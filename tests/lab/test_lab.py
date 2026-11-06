@@ -148,3 +148,29 @@ def test_committed_results_check():
     for p in sorted(Path("results").glob("*.json")):
         ok, msg = results.check(str(p))
         assert ok, msg
+
+
+def test_run_module_imports_without_gpu():
+    import lab.run  # noqa: F401  (module level is stdlib; mlx is imported inside run())
+
+
+def test_lab_energy_end_to_end_on_the_smoke_file(tmp_path):
+    """`lab energy` on the committed smoke + a synthetic capture spanning its real windows -> a new file that checks."""
+    src = "results/lane01-smoke.json"
+    rows = results.load(src)["rows"]
+    start = min(energy.parse_iso(r["start_utc"]) for r in rows).replace(microsecond=0) - timedelta(seconds=2)
+    end = max(energy.parse_iso(r["end_utc"]) for r in rows)
+    n = int((end - start).total_seconds()) + 3
+    idle_start = start - timedelta(seconds=60)
+    cap = tmp_path / "cap.plist"
+    cap.write_bytes(_capture(0.5, idle_start, 30) + b"\x00" + _capture(25.0, start, n))
+    out = tmp_path / "smoke+energy.json"
+    rc = main(["energy", src, "--capture", str(cap), "--idle-start", idle_start.isoformat(),
+               "--idle-end", (idle_start + timedelta(seconds=30)).isoformat(), "--out", str(out)])
+    assert rc == 0
+    d = results.load(str(out))
+    window = d["energy"]["window_s"]
+    assert d["energy"]["net_j"] == pytest.approx(25.0 * window - 0.5 * window, rel=1e-6)
+    assert d["aggregates"]["wh_per_case"] == pytest.approx(d["energy"]["net_j"] / 3600 / len(rows))
+    assert main(["energy", src, "--capture", str(cap), "--idle-start", idle_start.isoformat(),
+                 "--idle-end", (idle_start + timedelta(seconds=30)).isoformat(), "--out", str(out)]) == 2  # never overwrites
