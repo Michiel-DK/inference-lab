@@ -3,6 +3,34 @@
 Hand-written Metal compute kernels, compiled at runtime through MLX (`mx.fast.metal_kernel`), patched into
 mlx-lm models, and measured. Apple silicon only. Private while it is an exploration.
 
+## Lab
+
+**inference-lab.** This repo is also a lab: one question per lane, with the prediction committed before the run, a fixed case
+set, deterministic grading, one command that re-derives every number, and negatives kept in. The shape is copied from
+`lab-template` (taken from rag-retrieval-lab). The lab sits wilco's exams (email-triage, call-fields, recap, pinned in
+`docs/CASES.md`) under mlx-lm on this laptop and meters each case: tokens/s, peak memory and wall time from mlx-lm, plus Wh
+from an operator-started powermetrics capture using agent-sandbox's method (`lab/energy.py`). No hosted model calls.
+
+```
+P=~/.pyenv/versions/lewagon/bin/python3                      # mlx 0.32.2, mlx-lm 0.31.3
+$P -m pytest -q                                              # lab gate, no GPU
+$P -m lab check results/lane01-smoke.json                    # re-derives every aggregate; exit 1 on drift
+$P -m lab run mlx-community/Qwen2.5-Coder-1.5B-bf16 --name <run> --smoke   # refuses without predictions/<run>.md committed
+```
+
+| path | what |
+|---|---|
+| `lab/` | `cases.py` (pin + hashes), `run.py` (wilco `run_exam` per case, mlx-lm in-process), `metering.py`, `energy.py`, `results.py` (derive + check) |
+| `predictions/` | one file per run, committed before it (format in `predictions/README.md`) |
+| `results/` | committed evidence, never regenerated |
+| `LESSONS.md` · `SHOWCASE.md` · `LITERATURE.md` | prediction → result rows · the post · only what a lane ran against |
+
+**Status (lane 01, 6 Nov 2026):** skeleton and metering only. The smoke (`results/lane01-smoke.json`, 2 train cases) is
+wiring, and no number from it is posted. Wh is wired and tested on a synthetic capture but **not metered yet**: it needs
+`sudo powermetrics`, which an unattended job cannot start.
+
+---
+
 **Why this repo exists.** An on-device inference posting (2026-10-28) asked for Metal Shading Language, mobile
 GPU kernels and measured latency / memory wins. The portfolio's serving story lives in `agent-sandbox`
 (quantisation, KV-cache type, prefix cache, a 27B paged on 16 GB, an MLX-served adapter), all of it
