@@ -79,6 +79,10 @@ def run(model_ref, name, exam, case_ids, prediction_commit, out_path):
             graded = res["cases"][0]
             rows.append({"exam": exam, "case": cid, "split": graded["split"], "passed": bool(graded["passed"]),
                          "failed_checks": graded.get("failed_checks", []),
+                         # wilco's own error string when the case hit its `error` bucket (e.g. no JSON in the output), so a
+                         # wiring fault and a bad answer can be told apart from the committed file alone (lane 01 lesson)
+                         **({"wilco_error": str(graded["got"]["error"])[:300]}
+                            if isinstance(graded.get("got"), dict) and "error" in graded["got"] else {}),
                          "start_utc": start, "end_utc": end, "wall_s": wall_s,
                          "calls": adapter.calls[n_before:]})
             print(f"{cid}: {'PASS' if graded['passed'] else 'FAIL'}  {wall_s:.1f}s  "

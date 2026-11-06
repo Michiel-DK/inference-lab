@@ -1,0 +1,109 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "lane01-smoke",
+ "posted": false,
+ "prediction_commit": "6e2c85528dbd29f5bfec269e52b51f7e0a408347",
+ "lab_commit": "6e2c85528dbd29f5bfec269e52b51f7e0a408347",
+ "model": {
+  "ref": "mlx-community/Qwen2.5-Coder-1.5B-bf16",
+  "snapshot": "f72319a490488467139c14f76b18f9416baf63a5",
+  "load_s": 1.8322926670007291,
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/agent-exam-suite",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "agent": {
+   "temperature": 0.0,
+   "max_tokens": 2048
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6"
+ },
+ "exam": "email-triage",
+ "case_ids": [
+  "client-quote-request",
+  "overdue-invoice"
+ ],
+ "metric": "pass_rate",
+ "headline": 0.5,
+ "aggregates": {
+  "n_cases": 2,
+  "n_calls": 3,
+  "pass_rate": 0.5,
+  "gen_tokens_total": 6144,
+  "gen_tps": 44.32105031023013,
+  "prompt_tps": 69.02773176040718,
+  "peak_memory_gb_max": 3.316264884,
+  "wall_s_total": 149.6881107079971,
+  "wall_s_per_case": 74.84405535399856,
+  "wh_per_case": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "start_utc": "2026-11-06T17:21:26.727114+00:00",
+   "end_utc": "2026-11-06T17:23:06.241192+00:00",
+   "wall_s": 99.51301858299848,
+   "calls": [
+    {
+     "prompt_tokens": 197,
+     "prompt_tps": 27.124864373514363,
+     "gen_tokens": 2048,
+     "gen_tps": 47.92738939698523,
+     "peak_memory_gb": 3.312168872,
+     "finish_reason": "length",
+     "wall_s": 50.13167987500492
+    },
+    {
+     "prompt_tokens": 197,
+     "prompt_tps": 184.72343442174335,
+     "gen_tokens": 2048,
+     "gen_tps": 44.3911329383903,
+     "peak_memory_gb": 3.312267176,
+     "finish_reason": "length",
+     "wall_s": 47.37179262499558
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "overdue-invoice",
+   "split": "train",
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-06T17:23:06.241517+00:00",
+   "end_utc": "2026-11-06T17:23:56.417078+00:00",
+   "wall_s": 50.17509212499863,
+   "calls": [
+    {
+     "prompt_tokens": 200,
+     "prompt_tps": 724.4570052524388,
+     "gen_tokens": 2048,
+     "gen_tps": 41.15902304996612,
+     "peak_memory_gb": 3.316264884,
+     "finish_reason": "length",
+     "wall_s": 50.17328508399805
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "2ca76db8954b15e0408eb8473bc833bc03605013e8092abe872c14453f1a648f"
+}
