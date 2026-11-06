@@ -4,3 +4,5 @@ __pycache__/
 *.safetensors
 *.npz
 .DS_Store
+harness/
+.pytest_cache/
