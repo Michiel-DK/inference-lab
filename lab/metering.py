@@ -13,6 +13,27 @@ Greedy only: wilco's three exams run at temperature 0; any other temperature is 
 """
 import time
 
+
+def split_thinking(text, think_start, think_end, starts_in_thinking=False):
+    """(content, reasoning): what mlx_lm.server 0.31.3 puts in message.content vs message.reasoning.
+
+    The server's state machine (server.py: transitions normal -> reasoning on think_start, reasoning -> normal on
+    think_end; initial state reasoning when the prompt's last think_start is after its last think_end) applied to the
+    finished text. wilco grades `content` only (router.py, TERMINATION-DETECT D2: no fallback to thinking), so an
+    unterminated thought leaves content empty, which the adapter turns into wilco's TerminationError.
+    """
+    if not think_start:
+        return text, ""
+    content, reasoning, rest, thinking = [], [], text, starts_in_thinking
+    while rest:
+        mark = think_end if thinking else think_start
+        i = rest.find(mark)
+        head, rest = (rest, "") if i < 0 else (rest[:i], rest[i + len(mark):])
+        (reasoning if thinking else content).append(head)
+        if i >= 0:
+            thinking = not thinking
+    return "".join(content), "".join(reasoning)
+
 from .energy import METHOD as ENERGY_METHOD, energy_block  # noqa: F401  (re-exported: metering = speed + memory + energy)
 
 
@@ -41,17 +62,24 @@ class MeteredMLX:
             parts.append(resp.text)
             last = resp
         wall_s = time.perf_counter() - t0
-        text = "".join(parts)
+        raw = "".join(parts)
+        tk = self.tokenizer
+        starts_in = False
+        if tk.has_thinking:
+            ptxt = tk.decode(prompt) if not isinstance(prompt, str) else prompt
+            starts_in = ptxt.rfind(tk.think_start) > ptxt.rfind(tk.think_end)
+        text, reasoning = split_thinking(raw, tk.think_start if tk.has_thinking else None,
+                                         tk.think_end if tk.has_thinking else None, starts_in)
         call = {"prompt_tokens": last.prompt_tokens, "prompt_tps": float(last.prompt_tps),
                 "gen_tokens": last.generation_tokens, "gen_tps": float(last.generation_tps),
                 "peak_memory_gb": float(last.peak_memory), "finish_reason": last.finish_reason,
-                "wall_s": wall_s}
+                "wall_s": wall_s, "content_chars": len(text), "reasoning_chars": len(reasoning)}
         self.calls.append(call)
         meta = {"prompt_tokens": last.prompt_tokens, "completion_tokens": last.generation_tokens,
                 "total_tokens": last.prompt_tokens + last.generation_tokens,
-                "finish_reason": last.finish_reason, "content_chars": len(text), "reasoning_chars": 0}
+                "finish_reason": last.finish_reason, "content_chars": len(text), "reasoning_chars": len(reasoning)}
         if not text.strip() and self.empty_answer_exc is not None:
             raise self.empty_answer_exc(f"model emitted no answer (finish_reason={last.finish_reason!r})",
                                         {"finish_reason": last.finish_reason, "completion_tokens": last.generation_tokens,
-                                         "content_chars": len(text), "reasoning_chars": 0})
+                                         "content_chars": len(text), "reasoning_chars": len(reasoning)})
         return text, meta

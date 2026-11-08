@@ -18,6 +18,13 @@ Sizes are wilco's own split, counted from each case's `split` field at the pin (
 scores agree: 16/20, 14/19, 13/16). Full hashes are in `lab/cases.py`. The split is wilco's, drawn there
 before this lab existed. **Held-out is never tuned on here.** Every lab tuning or smoke run uses train cases only.
 
+**Pin vs HEAD (8 Nov 2026, lane 02).** wilco's `main` moved to `6b2c7bd` ("refresh 2026-11-08", adds a `wilco grade`
+subcommand). `git diff --quiet 62fcd449 6b2c7bd -- sandbox/runner.py sandbox/router.py evals agents` exits 0: the grader and
+all case and agent files are byte-identical; only tests and new files changed. The pin did not move (moving it is its own
+commit). Lane 02 ran against a read-only clone at the pin, `LAB_WILCO_DIR=.claude/worktrees/wilco-pin-62fcd449`, which is the
+`wilco.dir` in its results files; `verify_pin()` returned `[]` on it. Without `LAB_WILCO_DIR` the lab gate's
+`test_wilco_pin_holds_and_sizes_match` now fails on the moved HEAD, by design.
+
 ## Grading
 
 Deterministic, and wilco's own code. wilco at the pin has **no `grade` subcommand** (its CLI lists new, validate, list, run,

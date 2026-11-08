@@ -231,3 +231,13 @@ def test_check_catches_a_tampered_per_exam_aggregate(tmp_path, key, val):
 
 def test_run_refuses_without_the_named_prediction():
     assert main(["run", "some/model", "--name", "dense-x", "--prediction", "no-such-prediction", "--exams", "all"]) == 2
+
+
+def test_split_thinking_matches_the_server_state_machine():
+    from lab.metering import split_thinking
+    ts, te = "<|channel>thought", "<channel|>"
+    assert split_thinking('<|channel>thought\nplan...<channel|>{"label": "x"}', ts, te) == ('{"label": "x"}', "\nplan...")
+    assert split_thinking('{"a": 1}', ts, te) == ('{"a": 1}', "")
+    assert split_thinking("<|channel>thought never closed", ts, te) == ("", " never closed")     # -> TerminationError
+    assert split_thinking("still thinking<channel|>answer", ts, te, starts_in_thinking=True) == ("answer", "still thinking")
+    assert split_thinking("<think>x</think>y", None, None) == ("<think>x</think>y", "")          # no thinking tokens
