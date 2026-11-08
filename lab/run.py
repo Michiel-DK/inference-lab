@@ -124,3 +124,109 @@ def add_energy(src, capture, idle_start, idle_end, out_path):
     d["energy_source"] = {"from": str(src), "capture": str(capture)}
     Path(out_path).write_text(json.dumps(d, indent=1) + "\n")
     return d
+
+
+# ---- lane 02 on: several exams x N fresh loads, one process per load, rows written as they land
+
+def _battery():
+    return subprocess.run(["pmset", "-g", "batt"], capture_output=True, text=True).stdout.strip().replace("\t", " ")
+
+
+def sit_load(model_ref, plan, load_idx, partial_path):
+    """One FRESH load (this process) sits every (exam, case) in plan; one JSON line per row, flushed as it lands.
+
+    The last line is a footer {"_footer": ...}: a partial file without it is an interrupted load and is never assembled.
+    """
+    runner, router = import_wilco_runner()
+    from .metering import MeteredMLX
+    path, _ = resolve_model(model_ref)
+    t_load = time.perf_counter()
+    adapter = MeteredMLX(path, empty_answer_exc=router.TerminationError)
+    load_s = time.perf_counter() - t_load
+    batt0 = _battery()
+    real_adapter_for = runner.adapter_for
+    runner.adapter_for = lambda *a, **k: adapter
+    n = 0
+    try:
+        with open(partial_path, "w") as fh:
+            for exam, ids in plan:
+                agent = runner.load_agent(exam)
+                exam_doc = json.loads(C.cases_path(exam).read_text())
+                by_id = {c["id"]: c for c in exam_doc["cases"]}
+                for cid in ids:
+                    n_before = len(adapter.calls)
+                    start = _now()
+                    t0 = time.perf_counter()
+                    res = runner.run_exam(agent, {**exam_doc, "cases": [by_id[cid]]}, provider="mlx", model=model_ref)
+                    wall_s = time.perf_counter() - t0
+                    graded = res["cases"][0]
+                    row = {"exam": exam, "case": cid, "split": graded["split"], "load": load_idx,
+                           "passed": bool(graded["passed"]), "failed_checks": graded.get("failed_checks", []),
+                           **({"wilco_error": str(graded["got"]["error"])[:300]}
+                              if isinstance(graded.get("got"), dict) and "error" in graded["got"] else {}),
+                           "start_utc": start, "end_utc": _now(), "wall_s": wall_s,
+                           "calls": adapter.calls[n_before:]}
+                    fh.write(json.dumps(row) + "\n"); fh.flush()
+                    n += 1
+                    print(f"load {load_idx} {exam}/{cid}: {'PASS' if row['passed'] else 'FAIL'}  {wall_s:.1f}s  "
+                          f"{len(row['calls'])} call(s)", file=sys.stderr, flush=True)
+            fh.write(json.dumps({"_footer": {"load": load_idx, "load_s": load_s, "n_rows": n,
+                                             "battery_start": batt0, "battery_end": _battery()}}) + "\n")
+    finally:
+        runner.adapter_for = real_adapter_for
+
+
+def _read_partial(path):
+    lines = [json.loads(x) for x in Path(path).read_text().splitlines() if x.strip()]
+    if not lines or "_footer" not in lines[-1]:
+        return None, None
+    return lines[:-1], lines[-1]["_footer"]
+
+
+def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out_path, scratch, posted):
+    """Orchestrate N fresh loads (one subprocess each; a load whose partial file is complete is reused, so an interrupted
+    evening resumes at the next load), then write ONE results file. Never overwrites out_path (the CLI checks)."""
+    import mlx.core as mx
+    import mlx_lm
+    scratch = Path(scratch); scratch.mkdir(parents=True, exist_ok=True)
+    plan_arg = json.dumps(plan)
+    rows, loads_meta = [], []
+    for i in range(n_loads):
+        part = scratch / f"{name}.load{i}.jsonl"
+        got = _read_partial(part) if part.exists() else (None, None)
+        if got[0] is None:
+            cmd = [sys.executable, "-m", "lab", "sit", model_ref, "--plan", plan_arg, "--load", str(i), "--out", str(part)]
+            rc = subprocess.run(cmd).returncode
+            if rc != 0:
+                raise SystemExit(f"load {i} exited {rc}; partial kept at {part}")
+            got = _read_partial(part)
+            if got[0] is None:
+                raise SystemExit(f"load {i}: no footer in {part}")
+        rows += got[0]
+        loads_meta.append(got[1])
+    agg = results.derive(rows)
+    _, snapshot = resolve_model(model_ref)
+    exams = [e for e, _ in plan]
+    doc = {
+        "schema": results.SCHEMA, "run": name, "posted": posted,
+        "prediction": f"predictions/{prediction}.md", "prediction_commit": prediction_commit,
+        "lab_commit": _git("rev-parse", "HEAD"),
+        "model": {"ref": model_ref, "snapshot": snapshot, "mlx": mx.__version__, "mlx_lm": mlx_lm.__version__,
+                  "loads": [{"load": m["load"], "load_s": m["load_s"], "n_rows": m["n_rows"]} for m in loads_meta],
+                  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"},
+        "wilco": {"dir": str(C.WILCO_DIR), "pin": C.WILCO_PIN,
+                  "cases_sha256": {e: C.EXAMS[e]["sha256"] for e in exams},
+                  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+                  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+                  "agents": {e: {k: runner_agent.get(k) for k in ("temperature", "max_tokens")}
+                             for e, runner_agent in ((e, import_wilco_runner()[0].load_agent(e)) for e in exams)}},
+        "machine": {"model": _sysctl("hw.model"), "macos": platform.mac_ver()[0], "python": platform.python_version(),
+                    "power": [{"load": m["load"], "battery_start": m["battery_start"], "battery_end": m["battery_end"]}
+                              for m in loads_meta]},
+        "exams": exams, "plan": plan,
+        "metric": "heldout_majority_pass_rate", "headline": agg["heldout_majority_pass_rate"], "aggregates": agg,
+        "energy": None, "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+        "rows": rows, "rows_sha256": results.digest(rows),
+    }
+    Path(out_path).write_text(json.dumps(doc, indent=1) + "\n")
+    return doc

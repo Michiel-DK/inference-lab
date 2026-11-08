@@ -48,6 +48,66 @@ def derive(rows, energy=None):
     }
     if energy is not None:
         out["wh_per_case"] = energy["net_j"] / 3600.0 / len(rows)
+    if "load" in rows[0]:
+        out.update(_derive_loads(rows))
+    return out
+
+
+def _derive_loads(rows):
+    """Multi-exam, multi-load files (lane 02 on): wilco's snapshot rule, per exam, plus per-exam cost.
+
+    A row is one sitting of one case on one fresh model load. Per (exam, case) over the N loads, as wilco's
+    `sandbox/runner.py: aggregate_loads` at the pin: `passed` = MAJORITY verdict (N odd), `stable` = every load agreed;
+    the score is majority passes over ALL cases of the split (the denominator never moves). Beside it, the stricter count
+    the lane brief names ("a case counts when all three agree"): stable passes only. Cost per exam is over every sitting:
+    wall_s_per_case = mean wall of one sitting; min_per_1000_cases = that x 1000 / 60. Wh per 1,000 cases is None
+    unless an energy block exists (per exam it is never apportioned here, so it stays None).
+    """
+    loads = sorted({r["load"] for r in rows})
+    out = {"n_loads": len(loads)}
+    tot = {"heldout_n": 0, "heldout_majority_pass": 0, "heldout_stable_pass": 0, "n_unstable": 0, "n_unique_cases": 0}
+    for exam in sorted({r["exam"] for r in rows}):
+        er = [r for r in rows if r["exam"] == exam]
+        by_case = {}
+        for r in er:
+            by_case.setdefault(r["case"], []).append(r)
+        bad = {c: len(v) for c, v in by_case.items() if sorted(x["load"] for x in v) != loads}
+        if bad:
+            raise ValueError(f"{exam}: cases not sat exactly once on every load {loads}: {bad}")
+        n_unstable = 0
+        split = {"train": [0, 0, 0], "heldout": [0, 0, 0]}          # n, majority passes, stable passes
+        for cid, v in by_case.items():
+            n_pass = sum(bool(x["passed"]) for x in v)
+            majority = n_pass > len(v) - n_pass
+            stable = n_pass in (0, len(v))
+            n_unstable += 0 if stable else 1
+            s = split[v[0]["split"]]
+            s[0] += 1; s[1] += majority; s[2] += stable and majority
+        calls = [c for r in er for c in r["calls"]]
+        gt = sum(c["gen_tokens"] for c in calls)
+        gs = sum(_gen_seconds(c) for c in calls)
+        wall = sum(r["wall_s"] for r in er) / len(er)
+        out.update({
+            f"{exam}.n_cases": len(by_case),
+            f"{exam}.train_n": split["train"][0], f"{exam}.train_majority_pass": split["train"][1],
+            f"{exam}.heldout_n": split["heldout"][0], f"{exam}.heldout_majority_pass": split["heldout"][1],
+            f"{exam}.heldout_stable_pass": split["heldout"][2],
+            f"{exam}.all_majority_pass": split["train"][1] + split["heldout"][1],
+            f"{exam}.n_unstable": n_unstable,
+            f"{exam}.gen_tps": gt / gs if gs else None,
+            f"{exam}.peak_memory_gb_max": max((c["peak_memory_gb"] for c in calls), default=None),
+            f"{exam}.wall_s_per_case": wall,
+            f"{exam}.min_per_1000_cases": wall * 1000 / 60,
+            f"{exam}.finish_length_calls": sum(c["finish_reason"] == "length" for c in calls),
+            f"{exam}.wh_per_1000_cases": None,
+        })
+        tot["heldout_n"] += split["heldout"][0]
+        tot["heldout_majority_pass"] += split["heldout"][1]
+        tot["heldout_stable_pass"] += split["heldout"][2]
+        tot["n_unstable"] += n_unstable
+        tot["n_unique_cases"] += len(by_case)
+    out.update(tot)
+    out["heldout_majority_pass_rate"] = tot["heldout_majority_pass"] / tot["heldout_n"] if tot["heldout_n"] else None
     return out
 
 
@@ -95,4 +155,20 @@ def check(path):
     gtps = "n/a" if got["gen_tps"] is None else f"{got['gen_tps']:.2f}"
     return True, (f"{path}: matches — {d['metric']} = {got[d['metric']]:.6f} over {got['n_cases']} cases "
                   f"({got['n_calls']} calls); gen {gtps} tok/s; peak {got['peak_memory_gb_max']:.3f} GB; "
-                  f"wall {got['wall_s_total']:.2f} s; {wh}; {status}")
+                  f"wall {got['wall_s_total']:.2f} s; {wh}; {status}") + _per_exam_lines(got)
+
+
+def _per_exam_lines(got):
+    if "n_loads" not in got:
+        return ""
+    exams = sorted({k.split(".")[0] for k in got if "." in k})
+    lines = [f"\n  {got['n_loads']} loads; held-out majority {got['heldout_majority_pass']}/{got['heldout_n']}, "
+             f"stable-pass {got['heldout_stable_pass']}/{got['heldout_n']}; unstable {got['n_unstable']}/{got['n_unique_cases']}"]
+    for e in exams:
+        g = lambda k: got[f"{e}.{k}"]
+        tps = "n/a" if g("gen_tps") is None else f"{g('gen_tps'):.1f}"
+        lines.append(f"\n  {e:13s} held-out {g('heldout_majority_pass')}/{g('heldout_n')} (stable-pass "
+                     f"{g('heldout_stable_pass')}) · all {g('all_majority_pass')}/{g('n_cases')} · unstable {g('n_unstable')} · "
+                     f"gen {tps} tok/s · peak {g('peak_memory_gb_max'):.2f} GB · {g('wall_s_per_case'):.2f} s/case = "
+                     f"{g('min_per_1000_cases'):.1f} min/1000 · length-capped calls {g('finish_length_calls')}")
+    return "".join(lines)
