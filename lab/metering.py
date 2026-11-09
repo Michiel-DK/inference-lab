@@ -34,6 +34,29 @@ def split_thinking(text, think_start, think_end, starts_in_thinking=False):
             thinking = not thinking
     return "".join(content), "".join(reasoning)
 
+HARMONY_FINAL = "<|channel|>final<|message|>"
+HARMONY_STOPS = ("<|return|>", "<|end|>", "<|call|>")
+
+
+def split_harmony(text):
+    """(content, reasoning) for OpenAI's Harmony format (gpt-oss): the answer is the `final` channel's message.
+
+    mlx-lm 0.31.3 does not parse Harmony (`tokenizer_utils._infer_thinking` knows `<think>` and Gemma's
+    `<|channel>thought` only), so mlx_lm.server would hand wilco the analysis channel as the answer: lane 02's void
+    again. Rule (pre-registered in predictions/moe-vs-dense.md, addendum of 9 Nov): content = the text after the last
+    `<|channel|>final<|message|>`, up to the first Harmony stop token; everything else is reasoning. Output with no
+    `<|channel|>` marker at all is content as-is; channels opened but no final one = empty content (TerminationError).
+    """
+    if "<|channel|>" not in text:
+        return text, ""
+    i = text.rfind(HARMONY_FINAL)
+    if i < 0:
+        return "", text
+    content = text[i + len(HARMONY_FINAL):]
+    cut = min([j for j in (content.find(s) for s in HARMONY_STOPS) if j >= 0], default=len(content))
+    return content[:cut], text[:i]
+
+
 from .energy import METHOD as ENERGY_METHOD, energy_block  # noqa: F401  (re-exported: metering = speed + memory + energy)
 
 
@@ -45,6 +68,7 @@ class MeteredMLX:
         from mlx_lm import load
         self.mx = mx
         self.model, self.tokenizer = load(model_ref)
+        self.harmony = HARMONY_FINAL.split("final")[0] in self.tokenizer.get_vocab()   # gpt-oss: '<|channel|>' is a token
         self.empty_answer_exc = empty_answer_exc   # wilco's router.TerminationError, so an empty answer fails like it does there
         self.calls = []
 
@@ -68,8 +92,11 @@ class MeteredMLX:
         if tk.has_thinking:
             ptxt = tk.decode(prompt) if not isinstance(prompt, str) else prompt
             starts_in = ptxt.rfind(tk.think_start) > ptxt.rfind(tk.think_end)
-        text, reasoning = split_thinking(raw, tk.think_start if tk.has_thinking else None,
-                                         tk.think_end if tk.has_thinking else None, starts_in)
+        if self.harmony:
+            text, reasoning = split_harmony(raw)
+        else:
+            text, reasoning = split_thinking(raw, tk.think_start if tk.has_thinking else None,
+                                             tk.think_end if tk.has_thinking else None, starts_in)
         call = {"prompt_tokens": last.prompt_tokens, "prompt_tps": float(last.prompt_tps),
                 "gen_tokens": last.generation_tokens, "gen_tps": float(last.generation_tps),
                 "peak_memory_gb": float(last.peak_memory), "finish_reason": last.finish_reason,

@@ -241,3 +241,12 @@ def test_split_thinking_matches_the_server_state_machine():
     assert split_thinking("<|channel>thought never closed", ts, te) == ("", " never closed")     # -> TerminationError
     assert split_thinking("still thinking<channel|>answer", ts, te, starts_in_thinking=True) == ("answer", "still thinking")
     assert split_thinking("<think>x</think>y", None, None) == ("<think>x</think>y", "")          # no thinking tokens
+
+
+def test_split_harmony_grades_the_final_channel_only():
+    from lab.metering import split_harmony
+    a = "<|channel|>analysis<|message|>The user wants {\"label\": \"spam\"}?<|end|><|start|>assistant"
+    assert split_harmony(a + '<|channel|>final<|message|>{"label": "x"}<|return|>') == ('{"label": "x"}', a)
+    assert split_harmony(a + '<|channel|>final<|message|>{"label": "x"}') == ('{"label": "x"}', a)   # eos not emitted
+    assert split_harmony(a) == ("", a)                                              # no final channel -> TerminationError
+    assert split_harmony('{"a": 1}') == ('{"a": 1}', "")                                  # no Harmony markers
