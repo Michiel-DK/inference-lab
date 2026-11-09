@@ -60,3 +60,33 @@ small-model-friendly: email-triage saturates at the 2B, recap rewards restraint 
 hosted 26B-A4B (13/16 each, rank B) while reasoning-style models underperform, and call-fields wants exact fields where a
 larger active capacity would help but gpt-oss's 3.6B active is the e4b's size. Hence "costs like N, scores like N" on this
 machine, with the memory column as the one place the total shows.
+
+## Addendum (9 Nov 2026, before any lane-03 load; written after lane 02's results were known)
+
+This section adds no new predicted numbers. The bands above are scored as written. It fixes what lane 02 changed and
+how this evening decides which MoE runs, before a lane-03 model is loaded.
+
+1. **Packs fetched before the run, not inside it.** Neither MoE was cached. Both were fetched into the HF cache with
+   `snapshot_download` at pinned revisions before any `lab run`: `mlx-community/gpt-oss-20b-MXFP4-Q8@773a7da7` (12.1 GB,
+   Apache-2.0, 21B total / 3.6B active per `openai/gpt-oss-20b`'s card) and `LiquidAI/LFM2.5-8B-A1B-MLX-4bit@2e92b640`
+   (4.85 GB, LFM Open License v1.0, 8.3B / 1.5B active, 128k context, "reasoning-tuned" per `LiquidAI/LFM2.5-8B-A1B`'s
+   card). `lab run` resolves with `local_files_only` (unchanged).
+2. **Comparators.** Active-size dense = `results/dense-gemma-4-e4b-it-4bit.json` for gpt-oss and
+   `results/dense-gemma-4-e2b-it-4bit.json` for LFM2.5. The 14B total-size rows are void: lane 02 ran
+   `Meta-Llama-3.1-8B-Instruct-4bit` instead. For gpt-oss, the 8B is reported as "largest dense on file", below the 21B
+   total, and not as a total-size match. For LFM2.5 (8.3B total), the 8B is the total-size dense, as written above.
+3. **The machine gate.** `mx.device_info()['max_recommended_working_set_size']` = 11.45 GB on this M1 Pro, below the
+   12.1 GB gpt-oss pack, so paging is likely (the "flip" branch above). Gate smoke on train cases only: `--smoke` (the two
+   email-triage train cases) plus `--exam call-fields --cases support-long-train`. Lane 02's e4b sat those three in
+   37.2 s of wall (load 0) and its 3 × 83 run took 4888 s. Projected gpt-oss run = (smoke wall / 37.2) × 4888 s.
+   **gpt-oss sits the 3 × 83 run iff:** the smoke completes with no Metal allocation failure, projected wall ≤ 300 min
+   (smoke wall ≤ 137 s), and at least one smoke sitting yields a `final`-channel answer. Otherwise the smoke files are the
+   evidence for "pages on 16 GB / costs like the total" and are posted as such. The 3 × 83 run then goes to LFM2.5, for a
+   time or memory reason, not the Harmony one the prediction named.
+4. **Harmony split.** mlx-lm 0.31.3 parses `<think>` and Gemma's `<|channel>thought`, not Harmony, so the server would
+   grade gpt-oss's `analysis` channel as the answer. `lab/metering.py: split_harmony` grades the `final` channel only,
+   with no final channel counting as an empty answer (wilco's TerminationError). The lane 02 lesson, applied before the
+   run.
+5. **Kill clause, operational reading.** Against the active-size dense: gen tok/s within ±10% and held-out pass within
+   ±1 per exam. Wh is `null` without an operator capture and is not counted as "within noise". Peak memory and tokens per
+   sitting are reported beside the kill numbers.
