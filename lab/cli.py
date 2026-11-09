@@ -49,6 +49,19 @@ def main(argv=None):
     e.add_argument("src"); e.add_argument("--capture", required=True)
     e.add_argument("--idle-start", required=True); e.add_argument("--idle-end", required=True)
     e.add_argument("--out", required=True)
+    h = sub.add_parser("hosted", help="lane 09: a hosted Claude model sits fixed wilco cases via wilco's anthropic provider")
+    h.add_argument("model", help="claude-haiku-5-5 | claude-sonnet-5-5 | claude-opus-5-5 (lab/hosted.py PRICES)")
+    h.add_argument("--name", required=True)
+    hg = h.add_mutually_exclusive_group(required=True)
+    hg.add_argument("--smoke", action="store_true", help="train-only gate: the SMOKE email cases + call-fields support-long-train")
+    hg.add_argument("--heldout", action="store_true", help="every held-out case of the three exams (55 at the pin)")
+    h.add_argument("--sits", type=int, default=1, help="independent sits; majority over them (odd)")
+    h.add_argument("--prediction", required=True, help="prediction file stem")
+    h.add_argument("--ceiling", type=float, help="lane spend ceiling in $ (default lab/hosted.py CEILING_USD)")
+    h.add_argument("--project-from", help="refuse unless spent + this results file's cost x --project-factor fits the ceiling")
+    h.add_argument("--project-factor", type=float, default=2.5)
+    h.add_argument("--post", action="store_true")
+    h.add_argument("--scratch", default=".lab-scratch")
     a = p.parse_args(argv)
 
     if a.cmd == "check":
@@ -85,6 +98,51 @@ def main(argv=None):
             return 2
         sit_load(a.model, json.loads(a.plan), a.load, a.out)
         return 0
+    if a.cmd == "hosted":
+        import json
+        from . import hosted as H
+        ok, why, commit = _prediction_committed(a.prediction)
+        if not ok:
+            print(f"refused: {why}", file=sys.stderr)
+            return 2
+        problems = C.verify_pin()
+        if problems:
+            print("refused: wilco pin does not hold:\n  " + "\n  ".join(problems), file=sys.stderr)
+            return 2
+        if a.model not in H.PRICES or a.sits < 1 or a.sits % 2 == 0:
+            print(f"refused: model {a.model!r} has no price in lab/hosted.py, or sits {a.sits} not odd >= 1", file=sys.stderr)
+            return 2
+        if not H.key_present():
+            print("refused: ANTHROPIC_API_KEY is not set in this process", file=sys.stderr)
+            return 2
+        out = Path("results") / f"{a.name}.json"
+        if out.exists():
+            print(f"refused: {out} exists; results are never overwritten", file=sys.stderr)
+            return 2
+        ceiling = H.CEILING_USD if a.ceiling is None else a.ceiling
+        spent = H.ledger_spent(a.scratch)
+        if a.project_from:
+            ref = results.load(a.project_from)
+            got = results.derive(ref["rows"], ref.get("energy"), ref.get("prices"))
+            proj = got["cost_usd_total"] * a.project_factor
+            print(f"gate: spent ${spent:.4f} + {a.project_from} ${got['cost_usd_total']:.4f} x {a.project_factor} = "
+                  f"${spent + proj:.4f} vs ceiling ${ceiling:.2f}", file=sys.stderr)
+            if spent + proj > ceiling:
+                print("refused: not sat (ceiling) by the pre-registered projection", file=sys.stderr)
+                return 3
+        if a.smoke:
+            plan = [[C.SMOKE["exam"], list(C.SMOKE["cases"])], ["call-fields", ["support-long-train"]]]
+        else:
+            plan = [[e, [x["id"] for x in json.loads(C.cases_path(e).read_text())["cases"] if x["split"] == "heldout"]]
+                    for e in sorted(C.EXAMS)]
+        try:
+            H.run_hosted(a.model, a.name, plan, a.sits, a.prediction, commit, out, a.scratch, a.post, ceiling)
+        except H.CeilingReached as exc:
+            print(str(exc), file=sys.stderr)
+            return 3
+        ok, msg = results.check(str(out))
+        print(msg)
+        return 0 if ok else 1
     if a.cmd == "run":
         ok, why, commit = _prediction_committed(a.prediction or a.name)
         if not ok:
