@@ -1,4 +1,4 @@
-# inference-lab (metal-kernels)
+# inference-lab
 
 One area: inference on this laptop under mlx-lm, graded by wilco's exams, metered per case. Read `SHOWCASE.md`,
 `LESSONS.md` and the newest `docs/inbox/*-restart.md` before changing any method. The Metal kernel work (`mk/`, `bench/`, `tests/test_geglu.py`) predates the lab

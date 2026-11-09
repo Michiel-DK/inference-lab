@@ -1,21 +1,34 @@
-# metal-kernels
+# inference-lab
 
-Hand-written Metal compute kernels, compiled at runtime through MLX (`mx.fast.metal_kernel`), patched into
-mlx-lm models, and measured. Apple silicon only. Private while it is an exploration.
+Hand-written Metal compute kernels, and a lab that measures inference on one laptop. Apple silicon only (M1 Pro, 16 GB).
 
-## Lab
+## The lab
 
-**inference-lab.** This repo is also a lab: one question per lane, with the prediction committed before the run, a fixed case
-set, deterministic grading, one command that re-derives every number, and negatives kept in. The shape is copied from
-`lab-template` (taken from rag-retrieval-lab). The lab sits wilco's exams (email-triage, call-fields, recap, pinned in
-`docs/CASES.md`) under mlx-lm on this laptop and meters each case: tokens/s, peak memory and wall time from mlx-lm, plus Wh
-from an operator-started powermetrics capture using agent-sandbox's method (`lab/energy.py`). No hosted model calls.
+**The question.** What does a small local model pass, and what does a held-out case cost, on a laptop? Three 4-bit models run
+under mlx-lm (in-process, temperature 0, cached models only, no hosted model calls) and sit wilco's three office exams:
+email-triage, call-fields and recap, with wilco's own scorer. Each case is metered for tokens/s, peak memory and wall time;
+Wh comes only from an operator-started `sudo powermetrics` capture (`lab/energy.py`) and is `null` without one.
 
+**The lab rule.** One question per lane. The prediction is committed before the run, the case set is fixed (wilco pinned in
+`docs/CASES.md`), grading is deterministic, negatives stay in, `results/*.json` are committed evidence that is never
+regenerated, and a number is posted only with the command that re-derives it.
+
+**Headline.** Held-out passes over 55 cases: e4b 36 · Llama-3.1-8B 31 · e2b 23, with 0 of 83 cases unstable on any model.
+Re-derive it (no model, no GPU, no wilco checkout needed):
+
+```sh
+~/.pyenv/versions/lewagon/bin/python3 -m lab check results/dense-gemma-4-e2b-it-4bit.json \
+  results/dense-gemma-4-e4b-it-4bit.json results/dense-llama-3.1-8b-instruct-4bit.json
 ```
-P=~/.pyenv/versions/lewagon/bin/python3                      # mlx 0.32.2, mlx-lm 0.31.3
-$P -m pytest -q                                              # lab gate, no GPU
-$P -m lab check results/lane01-smoke.json                    # re-derives every aggregate; exit 1 on drift
-$P -m lab run mlx-community/Qwen2.5-Coder-1.5B-bf16 --name <run> --smoke   # refuses without predictions/<run>.md committed
+
+`lab check` re-derives every posted aggregate from the committed rows and exits 1 on drift. `SHOWCASE.md` is the post,
+`LESSONS.md` has prediction-to-result rows.
+
+```sh
+P=~/.pyenv/versions/lewagon/bin/python3          # mlx 0.32.2, mlx-lm 0.31.3 (requirements.txt pins)
+$P -m pytest -q                                  # lab gate, no GPU, no model (needs wilco at the pin, else one test fails)
+$P -m lab diff <a> <b>                           # difference of two results files
+$P -m lab run <model> --name <run> --smoke       # refuses without a committed predictions/<run>.md
 ```
 
 | path | what |
@@ -25,11 +38,9 @@ $P -m lab run mlx-community/Qwen2.5-Coder-1.5B-bf16 --name <run> --smoke   # ref
 | `results/` | committed evidence, never regenerated |
 | `LESSONS.md` · `SHOWCASE.md` · `LITERATURE.md` | prediction → result rows · the post · only what a lane ran against |
 
-**Status (lane 01, 6 Nov 2026):** skeleton and metering only. The smoke (`results/lane01-smoke.json`, 2 train cases) is
-wiring, and no number from it is posted. Wh is wired and tested on a synthetic capture but **not metered yet**: it needs
-`sudo powermetrics`, which an unattended job cannot start.
-
 ---
+
+# Metal kernels
 
 **Why this repo exists.** An on-device inference posting (2026-10-28) asked for Metal Shading Language, mobile
 GPU kernels and measured latency / memory wins. The portfolio's serving story lives in `agent-sandbox`
@@ -44,7 +55,7 @@ Mac-only, iterated dozens of times a day. agent-sandbox treats engines as runtim
 (Ollama, `mlx_lm.server`); this repo is one more such runtime. `docs/projects.md` §"How a kernel reaches
 wilco" has the three-step hand-off.
 
-## Layout
+### Layout
 
 ```
 mk/          one module per kernel: the MSL source, a Python wrapper, a patch_<model>() that swaps it in
@@ -54,7 +65,7 @@ scripts/     end-to-end smoke runs on a cached mlx-lm model (one run, never evid
 docs/        the ladder, the six projects, the posting gap
 ```
 
-## The ladder (from `docs/projects.md`)
+### The ladder (from `docs/projects.md`)
 
 | rung | what | status |
 |---|---|---|
@@ -66,7 +77,7 @@ docs/        the ladder, the six projects, the posting gap
 MLX ships fused `rms_norm`, `rope`, `scaled_dot_product_attention` and quantised matmuls already. A first
 kernel at rungs 2–4 will lose to them; the table must show by how much, then close the gap.
 
-## Run
+### Run
 
 ```
 PYTHONPATH=. python3 tests/test_geglu.py        # correctness, six shapes
@@ -77,7 +88,7 @@ PYTHONPATH=. python3 scripts/smoke_gemma.py 48  # patched vs stock Gemma 4 e2b 4
 Pins in `requirements.txt` are the versions the first numbers were taken on (M1 Pro, 16 GB, macOS 14.3.1).
 No Xcode needed: Command Line Tools only; MLX compiles the MSL body itself.
 
-## Rules
+### Rules
 
 - A kernel is not done until it has a test against the stock op, a benchmark row, and a patch function.
 - Benchmark against what mlx-lm *actually runs* (usually `mx.compile`d), never only against separate ops.
