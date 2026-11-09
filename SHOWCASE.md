@@ -13,7 +13,7 @@ and the flip definition.
 
 Protocol as in lane 02: all 83 cases at wilco pin `62fcd449`, three fresh loads, wilco's scorer, majority/stable rule, mlx
 0.32.2 and mlx-lm 0.31.3. The 4-bit arms are lane 02's committed files, not re-sat. The packs are all `mlx-community`
-affine quantisation, group size 64 (`config.json`).
+affine quantisation, group size 64 (`config.json`). The 4-bit files ran at `lab_commit` `27786ced`, the lane-04 arms at `7b8fd34`–`148bb3f`. `git diff 27786ced HEAD -- lab/` touches only `lab/metering.py`, to add `split_harmony`, and that branch runs only when `<|channel|>` is a vocab token. It is absent from all seven tokenizers here (`tokenizer.json`), so the adapter path for Gemma and Llama is unchanged between the two sets. The packs' `model.snapshot` fields match the addendum's revisions.
 
 **Headline.** **8-bit beat 4-bit on every model**:
 - held-out passes: e2b **23 → 32/55**, e4b **36 → 41/55**, Llama-3.1-8B **31 → 37/55**;
