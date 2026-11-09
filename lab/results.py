@@ -191,7 +191,9 @@ def check(path):
     cost = "" if "cost_usd_total" not in got else (
         f"; ${got['cost_usd_total']:.4f} total = ${got['cost_usd_per_case']:.5f}/case "
         f"({got['prompt_tokens_total']} in + {got['gen_tokens_total']} out tokens; unmetered calls {got['unmetered_calls']})")
-    return True, (f"{path}: matches — {d['metric']} = {got[d['metric']]:.6f} over {got['n_cases']} cases "
+    hv = got[d["metric"]]
+    hv = "n/a (no held-out case in this file)" if hv is None else f"{hv:.6f}"
+    return True, (f"{path}: matches — {d['metric']} = {hv} over {got['n_cases']} cases "
                   f"({got['n_calls']} calls); gen {gtps} tok/s; peak {peak}; "
                   f"wall {got['wall_s_total']:.2f} s; {wh}{cost}; {status}") + _per_exam_lines(got)
 
