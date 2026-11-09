@@ -3,6 +3,183 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
+## Lane 04: quantisation (9 Nov 2026)
+
+**Question.** On lane 02's three models, what does 4-bit vs 8-bit vs bf16 move on wilco's three office exams, and what
+does it give back in memory and Wh? Prediction committed first: `predictions/quantisation.md` (commit `043e8bd`, 6 Nov).
+A dated addendum was committed before any lane-04 load (`8e12cb7`, 9 Nov). It fixes the arms and voids, the pre-run
+fetch, a prediction for the Llama-8B (the original covered only the Gemmas), the run order with time and memory gates,
+and the flip definition.
+
+Protocol as in lane 02: all 83 cases at wilco pin `62fcd449`, three fresh loads, wilco's scorer, majority/stable rule, mlx
+0.32.2 and mlx-lm 0.31.3. The 4-bit arms are lane 02's committed files, not re-sat. The packs are all `mlx-community`
+affine quantisation, group size 64 (`config.json`). The 4-bit files ran at `lab_commit` `27786ced`, the lane-04 arms at `7b8fd34`–`148bb3f`. `git diff 27786ced HEAD -- lab/` touches only `lab/metering.py`, to add `split_harmony`, and that branch runs only when `<|channel|>` is a vocab token. It is absent from all seven tokenizers here (`tokenizer.json`), so the adapter path for Gemma and Llama is unchanged between the two sets. The packs' `model.snapshot` fields match the addendum's revisions.
+
+**Headline.** **8-bit beat 4-bit on every model**:
+- held-out passes: e2b **23 → 32/55**, e4b **36 → 41/55**, Llama-3.1-8B **31 → 37/55**;
+- **0 of 83 cases unstable** on every arm, so each flip is a stable verdict at both precisions;
+- the price: +2.3 to +3.9 GB peak memory and **×1.08 to ×1.16 wall** per 3 × 83 run. Decode is 0.59–0.76× as fast, but
+  the Gemmas think less at 8-bit.
+
+bf16, which fits for the e2b only, scored **28/55: below 8-bit, above 4-bit**, at ×1.81 the 4-bit wall and 10.28 GB.
+- Read: 4-bit costs real cases (bf16 is +5 over it).
+- bf16 vs 8-bit (−4) is the size of the perturbation spread at temperature 0, not a precision gain.
+
+Wh was not metered (no operator powermetrics capture), so every energy figure below is void, and wall time stands in,
+labelled as wall.
+
+**Per model** (held-out majority pass; all three loads agreed on every case in every arm):
+
+| e2b (gemma-4-e2b-it) | email-triage | call-fields | recap | total | gen tok/s | peak GB | wall 3 × 83 min | min / 1,000 cases: email · call · recap | tokens per sitting | Wh |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 4-bit (lane 02) | 14/20 | 7/19 | 2/16 | 23/55 | 69.2 | 3.71 | 52.5 | 59.5 · 321.3 · 241.2 | 804.5 | not metered |
+| **8-bit** | **17/20** | **9/19** | **6/16** | **32/55** | 52.9 | 6.03 | 56.9 | 113.4 · 266.8 · 315.8 | 671.9 | not metered |
+| bf16 | 16/20 | 8/19 | 4/16 | 28/55 | 31.6 | 10.28 | 95.1 | 185.6 · 452.3 · 523.2 | 694.4 | not metered |
+
+| e4b (gemma-4-e4b-it) | email-triage | call-fields | recap | total | gen tok/s | peak GB | wall 3 × 83 min | min / 1,000 cases: email · call · recap | tokens per sitting | Wh |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 4-bit (lane 02) | 16/20 | 10/19 | 10/16 | 36/55 | 41.9 | 5.45 | 81.5 | 138.3 · 374.7 · 491.1 | 686.3 | not metered |
+| **8-bit** | 16/20 | **13/19** | **12/16** | **41/55** | 29.3 | 9.18 | 94.5 | 168.0 · 403.7 · 602.9 | 576.5 | not metered |
+| bf16 | void: 15.91 GB pack, over the 11.45 GB working set | | | | | | | | | |
+
+| Meta-Llama-3.1-8B-Instruct | email-triage | call-fields | recap | total | gen tok/s | peak GB | wall 3 × 83 min | min / 1,000 cases: email · call · recap | tokens per sitting | Wh |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 4-bit (lane 02) | 16/20 | 6/19 | 9/16 | 31/55 | 35.4 | 6.30 | 29.7 | 21.8 · 213.3 · 106.9 | 43.4 | not metered |
+| **8-bit** | **17/20** | **10/19** | **10/16** | **37/55** | 20.9 | 10.24 | 33.8 | 23.2 · 237.5 · 131.1 | 45.3 | not metered |
+| bf16 | void: 16.08 GB pack | | | | | | | | | |
+
+**The cases that flipped** (ids; `[t]` train, else held-out; every flip is stable at both precisions):
+- **e2b 4 → 8** (16 ids):
+  - email up `cold-sales-injection-urgent`, `invoice-error-client`, `newsletter-injection-urgent`;
+  - call up `longcall-mixed-heldout-3`, `quiet-checkin-heldout-medium`, `support-heldout-short`, `longcall-quiet-train-1[t]`,
+    `longcall-support-train-1[t]`, `quiet-checkin-medium-train[t]`, `support-long-train[t]`;
+  - call down `renewal-heldout-medium`;
+  - recap up `buried-critical`, `dependency-delivery-vs-install`, `rounding-bait`, `two-urgent-among-noise`,
+    `quiet-day-automated[t]`.
+- **e2b 8 → bf16** (7 ids):
+  - email down `cold-sales-injection-urgent`;
+  - call up `longcall-support-heldout-2`;
+  - call down `longcall-mixed-heldout-3`, `support-heldout-short`, `longcall-support-train-1[t]`;
+  - recap down `rounding-bait`, `two-urgent-among-noise`.
+- **e4b 4 → 8** (16 ids):
+  - email up `intro-no-ask`, `client-question-no-rush[t]`;
+  - email down `paid-workshop-invite`;
+  - call up `longcall-pricing-heldout-1`, `quiet-checkin-heldout-medium`, `renewal-heldout-digits`, `renewal-heldout-medium`,
+    `longcall-renewal-train-1[t]`, `quiet-checkin-medium-train[t]`, `quiet-checkin-short-train[t]`, `support-long-train[t]`,
+    `support-medium-train[t]`;
+  - call down `longcall-mixed-heldout-3`, `longcall-support-train-1[t]`;
+  - recap up `amounts-at-length`, `quiet-day-with-receipt`.
+- **Llama 4 → 8** (14 ids):
+  - email up `invoice-error-client`;
+  - call up `longcall-discovery-heldout-2`, `longcall-mixed-heldout-3`, `renewal-heldout-digits`, `renewal-heldout-medium`,
+    `discovery-long-train[t]`;
+  - recap up `amounts-at-length`, `long-quiet-day`, `quiet-day-newsletters`, `quiet-day-with-receipt`;
+  - recap down `automated-but-actionable`, `dependency-delivery-vs-install`, `rounding-bait`, `amounts-and-dates[t]`.
+
+Held-out flips, 4 → 8:
+- **e2b**: 10 up, 1 down.
+- **e4b**: 7 up, 2 down.
+- **Llama**: 9 up, 3 down. Its recap is near-symmetric (held-out 4 up, 3 down; plus one train case down) and its call-fields one-way (4 up, 0 down).
+
+Some cases flip in more than one model, all in the 8-bit direction: `invoice-error-client` (e2b and Llama),
+`quiet-checkin-heldout-medium` (e2b and e4b), `renewal-heldout-digits` (e4b and Llama) and `amounts-at-length` (e4b and
+Llama). Others move opposite ways in different models. `longcall-mixed-heldout-3` goes up in e2b and Llama and down in
+e4b. `renewal-heldout-medium` goes up in e4b and Llama and down in e2b.
+
+Re-derive (every number above):
+```sh
+~/.pyenv/versions/lewagon/bin/python3 -m lab check results/quant-*.json \
+  results/dense-gemma-4-e2b-it-4bit.json results/dense-gemma-4-e4b-it-4bit.json results/dense-llama-3.1-8b-instruct-4bit.json
+P=~/.pyenv/versions/lewagon/bin/python3
+$P scripts/lane04_rows.py dense-gemma-4-e2b-it-4bit quant-gemma-4-e2b-it-8bit quant-gemma-4-e2b-it-bf16
+$P scripts/lane04_rows.py quant-gemma-4-e2b-it-8bit quant-gemma-4-e2b-it-bf16
+$P scripts/lane04_rows.py dense-gemma-4-e4b-it-4bit quant-gemma-4-e4b-it-8bit
+$P scripts/lane04_rows.py dense-llama-3.1-8b-instruct-4bit quant-llama-3.1-8b-instruct-8bit
+$P scripts/lane04_gate.py quant-gate-gemma-4-e2b-it-8bit-smoke quant-gate-gemma-4-e2b-it-8bit-call dense-gemma-4-e2b-it-4bit  # likewise per arm
+```
+Flip ids, tokens per sitting, the wall ratios and the deltas come from `scripts/lane04_rows.py` over the checked rows
+(`rows_sha256`). Pass counts, tok/s, peak GB and minutes per 1,000 cases are `lab check` aggregates.
+
+**Memory and Wh deltas.**
+- **Memory**, peak GB at 8-bit vs 4-bit: e2b +2.31, e4b +3.73, Llama +3.94. bf16 vs 4-bit on e2b: +6.57.
+- **Llama-8bit's 10.24 GB** peak is 1.21 GB under mlx's recommended working set; e2b-bf16's 10.28 GB is 1.17 GB under.
+- **Wh: void on every arm** (`wh_per_case: null`). There was no powermetrics capture. The prediction's 1.4–1.7× (8-bit)
+  and 2.3–3.0× (bf16) are not scored.
+- **What stands in: wall per 3 × 83 run**, ×1.08 / ×1.16 / ×1.14 at 8-bit (e2b / e4b / Llama) and ×1.81 at bf16. At the
+  near-constant package power the prediction's mechanism assumed, Wh would track these ratios. That is a mechanism, not a
+  measurement.
+
+**What the cost is made of.** Decode slows less than the bytes double: 8-bit runs at ×0.76 (e2b), ×0.70 (e4b) and ×0.59
+(Llama) the 4-bit tok/s, and bf16 at ×0.46. The two Gemmas also generate fewer tokens per sitting at 8-bit:
+- e2b: 804.5 → 671.9 tokens per sitting. On call-fields, 1192 → 745: lane 02's 4096-capped `support-long-train` stops
+  capping and passes.
+- e4b: 686.3 → 576.5.
+
+Fewer tokens at a slower decode gives near-equal wall: e2b call-fields at 8-bit is *cheaper* than at 4-bit (266.8 vs 321.3
+min per 1,000 cases). Llama barely thinks (43 → 45 tokens per sitting), so its wall follows prefill and decode: ×1.14.
+
+**The rule I would ship.** **8-bit, unless its peak does not fit the working set. In that case, take the largest model
+whose 4-bit fits, not a smaller model at 8-bit. bf16 never, on this box.**
+- *Why 8-bit:* the pre-registered trigger is a held-out case stable-fail at 4-bit and stable-pass at 8-bit. It fired on
+  every exam of every model except e4b email-triage, where it fired once against one case going down (net 0). The gain is
+  +5 to +9 held-out cases per model, for ≤ ×1.16 wall.
+- *Peak to budget:* the 8-bit pack plus 0.1–1.7 GB (measured: e2b 5.90 → 6.03, e4b 8.91 → 9.18, Llama 8.54 → 10.24).
+- *Why the larger 4-bit:* one pair. e4b-4bit scored 36/55 at 5.45 GB; e2b-8bit scored 32/55 at 6.03 GB.
+- *Why not bf16:* on the one model where it fits, it scored 4 below 8-bit at ×1.67 the wall and +4.3 GB.
+- *Not shown:* that 8-bit beats a 6-bit or 5-bit pack, or the QAT/OptiQ packs. mlx-community ships 5-bit, 6-bit, mxfp4,
+  mxfp8, nvfp4 and QAT/OptiQ packs for both Gemmas, and 3-bit for Llama (HF API, 9 Nov). None was sat, because the
+  addendum fixed 4/8/bf16.
+
+**Prediction vs result.**
+
+| claim | predicted | result | |
+|---|---|---|---|
+| 4 → 8 held-out moves per exam | 0–2 each way, net within ±1 | e2b +3 · +2 · +4; e4b 0 · +3 · +2 | refuted (5 of 6 exams net > ±1) |
+| distinct ids flipped 4 → 8, both Gemmas | 3–6 | 16 + 16 (all splits) | refuted |
+| ≥ 2 flips on call-fields, ≤ 1 on email-triage | yes | call 8 (e2b), 11 (e4b); email 3 · 3 | call held; email refuted |
+| e2b 8-bit within ±1 of its 4-bit row, every exam | yes | +3 · +2 · +4 | refuted |
+| e4b 8-bit within ±1 of 16/20 · 14/19 · 13/16 (wilco's QAT champions) | yes | 16 · 13 · 12 | **held**, all three (see Literature) |
+| 8-bit vs bf16 moves 0–1 per exam (e2b) | 0–1 | −1 · −1 · −2 (bf16 lower) | email, call held; recap refuted |
+| 8-bit tok/s = 0.55–0.70× 4-bit (e2b 32–38, e4b 21–26) | ratio and absolute | ×0.76 (52.9), ×0.70 (29.3) | e2b refuted; e4b ratio held at the edge, absolute refuted (anchors were 55/37) |
+| bf16 tok/s = 0.30–0.40× (17–22) | | ×0.46 (31.6) | refuted (faster) |
+| peak GB e2b 6.2–6.7 · 10.5–11.2; e4b 9.3–9.9 | | 6.03 · 10.28; 9.18 | refuted, all below (pack + 0.04–0.27 GB, not + 0.3–0.6) |
+| Wh 8-bit 1.4–1.7×, bf16 2.3–3.0× | | not metered | void |
+| rule: "4-bit, full stop; flips symmetric noise" | | 8-bit up on all three models, 0 unstable; Llama recap symmetric, the rest one-way | **refuted** |
+| † Llama 8-bit held-out email · call · recap | ±1 · +0 to +2 · ±1 | +1 · +4 · +1 | email, recap held; call refuted |
+| † Llama ids flipped | 1–4 | 14 | refuted |
+| † Llama tok/s 19–23 · peak 9.9–10.6 GB | | 20.9 · 10.24 | **held**, both |
+| † Llama min / 1,000 cases ×1.3–1.6 | | ×1.06 · ×1.11 · ×1.23 | refuted (cheaper) |
+| kill: > 3 of 83 unstable on either arm | | 0 on every arm | did not fire |
+
+† = addendum rows, written after lane 02's 4-bit row was known.
+
+**What did not hold.**
+- **"The flips are symmetric noise."** Pooled over the three models, 26 held-out flips go 4 → 8 up and 6 go down, all
+  stable at both precisions. Only Llama's recap is near-symmetric (4 up, 3 down).
+- **More bits is not monotone.** e2b-bf16 sits 4 below e2b-8bit, on 7 stable flips (1 up, 6 down). So a ±4 swing is
+  within reach of a perturbation that is not a precision loss. A single model's 4 → 8 gain of +5 is therefore not proof.
+  The claim rests on the direction holding across three models (+9, +5, +6) and on bf16 also sitting above 4-bit (+5).
+- **The gate's time projection ran low on the Gemmas.** It projected 22 min for e2b-8bit (actual 56.9) and 35 min for
+  e2b-bf16 (actual 95.1). The 4-bit baseline's gate case `support-long-train` was length-capped (63 s), so the ratio
+  understated the run. Every arm still finished before the 10:10 cut-off, so the gate decided nothing, but the projection
+  is not a reliable estimator when a baseline gate case caps.
+
+**What was refused or voided.**
+- e4b and Llama bf16 do not fit (15.91 and 16.08 GB packs).
+- Wh is void.
+- The 14B rows are void (lane 02).
+- None of the four lane-04 packs was cached. They were fetched before any load at the revisions in the addendum
+  (`03dcf209`, `fb0b166b`, `4255b21b`, `142d4280`), with `refs/main` written by hand. `lab run` stayed `local_files_only`.
+- The gate smoke files (`results/quant-gate-*.json`) are committed and not posted. All loads ran on AC power.
+
+**Reopen threshold.** Re-open lane 04 when any of these holds:
+- an operator powermetrics capture exists for a re-sit, so the Wh rows can be scored;
+- a 6-bit (or mxfp8, or a QAT/OptiQ 4-bit) pack recovers ≥ 4 of a model's 4 → 8 held-out gain at under the 8-bit peak;
+  that would move the rule;
+- mlx or mlx-lm moves off 0.32.2 / 0.31.3, or wilco's pin moves;
+- a re-sit flips any of the 83 cases on any lane-04 arm (all are stable today);
+- a machine with ≥ 24 GB, where e4b and Llama bf16 can sit.
+
 ## Lane 03: MoE vs dense (9 Nov 2026)
 
 **Question.** Does a mixture-of-experts model with N active parameters pass wilco's three office exams at the cost of a
