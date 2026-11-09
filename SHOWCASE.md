@@ -3,6 +3,132 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
+## Lane 09: hosted baseline on the 55 held-out cases (9 Nov 2026)
+
+**Question.** Lanes 02–04 posted what the laptop passes on wilco's three office exams. Lane 09 asks what hosted Claude
+passes on the same 55 held-out cases with the same grader, and what a case costs. The models are `claude-haiku-5-5`
+(three sits), `claude-sonnet-5-5` (one sit) and `claude-opus-5-5` (one sit). This lane lifts the lab's no-hosted-calls
+rule for this one comparison, under a $2.00 ceiling and the operator's go. The prediction was committed alone, before any
+call: `predictions/hosted-baseline.md`, commit `1088b19`.
+
+**Protocol.**
+- Cases: the 55 held-out ids at wilco pin `62fcd449` (the read-only clone, as in lanes 02–04).
+- Grading: wilco's `run_exam` per case, through **wilco's own** `anthropic` provider (`router.get_adapter`, the
+  OpenAI-compatible endpoint, `temperature` dropped by wilco).
+- Metering: `lab/hosted.py` wraps `requests.post` only to read each billed response's `usage`, `finish_reason` and model;
+  no request byte is changed.
+- Settings: `max_tokens` from each `agent.yaml`, effort at the API default, no prompt caching, no fallback model.
+- Cost: list price × metered tokens. Prices are stored in each file, and `lab check` re-derives every $ cell. Rates per
+  MTok in / out: Haiku $0.10 / $0.50, Sonnet $2 / $10, Opus $4 / $20. These come from the claude-api model table cached
+  2026-10-06 (rank C), the same rates wilco's 28 Oct probe used.
+
+**Headline.** On these three exams, **hosted Claude is level with the laptop's best row, not above it**:
+- **Sonnet 44/55**, **Haiku 40/55** (sits 39 · 38 · 40), **Opus 40/55**, against the 8-bit e4b's **41/55**.
+- Two of the three hosted models sit below the laptop. Sonnet is +3.
+- The gap is not uniform. It is two opposite gaps that cancel:
+  - Hosted wins email-triage by +3 to +4 and call-fields by +1 to +4.
+  - Hosted loses recap by 5 to 6 cases (6–7/16 against 12/16). Claude writes past recap's length rule
+    (`check_compression`) and calls a quiet day important (`check_abstention`).
+- A case costs **$0.00037 (Haiku), $0.0062 (Sonnet), $0.0132 (Opus)**, i.e. $0.37 / $6.15 / $13.24 per 1,000 held-out
+  cases. Local cost per case is void: no powermetrics capture, so Wh is null, as in lane 04.
+- Lane spend: **$1.128**, all of it in the committed files plus the 3-case smoke. All five sits ran; Opus sat after the
+  pre-registered gate.
+
+**The 55-case table** (held-out, majority over loads or sits; `python3 scripts/lane09_rows.py`, which first runs
+`lab check` on every file and exits 1 on drift):
+
+| arm | sits | email-triage /20 | call-fields /19 | recap /16 | **total /55** | unstable held-out ids | wall s / held-out case | $ / held-out case | $ / case: email · call · recap |
+|---|---|---|---|---|---|---|---|---|---|
+| gemma-4-e2b-it 4-bit (local) | 3 loads | 14 | 7 | 2 | **23** | 0 | 11.47 | void (Wh not metered) | void |
+| gemma-4-e2b-it 8-bit (local) | 3 loads | 17 | 9 | 6 | **32** | 0 | 13.58 | void (Wh not metered) | void |
+| gemma-4-e4b-it 4-bit (local) | 3 loads | 16 | 10 | 10 | **36** | 0 | 19.62 | void (Wh not metered) | void |
+| gemma-4-e4b-it 8-bit (local) | 3 loads | 16 | 13 | 12 | **41** | 0 | 22.37 | void (Wh not metered) | void |
+| Llama-3.1-8B-Instruct 4-bit (local) | 3 loads | 16 | 6 | 9 | **31** | 0 | 6.99 | void (Wh not metered) | void |
+| Llama-3.1-8B-Instruct 8-bit (local) | 3 loads | 17 | 10 | 10 | **37** | 0 | 7.90 | void (Wh not metered) | void |
+| claude-haiku-5-5 (hosted) | 3 | 19 | 15 | 6 | **40** | 7 | 2.08 | 0.00037 | 0.00005 · 0.00068 · 0.00039 |
+| claude-sonnet-5-5 (hosted) | 1 | 20 | 17 | 7 | **44** | unmeasured (1 sit) | 2.12 | 0.00615 | 0.00112 · 0.01183 · 0.00569 |
+| claude-opus-5-5 (hosted) | 1 | 20 | 14 | 6 | **40** | unmeasured (1 sit) | 2.84 | 0.01324 | 0.00275 · 0.02299 · 0.01479 |
+
+How to read the table:
+- "Unstable" means different things in the two halves. Local: load-to-load disagreement at temperature 0 (0 everywhere).
+  Hosted: sampling disagreement between sits. The endpoint rejects `temperature`, so a hosted sit is a sample.
+- Sonnet's and Opus's stability is **unmeasured**, not 0. Haiku moved 7 of 55 ids across three sits, so a one-sit
+  hosted row carries about ±2 cases of noise.
+- Local wall is mlx on this M-series laptop. Hosted wall is a network round trip, Anthropic's own compute, ~2–3 s.
+- The $ cells are list-price arithmetic over metered tokens, not an invoice.
+
+**Detail** (same script; its "Derived figures" and probe sections print every number below):
+- **Haiku per sit:** email 19 · 18 · 19; call-fields 13 · 15 · 15; recap 7 · 5 · 6.
+  - Majority 40; stable-pass 35/55.
+  - The 7 ids that moved between sits are recap `amounts-at-length`, `buried-last-en`, `quiet-day-with-receipt`,
+    `rounding-bait`; call-fields `discovery-heldout-long`, `longcall-mixed-heldout-3`; email `intro-no-ask`.
+- **Tokens:** Haiku 361,950 in + 49,015 out over 165 sittings. Sonnet 120,650 + 9,686. Opus 120,650 + 12,292.
+  - One call per sitting on every arm. 0 unmetered calls, 0 length-capped no-answer sittings.
+  - Input is 60–71% of the cost on every model (59.6 · 71.4 · 66.3%), not the hidden thinking. The 5.5 family barely thinks on these exams
+    (Sonnet 176 output tokens per case; on the smoke, email cases billed 13).
+- **Against the 8-bit e4b, by id** (majority):
+  - Every hosted model passes email `cold-sales-injection-urgent`, `newsletter-injection-urgent` and
+    `recruiter-fake-urgency`, and call-fields `discovery-heldout-long`, `longcall-renewal-heldout-2` and
+    `mixed-heldout-dense`. The laptop fails all six.
+  - The laptop passes recap `automated-but-actionable`, `dependency-delivery-vs-install`, `rounding-bait` and
+    `two-urgent-among-noise`, and call-fields `support-heldout-long`. All three hosted models fail them.
+  - Hosted-only / local-only passes: Haiku 7 / 8, Sonnet 9 / 6, Opus 7 / 8.
+- **Against wilco's 28 Oct probe** (same models, same exams, same provider, one pass each):
+  - Opus 40 = 40 per exam. By id, 2 recap cases swapped (`meeting-moved-date-decoy`, `rounding-bait`).
+  - Haiku 42 → 40 (email and call-fields identical by id; recap 8 → 6, 4 ids moved).
+  - Sonnet 41 → 44 (call 18 → 17 on `support-heldout-long`; recap 3 → 7, 4 ids up).
+  - Every case id matches between the probe and this lane, and all moves are on recap except Sonnet's one call-fields case.
+  - Sonnet's recap moving 4 cases between two days is the sampling noise this table cannot remove with one sit.
+
+**Prediction vs result** (`predictions/hosted-baseline.md`):
+
+| predicted | result | verdict |
+|---|---|---|
+| Haiku 39–45 (point 42); email 18–20 · call 13–16 · recap 6–10 | 40; 19 · 15 · 6 | **held** |
+| Sonnet 38–43 (point 41); 19–20 · 16–18 · 2–6 | 44; 20 · 17 · 7 | **refuted** (total +1 over the band, recap +1 over) |
+| Opus 37–43 (point 40); 19–20 · 13–16 · 4–8 | 40; 20 · 14 · 6 | **held** |
+| at least one hosted model strictly below 41, most likely Opus; none above 41 by more than 3 | Haiku 40, Opus 40; Sonnet 44 (= +3) | **held** |
+| hosted wins email (+3 to +4), loses recap; Sonnet +3 to +5 on call-fields, Haiku and Opus within ±2 | email +3 / +4 / +4; recap −6 / −5 / −6; call Sonnet +4, Haiku +2, Opus +1 | **held** |
+| Haiku sit spread 1–4 (point 2); 2–7 ids move, most on recap; majority within ±1 of the median sit | 2; 7 ids, 4 on recap; majority 40 vs median 39 | **held** |
+| $ per case: Haiku 0.0003–0.0006, Sonnet 0.004–0.009, Opus 0.009–0.018 | 0.00037 · 0.00615 · 0.01324 | **held** |
+| call-fields about 10× email per case; Opus / Sonnet 1.8–2.6× | 12.4× · 10.6× · 8.4×; 2.15× | **held** |
+| wall 3–15 s per case, Opus slowest | 2.08 · 2.12 · 2.84 s; Opus slowest | **refuted** (faster than the band) |
+| mechanism: output cost is mostly hidden thinking | input is 60–71% of cost; Sonnet 176 output tokens per case | **refuted** |
+| kill clauses: unmetered calls; thinking not in `completion_tokens`; > 5 length no-answers per sit | 0 unmetered; the smoke's 468 tokens for a 226-char answer; 0 length no-answers | did not fire |
+
+**What did not hold.**
+- **Sonnet's band.** The anchor was its 28 Oct recap 3/16. Today it scored 7/16 on one sit. A single hosted sit moved 4
+  recap cases between two days, more than the 0–4 per exam the band allowed for.
+- **"Hosted cost is thinking."** On these short-answer exams the 5.5 family mostly does not think. The bill is the prompt.
+  Prompt caching of the fixed system prompt, not effort, is the lever. Not tested here: the lane is list price, uncached.
+- **Wall.** Hosted is 2.5–10.7× faster per case than the laptop (2.08–2.84 s vs 6.99–22.37 s), the reverse of a cost-per-case story. The laptop's wall is
+  its own compute; hosted wall is someone else's.
+
+**What was refused or voided.**
+- The local cost per case is void: no operator powermetrics capture, Wh null, as lane 04 posted.
+- Sonnet and Opus stability is unmeasured (one sit each, by the brief's budget).
+- No train case sat in a posted arm. The gate smoke (`results/hosted-gate-claude-haiku-5-5-smoke.json`, 3 train cases,
+  $0.0007) is committed and not posted.
+- The effort level was not tuned: the endpoint sends none, so these are the API defaults (Haiku and Opus medium, Sonnet
+  high; rank C).
+- `tier: local` in the three `agent.yaml` was lifted by the operator's go for this lane. The cases are wilco's synthetic,
+  public exams.
+
+**Re-derive.**
+```sh
+python3 -m lab check results/hosted-claude-haiku-5-5.json results/hosted-claude-sonnet-5-5.json results/hosted-claude-opus-5-5.json
+python3 scripts/lane09_rows.py
+```
+
+**Reopen threshold.** Re-sit lane 09 when any of these holds:
+- **a new case pin**: wilco's pin or any `cases.json` hash moves;
+- **a new model tag**: a new Claude model id; a local row is re-posted (a new pack, a new mlx or mlx-lm); or a local
+  model reaches ≥ 45/55, which would clear Sonnet's 44 by more than one sit's noise;
+- the list prices change, or the endpoint starts honouring `temperature` or `effort`;
+- an operator powermetrics capture exists for a local arm, so a local $ per case can sit beside the hosted one;
+- the budget allows three sits of Sonnet and Opus. Their one-sit rows are within Haiku's ±2 sit noise of each other, so
+  the order Sonnet > Opus = Haiku is not established by this lane.
+
 ## Lane 04: quantisation (9 Nov 2026)
 
 **Question.** On lane 02's three models, what does 4-bit vs 8-bit vs bf16 move on wilco's three office exams, and what

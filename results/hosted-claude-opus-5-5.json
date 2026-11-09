@@ -1,0 +1,2005 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "hosted-claude-opus-5-5",
+ "posted": true,
+ "prediction": "predictions/hosted-baseline.md",
+ "prediction_commit": "1088b19eb4b65ffdb594ed70016f112d99dcf518",
+ "lab_commit": "45d57de80f68a31505f7ef03288a907b21a87cb9",
+ "model": {
+  "ref": "claude-opus-5-5",
+  "provider": "anthropic (wilco sandbox/router.py PROVIDERS, get_adapter)",
+  "endpoint": "https://api.anthropic.com/v1/chat/completions",
+  "response_models": [
+   "claude-opus-5-5"
+  ],
+  "effort": "API default (this endpoint sends none): haiku/opus medium, sonnet high (rank C)",
+  "temperature": "not sent (wilco drop_body_keys); the endpoint samples, so sits are samples, not loads",
+  "loads": [
+   {
+    "load": 0,
+    "n_rows": 55
+   }
+  ],
+  "load_protocol": "'load' = one sit: every case once, sequentially, one process; hosted, so no weights are loaded and n_unstable counts sampling disagreement between sits"
+ },
+ "prices": {
+  "input_usd_per_mtok": 4.0,
+  "output_usd_per_mtok": 20.0,
+  "source": "claude-api reference model table, cached 2026-10-06 (rank C); the same rates wilco's docs/probes/frontier-direct-2026-10-28 used",
+  "tier": "standard, no prompt caching, no batch"
+ },
+ "ceiling_usd": 2.0,
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/sched-lab-inf-09-hosted-baseline/../wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "recap": "315a6132da7f78c8f9e8a140ff711656f24b8ce12d893e8bc248ecd931aaf120"
+  },
+  "grader": "sandbox/runner.py run_exam (per case, provider='anthropic'), adapter_for -> lab.hosted.MeteredHosted around router.get_adapter('anthropic')",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over sits, stable = all agree",
+  "tier": "agents say tier: local; lifted for this lane by the operator's go (synthetic public cases)",
+  "agents": {
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   },
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "recap": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "python": "3.10.6"
+ },
+ "exams": [
+  "call-fields",
+  "email-triage",
+  "recap"
+ ],
+ "plan": [
+  [
+   "call-fields",
+   [
+    "discovery-heldout-easy",
+    "discovery-heldout-hard",
+    "discovery-heldout-long",
+    "renewal-heldout-medium",
+    "renewal-heldout-digits",
+    "renewal-heldout-short",
+    "support-heldout-short",
+    "support-heldout-long",
+    "pricing-objection-heldout-medium",
+    "pricing-objection-heldout-short",
+    "quiet-checkin-heldout-short",
+    "quiet-checkin-heldout-medium",
+    "mixed-heldout-dense",
+    "longcall-pricing-heldout-1",
+    "longcall-scoping-heldout-1",
+    "longcall-discovery-heldout-2",
+    "longcall-renewal-heldout-2",
+    "longcall-support-heldout-2",
+    "longcall-mixed-heldout-3"
+   ]
+  ],
+  [
+   "email-triage",
+   [
+    "production-down",
+    "gdpr-data-request",
+    "conference-invite",
+    "promo-code",
+    "invoice-error-client",
+    "dpa-signature-compliance",
+    "recruiter-fake-urgency",
+    "paid-workshop-invite",
+    "intro-no-ask",
+    "disk-warning-no-action",
+    "long-ramble-buried-incident",
+    "newsletter-injection-urgent",
+    "cold-sales-injection-urgent",
+    "nl-client-bug-buried",
+    "fr-tax-authority-documents",
+    "stripe-payout-notice",
+    "client-domain-newsletter-nl",
+    "calendar-accept-notice",
+    "proposal-accept-conditional",
+    "fr-networking-coffee"
+   ]
+  ],
+  [
+   "recap",
+   [
+    "buried-critical",
+    "quiet-day-newsletters",
+    "quiet-day-with-receipt",
+    "rounding-bait",
+    "two-urgent-among-noise",
+    "very-long-day",
+    "long-day-heldout-xl",
+    "long-quiet-day",
+    "buried-critical-xl",
+    "amounts-at-length",
+    "dependency-delivery-vs-install",
+    "near-duplicate-invoices",
+    "quiet-day-big-amount-decoy",
+    "automated-but-actionable",
+    "buried-last-en",
+    "meeting-moved-date-decoy"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": 0.7272727272727273,
+ "aggregates": {
+  "n_cases": 55,
+  "n_calls": 55,
+  "pass_rate": 0.7272727272727273,
+  "gen_tokens_total": 12292,
+  "gen_tps": null,
+  "prompt_tps": null,
+  "peak_memory_gb_max": null,
+  "wall_s_total": 155.97178241692018,
+  "wall_s_per_case": 2.835850589398549,
+  "wh_per_case": null,
+  "prompt_tokens_total": 120650,
+  "cost_usd_total": 0.7284400000000001,
+  "cost_usd_per_case": 0.013244363636363637,
+  "unmetered_calls": 0,
+  "n_loads": 1,
+  "call-fields.n_cases": 19,
+  "call-fields.train_n": 0,
+  "call-fields.train_majority_pass": 0,
+  "call-fields.heldout_n": 19,
+  "call-fields.heldout_majority_pass": 14,
+  "call-fields.heldout_stable_pass": 14,
+  "call-fields.all_majority_pass": 14,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": null,
+  "call-fields.peak_memory_gb_max": null,
+  "call-fields.wall_s_per_case": 2.9016664056827337,
+  "call-fields.min_per_1000_cases": 48.36110676137889,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "call-fields.cost_usd_per_case": 0.022991368421052635,
+  "call-fields.length_no_answer_cases": 0,
+  "email-triage.n_cases": 20,
+  "email-triage.train_n": 0,
+  "email-triage.train_majority_pass": 0,
+  "email-triage.heldout_n": 20,
+  "email-triage.heldout_majority_pass": 20,
+  "email-triage.heldout_stable_pass": 20,
+  "email-triage.all_majority_pass": 20,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": null,
+  "email-triage.peak_memory_gb_max": null,
+  "email-triage.wall_s_per_case": 1.59751054590306,
+  "email-triage.min_per_1000_cases": 26.625175765051,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "email-triage.cost_usd_per_case": 0.002748,
+  "email-triage.length_no_answer_cases": 0,
+  "recap.n_cases": 16,
+  "recap.train_n": 0,
+  "recap.train_majority_pass": 0,
+  "recap.heldout_n": 16,
+  "recap.heldout_majority_pass": 6,
+  "recap.heldout_stable_pass": 6,
+  "recap.all_majority_pass": 6,
+  "recap.n_unstable": 0,
+  "recap.gen_tps": null,
+  "recap.peak_memory_gb_max": null,
+  "recap.wall_s_per_case": 4.3056193619304395,
+  "recap.min_per_1000_cases": 71.76032269884065,
+  "recap.finish_length_calls": 0,
+  "recap.wh_per_1000_cases": null,
+  "recap.cost_usd_per_case": 0.01479025,
+  "recap.length_no_answer_cases": 0,
+  "heldout_n": 55,
+  "heldout_majority_pass": 40,
+  "heldout_stable_pass": 40,
+  "n_unstable": 0,
+  "n_unique_cases": 55,
+  "heldout_pass_per_load": [
+   40
+  ],
+  "heldout_pass_spread": 0,
+  "heldout_majority_pass_rate": 0.7272727272727273
+ },
+ "energy": null,
+ "energy_note": "hosted: no local energy to meter; cost is $ from metered tokens x list price",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-easy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T13:53:39.517528+00:00",
+   "end_utc": "2026-11-09T13:53:41.700660+00:00",
+   "wall_s": 2.1829642500088084,
+   "calls": [
+    {
+     "prompt_tokens": 1723,
+     "prompt_tps": null,
+     "gen_tokens": 195,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.1791210419905838,
+     "content_chars": 210,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 195,
+      "prompt_tokens": 1723,
+      "total_tokens": 1918
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-hard",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:53:41.704211+00:00",
+   "end_utc": "2026-11-09T13:53:44.405421+00:00",
+   "wall_s": 2.701156875002198,
+   "calls": [
+    {
+     "prompt_tokens": 2084,
+     "prompt_tps": null,
+     "gen_tokens": 242,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.696526374988025,
+     "content_chars": 205,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 242,
+      "prompt_tokens": 2084,
+      "total_tokens": 2326
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:53:44.409235+00:00",
+   "end_utc": "2026-11-09T13:53:49.097826+00:00",
+   "wall_s": 4.68853295801091,
+   "calls": [
+    {
+     "prompt_tokens": 3302,
+     "prompt_tps": null,
+     "gen_tokens": 396,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 4.685633999994025,
+     "content_chars": 206,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 396,
+      "prompt_tokens": 3302,
+      "total_tokens": 3698
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:53:49.101137+00:00",
+   "end_utc": "2026-11-09T13:53:51.980863+00:00",
+   "wall_s": 2.8796864169999026,
+   "calls": [
+    {
+     "prompt_tokens": 1936,
+     "prompt_tps": null,
+     "gen_tokens": 263,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.8756733750051353,
+     "content_chars": 203,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 263,
+      "prompt_tokens": 1936,
+      "total_tokens": 2199
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-digits",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:53:51.984537+00:00",
+   "end_utc": "2026-11-09T13:53:55.341813+00:00",
+   "wall_s": 3.3572438749833964,
+   "calls": [
+    {
+     "prompt_tokens": 2669,
+     "prompt_tps": null,
+     "gen_tokens": 341,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 3.355282290984178,
+     "content_chars": 211,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 341,
+      "prompt_tokens": 2669,
+      "total_tokens": 3010
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:53:55.344109+00:00",
+   "end_utc": "2026-11-09T13:53:57.309105+00:00",
+   "wall_s": 1.964966874977108,
+   "calls": [
+    {
+     "prompt_tokens": 1491,
+     "prompt_tps": null,
+     "gen_tokens": 84,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.960217832995113,
+     "content_chars": 201,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 84,
+      "prompt_tokens": 1491,
+      "total_tokens": 1575
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:53:57.313409+00:00",
+   "end_utc": "2026-11-09T13:53:58.681205+00:00",
+   "wall_s": 1.3677657500084024,
+   "calls": [
+    {
+     "prompt_tokens": 1619,
+     "prompt_tps": null,
+     "gen_tokens": 93,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.36419074999867,
+     "content_chars": 220,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 93,
+      "prompt_tokens": 1619,
+      "total_tokens": 1712
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T13:53:58.684111+00:00",
+   "end_utc": "2026-11-09T13:54:02.802402+00:00",
+   "wall_s": 4.118272332998458,
+   "calls": [
+    {
+     "prompt_tokens": 3381,
+     "prompt_tps": null,
+     "gen_tokens": 414,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 4.112818374997005,
+     "content_chars": 233,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 414,
+      "prompt_tokens": 3381,
+      "total_tokens": 3795
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:02.805828+00:00",
+   "end_utc": "2026-11-09T13:54:04.200760+00:00",
+   "wall_s": 1.394917167024687,
+   "calls": [
+    {
+     "prompt_tokens": 1906,
+     "prompt_tps": null,
+     "gen_tokens": 86,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.3933859170065261,
+     "content_chars": 202,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 86,
+      "prompt_tokens": 1906,
+      "total_tokens": 1992
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:04.203030+00:00",
+   "end_utc": "2026-11-09T13:54:05.689449+00:00",
+   "wall_s": 1.4863957499910612,
+   "calls": [
+    {
+     "prompt_tokens": 1549,
+     "prompt_tps": null,
+     "gen_tokens": 84,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.4812159590073861,
+     "content_chars": 201,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 84,
+      "prompt_tokens": 1549,
+      "total_tokens": 1633
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:05.693908+00:00",
+   "end_utc": "2026-11-09T13:54:07.118460+00:00",
+   "wall_s": 1.4245177079865243,
+   "calls": [
+    {
+     "prompt_tokens": 1494,
+     "prompt_tps": null,
+     "gen_tokens": 86,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.4220192920183763,
+     "content_chars": 218,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 86,
+      "prompt_tokens": 1494,
+      "total_tokens": 1580
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T13:54:07.121675+00:00",
+   "end_utc": "2026-11-09T13:54:10.946485+00:00",
+   "wall_s": 3.824788041994907,
+   "calls": [
+    {
+     "prompt_tokens": 1699,
+     "prompt_tps": null,
+     "gen_tokens": 346,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 3.8205319170083385,
+     "content_chars": 215,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 346,
+      "prompt_tokens": 1699,
+      "total_tokens": 2045
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "mixed-heldout-dense",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:10.950589+00:00",
+   "end_utc": "2026-11-09T13:54:13.778134+00:00",
+   "wall_s": 2.8275226250116248,
+   "calls": [
+    {
+     "prompt_tokens": 2163,
+     "prompt_tps": null,
+     "gen_tokens": 230,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.822809417004464,
+     "content_chars": 200,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 230,
+      "prompt_tokens": 2163,
+      "total_tokens": 2393
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-pricing-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:13.781726+00:00",
+   "end_utc": "2026-11-09T13:54:17.997087+00:00",
+   "wall_s": 4.215351457998622,
+   "calls": [
+    {
+     "prompt_tokens": 7365,
+     "prompt_tps": null,
+     "gen_tokens": 395,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 4.210688416991616,
+     "content_chars": 216,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 395,
+      "prompt_tokens": 7365,
+      "total_tokens": 7760
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-scoping-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T13:54:18.001029+00:00",
+   "end_utc": "2026-11-09T13:54:22.458482+00:00",
+   "wall_s": 4.457447833992774,
+   "calls": [
+    {
+     "prompt_tokens": 8610,
+     "prompt_tps": null,
+     "gen_tokens": 336,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 4.4540561249887105,
+     "content_chars": 232,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 336,
+      "prompt_tokens": 8610,
+      "total_tokens": 8946
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:22.461979+00:00",
+   "end_utc": "2026-11-09T13:54:24.914679+00:00",
+   "wall_s": 2.4526889999979176,
+   "calls": [
+    {
+     "prompt_tokens": 9399,
+     "prompt_tps": null,
+     "gen_tokens": 243,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.449385040992638,
+     "content_chars": 209,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 243,
+      "prompt_tokens": 9399,
+      "total_tokens": 9642
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:24.918438+00:00",
+   "end_utc": "2026-11-09T13:54:27.945742+00:00",
+   "wall_s": 3.027298625005642,
+   "calls": [
+    {
+     "prompt_tokens": 10893,
+     "prompt_tps": null,
+     "gen_tokens": 319,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 3.0249379159940872,
+     "content_chars": 220,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 319,
+      "prompt_tokens": 10893,
+      "total_tokens": 11212
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:27.948605+00:00",
+   "end_utc": "2026-11-09T13:54:29.634672+00:00",
+   "wall_s": 1.686062957975082,
+   "calls": [
+    {
+     "prompt_tokens": 13560,
+     "prompt_tps": null,
+     "gen_tokens": 91,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.684800749993883,
+     "content_chars": 220,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 91,
+      "prompt_tokens": 13560,
+      "total_tokens": 13651
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-mixed-heldout-3",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T13:54:29.636495+00:00",
+   "end_utc": "2026-11-09T13:54:34.710572+00:00",
+   "wall_s": 5.074081208003918,
+   "calls": [
+    {
+     "prompt_tokens": 8876,
+     "prompt_tps": null,
+     "gen_tokens": 454,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 5.071122207998997,
+     "content_chars": 226,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 454,
+      "prompt_tokens": 8876,
+      "total_tokens": 9330
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "production-down",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:34.716120+00:00",
+   "end_utc": "2026-11-09T13:54:36.376574+00:00",
+   "wall_s": 1.660424083005637,
+   "calls": [
+    {
+     "prompt_tokens": 286,
+     "prompt_tps": null,
+     "gen_tokens": 34,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.655114416993456,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 34,
+      "prompt_tokens": 286,
+      "total_tokens": 320
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "gdpr-data-request",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:36.380415+00:00",
+   "end_utc": "2026-11-09T13:54:38.353233+00:00",
+   "wall_s": 1.972795750014484,
+   "calls": [
+    {
+     "prompt_tokens": 273,
+     "prompt_tps": null,
+     "gen_tokens": 80,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.9696113749814685,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 80,
+      "prompt_tokens": 273,
+      "total_tokens": 353
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "conference-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:38.356770+00:00",
+   "end_utc": "2026-11-09T13:54:39.482409+00:00",
+   "wall_s": 1.1256212500156835,
+   "calls": [
+    {
+     "prompt_tokens": 305,
+     "prompt_tps": null,
+     "gen_tokens": 36,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.1217150420125108,
+     "content_chars": 24,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 36,
+      "prompt_tokens": 305,
+      "total_tokens": 341
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "promo-code",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:39.486083+00:00",
+   "end_utc": "2026-11-09T13:54:40.498213+00:00",
+   "wall_s": 1.0121084580023307,
+   "calls": [
+    {
+     "prompt_tokens": 281,
+     "prompt_tps": null,
+     "gen_tokens": 12,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.0111214999924414,
+     "content_chars": 19,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 12,
+      "prompt_tokens": 281,
+      "total_tokens": 293
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "invoice-error-client",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:40.499562+00:00",
+   "end_utc": "2026-11-09T13:54:42.162900+00:00",
+   "wall_s": 1.663336249999702,
+   "calls": [
+    {
+     "prompt_tokens": 296,
+     "prompt_tps": null,
+     "gen_tokens": 46,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.6620204170176294,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 46,
+      "prompt_tokens": 296,
+      "total_tokens": 342
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "dpa-signature-compliance",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:42.164727+00:00",
+   "end_utc": "2026-11-09T13:54:43.677766+00:00",
+   "wall_s": 1.513029124995228,
+   "calls": [
+    {
+     "prompt_tokens": 314,
+     "prompt_tps": null,
+     "gen_tokens": 69,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.509811041993089,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 69,
+      "prompt_tokens": 314,
+      "total_tokens": 383
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-fake-urgency",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:43.681189+00:00",
+   "end_utc": "2026-11-09T13:54:45.161171+00:00",
+   "wall_s": 1.4799705000186805,
+   "calls": [
+    {
+     "prompt_tokens": 302,
+     "prompt_tps": null,
+     "gen_tokens": 91,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.4770722499815747,
+     "content_chars": 24,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 91,
+      "prompt_tokens": 302,
+      "total_tokens": 393
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "paid-workshop-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:45.164681+00:00",
+   "end_utc": "2026-11-09T13:54:47.065635+00:00",
+   "wall_s": 1.9009468749864027,
+   "calls": [
+    {
+     "prompt_tokens": 326,
+     "prompt_tps": null,
+     "gen_tokens": 109,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.8992555839940906,
+     "content_chars": 24,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 109,
+      "prompt_tokens": 326,
+      "total_tokens": 435
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "intro-no-ask",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:47.067668+00:00",
+   "end_utc": "2026-11-09T13:54:49.619132+00:00",
+   "wall_s": 2.5514601249888074,
+   "calls": [
+    {
+     "prompt_tokens": 311,
+     "prompt_tps": null,
+     "gen_tokens": 180,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.546830042003421,
+     "content_chars": 24,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 180,
+      "prompt_tokens": 311,
+      "total_tokens": 491
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "disk-warning-no-action",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:49.622455+00:00",
+   "end_utc": "2026-11-09T13:54:51.153267+00:00",
+   "wall_s": 1.5307997500058264,
+   "calls": [
+    {
+     "prompt_tokens": 288,
+     "prompt_tps": null,
+     "gen_tokens": 83,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.527392082993174,
+     "content_chars": 19,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 83,
+      "prompt_tokens": 288,
+      "total_tokens": 371
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "long-ramble-buried-incident",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:51.156430+00:00",
+   "end_utc": "2026-11-09T13:54:52.281328+00:00",
+   "wall_s": 1.124884791992372,
+   "calls": [
+    {
+     "prompt_tokens": 625,
+     "prompt_tps": null,
+     "gen_tokens": 13,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.1221953330095857,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 13,
+      "prompt_tokens": 625,
+      "total_tokens": 638
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:52.284732+00:00",
+   "end_utc": "2026-11-09T13:54:55.050417+00:00",
+   "wall_s": 2.765671667002607,
+   "calls": [
+    {
+     "prompt_tokens": 322,
+     "prompt_tps": null,
+     "gen_tokens": 159,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.760642999986885,
+     "content_chars": 19,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 159,
+      "prompt_tokens": 322,
+      "total_tokens": 481
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "cold-sales-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:55.054693+00:00",
+   "end_utc": "2026-11-09T13:54:57.573458+00:00",
+   "wall_s": 2.518739250022918,
+   "calls": [
+    {
+     "prompt_tokens": 347,
+     "prompt_tps": null,
+     "gen_tokens": 165,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.5134469159820583,
+     "content_chars": 19,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 165,
+      "prompt_tokens": 347,
+      "total_tokens": 512
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "nl-client-bug-buried",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:57.577845+00:00",
+   "end_utc": "2026-11-09T13:54:58.755918+00:00",
+   "wall_s": 1.1780492920079269,
+   "calls": [
+    {
+     "prompt_tokens": 467,
+     "prompt_tps": null,
+     "gen_tokens": 32,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.1751408329873811,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 32,
+      "prompt_tokens": 467,
+      "total_tokens": 499
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-tax-authority-documents",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:54:58.759380+00:00",
+   "end_utc": "2026-11-09T13:55:00.356754+00:00",
+   "wall_s": 1.5973633330140729,
+   "calls": [
+    {
+     "prompt_tokens": 372,
+     "prompt_tps": null,
+     "gen_tokens": 95,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.5940016670210753,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 95,
+      "prompt_tokens": 372,
+      "total_tokens": 467
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "stripe-payout-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:00.359996+00:00",
+   "end_utc": "2026-11-09T13:55:01.925437+00:00",
+   "wall_s": 1.5654321670008358,
+   "calls": [
+    {
+     "prompt_tokens": 308,
+     "prompt_tps": null,
+     "gen_tokens": 45,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.563559708010871,
+     "content_chars": 19,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 45,
+      "prompt_tokens": 308,
+      "total_tokens": 353
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-domain-newsletter-nl",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:01.928664+00:00",
+   "end_utc": "2026-11-09T13:55:02.854803+00:00",
+   "wall_s": 0.9261225419759285,
+   "calls": [
+    {
+     "prompt_tokens": 348,
+     "prompt_tps": null,
+     "gen_tokens": 12,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 0.9226757079886738,
+     "content_chars": 19,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 12,
+      "prompt_tokens": 348,
+      "total_tokens": 360
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "calendar-accept-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:02.858518+00:00",
+   "end_utc": "2026-11-09T13:55:03.933624+00:00",
+   "wall_s": 1.0750908750051167,
+   "calls": [
+    {
+     "prompt_tokens": 366,
+     "prompt_tps": null,
+     "gen_tokens": 12,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.071135999984108,
+     "content_chars": 19,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 12,
+      "prompt_tokens": 366,
+      "total_tokens": 378
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "proposal-accept-conditional",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:03.936659+00:00",
+   "end_utc": "2026-11-09T13:55:05.594385+00:00",
+   "wall_s": 1.6577172919933219,
+   "calls": [
+    {
+     "prompt_tokens": 336,
+     "prompt_tps": null,
+     "gen_tokens": 69,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.6540232920087874,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 69,
+      "prompt_tokens": 336,
+      "total_tokens": 405
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-networking-coffee",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:05.598209+00:00",
+   "end_utc": "2026-11-09T13:55:06.728872+00:00",
+   "wall_s": 1.130647542013321,
+   "calls": [
+    {
+     "prompt_tokens": 392,
+     "prompt_tps": null,
+     "gen_tokens": 33,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.127530249999836,
+     "content_chars": 24,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 33,
+      "prompt_tokens": 392,
+      "total_tokens": 425
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:55:06.735305+00:00",
+   "end_utc": "2026-11-09T13:55:09.929173+00:00",
+   "wall_s": 3.1938487500010524,
+   "calls": [
+    {
+     "prompt_tokens": 1748,
+     "prompt_tps": null,
+     "gen_tokens": 290,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 3.1849987079913262,
+     "content_chars": 490,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 290,
+      "prompt_tokens": 1748,
+      "total_tokens": 2038
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-newsletters",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:09.933407+00:00",
+   "end_utc": "2026-11-09T13:55:11.225645+00:00",
+   "wall_s": 1.292205624980852,
+   "calls": [
+    {
+     "prompt_tokens": 744,
+     "prompt_tps": null,
+     "gen_tokens": 67,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.2849408750189468,
+     "content_chars": 181,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 67,
+      "prompt_tokens": 744,
+      "total_tokens": 811
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-with-receipt",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:11.229390+00:00",
+   "end_utc": "2026-11-09T13:55:13.272918+00:00",
+   "wall_s": 2.043519708997337,
+   "calls": [
+    {
+     "prompt_tokens": 954,
+     "prompt_tps": null,
+     "gen_tokens": 151,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.0374478329904377,
+     "content_chars": 231,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 151,
+      "prompt_tokens": 954,
+      "total_tokens": 1105
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "rounding-bait",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:55:13.275455+00:00",
+   "end_utc": "2026-11-09T13:55:18.917773+00:00",
+   "wall_s": 5.642327541980194,
+   "calls": [
+    {
+     "prompt_tokens": 972,
+     "prompt_tps": null,
+     "gen_tokens": 489,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 5.637756958982209,
+     "content_chars": 339,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 489,
+      "prompt_tokens": 972,
+      "total_tokens": 1461
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "two-urgent-among-noise",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:55:18.920233+00:00",
+   "end_utc": "2026-11-09T13:55:23.003135+00:00",
+   "wall_s": 4.08290104198386,
+   "calls": [
+    {
+     "prompt_tokens": 1562,
+     "prompt_tps": null,
+     "gen_tokens": 382,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 4.076955458003795,
+     "content_chars": 546,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 382,
+      "prompt_tokens": 1562,
+      "total_tokens": 1944
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "very-long-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:55:23.006029+00:00",
+   "end_utc": "2026-11-09T13:55:30.861117+00:00",
+   "wall_s": 7.855101041990565,
+   "calls": [
+    {
+     "prompt_tokens": 2488,
+     "prompt_tps": null,
+     "gen_tokens": 775,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 7.847199791984167,
+     "content_chars": 956,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 775,
+      "prompt_tokens": 2488,
+      "total_tokens": 3263
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-heldout-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:55:30.865356+00:00",
+   "end_utc": "2026-11-09T13:55:42.000314+00:00",
+   "wall_s": 11.13498862501001,
+   "calls": [
+    {
+     "prompt_tokens": 4026,
+     "prompt_tps": null,
+     "gen_tokens": 1134,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 11.127746707992628,
+     "content_chars": 1477,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 1134,
+      "prompt_tokens": 4026,
+      "total_tokens": 5160
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "long-quiet-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T13:55:42.004153+00:00",
+   "end_utc": "2026-11-09T13:55:44.139774+00:00",
+   "wall_s": 2.1356184580072295,
+   "calls": [
+    {
+     "prompt_tokens": 2768,
+     "prompt_tps": null,
+     "gen_tokens": 185,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.1317843750002794,
+     "content_chars": 283,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 185,
+      "prompt_tokens": 2768,
+      "total_tokens": 2953
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:44.141713+00:00",
+   "end_utc": "2026-11-09T13:55:47.928530+00:00",
+   "wall_s": 3.786805790994549,
+   "calls": [
+    {
+     "prompt_tokens": 3363,
+     "prompt_tps": null,
+     "gen_tokens": 292,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 3.779352709010709,
+     "content_chars": 361,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 292,
+      "prompt_tokens": 3363,
+      "total_tokens": 3655
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-at-length",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:55:47.933089+00:00",
+   "end_utc": "2026-11-09T13:55:55.976012+00:00",
+   "wall_s": 8.042912125005387,
+   "calls": [
+    {
+     "prompt_tokens": 2825,
+     "prompt_tps": null,
+     "gen_tokens": 800,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 8.034789500001352,
+     "content_chars": 836,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 800,
+      "prompt_tokens": 2825,
+      "total_tokens": 3625
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "dependency-delivery-vs-install",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:55:55.980001+00:00",
+   "end_utc": "2026-11-09T13:56:00.377174+00:00",
+   "wall_s": 4.397173957986524,
+   "calls": [
+    {
+     "prompt_tokens": 1204,
+     "prompt_tps": null,
+     "gen_tokens": 339,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 4.390865540975938,
+     "content_chars": 444,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 339,
+      "prompt_tokens": 1204,
+      "total_tokens": 1543
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "near-duplicate-invoices",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:56:00.380485+00:00",
+   "end_utc": "2026-11-09T13:56:03.796682+00:00",
+   "wall_s": 3.4161980409990065,
+   "calls": [
+    {
+     "prompt_tokens": 1108,
+     "prompt_tps": null,
+     "gen_tokens": 319,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 3.411271332995966,
+     "content_chars": 326,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 319,
+      "prompt_tokens": 1108,
+      "total_tokens": 1427
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-big-amount-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T13:56:03.799242+00:00",
+   "end_utc": "2026-11-09T13:56:06.521414+00:00",
+   "wall_s": 2.7221682079834864,
+   "calls": [
+    {
+     "prompt_tokens": 1084,
+     "prompt_tps": null,
+     "gen_tokens": 217,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.716332042007707,
+     "content_chars": 359,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 217,
+      "prompt_tokens": 1084,
+      "total_tokens": 1301
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "automated-but-actionable",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:56:06.524506+00:00",
+   "end_utc": "2026-11-09T13:56:09.461721+00:00",
+   "wall_s": 2.9372086669900455,
+   "calls": [
+    {
+     "prompt_tokens": 1054,
+     "prompt_tps": null,
+     "gen_tokens": 189,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.9307052500080317,
+     "content_chars": 371,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 189,
+      "prompt_tokens": 1054,
+      "total_tokens": 1243
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "buried-last-en",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T13:56:09.467053+00:00",
+   "end_utc": "2026-11-09T13:56:12.083719+00:00",
+   "wall_s": 2.616659499995876,
+   "calls": [
+    {
+     "prompt_tokens": 1112,
+     "prompt_tps": null,
+     "gen_tokens": 259,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.608524542010855,
+     "content_chars": 347,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 259,
+      "prompt_tokens": 1112,
+      "total_tokens": 1371
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "recap",
+   "case": "meeting-moved-date-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:56:12.087927+00:00",
+   "end_utc": "2026-11-09T13:56:15.678199+00:00",
+   "wall_s": 3.5902727079810575,
+   "calls": [
+    {
+     "prompt_tokens": 1054,
+     "prompt_tps": null,
+     "gen_tokens": 331,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 3.5854693329893053,
+     "content_chars": 370,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 331,
+      "prompt_tokens": 1054,
+      "total_tokens": 1385
+     },
+     "response_model": "claude-opus-5-5"
+    }
+   ],
+   "http_failures": []
+  }
+ ],
+ "rows_sha256": "c223acf145a3fc4b0f8c7ddd5f0664d13958778033ab2daf70ca9d09d89505c3"
+}
