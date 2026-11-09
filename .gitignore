@@ -7,3 +7,9 @@ __pycache__/
 harness/
 .pytest_cache/
 .lab-scratch/
+
+# Internal dev harness (private): a lane worktree clones it at harness/ and links .claude/ into it.
+# Not part of this tree; never staged, never a submodule (9 Nov 2026).
+.claude/workflows/
+.claude/agents/
+.claude/worktrees/
