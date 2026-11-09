@@ -36,3 +36,12 @@ for run in sys.argv[1:]:
         print(f"  {exam}: gen tokens per sitting {tps:.1f}; held-out failed checks (load 0) {dict(fc)}; "
               f"length-capped {capped}")
         print(f"    held-out fails: {fails}")
+
+# The gate's 2-case projection (supports the gate; the pre-registered formula also needed the call-fields case, which
+# did not finish): gpt-oss smoke wall / e4b load-0 wall on the same two cases x e4b's whole 3 x 83 wall.
+g = json.load(open("results/moe-gate-gpt-oss-20b-smoke.json"))
+e = json.load(open("results/dense-gemma-4-e4b-it-4bit.json"))
+gw = sum(r["wall_s"] for r in g["rows"])
+ew = sum(r["wall_s"] for r in e["rows"] if r["exam"] == SMOKE[0] and r["case"] in SMOKE[1] and r["load"] == 0)
+print(f"gate 2-case projection: gpt-oss {gw:.1f} s / e4b load-0 {ew:.1f} s x e4b 3x83 {e['aggregates']['wall_s_total']:.0f} s"
+      f" = {gw / ew * e['aggregates']['wall_s_total'] / 60:.0f} min (threshold 300)")

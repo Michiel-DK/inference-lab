@@ -12,11 +12,13 @@ no numbers. It fixes the comparators after lane 02, the machine gate and the Har
 as in lane 02: all 83 cases at wilco pin `62fcd449`, three fresh loads, wilco's scorer, majority/stable rule.
 
 **Headline.** On this 16 GB M1 Pro the answer depends on whether the MoE fits.
-- **The MoE that fits costs like its active size per case, and like its total in memory.** `LFM2.5-8B-A1B` (1.5B
-  active / 8.3B total) sat the 3 × 83 run.
-  - Minutes per 1,000 cases: 59.7 · 351.8 · 318.3 (email · call · recap), against 59.5 · 321.3 · 241.2 for the
-    active-size dense e2b and 21.8 · 213.3 · 106.9 for the total-size dense Llama-3.1-8B.
-  - Peak memory: 5.89 GB, against e2b's 3.71 and the 8B's 6.30.
+- **The MoE that fits is cheaper than its active size per token, and costs its total in memory.** `LFM2.5-8B-A1B`
+  (1.5B active / 8.3B total) sat the 3 × 83 run.
+  - Decode: **94.7 tok/s**, against 69.2 for the active-size dense e2b and 35.4 for the total-size dense
+    Llama-3.1-8B.
+  - Peak memory: **5.89 GB**, against e2b's 3.71 and the 8B's 6.30.
+  - Per case it does not keep the per-token saving: e2b +0% · +9.5% · +32% in minutes per 1,000 cases (email · call ·
+    recap), because it thinks 1.48× longer. It sits far above the 8B, but that comparator does not think.
   - It passes less than either: held-out **21/55** (14 · 2 · 5) vs e2b 23/55 and 8B 31/55.
   - 0 of 83 cases unstable.
 - **The MoE in the brief's size class does not run on this box at any cost the lab can pay.** `gpt-oss-20b` (3.6B
@@ -41,13 +43,15 @@ Re-derive (every aggregate above):
 ~/.pyenv/versions/lewagon/bin/python3 scripts/lane03_rows.py moe-lfm2.5-8b-a1b-mlx-4bit moe-gate-gpt-oss-20b-smoke \
   dense-gemma-4-e2b-it-4bit dense-gemma-4-e4b-it-4bit dense-llama-3.1-8b-instruct-4bit
 ```
-Two kinds of figure come from `scripts/lane03_rows.py` over the checked rows: the row-level reads (tokens per sitting,
-thinking share, length-capped and empty-answer calls, failing cases) and the e4b/e2b tok/s on the two smoke cases. The rows
-are covered by `rows_sha256`. The gpt-oss call-fields gate case has **no results file**: `lab run` writes on completion,
-and the case was stopped at the 40-minute cap (02:16–02:56 UTC). Its "did not finish" is an observation from this
-session's log, not a `lab check` number. Over the ~42 minutes of gpt-oss smoke, swap-ins went from 12,577,875 to
-58,622,987 pages (`vm_stat`), also not a lab number. Wh is `null`: there was no operator powermetrics capture. All loads
-ran on AC power.
+Three kinds of figure come from `scripts/lane03_rows.py` over the checked rows, which are covered by `rows_sha256`:
+- the row-level reads (tokens per sitting, thinking share, length-capped and empty-answer calls, failing cases);
+- the tok/s on the two smoke cases;
+- the gate's 2-case projection: gpt-oss 76.5 s / e4b 13.7 s on the same two cases × e4b's 4888 s run = **454 min**,
+  against the 300-minute threshold.
+
+The projection supports the gate; it is not the gate. The pre-registered formula also needed the call-fields case, and
+that case **did not complete within the 40-minute cap, so it has no results file** (`lab run` writes on completion). Wh is
+`null`: there was no operator powermetrics capture. All loads ran on AC power.
 
 **What the cost is made of.** The MoE that fits decodes 1.37× faster per token than the active-size dense (94.7 vs 69.2
 tok/s). It also thinks 1.48× longer (1190 vs 804 tokens per sitting, a 0.971 thinking share), and the two cancel: per case
@@ -61,14 +65,14 @@ its rows are void. LFM2.5 was the named fallback, and only the prediction's summ
 
 | claim | predicted | result | |
 |---|---|---|---|
-| gpt-oss peak GB | 12.5–13.5 | 12.35 on 2 short train cases (a lower bound) | refuted on the smoke (−0.15), band not tested on long cases |
+| gpt-oss peak GB | 12.5–13.5 | 12.35 on 2 short train cases, a lower bound | void: a lower bound below the band cannot refute it |
 | gpt-oss gen tok/s | 26–34 (0.7–0.9× e4b) | 2.91 (0.07× e4b on the same cases) | refuted |
 | "if the pack pages (gen_tps under 12) every number turns total-like: costs like the total on a 16 GB machine" | conditional | 2.91 tok/s; mlx-lm warns 11,516 MB needed vs 10,922 MB recommended | **held** |
 | gpt-oss held-out pass email · call · recap | 17 · 13 · 8 | not sat (gate) | void |
 | gpt-oss Wh | 0.9–1.3× e4b | not metered | void |
 | reasoning spends `max_tokens` (call-fields) | unsure | gpt-oss: void. LFM2.5: 3 capped calls on call-fields, 30 on recap | turned up on recap |
 | memory costs like the total (summary) | yes | LFM2.5 5.89 GB vs 8B 6.30 / e2b 3.71 | **held** |
-| time costs like N, the active size (summary) | yes | tok/s: 1.37× faster than e2b, not "like" it. Minutes per case: +0% · +9.5% · +32% vs e2b, far above the 8B | per case held on email and call; recap and tok/s refuted |
+| time costs like N, the active size (summary) | yes | tok/s: 1.37× faster than e2b, not "like" it. Minutes per case: +0% · +9.5% · +32% vs e2b, far above the 8B (which does not think) | per case held on email and call; recap and tok/s refuted |
 | quality not better than the active-size dense (summary) | yes | 21/55 vs e2b 23/55; recap +3, call-fields −5 | held overall, not per exam |
 | kill: within noise of the active-size dense on tok/s (±10%) and pass (±1 per exam) | fires | tok/s +37%; call −5, recap +3 | **did not fire** |
 
@@ -79,8 +83,8 @@ its rows are void. LFM2.5 was the named fallback, and only the prediction's summ
   loads and answers (2/2 smoke), but at 2.91 tok/s. A 12 GB pack is not usable on a 16 GB laptop running anything else.
 
 **What was refused or voided.**
-- gpt-oss-20b's 3 × 83 run was refused by the gate committed before any load: smoke wall over 137 s and the projected run
-  over 300 min. The gate smoke file is committed, not posted.
+- gpt-oss-20b's 3 × 83 run was refused by the gate committed before any load: smoke wall over 137 s (the email half
+  alone took 76.5 s, and the call-fields case did not complete) and the projected run over 300 min. The gate smoke file is committed, not posted.
 - The 14B rows of the prediction are void, as in lane 02.
 - Neither MoE was cached. Both were fetched before the run at pinned revisions (addendum §1); `lab run` itself is
   `local_files_only`.
