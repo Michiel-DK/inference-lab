@@ -132,7 +132,7 @@ def _battery():
     return subprocess.run(["pmset", "-g", "batt"], capture_output=True, text=True).stdout.strip().replace("\t", " ")
 
 
-def sit_load(model_ref, plan, load_idx, partial_path):
+def sit_load(model_ref, plan, load_idx, partial_path, context=None):
     """One FRESH load (this process) sits every (exam, case) in plan; one JSON line per row, flushed as it lands.
 
     The last line is a footer {"_footer": ...}: a partial file without it is an interrupted load and is never assembled.
@@ -141,7 +141,7 @@ def sit_load(model_ref, plan, load_idx, partial_path):
     from .metering import MeteredMLX
     path, _ = resolve_model(model_ref)
     t_load = time.perf_counter()
-    adapter = MeteredMLX(path, empty_answer_exc=router.TerminationError)
+    adapter = MeteredMLX(path, empty_answer_exc=router.TerminationError, context=context)
     load_s = time.perf_counter() - t_load
     batt0 = _battery()
     real_adapter_for = runner.adapter_for
@@ -155,6 +155,7 @@ def sit_load(model_ref, plan, load_idx, partial_path):
                 by_id = {c["id"]: c for c in exam_doc["cases"]}
                 for cid in ids:
                     n_before = len(adapter.calls)
+                    adapter.current_case, adapter.current_exam = by_id[cid], exam   # read only on the lane-05 path
                     start = _now()
                     t0 = time.perf_counter()
                     res = runner.run_exam(agent, {**exam_doc, "cases": [by_id[cid]]}, provider="mlx", model=model_ref)
@@ -183,7 +184,7 @@ def _read_partial(path):
     return lines[:-1], lines[-1]["_footer"]
 
 
-def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out_path, scratch, posted):
+def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out_path, scratch, posted, context=None):
     """Orchestrate N fresh loads (one subprocess each; a load whose partial file is complete is reused, so an interrupted
     evening resumes at the next load), then write ONE results file. Never overwrites out_path (the CLI checks)."""
     import mlx.core as mx
@@ -196,6 +197,8 @@ def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out
         got = _read_partial(part) if part.exists() else (None, None)
         if got[0] is None:
             cmd = [sys.executable, "-m", "lab", "sit", model_ref, "--plan", plan_arg, "--load", str(i), "--out", str(part)]
+            if context is not None:
+                cmd += ["--context", json.dumps(context)]
             rc = subprocess.run(cmd).returncode
             if rc != 0:
                 raise SystemExit(f"load {i} exited {rc}; partial kept at {part}")
@@ -228,5 +231,30 @@ def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out
         "energy": None, "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
         "rows": rows, "rows_sha256": results.digest(rows),
     }
+    if context is not None:
+        doc["context"] = _context_stamp(context, model_ref, rows)
     Path(out_path).write_text(json.dumps(doc, indent=1) + "\n")
     return doc
+
+
+def _context_stamp(context, model_ref, rows):
+    """Lane 05's stamp: what was requested AND what the runtime applied (cache classes read off the cache objects)."""
+    import hashlib
+    from . import context as X
+    path, _ = resolve_model(model_ref)
+    tmpl = Path(path) / "chat_template.jinja"
+    tcfg = json.loads((Path(path) / "tokenizer_config.json").read_text())
+    tsrc = tmpl.read_text() if tmpl.exists() else (tcfg.get("chat_template") or "")
+    cfg = json.loads((Path(path) / "config.json").read_text())
+    calls = [c for r in rows for c in r["calls"]]
+    applied = sorted({json.dumps(c["context"]["cache_applied"], sort_keys=True) for c in calls if "context" in c})
+    padded = [r for r in rows if r["calls"] and ((r["calls"][0].get("context") or {}).get("pad") or {}).get("pad_chars", 0) > 0]
+    return {"requested": context,
+            "applied_cache_classes": [json.loads(a) for a in applied],
+            "prefill_step_size": 2048,
+            "prefill_step_size_source": "mlx_lm.generate.generate_step default (stream_generate is passed none)",
+            "padding_rule": {"header": X.HEADER, "ack": X.ACK, "sep": X.SEP, "slack_tokens": X.SLACK,
+                             "pool": "sitting exam's train inputs, then the other exams' train inputs (sorted), minus the case and any train input containing its text"},
+            "rows_padded": len(padded), "rows_total": len(rows),
+            "quantization": cfg.get("quantization") or cfg.get("quantization_config"),
+            "chat_template_sha256": hashlib.sha256(tsrc.encode()).hexdigest()}

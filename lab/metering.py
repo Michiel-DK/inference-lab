@@ -63,7 +63,7 @@ from .energy import METHOD as ENERGY_METHOD, energy_block  # noqa: F401  (re-exp
 class MeteredMLX:
     """A wilco Adapter (generate(messages, model, temperature, max_tokens) -> (text, meta)) over an in-process mlx-lm model."""
 
-    def __init__(self, model_ref, empty_answer_exc=None):
+    def __init__(self, model_ref, empty_answer_exc=None, context=None):
         import mlx.core as mx
         from mlx_lm import load
         self.mx = mx
@@ -71,6 +71,49 @@ class MeteredMLX:
         self.harmony = HARMONY_FINAL.split("final")[0] in self.tokenizer.get_vocab()   # gpt-oss: '<|channel|>' is a token
         self.empty_answer_exc = empty_answer_exc   # wilco's router.TerminationError, so an empty answer fails like it does there
         self.calls = []
+        # lane 05 only (lab/context.py): None keeps every line of the pre-lane-05 path below unchanged in effect
+        self.context = context
+        self.current_case = None       # set by the sit loop before each case when context pads
+        self._pad = None               # (case id, pad text, pad meta) for the current case, fitted on its first call
+
+    def _context_messages(self, messages):
+        from . import context as X
+        ctx, case = self.context, self.current_case
+        if not ctx.get("pad_to"):
+            return messages, None
+        if case is None:
+            raise RuntimeError("context padding needs adapter.current_case")
+        if self._pad is None or self._pad[0] != case["id"]:
+            count = lambda ms: len(self.tokenizer.apply_chat_template(ms, add_generation_prompt=True))
+            pool = X.pool_text(self.current_exam, case=case)
+            pad, n = X.fit_padding(count, messages, case["input"], pool, int(ctx["pad_to"]))
+            self._pad = (case["id"], pad, {"target": int(ctx["pad_to"]), "pad_chars": len(pad), "pad_sha256": X.sha(pad),
+                                           "base_tokens": count(messages), "padded_tokens": n})
+        return X.insert_padding(messages, case["input"], self._pad[1]), self._pad[2]
+
+    def _generate_context(self, messages, max_tokens):
+        """The lane-05 path: padding + KV kwargs, own prompt cache so the APPLIED cache classes can be read back."""
+        from mlx_lm import stream_generate
+        from mlx_lm.models.cache import make_prompt_cache
+        from mlx_lm.sample_utils import make_sampler
+        from . import context as X
+        msgs, pad_meta = self._context_messages(messages)
+        prompt = self.tokenizer.apply_chat_template(msgs, add_generation_prompt=True)
+        kw = {k: self.context[k] for k in X.KV_KEYS if self.context.get(k) is not None}
+        cache = make_prompt_cache(self.model, max_kv_size=kw.get("max_kv_size"))
+        self.mx.reset_peak_memory()
+        parts, last = [], None
+        try:
+            for resp in stream_generate(self.model, self.tokenizer, prompt, max_tokens=max_tokens,
+                                        sampler=make_sampler(temp=0.0), prompt_cache=cache, **kw):
+                parts.append(resp.text)
+                last = resp
+        except Exception as exc:       # never let wilco score a runtime fault as a FAIL (it buckets ValueError/TypeError)
+            raise RuntimeError(f"mlx generation failed under context {self.context}: {type(exc).__name__}: {exc}") from exc
+        applied = {}
+        for c in cache:
+            applied[type(c).__name__] = applied.get(type(c).__name__, 0) + 1
+        return prompt, parts, last, {"pad": pad_meta, "cache_applied": applied, "kv_requested": kw}
 
     def generate(self, messages, model, temperature=0.0, max_tokens=512):
         from mlx_lm import stream_generate
@@ -78,13 +121,17 @@ class MeteredMLX:
         if temperature != 0.0:
             raise ValueError(f"MeteredMLX is greedy only; got temperature={temperature}")
         t0 = time.perf_counter()
-        prompt = self.tokenizer.apply_chat_template(messages, add_generation_prompt=True)
-        self.mx.reset_peak_memory()
-        parts, last = [], None
-        for resp in stream_generate(self.model, self.tokenizer, prompt, max_tokens=max_tokens,
-                                    sampler=make_sampler(temp=0.0)):
-            parts.append(resp.text)
-            last = resp
+        ctx_meta = None
+        if self.context is not None:
+            prompt, parts, last, ctx_meta = self._generate_context(messages, max_tokens)
+        else:
+            prompt = self.tokenizer.apply_chat_template(messages, add_generation_prompt=True)
+            self.mx.reset_peak_memory()
+            parts, last = [], None
+            for resp in stream_generate(self.model, self.tokenizer, prompt, max_tokens=max_tokens,
+                                        sampler=make_sampler(temp=0.0)):
+                parts.append(resp.text)
+                last = resp
         wall_s = time.perf_counter() - t0
         raw = "".join(parts)
         tk = self.tokenizer
@@ -101,6 +148,8 @@ class MeteredMLX:
                 "gen_tokens": last.generation_tokens, "gen_tps": float(last.generation_tps),
                 "peak_memory_gb": float(last.peak_memory), "finish_reason": last.finish_reason,
                 "wall_s": wall_s, "content_chars": len(text), "reasoning_chars": len(reasoning)}
+        if ctx_meta is not None:
+            call["context"] = ctx_meta
         self.calls.append(call)
         meta = {"prompt_tokens": last.prompt_tokens, "completion_tokens": last.generation_tokens,
                 "total_tokens": last.prompt_tokens + last.generation_tokens,

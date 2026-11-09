@@ -122,3 +122,8 @@ actual 16 · 10 · 10 (i.e. 13–15 · 7–9 · 7–9).
 
 **Stamp.** Unchanged from the original list, plus what the lane found it needs: the cache classes *applied* per layer
 (read off the cache objects, not the requested kwargs), because the requested `max_kv_size` and the applied cache disagree.
+
+**Second note (9 Nov, still before any graded run).** Writing the pool test found an overlap in wilco's own split at the
+pin: held-out recap `quiet-day-newsletters` (492 chars) is verbatim inside train recap `compression-heavy`. Under the rule
+above, that case would carry its own text as "already handled" history. The pool now also excludes **any train input that
+contains the sitting case's input** (one exclusion, on that one case; `tests/lab/test_context.py`). Nothing else changes.
