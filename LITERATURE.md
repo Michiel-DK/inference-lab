@@ -7,6 +7,8 @@ first. It holds what exists and its verdicts. This file holds what was reproduce
 
 | source | claim tested | run | held? | rank |
 |---|---|---|---|---|
+| wilco snapshots at `62fcd449` (`evals/<exam>/snapshot.json`; Ollama, QAT Q4_0 champions, 3 loads, 1 Nov) | the mlx-community affine 4-bit packs land within ±1 held-out case of the QAT champions (email-triage e2b 16/20, call-fields e4b 14/19, recap e4b 13/16) | lane 02, `results/dense-gemma-4-e{2,4}b-it-4bit.json` | **no**: 14/20, 10/19, 10/16 (−2, −4, −3) | B (same cases, other engine and packaging) |
+| agent-sandbox `docs/probes/mlx-s1-2026-11-01` (arm A, `mlx_lm.server`, gemma-4-e4b-it-4bit, 3 restarts) | e4b email-triage 16/20 held-out, 0 unstable, 37.6 tok/s | lane 02, `results/dense-gemma-4-e4b-it-4bit.json` | score yes (16/20, 0 unstable); case set no (one case moved each way); speed 41.9 tok/s in-process vs 37.6 decode-inclusive through the server | A (same cases, same machine, same pack; in-process vs server) |
 
-No rows: lane 01 ran no method from the literature. The energy method is the sandbox's own instrument, cited in
+Lane 01 ran no method from the literature. The radar's serving-track rows (`VERDICTS.md`, 7 Nov) hold no dense-baseline method, so lane 02's rows are its two baselines. The energy method is the sandbox's own instrument, cited in
 `lab/energy.py` (agent-sandbox@2806cbd0 `scripts/energy_report.py`, PR #158), not a literature claim.

@@ -3,4 +3,81 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
-Empty. Lane 01 built the skeleton and the metering, and its smoke (`results/lane01-smoke.json`) is wiring, not a result.
+## Lane 02: dense baselines on three office exams (8–9 Nov 2026)
+
+**Question.** Three dense 4-bit models that fit this 16 GB M1 Pro (mlx-lm 0.31.3, in-process, temperature 0) sit wilco's
+three office exams. What does each pass, and what does a held-out case cost? Prediction committed first:
+`predictions/dense-baselines.md` (commit `043e8bd`). Case set: every case of email-triage (28), call-fields (32) and recap
+(23) at wilco pin `62fcd449`, three fresh loads per model (each load its own process), wilco's own scorer, snapshot rule as
+wilco's `aggregate_loads` (majority verdict; a case is stable when all three loads agree).
+
+**Headline.** Held-out passes over the 55 held-out cases: **e4b 36/55 · Llama-3.1-8B 31/55 · e2b 23/55**. Spread: **0 of 83
+cases unstable on every model** (all three loads agreed on every case), so majority and the brief's "all three agree" count
+are the same number. Kill clause (more than 3 unstable cases on any model): not tripped, so this posts.
+
+| model (mlx-community, 4-bit) | email-triage held-out | call-fields held-out | recap held-out | gen tok/s | peak GB | min / 1,000 cases: email · call · recap | Wh / 1,000 cases |
+|---|---|---|---|---|---|---|---|
+| gemma-4-e2b-it-4bit | 14/20 | 7/19 | 2/16 | 69.2 | 3.71 | 59.5 · 321.3 · 241.2 | not metered |
+| gemma-4-e4b-it-4bit | **16/20** | **10/19** | **10/16** | 41.9 | 5.45 | 138.3 · 374.7 · 491.1 | not metered |
+| Meta-Llama-3.1-8B-Instruct-4bit | **16/20** | 6/19 | 9/16 | 35.4 | 6.30 | **21.8 · 213.3 · 106.9** | not metered |
+
+Re-derive (every number in the table and below):
+```sh
+LAB_WILCO_DIR=<clone at 62fcd449> ~/.pyenv/versions/lewagon/bin/python3 -m lab check \
+  results/dense-gemma-4-e2b-it-4bit.json results/dense-gemma-4-e4b-it-4bit.json results/dense-llama-3.1-8b-instruct-4bit.json
+```
+(`lab check` needs no wilco checkout; the clone is only needed to re-run.) Minutes per 1,000 cases = mean wall of one sitting
+× 1000 / 60, per exam (`<exam>.min_per_1000_cases`). gen tok/s is token-weighted over all calls, not the median the
+prediction named. Wh is `null`: no operator powermetrics capture, so the prediction's energy rows are void, not estimated.
+All posted loads ran on AC power (`machine.power` in each file).
+
+**What the cost is made of.** The two Gemmas think before answering (their thinking channel is ~91–93% of generated
+characters) and Llama 3.1 does not: 804 / 686 / 43 generated tokens per sitting (e2b / e4b / 8B, `gen_tokens_total /
+n_cases`, both checked aggregates). So the 8B, the slowest decoder, is the cheapest model on every exam: against e4b, 1.8×
+cheaper on call-fields, 4.6× on recap and 6.3× on email-triage. On this box, cost is set by whether the model thinks, not by
+its size. The thinking share is read off the rows' per-call `content_chars` / `reasoning_chars`, which are covered by
+`rows_sha256` but are not an aggregate:
+`python3 -c "import json,sys;d=json.load(open(sys.argv[1]));c=[x for r in d['rows'] for x in r['calls']];r=sum(x['reasoning_chars'] for x in c);print(r/(r+sum(x['content_chars'] for x in c)))" results/<file>`.
+
+**Prediction vs result.**
+
+| claim | predicted | result | |
+|---|---|---|---|
+| e2b held-out email · call · recap | 16 (15–17) · 11 (9–13) · 11 (10–12) | 14 · 7 · 2 | refuted, all three |
+| e4b held-out email · call · recap | 16 (15–17) · 14 (13–15) · 13 (12–14) | 16 · 10 · 10 | email held; call, recap refuted |
+| † 8B held-out email · call · recap | 17 · 13 · 9–11 | 16 · 6 · 9 | recap held; email off by 1; call refuted (−7) |
+| email-triage saturated above 2B (all within 2 of 16/20) | yes | 14 / 16 / 16 | held |
+| recap not monotone in size | 14B below e4b | 14B void; 8B (9) below e4b (10) | held for the 8B |
+| call-fields the one exam where size buys cases | +1 to +3 from e4b to 14B | 14B void; e4b → 8B is −4 | refuted for the 8B |
+| gen tok/s e2b · e4b · 8B | 55 (48–65) · 37 (34–40) · 24 (20–28) | 69.2 · 41.9 · 35.4 | refuted, all faster |
+| peak GB e2b · e4b · 8B | 3.6–4.0 · 5.2–5.8 · 5.0–6.0 | 3.71 · 5.45 · 6.30 | held, held, refuted (+0.3) |
+| wall s/case, 8B | 14 · 25 · 30 | 1.3 · 12.8 · 6.4 | refuted: Llama does not think |
+| cost-vs-pass: hockey stick, knee at the 4B | knee at e4b; size orders cost | e4b is the top scorer on all three exams, but the 8B is the cheapest, not the dearest | shape refuted; e4b-as-best held |
+| Wh per case | 0.045–0.35 | not metered | void |
+
+**What did not hold.**
+- **The small Gemma is far below the QAT champion on recap.** e2b 2/16 (rows' failed checks, load 0: `check_compression` 13,
+  `check_coverage` 11, `check_abstention` 5 of 16 cases), against a predicted 11/16. Its recaps run long and leave out
+  required items.
+- **mlx 4-bit sits below wilco's Ollama QAT champions, by more than the ±1 the prediction allowed.** Champions (rank B,
+  `evals/<exam>/snapshot.json` at the pin, 3 loads): email-triage e2b-QAT 16/20 vs mlx e2b 14/20; call-fields e4b 14/19 vs
+  mlx e4b 10/19; recap e4b-QAT 13/16 vs mlx e4b 10/16. Engine, quantisation and chat template all differ, so this measures
+  the packaging, not the size.
+- **Decode is faster than the bandwidth model said.** At 35.4 tok/s the 8B would read ≈150 GB/s if every token touched the whole 4.2 GB pack. The
+  prediction's 85–140 GB/s band was set from bf16 and launch-bound Gemma runs.
+- **The sandbox's rank-A anchor reproduced as a score, not as a case set.** e4b email-triage in-process 16/20, same as
+  `mlx_lm.server` on 1 Nov, but one case moved each way (in-process fails `intro-no-ask`, the server failed
+  `paid-workshop-invite`).
+
+**What was refused or voided.**
+- `results/dense-gemma-4-e2b-it-4bit-thinking-in-answer.json`, not posted. That first e2b run passed Gemma's
+  `<|channel>thought…` text to wilco as the answer, because the adapter did not split thinking out the way `mlx_lm.server` does.
+  Fixed in `lab/metering.py: split_thinking` (27786ce) and re-run. **The leak moved no verdict** (`lab diff` of the two
+  files: +0 on every pass count). wilco's JSON extraction had already found the answer object. The only change: one
+  length-capped call-fields case now ends in wilco's termination bucket, not a re-ask (252 → 249 calls). It is kept as
+  evidence of the wiring fault.
+- The Qwen3-14B rows of the prediction are void for this run (the operator picked the cached 8B).
+
+**Reopen threshold.** Re-sit and re-post a model when any of these happens: mlx or mlx-lm moves off 0.32.2 / 0.31.3; the
+wilco pin moves (`docs/CASES.md`); or a re-sit flips any one of the 83 cases (all 83 are stable today, so one flip is a
+non-reproduction). Separately, the cost columns need an operator powermetrics capture before any Wh figure is posted.
