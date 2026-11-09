@@ -26,7 +26,10 @@ Re-derive (every number in the table and below):
 LAB_WILCO_DIR=<clone at 62fcd449> ~/.pyenv/versions/lewagon/bin/python3 -m lab check \
   results/dense-gemma-4-e2b-it-4bit.json results/dense-gemma-4-e4b-it-4bit.json results/dense-llama-3.1-8b-instruct-4bit.json
 ```
-(`lab check` needs no wilco checkout; the clone is only needed to re-run.) Minutes per 1,000 cases = mean wall of one sitting
+(`lab check` needs no wilco checkout; the clone is only needed to re-run.) The numbers that are row-level reads, not aggregates
+(failed-check counts, failing case ids, length-capped cases, thinking share, tokens per sitting, and the wilco champion
+figures), come from `python3 scripts/lane02_rows.py <clone at 62fcd449>`. Rows are covered by `rows_sha256`, so `lab check`
+vouches for what the script reads. Minutes per 1,000 cases = mean wall of one sitting
 × 1000 / 60, per exam (`<exam>.min_per_1000_cases`). gen tok/s is token-weighted over all calls, not the median the
 prediction named. Wh is `null`: no operator powermetrics capture, so the prediction's energy rows are void, not estimated.
 All posted loads ran on AC power (`machine.power` in each file).
@@ -35,9 +38,7 @@ All posted loads ran on AC power (`machine.power` in each file).
 characters) and Llama 3.1 does not: 804 / 686 / 43 generated tokens per sitting (e2b / e4b / 8B, `gen_tokens_total /
 n_cases`, both checked aggregates). So the 8B, the slowest decoder, is the cheapest model on every exam: against e4b, 1.8×
 cheaper on call-fields, 4.6× on recap and 6.3× on email-triage. On this box, cost is set by whether the model thinks, not by
-its size. The thinking share is read off the rows' per-call `content_chars` / `reasoning_chars`, which are covered by
-`rows_sha256` but are not an aggregate:
-`python3 -c "import json,sys;d=json.load(open(sys.argv[1]));c=[x for r in d['rows'] for x in r['calls']];r=sum(x['reasoning_chars'] for x in c);print(r/(r+sum(x['content_chars'] for x in c)))" results/<file>`.
+its size. The thinking share and tokens per sitting come from `scripts/lane02_rows.py` (below).
 
 **Prediction vs result.**
 
@@ -46,19 +47,28 @@ its size. The thinking share is read off the rows' per-call `content_chars` / `r
 | e2b held-out email · call · recap | 16 (15–17) · 11 (9–13) · 11 (10–12) | 14 · 7 · 2 | refuted, all three |
 | e4b held-out email · call · recap | 16 (15–17) · 14 (13–15) · 13 (12–14) | 16 · 10 · 10 | email held; call, recap refuted |
 | † 8B held-out email · call · recap | 17 · 13 · 9–11 | 16 · 6 · 9 | recap held; email off by 1; call refuted (−7) |
+| all-cases email-triage, e2b · e4b | [23–25/28] · [24/28] | 21/28 · 23/28 | refuted (−2, −1) |
+| e2b → e4b step: cost ratio, cases bought (email · call · recap) | ~1.5×; +0 · +3 · +2 | ×2.3 · ×1.17 · ×2.0 (minutes); +2 · +3 · +8 | call-fields +3 held exactly; the rest refuted |
 | email-triage saturated above 2B (all within 2 of 16/20) | yes | 14 / 16 / 16 | held |
 | recap not monotone in size | 14B below e4b | 14B void; 8B (9) below e4b (10) | held for the 8B |
 | call-fields the one exam where size buys cases | +1 to +3 from e4b to 14B | 14B void; e4b → 8B is −4 | refuted for the 8B |
 | gen tok/s e2b · e4b · 8B | 55 (48–65) · 37 (34–40) · 24 (20–28) | 69.2 · 41.9 · 35.4 | refuted, all faster |
 | peak GB e2b · e4b · 8B | 3.6–4.0 · 5.2–5.8 · 5.0–6.0 | 3.71 · 5.45 · 6.30 | held, held, refuted (+0.3) |
-| wall s/case, 8B | 14 · 25 · 30 | 1.3 · 12.8 · 6.4 | refuted: Llama does not think |
+| wall s/case e2b (email · call · recap) | 6 · 12 · 13 | 3.6 · 19.3 · 14.5 | refuted (email faster, call slower); recap within 1.5 s |
+| wall s/case e4b | 9 · 17 · 18 | 8.3 · 22.5 · 29.5 | email held; call, recap refuted |
+| wall s/case 8B | 14 · 25 · 30 | 1.3 · 12.8 · 6.4 | refuted: Llama does not think |
+| e4b minutes per 1,000 cases | 150 · 280 · 300 | 138.3 · 374.7 · 491.1 | email held; call, recap refuted |
+| e2b gains less than 2× tok/s over e4b (mechanism) | < 2× | 69.2 / 41.9 = 1.65× | held |
 | cost-vs-pass: hockey stick, knee at the 4B | knee at e4b; size orders cost | e4b is the top scorer on all three exams, but the 8B is the cheapest, not the dearest | shape refuted; e4b-as-best held |
 | Wh per case | 0.045–0.35 | not metered | void |
 
 **What did not hold.**
-- **The small Gemma is far below the QAT champion on recap.** e2b 2/16 (rows' failed checks, load 0: `check_compression` 13,
-  `check_coverage` 11, `check_abstention` 5 of 16 cases), against a predicted 11/16. Its recaps run long and leave out
-  required items.
+- **The small Gemma is far below the QAT champion on recap.** e2b scored 2/16 against a predicted 11/16. Of the 14 held-out
+  fails on load 0, `check_compression` failed on 8, `check_coverage` on 8 and `check_abstention` on 4. Its recaps run long
+  and leave out required items.
+- **Thinking runs into wilco's `max_tokens` on one case per Gemma.** e4b recap `long-day-heldout-xl` (held-out) hit the 2048
+  cap on all three loads, on both the first call and the re-ask. e2b call-fields `support-long-train` (train) hit the 4096
+  cap on all three. Llama: none. This is the prediction's "unsure" item, which turned up on Gemma 4 rather than on Qwen3.
 - **mlx 4-bit sits below wilco's Ollama QAT champions, by more than the ±1 the prediction allowed.** Champions (rank B,
   `evals/<exam>/snapshot.json` at the pin, 3 loads): email-triage e2b-QAT 16/20 vs mlx e2b 14/20; call-fields e4b 14/19 vs
   mlx e4b 10/19; recap e4b-QAT 13/16 vs mlx e4b 10/16. Engine, quantisation and chat template all differ, so this measures
