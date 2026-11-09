@@ -10,6 +10,8 @@ import collections
 import json
 import sys
 
+SMOKE = ("email-triage", {"client-quote-request", "overdue-invoice"})   # lab/cases.py SMOKE
+
 for run in sys.argv[1:]:
     d = json.load(open(f"results/{run}.json"))
     rows, calls = d["rows"], [c for r in d["rows"] for c in r["calls"]]
@@ -20,9 +22,13 @@ for run in sys.argv[1:]:
           f"{a['gen_tokens_total'] / a['n_cases']:.1f}; calls {len(calls)}; length-capped calls "
           f"{sum(c['finish_reason'] == 'length' for c in calls)}; empty-answer calls "
           f"{sum(c.get('content_chars', 1) == 0 for c in calls)}")
+    sc = [c for r in rows if r["exam"] == SMOKE[0] and r["case"] in SMOKE[1] for c in r["calls"]]
+    if sc:   # token-weighted decode speed on the lane-03 gate smoke cases, every load: the like-for-like gpt-oss comparison
+        tps_smoke = sum(c["gen_tokens"] for c in sc) / sum(c["gen_tokens"] / c["gen_tps"] for c in sc)
+        print(f"  gen tok/s on the gate smoke cases {tps_smoke:.1f} over {len(sc)} calls")
     for exam in d.get("exams") or sorted({r["exam"] for r in rows}):
         er = [r for r in rows if r["exam"] == exam]
-        fc = collections.Counter(f["check"] for r in er if r["load"] == 0 and r["split"] == "heldout"
+        fc = collections.Counter(f["check"] for r in er if r.get("load", 0) == 0 and r["split"] == "heldout"
                                  for f in r["failed_checks"])
         fails = sorted({r["case"] for r in er if r["split"] == "heldout" and not r["passed"]})
         capped = sorted({(r["case"], r["split"]) for r in er if any(c["finish_reason"] == "length" for c in r["calls"])})
