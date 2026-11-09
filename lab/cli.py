@@ -36,7 +36,15 @@ def main(argv=None):
     g = r.add_mutually_exclusive_group(required=True)
     g.add_argument("--smoke", action="store_true", help=f"the fixed 2-case smoke: {C.SMOKE['exam']} {C.SMOKE['cases']}")
     g.add_argument("--exam", choices=sorted(C.EXAMS))
+    g.add_argument("--exams", help="comma-separated exams or 'all': every case of each, sat on --loads fresh loads")
     r.add_argument("--cases", help="comma-separated case ids (with --exam); default: every case of the exam")
+    r.add_argument("--prediction", help="prediction file stem when one prediction covers several runs (default: --name)")
+    r.add_argument("--loads", type=int, default=3, help="fresh model loads with --exams (odd, >= 3: wilco's snapshot rule)")
+    r.add_argument("--post", action="store_true", help="write posted: true (the lane posts this run)")
+    r.add_argument("--scratch", default=".lab-scratch", help="per-load partial rows (gitignored); a complete load is reused")
+    s = sub.add_parser("sit", help=argparse.SUPPRESS)        # internal: one fresh load, run by `lab run --exams`
+    s.add_argument("model"); s.add_argument("--plan", required=True)
+    s.add_argument("--load", type=int, required=True); s.add_argument("--out", required=True)
     e = sub.add_parser("energy", help="new results file = SRC + Wh integrated from an operator powermetrics capture")
     e.add_argument("src"); e.add_argument("--capture", required=True)
     e.add_argument("--idle-start", required=True); e.add_argument("--idle-end", required=True)
@@ -68,8 +76,17 @@ def main(argv=None):
         ok, msg = results.check(a.out)
         print(msg)
         return 0 if ok else 1
+    if a.cmd == "sit":
+        import json
+        from .run import sit_load
+        problems = C.verify_pin()
+        if problems:
+            print("refused: wilco pin does not hold:\n  " + "\n  ".join(problems), file=sys.stderr)
+            return 2
+        sit_load(a.model, json.loads(a.plan), a.load, a.out)
+        return 0
     if a.cmd == "run":
-        ok, why, commit = _prediction_committed(a.name)
+        ok, why, commit = _prediction_committed(a.prediction or a.name)
         if not ok:
             print(f"refused: {why}", file=sys.stderr)
             return 2
@@ -81,6 +98,19 @@ def main(argv=None):
         if out.exists():
             print(f"refused: {out} exists; results are never overwritten", file=sys.stderr)
             return 2
+        if a.exams:
+            import json
+            exams = sorted(C.EXAMS) if a.exams == "all" else a.exams.split(",")
+            unknown = [e for e in exams if e not in C.EXAMS]
+            if unknown or a.loads < 3 or a.loads % 2 == 0:
+                print(f"refused: unknown exams {unknown} or loads {a.loads} not odd >= 3", file=sys.stderr)
+                return 2
+            plan = [[e, [x["id"] for x in json.loads(C.cases_path(e).read_text())["cases"]]] for e in exams]
+            from .run import run_loads
+            run_loads(a.model, a.name, plan, a.loads, a.prediction or a.name, commit, out, a.scratch, a.post)
+            ok, msg = results.check(str(out))
+            print(msg)
+            return 0 if ok else 1
         if a.smoke:
             exam, ids = C.SMOKE["exam"], list(C.SMOKE["cases"])
         else:

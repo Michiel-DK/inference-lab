@@ -174,3 +174,70 @@ def test_lab_energy_end_to_end_on_the_smoke_file(tmp_path):
     assert d["aggregates"]["wh_per_case"] == pytest.approx(d["energy"]["net_j"] / 3600 / len(rows))
     assert main(["energy", src, "--capture", str(cap), "--idle-start", idle_start.isoformat(),
                  "--idle-end", (idle_start + timedelta(seconds=30)).isoformat(), "--out", str(out)]) == 2  # never overwrites
+
+
+# ---- lane 02: several exams x N fresh loads, wilco's snapshot rule (sandbox/runner.py aggregate_loads at the pin)
+
+def _lrow(exam, case, split, load, passed, wall=2.0, finish="stop"):
+    c = _call(20, 10.0)
+    c["finish_reason"] = finish
+    return {"exam": exam, "case": case, "split": split, "load": load, "passed": passed, "failed_checks": [],
+            "start_utc": T0.isoformat(), "end_utc": T0.isoformat(), "wall_s": wall, "calls": [c]}
+
+
+def _loads_rows():
+    verdicts = {("email-triage", "a", "heldout"): (True, True, True),     # stable pass
+                ("email-triage", "b", "heldout"): (True, False, True),    # unstable, majority pass
+                ("email-triage", "c", "train"): (False, False, False),    # stable fail
+                ("recap", "d", "heldout"): (False, True, False)}          # unstable, majority fail
+    return [_lrow(e, c, s, i, v[i], wall=1.0 + i, finish="length" if c == "d" else "stop")
+            for (e, c, s), v in verdicts.items() for i in range(3)]
+
+
+def test_derive_loads_is_wilcos_majority_rule():
+    agg = results.derive(_loads_rows())
+    assert agg["n_loads"] == 3 and agg["n_unique_cases"] == 4
+    assert agg["email-triage.heldout_n"] == 2 and agg["email-triage.heldout_majority_pass"] == 2
+    assert agg["email-triage.heldout_stable_pass"] == 1                    # the brief's stricter "all three agree"
+    assert agg["email-triage.train_majority_pass"] == 0 and agg["email-triage.n_unstable"] == 1
+    assert agg["recap.heldout_majority_pass"] == 0 and agg["recap.n_unstable"] == 1
+    assert agg["n_unstable"] == 2 and agg["heldout_majority_pass_rate"] == pytest.approx(2 / 3)
+    assert agg["email-triage.wall_s_per_case"] == pytest.approx(2.0)      # mean over every sitting (1, 2, 3 s)
+    assert agg["email-triage.min_per_1000_cases"] == pytest.approx(2.0 * 1000 / 60)
+    assert agg["recap.finish_length_calls"] == 3 and agg["email-triage.finish_length_calls"] == 0
+    assert agg["recap.wh_per_1000_cases"] is None
+
+
+def test_derive_loads_refuses_a_missing_sitting():
+    rows = [r for r in _loads_rows() if not (r["case"] == "a" and r["load"] == 2)]
+    with pytest.raises(ValueError, match="every load"):
+        results.derive(rows)
+
+
+@pytest.mark.parametrize("key,val", [("email-triage.heldout_majority_pass", 1), ("recap.n_unstable", 0),
+                                     ("email-triage.min_per_1000_cases", 1.0), ("n_unstable", 0)])
+def test_check_catches_a_tampered_per_exam_aggregate(tmp_path, key, val):
+    rows = _loads_rows()
+    agg = results.derive(rows)
+    d = {"schema": results.SCHEMA, "run": "t", "posted": True, "metric": "heldout_majority_pass_rate",
+         "headline": agg["heldout_majority_pass_rate"], "aggregates": agg, "energy": None, "rows": rows,
+         "rows_sha256": results.digest(rows)}
+    ok, msg = results.check(_write(tmp_path, d))
+    assert ok and "POSTED" in msg and "recap" in msg, msg
+    d["aggregates"][key] = val
+    ok, msg = results.check(_write(tmp_path, d))
+    assert not ok and key in msg
+
+
+def test_run_refuses_without_the_named_prediction():
+    assert main(["run", "some/model", "--name", "dense-x", "--prediction", "no-such-prediction", "--exams", "all"]) == 2
+
+
+def test_split_thinking_matches_the_server_state_machine():
+    from lab.metering import split_thinking
+    ts, te = "<|channel>thought", "<channel|>"
+    assert split_thinking('<|channel>thought\nplan...<channel|>{"label": "x"}', ts, te) == ('{"label": "x"}', "\nplan...")
+    assert split_thinking('{"a": 1}', ts, te) == ('{"a": 1}', "")
+    assert split_thinking("<|channel>thought never closed", ts, te) == ("", " never closed")     # -> TerminationError
+    assert split_thinking("still thinking<channel|>answer", ts, te, starts_in_thinking=True) == ("answer", "still thinking")
+    assert split_thinking("<think>x</think>y", None, None) == ("<think>x</think>y", "")          # no thinking tokens
