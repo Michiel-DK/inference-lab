@@ -1,0 +1,6555 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "quant-gemma-4-e4b-it-8bit",
+ "posted": true,
+ "prediction": "predictions/quantisation.md",
+ "prediction_commit": "8e12cb72750fac007046dcead391eaa93f83ddf0",
+ "lab_commit": "410d9c3250500c15ba485c07e674ba08e7bb72f1",
+ "model": {
+  "ref": "mlx-community/gemma-4-e4b-it-8bit",
+  "snapshot": "4255b21bd9a9d3fc807ef7abd80373f5e3a52a73",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 4.11473912501242,
+    "n_rows": 83
+   },
+   {
+    "load": 1,
+    "load_s": 4.592386166012147,
+    "n_rows": 83
+   },
+   {
+    "load": 2,
+    "load_s": 4.419735708012013,
+    "n_rows": 83
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/metal-kernels/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "recap": "315a6132da7f78c8f9e8a140ff711656f24b8ce12d893e8bc248ecd931aaf120"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   },
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "recap": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   },
+   {
+    "load": 1,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   },
+   {
+    "load": 2,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "call-fields",
+  "email-triage",
+  "recap"
+ ],
+ "plan": [
+  [
+   "call-fields",
+   [
+    "discovery-short-train",
+    "renewal-medium-train",
+    "support-long-train",
+    "quiet-checkin-short-train",
+    "pricing-objection-medium-train",
+    "discovery-long-train",
+    "renewal-short-train",
+    "support-medium-train",
+    "quiet-checkin-medium-train",
+    "discovery-heldout-easy",
+    "discovery-heldout-hard",
+    "discovery-heldout-long",
+    "renewal-heldout-medium",
+    "renewal-heldout-digits",
+    "renewal-heldout-short",
+    "support-heldout-short",
+    "support-heldout-long",
+    "pricing-objection-heldout-medium",
+    "pricing-objection-heldout-short",
+    "quiet-checkin-heldout-short",
+    "quiet-checkin-heldout-medium",
+    "mixed-heldout-dense",
+    "longcall-quiet-train-1",
+    "longcall-discovery-train-1",
+    "longcall-renewal-train-1",
+    "longcall-support-train-1",
+    "longcall-pricing-heldout-1",
+    "longcall-scoping-heldout-1",
+    "longcall-discovery-heldout-2",
+    "longcall-renewal-heldout-2",
+    "longcall-support-heldout-2",
+    "longcall-mixed-heldout-3"
+   ]
+  ],
+  [
+   "email-triage",
+   [
+    "client-quote-request",
+    "overdue-invoice",
+    "newsletter-substack",
+    "recruiter-linkedin",
+    "seo-cold-spam",
+    "friend-dinner",
+    "production-down",
+    "gdpr-data-request",
+    "conference-invite",
+    "promo-code",
+    "client-question-no-rush",
+    "agency-whitelabel-offer",
+    "invoice-error-client",
+    "dpa-signature-compliance",
+    "recruiter-fake-urgency",
+    "paid-workshop-invite",
+    "intro-no-ask",
+    "disk-warning-no-action",
+    "long-ramble-buried-incident",
+    "newsletter-injection-urgent",
+    "cold-sales-injection-urgent",
+    "nl-client-bug-buried",
+    "fr-tax-authority-documents",
+    "stripe-payout-notice",
+    "client-domain-newsletter-nl",
+    "calendar-accept-notice",
+    "proposal-accept-conditional",
+    "fr-networking-coffee"
+   ]
+  ],
+  [
+   "recap",
+   [
+    "busy-day-standard",
+    "quiet-day-automated",
+    "compression-heavy",
+    "amounts-and-dates",
+    "buried-critical",
+    "quiet-day-newsletters",
+    "quiet-day-with-receipt",
+    "rounding-bait",
+    "two-urgent-among-noise",
+    "long-day-train-xl",
+    "very-long-day",
+    "long-day-heldout-xl",
+    "long-quiet-day",
+    "buried-critical-xl",
+    "amounts-at-length",
+    "long-day-train-2",
+    "long-day-train-3",
+    "dependency-delivery-vs-install",
+    "near-duplicate-invoices",
+    "quiet-day-big-amount-decoy",
+    "automated-but-actionable",
+    "buried-last-en",
+    "meeting-moved-date-decoy"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": 0.7454545454545455,
+ "aggregates": {
+  "n_cases": 249,
+  "n_calls": 249,
+  "pass_rate": 0.7469879518072289,
+  "gen_tokens_total": 143559,
+  "gen_tps": 29.31861202482497,
+  "prompt_tps": 535.8419131162202,
+  "peak_memory_gb_max": 9.178453192,
+  "wall_s_total": 5668.1857607532,
+  "wall_s_per_case": 22.763798235956628,
+  "wh_per_case": null,
+  "n_loads": 3,
+  "call-fields.n_cases": 32,
+  "call-fields.train_n": 13,
+  "call-fields.train_majority_pass": 10,
+  "call-fields.heldout_n": 19,
+  "call-fields.heldout_majority_pass": 13,
+  "call-fields.heldout_stable_pass": 13,
+  "call-fields.all_majority_pass": 23,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 28.880961149329124,
+  "call-fields.peak_memory_gb_max": 9.178453192,
+  "call-fields.wall_s_per_case": 24.219657776531374,
+  "call-fields.min_per_1000_cases": 403.66096294218954,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 28,
+  "email-triage.train_n": 8,
+  "email-triage.train_majority_pass": 8,
+  "email-triage.heldout_n": 20,
+  "email-triage.heldout_majority_pass": 16,
+  "email-triage.heldout_stable_pass": 16,
+  "email-triage.all_majority_pass": 24,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 30.199934000249893,
+  "email-triage.peak_memory_gb_max": 8.52648152,
+  "email-triage.wall_s_per_case": 10.082337602202772,
+  "email-triage.min_per_1000_cases": 168.03896003671287,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "recap.n_cases": 23,
+  "recap.train_n": 7,
+  "recap.train_majority_pass": 3,
+  "recap.heldout_n": 16,
+  "recap.heldout_majority_pass": 12,
+  "recap.heldout_stable_pass": 12,
+  "recap.all_majority_pass": 15,
+  "recap.n_unstable": 0,
+  "recap.gen_tps": 29.356366064498534,
+  "recap.peak_memory_gb_max": 8.811454142,
+  "recap.wall_s_per_case": 36.17655442929211,
+  "recap.min_per_1000_cases": 602.9425738215352,
+  "recap.finish_length_calls": 0,
+  "recap.wh_per_1000_cases": null,
+  "heldout_n": 55,
+  "heldout_majority_pass": 41,
+  "heldout_stable_pass": 41,
+  "n_unstable": 0,
+  "n_unique_cases": 83,
+  "heldout_majority_pass_rate": 0.7454545454545455
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "discovery-short-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:49:57.028317+00:00",
+   "end_utc": "2026-11-09T05:50:14.211688+00:00",
+   "wall_s": 17.182923957996536,
+   "calls": [
+    {
+     "prompt_tokens": 1445,
+     "prompt_tps": 448.41883286836014,
+     "gen_tokens": 400,
+     "gen_tps": 29.202969113348846,
+     "peak_memory_gb": 8.662935728,
+     "finish_reason": "stop",
+     "wall_s": 17.179260167002212,
+     "content_chars": 203,
+     "reasoning_chars": 1268
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-medium-train",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T05:50:14.212147+00:00",
+   "end_utc": "2026-11-09T05:50:45.503139+00:00",
+   "wall_s": 31.2907911670045,
+   "calls": [
+    {
+     "prompt_tokens": 2090,
+     "prompt_tps": 538.275515317089,
+     "gen_tokens": 794,
+     "gen_tps": 29.21695779557671,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 31.287030375009635,
+     "content_chars": 205,
+     "reasoning_chars": 2646
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:50:45.503471+00:00",
+   "end_utc": "2026-11-09T05:51:18.590414+00:00",
+   "wall_s": 33.08673650000128,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 550.2275124710695,
+     "gen_tokens": 789,
+     "gen_tps": 28.927692510307555,
+     "peak_memory_gb": 8.81145567,
+     "finish_reason": "stop",
+     "wall_s": 33.08257858300931,
+     "content_chars": 226,
+     "reasoning_chars": 2578
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-short-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:51:18.590703+00:00",
+   "end_utc": "2026-11-09T05:51:29.829207+00:00",
+   "wall_s": 11.238425624993397,
+   "calls": [
+    {
+     "prompt_tokens": 1251,
+     "prompt_tps": 527.9392563269487,
+     "gen_tokens": 257,
+     "gen_tps": 29.711098295265867,
+     "peak_memory_gb": 8.766910662,
+     "finish_reason": "stop",
+     "wall_s": 11.23661816699314,
+     "content_chars": 217,
+     "reasoning_chars": 663
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-medium-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:51:29.829390+00:00",
+   "end_utc": "2026-11-09T05:51:50.631491+00:00",
+   "wall_s": 20.801966541999718,
+   "calls": [
+    {
+     "prompt_tokens": 1580,
+     "prompt_tps": 532.4397556442464,
+     "gen_tokens": 519,
+     "gen_tps": 29.471772217073767,
+     "peak_memory_gb": 8.742933692,
+     "finish_reason": "stop",
+     "wall_s": 20.799583750020247,
+     "content_chars": 198,
+     "reasoning_chars": 1512
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:51:50.631729+00:00",
+   "end_utc": "2026-11-09T05:52:18.586917+00:00",
+   "wall_s": 27.955012833001092,
+   "calls": [
+    {
+     "prompt_tokens": 2155,
+     "prompt_tps": 545.2325423105905,
+     "gen_tokens": 695,
+     "gen_tps": 29.234563004899204,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 27.951867833995493,
+     "content_chars": 217,
+     "reasoning_chars": 2200
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-short-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:52:18.587170+00:00",
+   "end_utc": "2026-11-09T05:52:33.747262+00:00",
+   "wall_s": 15.159988625004189,
+   "calls": [
+    {
+     "prompt_tokens": 1192,
+     "prompt_tps": 525.1106621284468,
+     "gen_tokens": 372,
+     "gen_tps": 29.376242283874827,
+     "peak_memory_gb": 8.726032572,
+     "finish_reason": "stop",
+     "wall_s": 15.157882208994124,
+     "content_chars": 199,
+     "reasoning_chars": 1061
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-medium-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:52:33.747505+00:00",
+   "end_utc": "2026-11-09T05:52:52.989758+00:00",
+   "wall_s": 19.242132833984215,
+   "calls": [
+    {
+     "prompt_tokens": 1474,
+     "prompt_tps": 526.9755358986953,
+     "gen_tokens": 479,
+     "gen_tps": 29.528802304181312,
+     "peak_memory_gb": 8.679691452,
+     "finish_reason": "stop",
+     "wall_s": 19.24072737499955,
+     "content_chars": 222,
+     "reasoning_chars": 1462
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-medium-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:52:52.989853+00:00",
+   "end_utc": "2026-11-09T05:53:06.964630+00:00",
+   "wall_s": 13.974680458981311,
+   "calls": [
+    {
+     "prompt_tokens": 1292,
+     "prompt_tps": 525.9609689402212,
+     "gen_tokens": 335,
+     "gen_tps": 29.655345244673104,
+     "peak_memory_gb": 8.703448252,
+     "finish_reason": "stop",
+     "wall_s": 13.972584584000288,
+     "content_chars": 223,
+     "reasoning_chars": 1007
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-easy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T05:53:06.964951+00:00",
+   "end_utc": "2026-11-09T05:53:20.628839+00:00",
+   "wall_s": 13.663790582999354,
+   "calls": [
+    {
+     "prompt_tokens": 1284,
+     "prompt_tps": 525.2884470571088,
+     "gen_tokens": 326,
+     "gen_tps": 29.65430594995861,
+     "peak_memory_gb": 8.69832006,
+     "finish_reason": "stop",
+     "wall_s": 13.661477375018876,
+     "content_chars": 210,
+     "reasoning_chars": 845
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-hard",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:53:20.629152+00:00",
+   "end_utc": "2026-11-09T05:53:38.747137+00:00",
+   "wall_s": 18.117859541001962,
+   "calls": [
+    {
+     "prompt_tokens": 1552,
+     "prompt_tps": 540.7967073816235,
+     "gen_tokens": 443,
+     "gen_tps": 29.496459808926627,
+     "peak_memory_gb": 8.726549692,
+     "finish_reason": "stop",
+     "wall_s": 18.11529266598518,
+     "content_chars": 205,
+     "reasoning_chars": 1388
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T05:53:38.747400+00:00",
+   "end_utc": "2026-11-09T05:54:10.513256+00:00",
+   "wall_s": 31.76565783302067,
+   "calls": [
+    {
+     "prompt_tokens": 2421,
+     "prompt_tps": 552.4787125059024,
+     "gen_tokens": 791,
+     "gen_tps": 29.129206716290305,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 31.76208787498763,
+     "content_chars": 209,
+     "reasoning_chars": 2733
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:54:10.513542+00:00",
+   "end_utc": "2026-11-09T05:54:33.444989+00:00",
+   "wall_s": 22.9312976670044,
+   "calls": [
+    {
+     "prompt_tokens": 1461,
+     "prompt_tps": 541.5392197252916,
+     "gen_tokens": 590,
+     "gen_tps": 29.48722251120521,
+     "peak_memory_gb": 8.671925436,
+     "finish_reason": "stop",
+     "wall_s": 22.928845832997467,
+     "content_chars": 203,
+     "reasoning_chars": 1887
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-digits",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:54:33.445257+00:00",
+   "end_utc": "2026-11-09T05:55:07.527936+00:00",
+   "wall_s": 34.08246520900866,
+   "calls": [
+    {
+     "prompt_tokens": 1966,
+     "prompt_tps": 540.758893630135,
+     "gen_tokens": 880,
+     "gen_tps": 29.12386201870154,
+     "peak_memory_gb": 8.783942844,
+     "finish_reason": "stop",
+     "wall_s": 34.0794612080208,
+     "content_chars": 211,
+     "reasoning_chars": 3047
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:55:07.529667+00:00",
+   "end_utc": "2026-11-09T05:55:22.532973+00:00",
+   "wall_s": 15.003205040993635,
+   "calls": [
+    {
+     "prompt_tokens": 1133,
+     "prompt_tps": 515.9533802981791,
+     "gen_tokens": 374,
+     "gen_tps": 29.718488635780627,
+     "peak_memory_gb": 8.705411248,
+     "finish_reason": "stop",
+     "wall_s": 15.00112154200906,
+     "content_chars": 201,
+     "reasoning_chars": 1065
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:55:22.533224+00:00",
+   "end_utc": "2026-11-09T05:55:35.516518+00:00",
+   "wall_s": 12.973594375012908,
+   "calls": [
+    {
+     "prompt_tokens": 1229,
+     "prompt_tps": 533.3270554915725,
+     "gen_tokens": 310,
+     "gen_tps": 29.694147646012876,
+     "peak_memory_gb": 8.752591036,
+     "finish_reason": "stop",
+     "wall_s": 12.97140158401453,
+     "content_chars": 220,
+     "reasoning_chars": 857
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:55:35.516779+00:00",
+   "end_utc": "2026-11-09T05:55:59.594569+00:00",
+   "wall_s": 24.069161333027296,
+   "calls": [
+    {
+     "prompt_tokens": 2452,
+     "prompt_tps": 552.6300486996641,
+     "gen_tokens": 566,
+     "gen_tps": 29.1698789085061,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 24.06563687499147,
+     "content_chars": 230,
+     "reasoning_chars": 1851
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:55:59.594892+00:00",
+   "end_utc": "2026-11-09T05:56:15.787456+00:00",
+   "wall_s": 16.190924124995945,
+   "calls": [
+    {
+     "prompt_tokens": 1455,
+     "prompt_tps": 539.0263821407959,
+     "gen_tokens": 392,
+     "gen_tps": 29.561557792562283,
+     "peak_memory_gb": 8.668288188,
+     "finish_reason": "stop",
+     "wall_s": 16.188141165999696,
+     "content_chars": 202,
+     "reasoning_chars": 1083
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:56:15.787700+00:00",
+   "end_utc": "2026-11-09T05:56:30.211914+00:00",
+   "wall_s": 14.423568833997706,
+   "calls": [
+    {
+     "prompt_tokens": 1191,
+     "prompt_tps": 529.879383933105,
+     "gen_tokens": 355,
+     "gen_tps": 29.69265664235653,
+     "peak_memory_gb": 8.725131452,
+     "finish_reason": "stop",
+     "wall_s": 14.421573875006288,
+     "content_chars": 201,
+     "reasoning_chars": 979
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:56:30.212169+00:00",
+   "end_utc": "2026-11-09T05:56:43.032118+00:00",
+   "wall_s": 12.819623084011255,
+   "calls": [
+    {
+     "prompt_tokens": 1136,
+     "prompt_tps": 523.0029809134871,
+     "gen_tokens": 310,
+     "gen_tps": 29.7325577996738,
+     "peak_memory_gb": 8.707737776,
+     "finish_reason": "stop",
+     "wall_s": 12.817660291009815,
+     "content_chars": 218,
+     "reasoning_chars": 883
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:56:43.032369+00:00",
+   "end_utc": "2026-11-09T05:56:56.339008+00:00",
+   "wall_s": 13.306404667004244,
+   "calls": [
+    {
+     "prompt_tokens": 1265,
+     "prompt_tps": 530.8018025510828,
+     "gen_tokens": 317,
+     "gen_tps": 29.64069736003898,
+     "peak_memory_gb": 8.688267452,
+     "finish_reason": "stop",
+     "wall_s": 13.304172749980353,
+     "content_chars": 220,
+     "reasoning_chars": 980
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "mixed-heldout-dense",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T05:56:56.339254+00:00",
+   "end_utc": "2026-11-09T05:57:24.575073+00:00",
+   "wall_s": 28.235452417022316,
+   "calls": [
+    {
+     "prompt_tokens": 1618,
+     "prompt_tps": 536.1540884603859,
+     "gen_tokens": 735,
+     "gen_tps": 29.412541899648062,
+     "peak_memory_gb": 8.765510844,
+     "finish_reason": "stop",
+     "wall_s": 28.232779624988325,
+     "content_chars": 193,
+     "reasoning_chars": 2584
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-quiet-train-1",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:57:24.575357+00:00",
+   "end_utc": "2026-11-09T05:57:46.508083+00:00",
+   "wall_s": 21.932473541004583,
+   "calls": [
+    {
+     "prompt_tokens": 4057,
+     "prompt_tps": 544.0797130877058,
+     "gen_tokens": 408,
+     "gen_tps": 28.64441977240248,
+     "peak_memory_gb": 8.9245171,
+     "finish_reason": "stop",
+     "wall_s": 21.927932874998078,
+     "content_chars": 228,
+     "reasoning_chars": 1187
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-train-1",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T05:57:46.508294+00:00",
+   "end_utc": "2026-11-09T05:58:19.140490+00:00",
+   "wall_s": 32.631838125002105,
+   "calls": [
+    {
+     "prompt_tokens": 4776,
+     "prompt_tps": 546.625019701127,
+     "gen_tokens": 672,
+     "gen_tps": 28.403204944508236,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 32.626560167002026,
+     "content_chars": 209,
+     "reasoning_chars": 2119
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-train-1",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:58:19.140724+00:00",
+   "end_utc": "2026-11-09T05:58:56.599687+00:00",
+   "wall_s": 37.45855108401156,
+   "calls": [
+    {
+     "prompt_tokens": 5182,
+     "prompt_tps": 547.5699862167276,
+     "gen_tokens": 784,
+     "gen_tps": 28.24152628136042,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 37.45294575000298,
+     "content_chars": 221,
+     "reasoning_chars": 2615
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-train-1",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T05:58:56.599979+00:00",
+   "end_utc": "2026-11-09T05:59:20.746643+00:00",
+   "wall_s": 24.146392416994786,
+   "calls": [
+    {
+     "prompt_tokens": 4533,
+     "prompt_tps": 549.8476143185903,
+     "gen_tokens": 447,
+     "gen_tps": 28.533142652898643,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 24.14132491601049,
+     "content_chars": 230,
+     "reasoning_chars": 1322
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-pricing-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T05:59:20.748503+00:00",
+   "end_utc": "2026-11-09T05:59:53.514250+00:00",
+   "wall_s": 32.765387833991554,
+   "calls": [
+    {
+     "prompt_tokens": 4962,
+     "prompt_tps": 545.0842901945606,
+     "gen_tokens": 664,
+     "gen_tps": 28.336312317959663,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 32.760042542009614,
+     "content_chars": 216,
+     "reasoning_chars": 2093
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-scoping-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T05:59:53.514498+00:00",
+   "end_utc": "2026-11-09T06:00:25.013392+00:00",
+   "wall_s": 31.498547625000356,
+   "calls": [
+    {
+     "prompt_tokens": 5726,
+     "prompt_tps": 548.2283466816834,
+     "gen_tokens": 585,
+     "gen_tps": 28.094089635899884,
+     "peak_memory_gb": 8.979877444,
+     "finish_reason": "stop",
+     "wall_s": 31.492613332986366,
+     "content_chars": 232,
+     "reasoning_chars": 1924
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:00:25.013630+00:00",
+   "end_utc": "2026-11-09T06:00:58.504002+00:00",
+   "wall_s": 33.490005166007904,
+   "calls": [
+    {
+     "prompt_tokens": 6280,
+     "prompt_tps": 546.4548968633816,
+     "gen_tokens": 608,
+     "gen_tps": 27.933085802470533,
+     "peak_memory_gb": 9.0651906,
+     "finish_reason": "stop",
+     "wall_s": 33.48377929200069,
+     "content_chars": 209,
+     "reasoning_chars": 1818
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:00:58.504677+00:00",
+   "end_utc": "2026-11-09T06:01:35.537580+00:00",
+   "wall_s": 37.03249825001694,
+   "calls": [
+    {
+     "prompt_tokens": 7169,
+     "prompt_tps": 545.6760587545448,
+     "gen_tokens": 655,
+     "gen_tps": 27.681813912048096,
+     "peak_memory_gb": 9.0651906,
+     "finish_reason": "stop",
+     "wall_s": 37.02577208299772,
+     "content_chars": 227,
+     "reasoning_chars": 2104
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:01:35.539306+00:00",
+   "end_utc": "2026-11-09T06:02:16.067792+00:00",
+   "wall_s": 40.528041375015164,
+   "calls": [
+    {
+     "prompt_tokens": 8935,
+     "prompt_tps": 542.2168376104476,
+     "gen_tokens": 647,
+     "gen_tps": 27.169762814739716,
+     "peak_memory_gb": 9.178453192,
+     "finish_reason": "stop",
+     "wall_s": 40.51939654099988,
+     "content_chars": 220,
+     "reasoning_chars": 2183
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-mixed-heldout-3",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:02:16.068049+00:00",
+   "end_utc": "2026-11-09T06:02:52.052520+00:00",
+   "wall_s": 35.98407979100011,
+   "calls": [
+    {
+     "prompt_tokens": 5917,
+     "prompt_tps": 547.3941796550353,
+     "gen_tokens": 696,
+     "gen_tps": 27.898423716159265,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 35.97798629198223,
+     "content_chars": 216,
+     "reasoning_chars": 2162
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:02:52.057251+00:00",
+   "end_utc": "2026-11-09T06:03:02.717361+00:00",
+   "wall_s": 10.659976291994099,
+   "calls": [
+    {
+     "prompt_tokens": 204,
+     "prompt_tps": 435.86107595045183,
+     "gen_tokens": 302,
+     "gen_tps": 30.287738784705382,
+     "peak_memory_gb": 8.280826192,
+     "finish_reason": "stop",
+     "wall_s": 10.659088832995621,
+     "content_chars": 22,
+     "reasoning_chars": 1241
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "overdue-invoice",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:03:02.717598+00:00",
+   "end_utc": "2026-11-09T06:03:11.868574+00:00",
+   "wall_s": 9.150861208996503,
+   "calls": [
+    {
+     "prompt_tokens": 211,
+     "prompt_tps": 469.7506642428031,
+     "gen_tokens": 257,
+     "gen_tps": 30.32409451463352,
+     "peak_memory_gb": 8.293523792,
+     "finish_reason": "stop",
+     "wall_s": 9.149812916992232,
+     "content_chars": 22,
+     "reasoning_chars": 1069
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-substack",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:03:11.868796+00:00",
+   "end_utc": "2026-11-09T06:03:19.758326+00:00",
+   "wall_s": 7.889427666988922,
+   "calls": [
+    {
+     "prompt_tokens": 198,
+     "prompt_tps": 442.3317023990243,
+     "gen_tokens": 219,
+     "gen_tps": 30.34814168398867,
+     "peak_memory_gb": 8.279105798,
+     "finish_reason": "stop",
+     "wall_s": 7.888404958008323,
+     "content_chars": 19,
+     "reasoning_chars": 829
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-linkedin",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:03:19.758578+00:00",
+   "end_utc": "2026-11-09T06:03:28.219772+00:00",
+   "wall_s": 8.46108141701552,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 465.11822921649417,
+     "gen_tokens": 236,
+     "gen_tps": 30.309399733114375,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 8.460030332993483,
+     "content_chars": 24,
+     "reasoning_chars": 810
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "seo-cold-spam",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:03:28.220009+00:00",
+   "end_utc": "2026-11-09T06:03:38.426259+00:00",
+   "wall_s": 10.206121916999109,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 464.2687021639093,
+     "gen_tokens": 289,
+     "gen_tps": 30.307054639432348,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 10.20503824998741,
+     "content_chars": 19,
+     "reasoning_chars": 1115
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "friend-dinner",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:03:38.426515+00:00",
+   "end_utc": "2026-11-09T06:03:46.196438+00:00",
+   "wall_s": 7.769824207993224,
+   "calls": [
+    {
+     "prompt_tokens": 194,
+     "prompt_tps": 436.2679603099336,
+     "gen_tokens": 216,
+     "gen_tps": 30.431513043359132,
+     "peak_memory_gb": 8.27276519,
+     "finish_reason": "stop",
+     "wall_s": 7.768743209016975,
+     "content_chars": 24,
+     "reasoning_chars": 828
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "production-down",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:03:46.196680+00:00",
+   "end_utc": "2026-11-09T06:03:55.871137+00:00",
+   "wall_s": 9.674335207993863,
+   "calls": [
+    {
+     "prompt_tokens": 206,
+     "prompt_tps": 456.8649788168653,
+     "gen_tokens": 272,
+     "gen_tps": 30.235544060081875,
+     "peak_memory_gb": 8.285626704,
+     "finish_reason": "stop",
+     "wall_s": 9.673296374996426,
+     "content_chars": 22,
+     "reasoning_chars": 1148
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "gdpr-data-request",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:03:55.871378+00:00",
+   "end_utc": "2026-11-09T06:04:04.301140+00:00",
+   "wall_s": 8.429654749983456,
+   "calls": [
+    {
+     "prompt_tokens": 196,
+     "prompt_tps": 433.1514054674074,
+     "gen_tokens": 235,
+     "gen_tps": 30.3449538465307,
+     "peak_memory_gb": 8.27448551,
+     "finish_reason": "stop",
+     "wall_s": 8.428607000008924,
+     "content_chars": 22,
+     "reasoning_chars": 1009
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "conference-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:04:04.301397+00:00",
+   "end_utc": "2026-11-09T06:04:14.013535+00:00",
+   "wall_s": 9.712022250023438,
+   "calls": [
+    {
+     "prompt_tokens": 217,
+     "prompt_tps": 480.8590317385242,
+     "gen_tokens": 274,
+     "gen_tps": 30.2947721431742,
+     "peak_memory_gb": 8.302584144,
+     "finish_reason": "stop",
+     "wall_s": 9.711229792010272,
+     "content_chars": 24,
+     "reasoning_chars": 1118
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "promo-code",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:04:14.013681+00:00",
+   "end_utc": "2026-11-09T06:04:21.911912+00:00",
+   "wall_s": 7.898130707995733,
+   "calls": [
+    {
+     "prompt_tokens": 199,
+     "prompt_tps": 441.9815465618667,
+     "gen_tokens": 220,
+     "gen_tps": 30.40648932526206,
+     "peak_memory_gb": 8.280006918,
+     "finish_reason": "stop",
+     "wall_s": 7.897239874990191,
+     "content_chars": 19,
+     "reasoning_chars": 805
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-question-no-rush",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:04:21.912156+00:00",
+   "end_utc": "2026-11-09T06:04:31.691853+00:00",
+   "wall_s": 9.779575916996691,
+   "calls": [
+    {
+     "prompt_tokens": 205,
+     "prompt_tps": 450.1225760494163,
+     "gen_tokens": 276,
+     "gen_tps": 30.33835009829062,
+     "peak_memory_gb": 8.281497936,
+     "finish_reason": "stop",
+     "wall_s": 9.778588958986802,
+     "content_chars": 22,
+     "reasoning_chars": 1148
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "agency-whitelabel-offer",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:04:31.692108+00:00",
+   "end_utc": "2026-11-09T06:04:40.393611+00:00",
+   "wall_s": 8.701395584008424,
+   "calls": [
+    {
+     "prompt_tokens": 221,
+     "prompt_tps": 486.96442935335784,
+     "gen_tokens": 243,
+     "gen_tps": 30.303839327463493,
+     "peak_memory_gb": 8.309170512,
+     "finish_reason": "stop",
+     "wall_s": 8.700264374987455,
+     "content_chars": 24,
+     "reasoning_chars": 972
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "invoice-error-client",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:04:40.393843+00:00",
+   "end_utc": "2026-11-09T06:04:51.946174+00:00",
+   "wall_s": 11.552193459006958,
+   "calls": [
+    {
+     "prompt_tokens": 219,
+     "prompt_tps": 491.34403477576944,
+     "gen_tokens": 329,
+     "gen_tps": 30.241451793702318,
+     "peak_memory_gb": 8.30748296,
+     "finish_reason": "stop",
+     "wall_s": 11.551138542010449,
+     "content_chars": 22,
+     "reasoning_chars": 1325
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "dpa-signature-compliance",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:04:51.946420+00:00",
+   "end_utc": "2026-11-09T06:05:02.571032+00:00",
+   "wall_s": 10.624484208005015,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 459.71710523457955,
+     "gen_tokens": 297,
+     "gen_tps": 29.872749002224577,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 10.623437916015973,
+     "content_chars": 22,
+     "reasoning_chars": 1252
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-fake-urgency",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:05:02.571271+00:00",
+   "end_utc": "2026-11-09T06:05:13.448869+00:00",
+   "wall_s": 10.877467250014888,
+   "calls": [
+    {
+     "prompt_tokens": 213,
+     "prompt_tps": 471.81387458410444,
+     "gen_tokens": 308,
+     "gen_tps": 30.209933536142668,
+     "peak_memory_gb": 8.29609608,
+     "finish_reason": "stop",
+     "wall_s": 10.87609912501648,
+     "content_chars": 22,
+     "reasoning_chars": 1320
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "paid-workshop-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:05:13.449105+00:00",
+   "end_utc": "2026-11-09T06:05:25.172573+00:00",
+   "wall_s": 11.723329000000376,
+   "calls": [
+    {
+     "prompt_tokens": 225,
+     "prompt_tps": 512.3664877967875,
+     "gen_tokens": 333,
+     "gen_tps": 30.11963623439925,
+     "peak_memory_gb": 8.310399302,
+     "finish_reason": "stop",
+     "wall_s": 11.722279374982463,
+     "content_chars": 22,
+     "reasoning_chars": 1464
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "intro-no-ask",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:05:25.172823+00:00",
+   "end_utc": "2026-11-09T06:05:35.611406+00:00",
+   "wall_s": 10.438456625008257,
+   "calls": [
+    {
+     "prompt_tokens": 213,
+     "prompt_tps": 469.9828776276943,
+     "gen_tokens": 296,
+     "gen_tps": 30.309651103184066,
+     "peak_memory_gb": 8.29609608,
+     "finish_reason": "stop",
+     "wall_s": 10.437342999997782,
+     "content_chars": 24,
+     "reasoning_chars": 1230
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "disk-warning-no-action",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:05:35.611717+00:00",
+   "end_utc": "2026-11-09T06:05:46.736362+00:00",
+   "wall_s": 11.124512667011004,
+   "calls": [
+    {
+     "prompt_tokens": 212,
+     "prompt_tps": 467.7196675107439,
+     "gen_tokens": 316,
+     "gen_tps": 30.254794922217503,
+     "peak_memory_gb": 8.294326608,
+     "finish_reason": "stop",
+     "wall_s": 11.123108708008658,
+     "content_chars": 19,
+     "reasoning_chars": 1334
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "long-ramble-buried-incident",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:05:46.736580+00:00",
+   "end_utc": "2026-11-09T06:06:00.378359+00:00",
+   "wall_s": 13.641618875000859,
+   "calls": [
+    {
+     "prompt_tokens": 436,
+     "prompt_tps": 531.6693597629112,
+     "gen_tokens": 377,
+     "gen_tps": 29.9371289528967,
+     "peak_memory_gb": 8.52648152,
+     "finish_reason": "stop",
+     "wall_s": 13.640066457999637,
+     "content_chars": 38,
+     "reasoning_chars": 1539
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:06:00.378612+00:00",
+   "end_utc": "2026-11-09T06:06:10.974109+00:00",
+   "wall_s": 10.595365291985217,
+   "calls": [
+    {
+     "prompt_tokens": 215,
+     "prompt_tps": 471.1109041479881,
+     "gen_tokens": 300,
+     "gen_tps": 30.245758508075543,
+     "peak_memory_gb": 8.299798864,
+     "finish_reason": "stop",
+     "wall_s": 10.594282833015313,
+     "content_chars": 38,
+     "reasoning_chars": 1169
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "cold-sales-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:06:10.974326+00:00",
+   "end_utc": "2026-11-09T06:06:23.625476+00:00",
+   "wall_s": 12.651002833008533,
+   "calls": [
+    {
+     "prompt_tokens": 231,
+     "prompt_tps": 460.42033650241115,
+     "gen_tokens": 360,
+     "gen_tps": 30.20698750667649,
+     "peak_memory_gb": 8.32272007,
+     "finish_reason": "stop",
+     "wall_s": 12.64994570898125,
+     "content_chars": 22,
+     "reasoning_chars": 1449
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "nl-client-bug-buried",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:06:23.625750+00:00",
+   "end_utc": "2026-11-09T06:06:36.404254+00:00",
+   "wall_s": 12.778354875015793,
+   "calls": [
+    {
+     "prompt_tokens": 297,
+     "prompt_tps": 481.6907833148577,
+     "gen_tokens": 359,
+     "gen_tps": 30.07711376191092,
+     "peak_memory_gb": 8.368944138,
+     "finish_reason": "stop",
+     "wall_s": 12.77722212500521,
+     "content_chars": 22,
+     "reasoning_chars": 1460
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-tax-authority-documents",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:06:36.404528+00:00",
+   "end_utc": "2026-11-09T06:06:47.018935+00:00",
+   "wall_s": 10.61428262499976,
+   "calls": [
+    {
+     "prompt_tokens": 242,
+     "prompt_tps": 481.46392919084855,
+     "gen_tokens": 299,
+     "gen_tps": 30.22412451775861,
+     "peak_memory_gb": 8.343068998,
+     "finish_reason": "stop",
+     "wall_s": 10.613602750003338,
+     "content_chars": 22,
+     "reasoning_chars": 1299
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "stripe-payout-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:06:47.019039+00:00",
+   "end_utc": "2026-11-09T06:06:56.216161+00:00",
+   "wall_s": 9.197011167008895,
+   "calls": [
+    {
+     "prompt_tokens": 229,
+     "prompt_tps": 453.88335334670626,
+     "gen_tokens": 256,
+     "gen_tps": 30.2113704320154,
+     "peak_memory_gb": 8.319066438,
+     "finish_reason": "stop",
+     "wall_s": 9.196088583994424,
+     "content_chars": 19,
+     "reasoning_chars": 1060
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-domain-newsletter-nl",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:06:56.216385+00:00",
+   "end_utc": "2026-11-09T06:07:06.110384+00:00",
+   "wall_s": 9.893878750008298,
+   "calls": [
+    {
+     "prompt_tokens": 237,
+     "prompt_tps": 472.3764421514268,
+     "gen_tokens": 276,
+     "gen_tps": 30.117811522509825,
+     "peak_memory_gb": 8.332042566,
+     "finish_reason": "stop",
+     "wall_s": 9.892783584014978,
+     "content_chars": 19,
+     "reasoning_chars": 1060
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "calendar-accept-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:07:06.110685+00:00",
+   "end_utc": "2026-11-09T06:07:14.359119+00:00",
+   "wall_s": 8.248330207978142,
+   "calls": [
+    {
+     "prompt_tokens": 257,
+     "prompt_tps": 522.2200485405436,
+     "gen_tokens": 228,
+     "gen_tps": 30.282657395655995,
+     "peak_memory_gb": 8.371643682,
+     "finish_reason": "stop",
+     "wall_s": 8.247219167009462,
+     "content_chars": 19,
+     "reasoning_chars": 992
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "proposal-accept-conditional",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:07:14.359351+00:00",
+   "end_utc": "2026-11-09T06:07:25.791551+00:00",
+   "wall_s": 11.432064583990723,
+   "calls": [
+    {
+     "prompt_tokens": 242,
+     "prompt_tps": 478.3118362489751,
+     "gen_tokens": 323,
+     "gen_tps": 30.17530685512623,
+     "peak_memory_gb": 8.343068998,
+     "finish_reason": "stop",
+     "wall_s": 11.430978457996389,
+     "content_chars": 22,
+     "reasoning_chars": 1395
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-networking-coffee",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:07:25.791797+00:00",
+   "end_utc": "2026-11-09T06:07:34.299665+00:00",
+   "wall_s": 8.507761082990328,
+   "calls": [
+    {
+     "prompt_tokens": 254,
+     "prompt_tps": 506.9974965959256,
+     "gen_tokens": 231,
+     "gen_tps": 29.70791397729194,
+     "peak_memory_gb": 8.364368198,
+     "finish_reason": "stop",
+     "wall_s": 8.506677500001388,
+     "content_chars": 24,
+     "reasoning_chars": 867
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "busy-day-standard",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:07:34.304871+00:00",
+   "end_utc": "2026-11-09T06:08:02.522570+00:00",
+   "wall_s": 28.217379750014516,
+   "calls": [
+    {
+     "prompt_tokens": 923,
+     "prompt_tps": 531.6487359064805,
+     "gen_tokens": 779,
+     "gen_tps": 29.67244256408436,
+     "peak_memory_gb": 8.675615932,
+     "finish_reason": "stop",
+     "wall_s": 28.211757500015665,
+     "content_chars": 278,
+     "reasoning_chars": 2582
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-automated",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T06:08:02.522818+00:00",
+   "end_utc": "2026-11-09T06:08:17.700529+00:00",
+   "wall_s": 15.17753591600922,
+   "calls": [
+    {
+     "prompt_tokens": 575,
+     "prompt_tps": 550.1482667830094,
+     "gen_tokens": 416,
+     "gen_tps": 29.913145545339724,
+     "peak_memory_gb": 8.565646544,
+     "finish_reason": "stop",
+     "wall_s": 15.17330129200127,
+     "content_chars": 108,
+     "reasoning_chars": 1456
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "compression-heavy",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:08:17.700707+00:00",
+   "end_utc": "2026-11-09T06:08:49.809876+00:00",
+   "wall_s": 32.1088148340059,
+   "calls": [
+    {
+     "prompt_tokens": 1168,
+     "prompt_tps": 532.0856047404741,
+     "gen_tokens": 877,
+     "gen_tps": 29.545153996533614,
+     "peak_memory_gb": 8.70796102,
+     "finish_reason": "stop",
+     "wall_s": 32.10383108400856,
+     "content_chars": 336,
+     "reasoning_chars": 2855
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-and-dates",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:08:49.810083+00:00",
+   "end_utc": "2026-11-09T06:09:16.627363+00:00",
+   "wall_s": 26.81697995797731,
+   "calls": [
+    {
+     "prompt_tokens": 761,
+     "prompt_tps": 513.1177379882608,
+     "gen_tokens": 747,
+     "gen_tps": 29.757681743154784,
+     "peak_memory_gb": 8.543577276,
+     "finish_reason": "stop",
+     "wall_s": 26.81224179099081,
+     "content_chars": 308,
+     "reasoning_chars": 2138
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:09:16.627586+00:00",
+   "end_utc": "2026-11-09T06:09:50.106470+00:00",
+   "wall_s": 33.478521083976375,
+   "calls": [
+    {
+     "prompt_tokens": 1162,
+     "prompt_tps": 531.7746406642534,
+     "gen_tokens": 918,
+     "gen_tps": 29.54719958704086,
+     "peak_memory_gb": 8.70411078,
+     "finish_reason": "stop",
+     "wall_s": 33.4739423750143,
+     "content_chars": 265,
+     "reasoning_chars": 2970
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-newsletters",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:09:50.106623+00:00",
+   "end_utc": "2026-11-09T06:10:06.295277+00:00",
+   "wall_s": 16.188460833014688,
+   "calls": [
+    {
+     "prompt_tokens": 520,
+     "prompt_tps": 513.8297611248346,
+     "gen_tokens": 443,
+     "gen_tps": 29.632594954307898,
+     "peak_memory_gb": 8.537629914,
+     "finish_reason": "stop",
+     "wall_s": 16.18419679100043,
+     "content_chars": 226,
+     "reasoning_chars": 1545
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-with-receipt",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:10:06.295490+00:00",
+   "end_utc": "2026-11-09T06:10:28.948409+00:00",
+   "wall_s": 22.652664708002703,
+   "calls": [
+    {
+     "prompt_tokens": 653,
+     "prompt_tps": 508.7449795037266,
+     "gen_tokens": 631,
+     "gen_tps": 29.843861974377166,
+     "peak_memory_gb": 8.583472336,
+     "finish_reason": "stop",
+     "wall_s": 22.648260166984983,
+     "content_chars": 245,
+     "reasoning_chars": 2161
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "rounding-bait",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:10:28.948618+00:00",
+   "end_utc": "2026-11-09T06:10:53.092290+00:00",
+   "wall_s": 24.143408291012747,
+   "calls": [
+    {
+     "prompt_tokens": 666,
+     "prompt_tps": 509.2398162000332,
+     "gen_tokens": 674,
+     "gen_tps": 29.81491100099146,
+     "peak_memory_gb": 8.58414411,
+     "finish_reason": "stop",
+     "wall_s": 24.13945225000498,
+     "content_chars": 258,
+     "reasoning_chars": 2051
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "two-urgent-among-noise",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:10:53.092420+00:00",
+   "end_utc": "2026-11-09T06:11:25.424072+00:00",
+   "wall_s": 32.331294458010234,
+   "calls": [
+    {
+     "prompt_tokens": 1044,
+     "prompt_tps": 522.1905776304219,
+     "gen_tokens": 891,
+     "gen_tps": 29.594320203690554,
+     "peak_memory_gb": 8.74023754,
+     "finish_reason": "stop",
+     "wall_s": 32.32623554201564,
+     "content_chars": 404,
+     "reasoning_chars": 2664
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-xl",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:11:25.424296+00:00",
+   "end_utc": "2026-11-09T06:12:22.407376+00:00",
+   "wall_s": 56.98246787500102,
+   "calls": [
+    {
+     "prompt_tokens": 1984,
+     "prompt_tps": 546.6320247006595,
+     "gen_tokens": 1547,
+     "gen_tps": 29.115557833457967,
+     "peak_memory_gb": 8.78835015,
+     "finish_reason": "stop",
+     "wall_s": 56.97686325001996,
+     "content_chars": 617,
+     "reasoning_chars": 4552
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "very-long-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:12:22.407571+00:00",
+   "end_utc": "2026-11-09T06:13:12.414265+00:00",
+   "wall_s": 50.00615479200496,
+   "calls": [
+    {
+     "prompt_tokens": 1633,
+     "prompt_tps": 547.694963244956,
+     "gen_tokens": 1366,
+     "gen_tps": 29.188780253266287,
+     "peak_memory_gb": 8.773129404,
+     "finish_reason": "stop",
+     "wall_s": 50.000896166980965,
+     "content_chars": 669,
+     "reasoning_chars": 3890
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-heldout-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T06:13:12.414471+00:00",
+   "end_utc": "2026-11-09T06:14:21.655855+00:00",
+   "wall_s": 69.2406387499941,
+   "calls": [
+    {
+     "prompt_tokens": 2603,
+     "prompt_tps": 553.183033878244,
+     "gen_tokens": 1857,
+     "gen_tps": 28.87805124263565,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 69.23407229201985,
+     "content_chars": 493,
+     "reasoning_chars": 5480
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-quiet-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T06:14:21.656299+00:00",
+   "end_utc": "2026-11-09T06:15:05.491891+00:00",
+   "wall_s": 43.83511308400193,
+   "calls": [
+    {
+     "prompt_tokens": 1767,
+     "prompt_tps": 539.6207789204778,
+     "gen_tokens": 1176,
+     "gen_tps": 29.15700346804186,
+     "peak_memory_gb": 8.695387324,
+     "finish_reason": "stop",
+     "wall_s": 43.82956191600533,
+     "content_chars": 372,
+     "reasoning_chars": 3601
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:15:05.492160+00:00",
+   "end_utc": "2026-11-09T06:15:51.755264+00:00",
+   "wall_s": 46.262608542019734,
+   "calls": [
+    {
+     "prompt_tokens": 2118,
+     "prompt_tps": 543.3949136016574,
+     "gen_tokens": 1228,
+     "gen_tps": 29.135605168137843,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 46.25742004200583,
+     "content_chars": 285,
+     "reasoning_chars": 4015
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-at-length",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:15:51.756530+00:00",
+   "end_utc": "2026-11-09T06:16:52.881686+00:00",
+   "wall_s": 61.12449929199647,
+   "calls": [
+    {
+     "prompt_tokens": 1871,
+     "prompt_tps": 538.8627389709413,
+     "gen_tokens": 1674,
+     "gen_tps": 29.146774449295336,
+     "peak_memory_gb": 8.7378055,
+     "finish_reason": "stop",
+     "wall_s": 61.11941987500177,
+     "content_chars": 492,
+     "reasoning_chars": 4731
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-2",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:16:52.881897+00:00",
+   "end_utc": "2026-11-09T06:17:49.614625+00:00",
+   "wall_s": 56.732116665982176,
+   "calls": [
+    {
+     "prompt_tokens": 1698,
+     "prompt_tps": 539.446902575071,
+     "gen_tokens": 1553,
+     "gen_tps": 29.109672467028556,
+     "peak_memory_gb": 8.783516826,
+     "finish_reason": "stop",
+     "wall_s": 56.72650700001395,
+     "content_chars": 640,
+     "reasoning_chars": 4937
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-3",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:17:49.616351+00:00",
+   "end_utc": "2026-11-09T06:18:53.607552+00:00",
+   "wall_s": 63.990511207986856,
+   "calls": [
+    {
+     "prompt_tokens": 2345,
+     "prompt_tps": 548.6104218544447,
+     "gen_tokens": 1724,
+     "gen_tps": 28.98214517037585,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 63.98425566597143,
+     "content_chars": 765,
+     "reasoning_chars": 5277
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "dependency-delivery-vs-install",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:18:53.607767+00:00",
+   "end_utc": "2026-11-09T06:19:19.947567+00:00",
+   "wall_s": 26.33950574998744,
+   "calls": [
+    {
+     "prompt_tokens": 825,
+     "prompt_tps": 526.3668452156462,
+     "gen_tokens": 730,
+     "gen_tps": 29.736150273429434,
+     "peak_memory_gb": 8.585602236,
+     "finish_reason": "stop",
+     "wall_s": 26.334959375002654,
+     "content_chars": 306,
+     "reasoning_chars": 2300
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "near-duplicate-invoices",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:19:19.947798+00:00",
+   "end_utc": "2026-11-09T06:19:48.568374+00:00",
+   "wall_s": 28.6202596250223,
+   "calls": [
+    {
+     "prompt_tokens": 779,
+     "prompt_tps": 513.901183692828,
+     "gen_tokens": 799,
+     "gen_tps": 29.734279554570982,
+     "peak_memory_gb": 8.562795708,
+     "finish_reason": "stop",
+     "wall_s": 28.61555041599786,
+     "content_chars": 319,
+     "reasoning_chars": 2332
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-big-amount-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T06:19:48.568586+00:00",
+   "end_utc": "2026-11-09T06:20:13.116134+00:00",
+   "wall_s": 24.547273500007577,
+   "calls": [
+    {
+     "prompt_tokens": 736,
+     "prompt_tps": 521.9580363337635,
+     "gen_tokens": 678,
+     "gen_tps": 29.591077172926198,
+     "peak_memory_gb": 8.64779591,
+     "finish_reason": "stop",
+     "wall_s": 24.542704709019745,
+     "content_chars": 300,
+     "reasoning_chars": 2268
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "automated-but-actionable",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:20:13.116345+00:00",
+   "end_utc": "2026-11-09T06:20:33.288523+00:00",
+   "wall_s": 20.171948166011134,
+   "calls": [
+    {
+     "prompt_tokens": 722,
+     "prompt_tps": 542.0000968508828,
+     "gen_tokens": 555,
+     "gen_tps": 29.817465401832727,
+     "peak_memory_gb": 8.643470574,
+     "finish_reason": "stop",
+     "wall_s": 20.1673165000102,
+     "content_chars": 264,
+     "reasoning_chars": 1852
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-last-en",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:20:33.290224+00:00",
+   "end_utc": "2026-11-09T06:21:02.773010+00:00",
+   "wall_s": 29.48246079098317,
+   "calls": [
+    {
+     "prompt_tokens": 774,
+     "prompt_tps": 512.3671179960835,
+     "gen_tokens": 825,
+     "gen_tps": 29.726519399535377,
+     "peak_memory_gb": 8.55866694,
+     "finish_reason": "stop",
+     "wall_s": 29.47838691601646,
+     "content_chars": 268,
+     "reasoning_chars": 2866
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "meeting-moved-date-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:21:02.773199+00:00",
+   "end_utc": "2026-11-09T06:21:26.038252+00:00",
+   "wall_s": 23.264801417011768,
+   "calls": [
+    {
+     "prompt_tokens": 726,
+     "prompt_tps": 491.62532743721215,
+     "gen_tokens": 643,
+     "gen_tps": 29.79144080336655,
+     "peak_memory_gb": 8.647353582,
+     "finish_reason": "stop",
+     "wall_s": 23.262053709011525,
+     "content_chars": 237,
+     "reasoning_chars": 1939
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-short-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:21:31.120622+00:00",
+   "end_utc": "2026-11-09T06:21:48.193450+00:00",
+   "wall_s": 17.072049833019264,
+   "calls": [
+    {
+     "prompt_tokens": 1445,
+     "prompt_tps": 443.0721529881677,
+     "gen_tokens": 400,
+     "gen_tps": 29.53050656662653,
+     "peak_memory_gb": 8.662935728,
+     "finish_reason": "stop",
+     "wall_s": 17.066952999972273,
+     "content_chars": 203,
+     "reasoning_chars": 1268
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-medium-train",
+   "split": "train",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:21:48.193873+00:00",
+   "end_utc": "2026-11-09T06:22:19.587521+00:00",
+   "wall_s": 31.393300374998944,
+   "calls": [
+    {
+     "prompt_tokens": 2090,
+     "prompt_tps": 543.6333913288488,
+     "gen_tokens": 794,
+     "gen_tps": 29.064892097153283,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 31.389561542018782,
+     "content_chars": 205,
+     "reasoning_chars": 2646
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:22:19.587811+00:00",
+   "end_utc": "2026-11-09T06:22:52.865179+00:00",
+   "wall_s": 33.27699670800939,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 547.487402526435,
+     "gen_tokens": 789,
+     "gen_tps": 28.75481763193063,
+     "peak_memory_gb": 8.81145567,
+     "finish_reason": "stop",
+     "wall_s": 33.27224691698211,
+     "content_chars": 226,
+     "reasoning_chars": 2578
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-short-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:22:52.866838+00:00",
+   "end_utc": "2026-11-09T06:23:04.148392+00:00",
+   "wall_s": 11.281416166981217,
+   "calls": [
+    {
+     "prompt_tokens": 1251,
+     "prompt_tps": 521.9012348828957,
+     "gen_tokens": 257,
+     "gen_tps": 29.70527498101411,
+     "peak_memory_gb": 8.766910662,
+     "finish_reason": "stop",
+     "wall_s": 11.278738583001541,
+     "content_chars": 217,
+     "reasoning_chars": 663
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-medium-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:23:04.148664+00:00",
+   "end_utc": "2026-11-09T06:23:24.920854+00:00",
+   "wall_s": 20.771953291987302,
+   "calls": [
+    {
+     "prompt_tokens": 1580,
+     "prompt_tps": 539.0692654116004,
+     "gen_tokens": 519,
+     "gen_tps": 29.466143386463138,
+     "peak_memory_gb": 8.742933692,
+     "finish_reason": "stop",
+     "wall_s": 20.76896441698773,
+     "content_chars": 198,
+     "reasoning_chars": 1512
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-long-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:23:24.921135+00:00",
+   "end_utc": "2026-11-09T06:23:52.980113+00:00",
+   "wall_s": 28.058666625001933,
+   "calls": [
+    {
+     "prompt_tokens": 2155,
+     "prompt_tps": 538.9442837568787,
+     "gen_tokens": 695,
+     "gen_tps": 29.16418677100087,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 28.05547175000538,
+     "content_chars": 217,
+     "reasoning_chars": 2200
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-short-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:23:52.981665+00:00",
+   "end_utc": "2026-11-09T06:24:08.030411+00:00",
+   "wall_s": 15.04856724999263,
+   "calls": [
+    {
+     "prompt_tokens": 1192,
+     "prompt_tps": 523.6337693520608,
+     "gen_tokens": 372,
+     "gen_tps": 29.663068900486888,
+     "peak_memory_gb": 8.726032572,
+     "finish_reason": "stop",
+     "wall_s": 15.046750041015912,
+     "content_chars": 199,
+     "reasoning_chars": 1061
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-medium-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:24:08.030613+00:00",
+   "end_utc": "2026-11-09T06:24:27.268462+00:00",
+   "wall_s": 19.237630459014326,
+   "calls": [
+    {
+     "prompt_tokens": 1474,
+     "prompt_tps": 529.2633912129791,
+     "gen_tokens": 479,
+     "gen_tps": 29.518424164800226,
+     "peak_memory_gb": 8.679691452,
+     "finish_reason": "stop",
+     "wall_s": 19.235341874998994,
+     "content_chars": 222,
+     "reasoning_chars": 1462
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-medium-train",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:24:27.270080+00:00",
+   "end_utc": "2026-11-09T06:24:41.207966+00:00",
+   "wall_s": 13.937718958011828,
+   "calls": [
+    {
+     "prompt_tokens": 1292,
+     "prompt_tps": 535.6686607443877,
+     "gen_tokens": 335,
+     "gen_tps": 29.6444178633174,
+     "peak_memory_gb": 8.703448252,
+     "finish_reason": "stop",
+     "wall_s": 13.93500470899744,
+     "content_chars": 223,
+     "reasoning_chars": 1007
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-easy",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:24:41.208291+00:00",
+   "end_utc": "2026-11-09T06:24:54.845712+00:00",
+   "wall_s": 13.637261250027223,
+   "calls": [
+    {
+     "prompt_tokens": 1284,
+     "prompt_tps": 531.9828627418926,
+     "gen_tokens": 326,
+     "gen_tps": 29.65611303315828,
+     "peak_memory_gb": 8.69832006,
+     "finish_reason": "stop",
+     "wall_s": 13.634595290990546,
+     "content_chars": 210,
+     "reasoning_chars": 845
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-hard",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:24:54.845980+00:00",
+   "end_utc": "2026-11-09T06:25:13.118828+00:00",
+   "wall_s": 18.272635874978732,
+   "calls": [
+    {
+     "prompt_tokens": 1552,
+     "prompt_tps": 532.4921193017155,
+     "gen_tokens": 443,
+     "gen_tps": 29.28098266840397,
+     "peak_memory_gb": 8.726549692,
+     "finish_reason": "stop",
+     "wall_s": 18.26957649999531,
+     "content_chars": 205,
+     "reasoning_chars": 1388
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-long",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:25:13.119091+00:00",
+   "end_utc": "2026-11-09T06:25:44.896755+00:00",
+   "wall_s": 31.77731658401899,
+   "calls": [
+    {
+     "prompt_tokens": 2421,
+     "prompt_tps": 552.6355601570631,
+     "gen_tokens": 791,
+     "gen_tps": 29.11556502057998,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 31.773558791988762,
+     "content_chars": 209,
+     "reasoning_chars": 2733
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-medium",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:25:44.897010+00:00",
+   "end_utc": "2026-11-09T06:26:07.844859+00:00",
+   "wall_s": 22.947589582996443,
+   "calls": [
+    {
+     "prompt_tokens": 1461,
+     "prompt_tps": 540.6190642657425,
+     "gen_tokens": 590,
+     "gen_tps": 29.47300046065156,
+     "peak_memory_gb": 8.671925436,
+     "finish_reason": "stop",
+     "wall_s": 22.944706958980532,
+     "content_chars": 203,
+     "reasoning_chars": 1887
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-digits",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:26:07.845128+00:00",
+   "end_utc": "2026-11-09T06:26:41.799315+00:00",
+   "wall_s": 33.953814707987476,
+   "calls": [
+    {
+     "prompt_tokens": 1966,
+     "prompt_tps": 542.559344325518,
+     "gen_tokens": 880,
+     "gen_tps": 29.240842031385476,
+     "peak_memory_gb": 8.783942844,
+     "finish_reason": "stop",
+     "wall_s": 33.950783000007505,
+     "content_chars": 211,
+     "reasoning_chars": 3047
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-short",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:26:41.799611+00:00",
+   "end_utc": "2026-11-09T06:26:56.788826+00:00",
+   "wall_s": 14.989038166997489,
+   "calls": [
+    {
+     "prompt_tokens": 1133,
+     "prompt_tps": 522.0219165918722,
+     "gen_tokens": 374,
+     "gen_tps": 29.699021364225317,
+     "peak_memory_gb": 8.705411248,
+     "finish_reason": "stop",
+     "wall_s": 14.98656270900392,
+     "content_chars": 201,
+     "reasoning_chars": 1065
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-short",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:26:56.789082+00:00",
+   "end_utc": "2026-11-09T06:27:09.759096+00:00",
+   "wall_s": 12.969859542004997,
+   "calls": [
+    {
+     "prompt_tokens": 1229,
+     "prompt_tps": 534.5649931144785,
+     "gen_tokens": 310,
+     "gen_tps": 29.69444665929223,
+     "peak_memory_gb": 8.752591036,
+     "finish_reason": "stop",
+     "wall_s": 12.967224500025623,
+     "content_chars": 220,
+     "reasoning_chars": 857
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-long",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:27:09.759363+00:00",
+   "end_utc": "2026-11-09T06:27:33.964262+00:00",
+   "wall_s": 24.204627917002654,
+   "calls": [
+    {
+     "prompt_tokens": 2452,
+     "prompt_tps": 552.6828584208208,
+     "gen_tokens": 566,
+     "gen_tps": 28.96818875112245,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 24.200817417004146,
+     "content_chars": 230,
+     "reasoning_chars": 1851
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-medium",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:27:33.964534+00:00",
+   "end_utc": "2026-11-09T06:27:50.164129+00:00",
+   "wall_s": 16.19940679197316,
+   "calls": [
+    {
+     "prompt_tokens": 1455,
+     "prompt_tps": 537.3470924089335,
+     "gen_tokens": 392,
+     "gen_tps": 29.545891704087822,
+     "peak_memory_gb": 8.668288188,
+     "finish_reason": "stop",
+     "wall_s": 16.196514541021315,
+     "content_chars": 202,
+     "reasoning_chars": 1083
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-short",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:27:50.164390+00:00",
+   "end_utc": "2026-11-09T06:28:04.628660+00:00",
+   "wall_s": 14.46410112499143,
+   "calls": [
+    {
+     "prompt_tokens": 1191,
+     "prompt_tps": 522.3875427278374,
+     "gen_tokens": 355,
+     "gen_tps": 29.675531602010008,
+     "peak_memory_gb": 8.725131452,
+     "finish_reason": "stop",
+     "wall_s": 14.461948707990814,
+     "content_chars": 201,
+     "reasoning_chars": 979
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-short",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:28:04.629249+00:00",
+   "end_utc": "2026-11-09T06:28:17.415801+00:00",
+   "wall_s": 12.786393832997419,
+   "calls": [
+    {
+     "prompt_tokens": 1136,
+     "prompt_tps": 531.5875486591137,
+     "gen_tokens": 310,
+     "gen_tps": 29.735140232350375,
+     "peak_memory_gb": 8.707737776,
+     "finish_reason": "stop",
+     "wall_s": 12.78438341600122,
+     "content_chars": 218,
+     "reasoning_chars": 883
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-medium",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:28:17.416060+00:00",
+   "end_utc": "2026-11-09T06:28:30.733267+00:00",
+   "wall_s": 13.317047459015157,
+   "calls": [
+    {
+     "prompt_tokens": 1265,
+     "prompt_tps": 527.3163322319394,
+     "gen_tokens": 317,
+     "gen_tps": 29.656459850677606,
+     "peak_memory_gb": 8.688267452,
+     "finish_reason": "stop",
+     "wall_s": 13.314288458990632,
+     "content_chars": 220,
+     "reasoning_chars": 980
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "mixed-heldout-dense",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:28:30.733556+00:00",
+   "end_utc": "2026-11-09T06:28:58.974155+00:00",
+   "wall_s": 28.240284207975492,
+   "calls": [
+    {
+     "prompt_tokens": 1618,
+     "prompt_tps": 536.5777086423724,
+     "gen_tokens": 735,
+     "gen_tps": 29.401834478040552,
+     "peak_memory_gb": 8.765510844,
+     "finish_reason": "stop",
+     "wall_s": 28.237322208995465,
+     "content_chars": 193,
+     "reasoning_chars": 2584
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-quiet-train-1",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:28:58.974430+00:00",
+   "end_utc": "2026-11-09T06:29:20.843698+00:00",
+   "wall_s": 21.86901791699347,
+   "calls": [
+    {
+     "prompt_tokens": 4057,
+     "prompt_tps": 547.6191916572681,
+     "gen_tokens": 408,
+     "gen_tps": 28.688687050489758,
+     "peak_memory_gb": 8.9245171,
+     "finish_reason": "stop",
+     "wall_s": 21.864233833010076,
+     "content_chars": 228,
+     "reasoning_chars": 1187
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-train-1",
+   "split": "train",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:29:20.845470+00:00",
+   "end_utc": "2026-11-09T06:29:53.545250+00:00",
+   "wall_s": 32.716657999990275,
+   "calls": [
+    {
+     "prompt_tokens": 4776,
+     "prompt_tps": 542.3079520846387,
+     "gen_tokens": 672,
+     "gen_tps": 28.390131068994755,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 32.711125375004485,
+     "content_chars": 209,
+     "reasoning_chars": 2119
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-train-1",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:29:53.546969+00:00",
+   "end_utc": "2026-11-09T06:30:31.033476+00:00",
+   "wall_s": 37.48883520899108,
+   "calls": [
+    {
+     "prompt_tokens": 5182,
+     "prompt_tps": 547.6845932297564,
+     "gen_tokens": 784,
+     "gen_tps": 28.202860235543156,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 37.482762667001225,
+     "content_chars": 221,
+     "reasoning_chars": 2615
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-train-1",
+   "split": "train",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:30:31.035124+00:00",
+   "end_utc": "2026-11-09T06:30:55.147696+00:00",
+   "wall_s": 24.112606999988202,
+   "calls": [
+    {
+     "prompt_tokens": 4533,
+     "prompt_tps": 552.7271311820418,
+     "gen_tokens": 447,
+     "gen_tps": 28.504699272689418,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 24.107329749997007,
+     "content_chars": 230,
+     "reasoning_chars": 1322
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-pricing-heldout-1",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:30:55.149542+00:00",
+   "end_utc": "2026-11-09T06:31:27.872680+00:00",
+   "wall_s": 32.72296604097937,
+   "calls": [
+    {
+     "prompt_tokens": 4962,
+     "prompt_tps": 547.0153185215195,
+     "gen_tokens": 664,
+     "gen_tps": 28.34500772886009,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 32.71713708300376,
+     "content_chars": 216,
+     "reasoning_chars": 2093
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-scoping-heldout-1",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:31:27.874494+00:00",
+   "end_utc": "2026-11-09T06:31:59.397623+00:00",
+   "wall_s": 31.522927792015253,
+   "calls": [
+    {
+     "prompt_tokens": 5726,
+     "prompt_tps": 546.2340885358141,
+     "gen_tokens": 585,
+     "gen_tps": 28.113909985668286,
+     "peak_memory_gb": 8.979877444,
+     "finish_reason": "stop",
+     "wall_s": 31.51669295798638,
+     "content_chars": 232,
+     "reasoning_chars": 1924
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-heldout-2",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:31:59.397916+00:00",
+   "end_utc": "2026-11-09T06:32:32.993915+00:00",
+   "wall_s": 33.59577779198298,
+   "calls": [
+    {
+     "prompt_tokens": 6280,
+     "prompt_tps": 545.8273701387714,
+     "gen_tokens": 608,
+     "gen_tps": 27.804361220378855,
+     "peak_memory_gb": 9.0651906,
+     "finish_reason": "stop",
+     "wall_s": 33.59010704100365,
+     "content_chars": 209,
+     "reasoning_chars": 1818
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-heldout-2",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:32:32.994117+00:00",
+   "end_utc": "2026-11-09T06:33:09.992124+00:00",
+   "wall_s": 36.99776654198649,
+   "calls": [
+    {
+     "prompt_tokens": 7169,
+     "prompt_tps": 546.9790712685816,
+     "gen_tokens": 655,
+     "gen_tps": 27.682450789598356,
+     "peak_memory_gb": 9.0651906,
+     "finish_reason": "stop",
+     "wall_s": 36.990484749985626,
+     "content_chars": 227,
+     "reasoning_chars": 2104
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-heldout-2",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:33:09.993912+00:00",
+   "end_utc": "2026-11-09T06:33:50.527806+00:00",
+   "wall_s": 40.53362683401792,
+   "calls": [
+    {
+     "prompt_tokens": 8935,
+     "prompt_tps": 542.4555722207947,
+     "gen_tokens": 647,
+     "gen_tps": 27.15513275709574,
+     "peak_memory_gb": 9.178453192,
+     "finish_reason": "stop",
+     "wall_s": 40.52542279101908,
+     "content_chars": 220,
+     "reasoning_chars": 2183
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-mixed-heldout-3",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:33:50.529522+00:00",
+   "end_utc": "2026-11-09T06:34:26.402747+00:00",
+   "wall_s": 35.87298537499737,
+   "calls": [
+    {
+     "prompt_tokens": 5917,
+     "prompt_tps": 546.6851560907933,
+     "gen_tokens": 696,
+     "gen_tps": 28.041648380754854,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 35.86621491599362,
+     "content_chars": 216,
+     "reasoning_chars": 2162
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:34:26.408625+00:00",
+   "end_utc": "2026-11-09T06:34:37.105938+00:00",
+   "wall_s": 10.69722366699716,
+   "calls": [
+    {
+     "prompt_tokens": 204,
+     "prompt_tps": 439.1329921634943,
+     "gen_tokens": 302,
+     "gen_tps": 30.144532802614602,
+     "peak_memory_gb": 8.280826192,
+     "finish_reason": "stop",
+     "wall_s": 10.69633433400304,
+     "content_chars": 22,
+     "reasoning_chars": 1241
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "overdue-invoice",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:34:37.106193+00:00",
+   "end_utc": "2026-11-09T06:34:46.255464+00:00",
+   "wall_s": 9.14919899997767,
+   "calls": [
+    {
+     "prompt_tokens": 211,
+     "prompt_tps": 468.1674771177346,
+     "gen_tokens": 257,
+     "gen_tps": 30.32359299923612,
+     "peak_memory_gb": 8.293523792,
+     "finish_reason": "stop",
+     "wall_s": 9.148228291975101,
+     "content_chars": 22,
+     "reasoning_chars": 1069
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-substack",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:34:46.255712+00:00",
+   "end_utc": "2026-11-09T06:34:54.142168+00:00",
+   "wall_s": 7.8863882909936365,
+   "calls": [
+    {
+     "prompt_tokens": 198,
+     "prompt_tps": 443.52652870238603,
+     "gen_tokens": 219,
+     "gen_tps": 30.35168175162391,
+     "peak_memory_gb": 8.279105798,
+     "finish_reason": "stop",
+     "wall_s": 7.885408583009848,
+     "content_chars": 19,
+     "reasoning_chars": 829
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-linkedin",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:34:54.142439+00:00",
+   "end_utc": "2026-11-09T06:35:02.744994+00:00",
+   "wall_s": 8.6024817499856,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 465.6576112548425,
+     "gen_tokens": 236,
+     "gen_tps": 29.765560735201834,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 8.601463667000644,
+     "content_chars": 24,
+     "reasoning_chars": 810
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "seo-cold-spam",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:35:02.745257+00:00",
+   "end_utc": "2026-11-09T06:35:13.044056+00:00",
+   "wall_s": 10.298717708006734,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 460.6988865616045,
+     "gen_tokens": 289,
+     "gen_tps": 30.05244268439551,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 10.297727958008181,
+     "content_chars": 19,
+     "reasoning_chars": 1115
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "friend-dinner",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:35:13.044296+00:00",
+   "end_utc": "2026-11-09T06:35:20.810697+00:00",
+   "wall_s": 7.766336707980372,
+   "calls": [
+    {
+     "prompt_tokens": 194,
+     "prompt_tps": 436.8827772513268,
+     "gen_tokens": 216,
+     "gen_tps": 30.43896474972553,
+     "peak_memory_gb": 8.27276519,
+     "finish_reason": "stop",
+     "wall_s": 7.765318708989071,
+     "content_chars": 24,
+     "reasoning_chars": 828
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "production-down",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:35:20.811001+00:00",
+   "end_utc": "2026-11-09T06:35:30.461286+00:00",
+   "wall_s": 9.65020870801527,
+   "calls": [
+    {
+     "prompt_tokens": 206,
+     "prompt_tps": 459.20565223272126,
+     "gen_tokens": 272,
+     "gen_tps": 30.310831590491187,
+     "peak_memory_gb": 8.285626704,
+     "finish_reason": "stop",
+     "wall_s": 9.649198166007409,
+     "content_chars": 22,
+     "reasoning_chars": 1148
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "gdpr-data-request",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:35:30.461545+00:00",
+   "end_utc": "2026-11-09T06:35:38.879548+00:00",
+   "wall_s": 8.417932499985909,
+   "calls": [
+    {
+     "prompt_tokens": 196,
+     "prompt_tps": 438.32046446919566,
+     "gen_tokens": 235,
+     "gen_tps": 30.3505963681404,
+     "peak_memory_gb": 8.27448551,
+     "finish_reason": "stop",
+     "wall_s": 8.416953292005928,
+     "content_chars": 22,
+     "reasoning_chars": 1009
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "conference-invite",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:35:38.879819+00:00",
+   "end_utc": "2026-11-09T06:35:48.614593+00:00",
+   "wall_s": 9.734696500003338,
+   "calls": [
+    {
+     "prompt_tokens": 217,
+     "prompt_tps": 478.7929559693519,
+     "gen_tokens": 274,
+     "gen_tps": 30.268747816156555,
+     "peak_memory_gb": 8.302584144,
+     "finish_reason": "stop",
+     "wall_s": 9.733662540995283,
+     "content_chars": 24,
+     "reasoning_chars": 1118
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "promo-code",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:35:48.614907+00:00",
+   "end_utc": "2026-11-09T06:35:56.525532+00:00",
+   "wall_s": 7.910561041004257,
+   "calls": [
+    {
+     "prompt_tokens": 199,
+     "prompt_tps": 443.6100236729323,
+     "gen_tokens": 220,
+     "gen_tps": 30.39837432260907,
+     "peak_memory_gb": 8.280006918,
+     "finish_reason": "stop",
+     "wall_s": 7.909524624992628,
+     "content_chars": 19,
+     "reasoning_chars": 805
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-question-no-rush",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:35:56.525782+00:00",
+   "end_utc": "2026-11-09T06:36:06.330340+00:00",
+   "wall_s": 9.804474292002851,
+   "calls": [
+    {
+     "prompt_tokens": 205,
+     "prompt_tps": 454.75195025956543,
+     "gen_tokens": 276,
+     "gen_tps": 30.251058575861766,
+     "peak_memory_gb": 8.281497936,
+     "finish_reason": "stop",
+     "wall_s": 9.80351441600942,
+     "content_chars": 22,
+     "reasoning_chars": 1148
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "agency-whitelabel-offer",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:36:06.330578+00:00",
+   "end_utc": "2026-11-09T06:36:15.036753+00:00",
+   "wall_s": 8.706103375006933,
+   "calls": [
+    {
+     "prompt_tokens": 221,
+     "prompt_tps": 485.59195390911856,
+     "gen_tokens": 243,
+     "gen_tps": 30.2844853515424,
+     "peak_memory_gb": 8.309170512,
+     "finish_reason": "stop",
+     "wall_s": 8.70504770797561,
+     "content_chars": 24,
+     "reasoning_chars": 972
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "invoice-error-client",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:36:15.037026+00:00",
+   "end_utc": "2026-11-09T06:36:26.601251+00:00",
+   "wall_s": 11.564134124986595,
+   "calls": [
+    {
+     "prompt_tokens": 219,
+     "prompt_tps": 487.4677842213835,
+     "gen_tokens": 329,
+     "gen_tps": 30.215664188358613,
+     "peak_memory_gb": 8.30748296,
+     "finish_reason": "stop",
+     "wall_s": 11.563043417001609,
+     "content_chars": 22,
+     "reasoning_chars": 1325
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "dpa-signature-compliance",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:36:26.601516+00:00",
+   "end_utc": "2026-11-09T06:36:37.121314+00:00",
+   "wall_s": 10.519710500026122,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 461.32404990759784,
+     "gen_tokens": 297,
+     "gen_tps": 30.171618862200706,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 10.518658957997104,
+     "content_chars": 22,
+     "reasoning_chars": 1252
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-fake-urgency",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:36:37.121576+00:00",
+   "end_utc": "2026-11-09T06:36:47.982988+00:00",
+   "wall_s": 10.86132604200975,
+   "calls": [
+    {
+     "prompt_tokens": 213,
+     "prompt_tps": 469.41799608246663,
+     "gen_tokens": 308,
+     "gen_tps": 30.250678682105946,
+     "peak_memory_gb": 8.29609608,
+     "finish_reason": "stop",
+     "wall_s": 10.860272958991118,
+     "content_chars": 22,
+     "reasoning_chars": 1320
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "paid-workshop-invite",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:36:47.983250+00:00",
+   "end_utc": "2026-11-09T06:36:59.686658+00:00",
+   "wall_s": 11.703321708977455,
+   "calls": [
+    {
+     "prompt_tokens": 225,
+     "prompt_tps": 503.7028697827541,
+     "gen_tokens": 333,
+     "gen_tps": 30.191876400274605,
+     "peak_memory_gb": 8.310399302,
+     "finish_reason": "stop",
+     "wall_s": 11.702293915994233,
+     "content_chars": 22,
+     "reasoning_chars": 1464
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "intro-no-ask",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:36:59.686950+00:00",
+   "end_utc": "2026-11-09T06:37:10.133536+00:00",
+   "wall_s": 10.446503540995764,
+   "calls": [
+    {
+     "prompt_tokens": 213,
+     "prompt_tps": 473.2870122136099,
+     "gen_tokens": 296,
+     "gen_tps": 30.298402674889424,
+     "peak_memory_gb": 8.29609608,
+     "finish_reason": "stop",
+     "wall_s": 10.445514624996576,
+     "content_chars": 24,
+     "reasoning_chars": 1230
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "disk-warning-no-action",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:37:10.133847+00:00",
+   "end_utc": "2026-11-09T06:37:21.269600+00:00",
+   "wall_s": 11.135665666981367,
+   "calls": [
+    {
+     "prompt_tokens": 212,
+     "prompt_tps": 470.0865408041547,
+     "gen_tokens": 316,
+     "gen_tps": 30.213022845497537,
+     "peak_memory_gb": 8.294326608,
+     "finish_reason": "stop",
+     "wall_s": 11.134617874980904,
+     "content_chars": 19,
+     "reasoning_chars": 1334
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "long-ramble-buried-incident",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:37:21.269891+00:00",
+   "end_utc": "2026-11-09T06:37:35.086818+00:00",
+   "wall_s": 13.816827874979936,
+   "calls": [
+    {
+     "prompt_tokens": 436,
+     "prompt_tps": 531.2953474265586,
+     "gen_tokens": 377,
+     "gen_tps": 29.509360023742243,
+     "peak_memory_gb": 8.52648152,
+     "finish_reason": "stop",
+     "wall_s": 13.815757249976741,
+     "content_chars": 38,
+     "reasoning_chars": 1539
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-injection-urgent",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:37:35.086965+00:00",
+   "end_utc": "2026-11-09T06:37:45.708070+00:00",
+   "wall_s": 10.621020749997115,
+   "calls": [
+    {
+     "prompt_tokens": 215,
+     "prompt_tps": 474.98381741363744,
+     "gen_tokens": 300,
+     "gen_tps": 30.17674557603224,
+     "peak_memory_gb": 8.299798864,
+     "finish_reason": "stop",
+     "wall_s": 10.620087875024183,
+     "content_chars": 38,
+     "reasoning_chars": 1169
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "cold-sales-injection-urgent",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T06:37:45.708319+00:00",
+   "end_utc": "2026-11-09T06:37:58.378892+00:00",
+   "wall_s": 12.670477124978788,
+   "calls": [
+    {
+     "prompt_tokens": 231,
+     "prompt_tps": 463.11142852892664,
+     "gen_tokens": 360,
+     "gen_tps": 30.14165258020302,
+     "peak_memory_gb": 8.32272007,
+     "finish_reason": "stop",
+     "wall_s": 12.669427374989027,
+     "content_chars": 22,
+     "reasoning_chars": 1449
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "nl-client-bug-buried",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:37:58.379169+00:00",
+   "end_utc": "2026-11-09T06:38:11.164083+00:00",
+   "wall_s": 12.784818791988073,
+   "calls": [
+    {
+     "prompt_tokens": 297,
+     "prompt_tps": 490.77960215578327,
+     "gen_tokens": 359,
+     "gen_tps": 30.041192730264893,
+     "peak_memory_gb": 8.368944138,
+     "finish_reason": "stop",
+     "wall_s": 12.783757042023353,
+     "content_chars": 22,
+     "reasoning_chars": 1460
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-tax-authority-documents",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:38:11.164320+00:00",
+   "end_utc": "2026-11-09T06:38:21.793805+00:00",
+   "wall_s": 10.629399917001138,
+   "calls": [
+    {
+     "prompt_tokens": 242,
+     "prompt_tps": 486.0741591347768,
+     "gen_tokens": 299,
+     "gen_tps": 30.18174266833914,
+     "peak_memory_gb": 8.343068998,
+     "finish_reason": "stop",
+     "wall_s": 10.628357959009008,
+     "content_chars": 22,
+     "reasoning_chars": 1299
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "stripe-payout-notice",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:38:21.794108+00:00",
+   "end_utc": "2026-11-09T06:38:30.980283+00:00",
+   "wall_s": 9.18609970799298,
+   "calls": [
+    {
+     "prompt_tokens": 229,
+     "prompt_tps": 459.0045314247931,
+     "gen_tokens": 256,
+     "gen_tps": 30.238995553923242,
+     "peak_memory_gb": 8.319066438,
+     "finish_reason": "stop",
+     "wall_s": 9.1849889169971,
+     "content_chars": 19,
+     "reasoning_chars": 1060
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-domain-newsletter-nl",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:38:30.980565+00:00",
+   "end_utc": "2026-11-09T06:38:40.832609+00:00",
+   "wall_s": 9.85196295901551,
+   "calls": [
+    {
+     "prompt_tokens": 237,
+     "prompt_tps": 473.0333563274652,
+     "gen_tokens": 276,
+     "gen_tps": 30.24785403941143,
+     "peak_memory_gb": 8.332042566,
+     "finish_reason": "stop",
+     "wall_s": 9.850908207998145,
+     "content_chars": 19,
+     "reasoning_chars": 1060
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "calendar-accept-notice",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:38:40.832918+00:00",
+   "end_utc": "2026-11-09T06:38:49.091920+00:00",
+   "wall_s": 8.258931791002396,
+   "calls": [
+    {
+     "prompt_tokens": 257,
+     "prompt_tps": 520.6808993072937,
+     "gen_tokens": 228,
+     "gen_tps": 30.260085265658724,
+     "peak_memory_gb": 8.371643682,
+     "finish_reason": "stop",
+     "wall_s": 8.257904166006483,
+     "content_chars": 19,
+     "reasoning_chars": 992
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "proposal-accept-conditional",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:38:49.092140+00:00",
+   "end_utc": "2026-11-09T06:39:00.532179+00:00",
+   "wall_s": 11.439952999993693,
+   "calls": [
+    {
+     "prompt_tokens": 242,
+     "prompt_tps": 484.50586384633425,
+     "gen_tokens": 323,
+     "gen_tps": 30.153851274032647,
+     "peak_memory_gb": 8.343068998,
+     "finish_reason": "stop",
+     "wall_s": 11.438773790985579,
+     "content_chars": 22,
+     "reasoning_chars": 1395
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-networking-coffee",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:39:00.532457+00:00",
+   "end_utc": "2026-11-09T06:39:08.889755+00:00",
+   "wall_s": 8.357228334003594,
+   "calls": [
+    {
+     "prompt_tokens": 254,
+     "prompt_tps": 505.5428926992936,
+     "gen_tokens": 231,
+     "gen_tps": 30.286515848202683,
+     "peak_memory_gb": 8.364368198,
+     "finish_reason": "stop",
+     "wall_s": 8.356157750007696,
+     "content_chars": 24,
+     "reasoning_chars": 867
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "busy-day-standard",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:39:08.894698+00:00",
+   "end_utc": "2026-11-09T06:39:37.112152+00:00",
+   "wall_s": 28.217263415979687,
+   "calls": [
+    {
+     "prompt_tokens": 923,
+     "prompt_tps": 532.8103493190969,
+     "gen_tokens": 779,
+     "gen_tps": 29.668147865142377,
+     "peak_memory_gb": 8.675615932,
+     "finish_reason": "stop",
+     "wall_s": 28.2112195410009,
+     "content_chars": 278,
+     "reasoning_chars": 2582
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-automated",
+   "split": "train",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T06:39:37.112386+00:00",
+   "end_utc": "2026-11-09T06:39:52.295117+00:00",
+   "wall_s": 15.182619415980298,
+   "calls": [
+    {
+     "prompt_tokens": 575,
+     "prompt_tps": 550.4435000805378,
+     "gen_tokens": 416,
+     "gen_tps": 29.902506058289415,
+     "peak_memory_gb": 8.565646544,
+     "finish_reason": "stop",
+     "wall_s": 15.177848208026262,
+     "content_chars": 108,
+     "reasoning_chars": 1456
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "compression-heavy",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:39:52.295365+00:00",
+   "end_utc": "2026-11-09T06:40:24.579842+00:00",
+   "wall_s": 32.284262874978594,
+   "calls": [
+    {
+     "prompt_tokens": 1168,
+     "prompt_tps": 526.9573598160191,
+     "gen_tokens": 877,
+     "gen_tps": 29.39647876861171,
+     "peak_memory_gb": 8.70796102,
+     "finish_reason": "stop",
+     "wall_s": 32.278639665979426,
+     "content_chars": 336,
+     "reasoning_chars": 2855
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-and-dates",
+   "split": "train",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:40:24.581465+00:00",
+   "end_utc": "2026-11-09T06:40:51.392375+00:00",
+   "wall_s": 26.810725082992576,
+   "calls": [
+    {
+     "prompt_tokens": 761,
+     "prompt_tps": 517.4102575271099,
+     "gen_tokens": 747,
+     "gen_tps": 29.746169307144115,
+     "peak_memory_gb": 8.543577276,
+     "finish_reason": "stop",
+     "wall_s": 26.806073917017784,
+     "content_chars": 308,
+     "reasoning_chars": 2138
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:40:51.392629+00:00",
+   "end_utc": "2026-11-09T06:41:24.913181+00:00",
+   "wall_s": 33.52032845802023,
+   "calls": [
+    {
+     "prompt_tokens": 1162,
+     "prompt_tps": 529.2345137383832,
+     "gen_tokens": 918,
+     "gen_tps": 29.521061062194274,
+     "peak_memory_gb": 8.70411078,
+     "finish_reason": "stop",
+     "wall_s": 33.51467866697931,
+     "content_chars": 265,
+     "reasoning_chars": 2970
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-newsletters",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:41:24.913457+00:00",
+   "end_utc": "2026-11-09T06:41:40.955404+00:00",
+   "wall_s": 16.041831209004158,
+   "calls": [
+    {
+     "prompt_tokens": 520,
+     "prompt_tps": 518.9333972572568,
+     "gen_tokens": 443,
+     "gen_tps": 29.90570000402849,
+     "peak_memory_gb": 8.537629914,
+     "finish_reason": "stop",
+     "wall_s": 16.037185666005826,
+     "content_chars": 226,
+     "reasoning_chars": 1545
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-with-receipt",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:41:40.955613+00:00",
+   "end_utc": "2026-11-09T06:42:03.714854+00:00",
+   "wall_s": 22.75908479100326,
+   "calls": [
+    {
+     "prompt_tokens": 653,
+     "prompt_tps": 478.0567906645941,
+     "gen_tokens": 631,
+     "gen_tps": 29.825252204334458,
+     "peak_memory_gb": 8.583472336,
+     "finish_reason": "stop",
+     "wall_s": 22.75385920901317,
+     "content_chars": 245,
+     "reasoning_chars": 2161
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "rounding-bait",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:42:03.715103+00:00",
+   "end_utc": "2026-11-09T06:42:27.928428+00:00",
+   "wall_s": 24.21316004198161,
+   "calls": [
+    {
+     "prompt_tokens": 666,
+     "prompt_tps": 495.5006439709653,
+     "gen_tokens": 674,
+     "gen_tps": 29.76518854447531,
+     "peak_memory_gb": 8.58414411,
+     "finish_reason": "stop",
+     "wall_s": 24.208614291012054,
+     "content_chars": 258,
+     "reasoning_chars": 2051
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "two-urgent-among-noise",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:42:27.928667+00:00",
+   "end_utc": "2026-11-09T06:43:00.363993+00:00",
+   "wall_s": 32.43511254200712,
+   "calls": [
+    {
+     "prompt_tokens": 1044,
+     "prompt_tps": 521.2806111216404,
+     "gen_tokens": 891,
+     "gen_tps": 29.502923666055022,
+     "peak_memory_gb": 8.74023754,
+     "finish_reason": "stop",
+     "wall_s": 32.42958416699548,
+     "content_chars": 404,
+     "reasoning_chars": 2664
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-xl",
+   "split": "train",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:43:00.364239+00:00",
+   "end_utc": "2026-11-09T06:43:57.349345+00:00",
+   "wall_s": 56.98474433302181,
+   "calls": [
+    {
+     "prompt_tokens": 1984,
+     "prompt_tps": 544.4432690275927,
+     "gen_tokens": 1547,
+     "gen_tps": 29.126664477437,
+     "peak_memory_gb": 8.78835015,
+     "finish_reason": "stop",
+     "wall_s": 56.97863533400232,
+     "content_chars": 617,
+     "reasoning_chars": 4552
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "very-long-day",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:43:57.350946+00:00",
+   "end_utc": "2026-11-09T06:44:47.233951+00:00",
+   "wall_s": 49.88700566699845,
+   "calls": [
+    {
+     "prompt_tokens": 1633,
+     "prompt_tps": 546.9661472212431,
+     "gen_tokens": 1366,
+     "gen_tps": 29.26742481385331,
+     "peak_memory_gb": 8.773129404,
+     "finish_reason": "stop",
+     "wall_s": 49.8811875829997,
+     "content_chars": 669,
+     "reasoning_chars": 3890
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-heldout-xl",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T06:44:47.234187+00:00",
+   "end_utc": "2026-11-09T06:45:56.640225+00:00",
+   "wall_s": 69.40842262501246,
+   "calls": [
+    {
+     "prompt_tokens": 2603,
+     "prompt_tps": 554.2252376726678,
+     "gen_tokens": 1857,
+     "gen_tps": 28.80288624448767,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 69.40201512500062,
+     "content_chars": 493,
+     "reasoning_chars": 5480
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-quiet-day",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T06:45:56.641034+00:00",
+   "end_utc": "2026-11-09T06:46:40.351393+00:00",
+   "wall_s": 43.710164959018584,
+   "calls": [
+    {
+     "prompt_tokens": 1767,
+     "prompt_tps": 540.0425271502676,
+     "gen_tokens": 1176,
+     "gen_tps": 29.24912321232206,
+     "peak_memory_gb": 8.695387324,
+     "finish_reason": "stop",
+     "wall_s": 43.704286459018476,
+     "content_chars": 372,
+     "reasoning_chars": 3601
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical-xl",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:46:40.351651+00:00",
+   "end_utc": "2026-11-09T06:47:26.651104+00:00",
+   "wall_s": 46.29922629200155,
+   "calls": [
+    {
+     "prompt_tokens": 2118,
+     "prompt_tps": 544.9087596221613,
+     "gen_tokens": 1228,
+     "gen_tps": 29.11368342830732,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 46.29247720900457,
+     "content_chars": 285,
+     "reasoning_chars": 4015
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-at-length",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:47:26.651322+00:00",
+   "end_utc": "2026-11-09T06:48:27.970540+00:00",
+   "wall_s": 61.31892550000339,
+   "calls": [
+    {
+     "prompt_tokens": 1871,
+     "prompt_tps": 539.2379618489084,
+     "gen_tokens": 1674,
+     "gen_tps": 29.054377720588736,
+     "peak_memory_gb": 8.7378055,
+     "finish_reason": "stop",
+     "wall_s": 61.312860290985554,
+     "content_chars": 492,
+     "reasoning_chars": 4731
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-2",
+   "split": "train",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:48:27.970791+00:00",
+   "end_utc": "2026-11-09T06:49:24.536627+00:00",
+   "wall_s": 56.565565249999054,
+   "calls": [
+    {
+     "prompt_tokens": 1698,
+     "prompt_tps": 537.463353335955,
+     "gen_tokens": 1553,
+     "gen_tps": 29.20332316612241,
+     "peak_memory_gb": 8.783516826,
+     "finish_reason": "stop",
+     "wall_s": 56.55983074998949,
+     "content_chars": 640,
+     "reasoning_chars": 4937
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-3",
+   "split": "train",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T06:49:24.538233+00:00",
+   "end_utc": "2026-11-09T06:50:28.696423+00:00",
+   "wall_s": 64.15788070799317,
+   "calls": [
+    {
+     "prompt_tokens": 2345,
+     "prompt_tps": 550.4528472290698,
+     "gen_tokens": 1724,
+     "gen_tps": 28.8933858969126,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 64.15150925001944,
+     "content_chars": 765,
+     "reasoning_chars": 5277
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "dependency-delivery-vs-install",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:50:28.696661+00:00",
+   "end_utc": "2026-11-09T06:50:55.071894+00:00",
+   "wall_s": 26.37509079198935,
+   "calls": [
+    {
+     "prompt_tokens": 825,
+     "prompt_tps": 521.2656096300667,
+     "gen_tokens": 730,
+     "gen_tps": 29.71659456726888,
+     "peak_memory_gb": 8.585602236,
+     "finish_reason": "stop",
+     "wall_s": 26.370342209003866,
+     "content_chars": 306,
+     "reasoning_chars": 2300
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "near-duplicate-invoices",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:50:55.072101+00:00",
+   "end_utc": "2026-11-09T06:51:23.692304+00:00",
+   "wall_s": 28.620056375017157,
+   "calls": [
+    {
+     "prompt_tokens": 779,
+     "prompt_tps": 514.2253050561861,
+     "gen_tokens": 799,
+     "gen_tps": 29.726264401024345,
+     "peak_memory_gb": 8.562795708,
+     "finish_reason": "stop",
+     "wall_s": 28.615295458002947,
+     "content_chars": 319,
+     "reasoning_chars": 2332
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-big-amount-decoy",
+   "split": "heldout",
+   "load": 1,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T06:51:23.692530+00:00",
+   "end_utc": "2026-11-09T06:51:48.089886+00:00",
+   "wall_s": 24.39722775001428,
+   "calls": [
+    {
+     "prompt_tokens": 736,
+     "prompt_tps": 528.2595849131071,
+     "gen_tokens": 678,
+     "gen_tps": 29.76620658817101,
+     "peak_memory_gb": 8.64779591,
+     "finish_reason": "stop",
+     "wall_s": 24.39245449998998,
+     "content_chars": 300,
+     "reasoning_chars": 2268
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "automated-but-actionable",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:51:48.090109+00:00",
+   "end_utc": "2026-11-09T06:52:08.398807+00:00",
+   "wall_s": 20.308586125000147,
+   "calls": [
+    {
+     "prompt_tokens": 722,
+     "prompt_tps": 490.35980836576596,
+     "gen_tokens": 555,
+     "gen_tps": 29.821733468041128,
+     "peak_memory_gb": 8.643470574,
+     "finish_reason": "stop",
+     "wall_s": 20.304043500014814,
+     "content_chars": 264,
+     "reasoning_chars": 1852
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-last-en",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:52:08.399050+00:00",
+   "end_utc": "2026-11-09T06:52:38.097412+00:00",
+   "wall_s": 29.698214500007452,
+   "calls": [
+    {
+     "prompt_tokens": 774,
+     "prompt_tps": 506.16876836899047,
+     "gen_tokens": 825,
+     "gen_tps": 29.51548695896595,
+     "peak_memory_gb": 8.55866694,
+     "finish_reason": "stop",
+     "wall_s": 29.694030874990858,
+     "content_chars": 268,
+     "reasoning_chars": 2866
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "meeting-moved-date-decoy",
+   "split": "heldout",
+   "load": 1,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:52:38.097566+00:00",
+   "end_utc": "2026-11-09T06:53:01.313463+00:00",
+   "wall_s": 23.215774375014007,
+   "calls": [
+    {
+     "prompt_tokens": 726,
+     "prompt_tps": 514.2086134732888,
+     "gen_tokens": 643,
+     "gen_tps": 29.80440592087598,
+     "peak_memory_gb": 8.647353582,
+     "finish_reason": "stop",
+     "wall_s": 23.21093912498327,
+     "content_chars": 237,
+     "reasoning_chars": 1939
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-short-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:53:06.227739+00:00",
+   "end_utc": "2026-11-09T06:53:23.238453+00:00",
+   "wall_s": 17.01024537498597,
+   "calls": [
+    {
+     "prompt_tokens": 1445,
+     "prompt_tps": 450.7577506371423,
+     "gen_tokens": 400,
+     "gen_tps": 29.536526304509024,
+     "peak_memory_gb": 8.662935728,
+     "finish_reason": "stop",
+     "wall_s": 17.00628558298922,
+     "content_chars": 203,
+     "reasoning_chars": 1268
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-medium-train",
+   "split": "train",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:53:23.238994+00:00",
+   "end_utc": "2026-11-09T06:53:54.484014+00:00",
+   "wall_s": 31.244861832994502,
+   "calls": [
+    {
+     "prompt_tokens": 2090,
+     "prompt_tps": 544.8212706624665,
+     "gen_tokens": 794,
+     "gen_tps": 29.222363196499998,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 31.240452124999138,
+     "content_chars": 205,
+     "reasoning_chars": 2646
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:53:54.484271+00:00",
+   "end_utc": "2026-11-09T06:54:27.568930+00:00",
+   "wall_s": 33.08449179099989,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 550.373231252845,
+     "gen_tokens": 789,
+     "gen_tps": 28.930999742123028,
+     "peak_memory_gb": 8.81145567,
+     "finish_reason": "stop",
+     "wall_s": 33.07977362500969,
+     "content_chars": 226,
+     "reasoning_chars": 2578
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-short-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:54:27.570686+00:00",
+   "end_utc": "2026-11-09T06:54:38.832960+00:00",
+   "wall_s": 11.262205834005727,
+   "calls": [
+    {
+     "prompt_tokens": 1251,
+     "prompt_tps": 524.3118081602272,
+     "gen_tokens": 257,
+     "gen_tps": 29.70073733643571,
+     "peak_memory_gb": 8.766910662,
+     "finish_reason": "stop",
+     "wall_s": 11.259473334008362,
+     "content_chars": 217,
+     "reasoning_chars": 663
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-medium-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:54:38.833217+00:00",
+   "end_utc": "2026-11-09T06:54:59.698873+00:00",
+   "wall_s": 20.865544000000227,
+   "calls": [
+    {
+     "prompt_tokens": 1580,
+     "prompt_tps": 534.2589238881856,
+     "gen_tokens": 519,
+     "gen_tps": 29.34954322350498,
+     "peak_memory_gb": 8.742933692,
+     "finish_reason": "stop",
+     "wall_s": 20.86247583301156,
+     "content_chars": 198,
+     "reasoning_chars": 1512
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-long-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:54:59.699145+00:00",
+   "end_utc": "2026-11-09T06:55:27.702883+00:00",
+   "wall_s": 28.003592957975343,
+   "calls": [
+    {
+     "prompt_tokens": 2155,
+     "prompt_tps": 542.0419051831525,
+     "gen_tokens": 695,
+     "gen_tps": 29.206831137387926,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 27.99976425000932,
+     "content_chars": 217,
+     "reasoning_chars": 2200
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-short-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:55:27.704632+00:00",
+   "end_utc": "2026-11-09T06:55:42.738616+00:00",
+   "wall_s": 15.033898791996762,
+   "calls": [
+    {
+     "prompt_tokens": 1192,
+     "prompt_tps": 526.3758690257285,
+     "gen_tokens": 372,
+     "gen_tps": 29.665644165804782,
+     "peak_memory_gb": 8.726032572,
+     "finish_reason": "stop",
+     "wall_s": 15.031169791996945,
+     "content_chars": 199,
+     "reasoning_chars": 1061
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-medium-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:55:42.738878+00:00",
+   "end_utc": "2026-11-09T06:56:01.981884+00:00",
+   "wall_s": 19.242898084019544,
+   "calls": [
+    {
+     "prompt_tokens": 1474,
+     "prompt_tps": 527.8319761768754,
+     "gen_tokens": 479,
+     "gen_tps": 29.523124344726437,
+     "peak_memory_gb": 8.679691452,
+     "finish_reason": "stop",
+     "wall_s": 19.24038462500903,
+     "content_chars": 222,
+     "reasoning_chars": 1462
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-medium-train",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:56:01.982128+00:00",
+   "end_utc": "2026-11-09T06:56:15.933364+00:00",
+   "wall_s": 13.951153333007824,
+   "calls": [
+    {
+     "prompt_tokens": 1292,
+     "prompt_tps": 534.9498958288884,
+     "gen_tokens": 335,
+     "gen_tps": 29.636092778839014,
+     "peak_memory_gb": 8.703448252,
+     "finish_reason": "stop",
+     "wall_s": 13.94890225000563,
+     "content_chars": 223,
+     "reasoning_chars": 1007
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-easy",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:56:15.933677+00:00",
+   "end_utc": "2026-11-09T06:56:29.563603+00:00",
+   "wall_s": 13.629845332994591,
+   "calls": [
+    {
+     "prompt_tokens": 1284,
+     "prompt_tps": 533.0793594966253,
+     "gen_tokens": 326,
+     "gen_tps": 29.648666261488927,
+     "peak_memory_gb": 8.69832006,
+     "finish_reason": "stop",
+     "wall_s": 13.627107790991431,
+     "content_chars": 210,
+     "reasoning_chars": 845
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-hard",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:56:29.563866+00:00",
+   "end_utc": "2026-11-09T06:56:47.696217+00:00",
+   "wall_s": 18.13225170801161,
+   "calls": [
+    {
+     "prompt_tokens": 1552,
+     "prompt_tps": 538.5781545401456,
+     "gen_tokens": 443,
+     "gen_tps": 29.48823762814139,
+     "peak_memory_gb": 8.726549692,
+     "finish_reason": "stop",
+     "wall_s": 18.129156542010605,
+     "content_chars": 205,
+     "reasoning_chars": 1388
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-long",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T06:56:47.696473+00:00",
+   "end_utc": "2026-11-09T06:57:19.458109+00:00",
+   "wall_s": 31.761469958990347,
+   "calls": [
+    {
+     "prompt_tokens": 2421,
+     "prompt_tps": 553.1354767799089,
+     "gen_tokens": 791,
+     "gen_tps": 29.129192100656656,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 31.757368916994892,
+     "content_chars": 209,
+     "reasoning_chars": 2733
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-medium",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:57:19.458407+00:00",
+   "end_utc": "2026-11-09T06:57:42.535639+00:00",
+   "wall_s": 23.077109458012274,
+   "calls": [
+    {
+     "prompt_tokens": 1461,
+     "prompt_tps": 541.4501108233144,
+     "gen_tokens": 590,
+     "gen_tps": 29.274033733620907,
+     "peak_memory_gb": 8.671925436,
+     "finish_reason": "stop",
+     "wall_s": 23.074183958990034,
+     "content_chars": 203,
+     "reasoning_chars": 1887
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-digits",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:57:42.535881+00:00",
+   "end_utc": "2026-11-09T06:58:16.504009+00:00",
+   "wall_s": 33.96796108299168,
+   "calls": [
+    {
+     "prompt_tokens": 1966,
+     "prompt_tps": 538.68958337348,
+     "gen_tokens": 880,
+     "gen_tps": 29.24604189998241,
+     "peak_memory_gb": 8.783942844,
+     "finish_reason": "stop",
+     "wall_s": 33.964496041997336,
+     "content_chars": 211,
+     "reasoning_chars": 3047
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-short",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:58:16.505704+00:00",
+   "end_utc": "2026-11-09T06:58:31.497037+00:00",
+   "wall_s": 14.99124487498193,
+   "calls": [
+    {
+     "prompt_tokens": 1133,
+     "prompt_tps": 520.54013444402,
+     "gen_tokens": 374,
+     "gen_tps": 29.70432501606031,
+     "peak_memory_gb": 8.705411248,
+     "finish_reason": "stop",
+     "wall_s": 14.9886317079945,
+     "content_chars": 201,
+     "reasoning_chars": 1065
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-short",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:58:31.497322+00:00",
+   "end_utc": "2026-11-09T06:58:44.470232+00:00",
+   "wall_s": 12.972828666999703,
+   "calls": [
+    {
+     "prompt_tokens": 1229,
+     "prompt_tps": 534.2075773219981,
+     "gen_tokens": 310,
+     "gen_tps": 29.673569437240857,
+     "peak_memory_gb": 8.752591036,
+     "finish_reason": "stop",
+     "wall_s": 12.970205666992115,
+     "content_chars": 220,
+     "reasoning_chars": 857
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-long",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:58:44.470457+00:00",
+   "end_utc": "2026-11-09T06:59:08.522763+00:00",
+   "wall_s": 24.052178874990204,
+   "calls": [
+    {
+     "prompt_tokens": 2452,
+     "prompt_tps": 555.1374248552578,
+     "gen_tokens": 566,
+     "gen_tps": 29.16350175904717,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 24.048263834003592,
+     "content_chars": 230,
+     "reasoning_chars": 1851
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-medium",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:59:08.523030+00:00",
+   "end_utc": "2026-11-09T06:59:24.697643+00:00",
+   "wall_s": 16.1745229169901,
+   "calls": [
+    {
+     "prompt_tokens": 1455,
+     "prompt_tps": 539.5406255888867,
+     "gen_tokens": 392,
+     "gen_tps": 29.579212220171417,
+     "peak_memory_gb": 8.668288188,
+     "finish_reason": "stop",
+     "wall_s": 16.17163979198085,
+     "content_chars": 202,
+     "reasoning_chars": 1083
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-short",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:59:24.697938+00:00",
+   "end_utc": "2026-11-09T06:59:39.153337+00:00",
+   "wall_s": 14.455317625019234,
+   "calls": [
+    {
+     "prompt_tokens": 1191,
+     "prompt_tps": 526.2771541893885,
+     "gen_tokens": 355,
+     "gen_tps": 29.67325803793342,
+     "peak_memory_gb": 8.725131452,
+     "finish_reason": "stop",
+     "wall_s": 14.452743541012751,
+     "content_chars": 201,
+     "reasoning_chars": 979
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-short",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:59:39.153611+00:00",
+   "end_utc": "2026-11-09T06:59:51.969755+00:00",
+   "wall_s": 12.816067917010514,
+   "calls": [
+    {
+     "prompt_tokens": 1136,
+     "prompt_tps": 523.7520518156409,
+     "gen_tokens": 310,
+     "gen_tps": 29.74297821065578,
+     "peak_memory_gb": 8.707737776,
+     "finish_reason": "stop",
+     "wall_s": 12.813611499994295,
+     "content_chars": 218,
+     "reasoning_chars": 883
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-medium",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T06:59:51.970004+00:00",
+   "end_utc": "2026-11-09T07:00:05.380942+00:00",
+   "wall_s": 13.41082925000228,
+   "calls": [
+    {
+     "prompt_tokens": 1265,
+     "prompt_tps": 537.4048561706893,
+     "gen_tokens": 317,
+     "gen_tps": 29.26868666465117,
+     "peak_memory_gb": 8.688267452,
+     "finish_reason": "stop",
+     "wall_s": 13.408186666027177,
+     "content_chars": 220,
+     "reasoning_chars": 980
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "mixed-heldout-dense",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T07:00:05.381190+00:00",
+   "end_utc": "2026-11-09T07:00:33.606807+00:00",
+   "wall_s": 28.225471541984007,
+   "calls": [
+    {
+     "prompt_tokens": 1618,
+     "prompt_tps": 538.9850891423245,
+     "gen_tokens": 735,
+     "gen_tps": 29.409196108586606,
+     "peak_memory_gb": 8.765510844,
+     "finish_reason": "stop",
+     "wall_s": 28.222372458985774,
+     "content_chars": 193,
+     "reasoning_chars": 2584
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-quiet-train-1",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:00:33.607070+00:00",
+   "end_utc": "2026-11-09T07:00:55.505187+00:00",
+   "wall_s": 21.897996000014246,
+   "calls": [
+    {
+     "prompt_tokens": 4057,
+     "prompt_tps": 545.3124161966603,
+     "gen_tokens": 408,
+     "gen_tps": 28.684101634899893,
+     "peak_memory_gb": 8.9245171,
+     "finish_reason": "stop",
+     "wall_s": 21.89296683401335,
+     "content_chars": 228,
+     "reasoning_chars": 1187
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-train-1",
+   "split": "train",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T07:00:55.505939+00:00",
+   "end_utc": "2026-11-09T07:01:28.169802+00:00",
+   "wall_s": 32.663698541990016,
+   "calls": [
+    {
+     "prompt_tokens": 4776,
+     "prompt_tps": 545.5530099841995,
+     "gen_tokens": 672,
+     "gen_tps": 28.382532329790468,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 32.65752816700842,
+     "content_chars": 209,
+     "reasoning_chars": 2119
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-train-1",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:01:28.170036+00:00",
+   "end_utc": "2026-11-09T07:02:05.640016+00:00",
+   "wall_s": 37.470683499996085,
+   "calls": [
+    {
+     "prompt_tokens": 5182,
+     "prompt_tps": 546.7502862167553,
+     "gen_tokens": 784,
+     "gen_tps": 28.24301063944978,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 37.46461745898705,
+     "content_chars": 221,
+     "reasoning_chars": 2615
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-train-1",
+   "split": "train",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T07:02:05.641844+00:00",
+   "end_utc": "2026-11-09T07:02:29.865637+00:00",
+   "wall_s": 24.22448354100925,
+   "calls": [
+    {
+     "prompt_tokens": 4533,
+     "prompt_tps": 549.9409877210512,
+     "gen_tokens": 447,
+     "gen_tps": 28.37890617171956,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 24.218919250008184,
+     "content_chars": 230,
+     "reasoning_chars": 1322
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-pricing-heldout-1",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:02:29.867195+00:00",
+   "end_utc": "2026-11-09T07:03:02.628198+00:00",
+   "wall_s": 32.761035707982956,
+   "calls": [
+    {
+     "prompt_tokens": 4962,
+     "prompt_tps": 546.302526902786,
+     "gen_tokens": 664,
+     "gen_tps": 28.32592664386574,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 32.755322207987774,
+     "content_chars": 216,
+     "reasoning_chars": 2093
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-scoping-heldout-1",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T07:03:02.629917+00:00",
+   "end_utc": "2026-11-09T07:03:34.095433+00:00",
+   "wall_s": 31.465391250007087,
+   "calls": [
+    {
+     "prompt_tokens": 5726,
+     "prompt_tps": 549.1663181029066,
+     "gen_tokens": 585,
+     "gen_tps": 28.11959570840548,
+     "peak_memory_gb": 8.979877444,
+     "finish_reason": "stop",
+     "wall_s": 31.458985083008884,
+     "content_chars": 232,
+     "reasoning_chars": 1924
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-heldout-2",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:03:34.095946+00:00",
+   "end_utc": "2026-11-09T07:04:07.576784+00:00",
+   "wall_s": 33.48068583299755,
+   "calls": [
+    {
+     "prompt_tokens": 6280,
+     "prompt_tps": 546.7190429865477,
+     "gen_tokens": 608,
+     "gen_tps": 27.9454760631791,
+     "peak_memory_gb": 9.0651906,
+     "finish_reason": "stop",
+     "wall_s": 33.473723875009455,
+     "content_chars": 209,
+     "reasoning_chars": 1818
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-heldout-2",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T07:04:07.578508+00:00",
+   "end_utc": "2026-11-09T07:04:44.569329+00:00",
+   "wall_s": 36.99065191700356,
+   "calls": [
+    {
+     "prompt_tokens": 7169,
+     "prompt_tps": 547.6560224380872,
+     "gen_tokens": 655,
+     "gen_tps": 27.676337779084353,
+     "peak_memory_gb": 9.0651906,
+     "finish_reason": "stop",
+     "wall_s": 36.98316433301079,
+     "content_chars": 227,
+     "reasoning_chars": 2104
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-heldout-2",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:04:44.569554+00:00",
+   "end_utc": "2026-11-09T07:05:25.167975+00:00",
+   "wall_s": 40.598238542006584,
+   "calls": [
+    {
+     "prompt_tokens": 8935,
+     "prompt_tps": 541.3256848033294,
+     "gen_tokens": 647,
+     "gen_tps": 27.12042116674026,
+     "peak_memory_gb": 9.178453192,
+     "finish_reason": "stop",
+     "wall_s": 40.58970450001652,
+     "content_chars": 220,
+     "reasoning_chars": 2183
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-mixed-heldout-3",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T07:05:25.169701+00:00",
+   "end_utc": "2026-11-09T07:06:01.083837+00:00",
+   "wall_s": 35.91396683300263,
+   "calls": [
+    {
+     "prompt_tokens": 5917,
+     "prompt_tps": 545.1540017443192,
+     "gen_tokens": 696,
+     "gen_tps": 28.028618824704285,
+     "peak_memory_gb": 8.945636552,
+     "finish_reason": "stop",
+     "wall_s": 35.90805112500675,
+     "content_chars": 216,
+     "reasoning_chars": 2162
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:06:01.089725+00:00",
+   "end_utc": "2026-11-09T07:06:11.751153+00:00",
+   "wall_s": 10.661362542014103,
+   "calls": [
+    {
+     "prompt_tokens": 204,
+     "prompt_tps": 437.2764610379092,
+     "gen_tokens": 302,
+     "gen_tps": 30.269528474260987,
+     "peak_memory_gb": 8.280826192,
+     "finish_reason": "stop",
+     "wall_s": 10.660533250018489,
+     "content_chars": 22,
+     "reasoning_chars": 1241
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "overdue-invoice",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:06:11.751389+00:00",
+   "end_utc": "2026-11-09T07:06:20.892411+00:00",
+   "wall_s": 9.140966375009157,
+   "calls": [
+    {
+     "prompt_tokens": 211,
+     "prompt_tps": 470.7391122049502,
+     "gen_tokens": 257,
+     "gen_tps": 30.357376457090385,
+     "peak_memory_gb": 8.293523792,
+     "finish_reason": "stop",
+     "wall_s": 9.139985834015533,
+     "content_chars": 22,
+     "reasoning_chars": 1069
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-substack",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:06:20.892660+00:00",
+   "end_utc": "2026-11-09T07:06:28.792572+00:00",
+   "wall_s": 7.89986149998731,
+   "calls": [
+    {
+     "prompt_tokens": 198,
+     "prompt_tps": 436.2456217180477,
+     "gen_tokens": 219,
+     "gen_tps": 30.33520295374757,
+     "peak_memory_gb": 8.279105798,
+     "finish_reason": "stop",
+     "wall_s": 7.898912625008961,
+     "content_chars": 19,
+     "reasoning_chars": 829
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-linkedin",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:06:28.792813+00:00",
+   "end_utc": "2026-11-09T07:06:37.243927+00:00",
+   "wall_s": 8.451059000013629,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 459.6848049906109,
+     "gen_tokens": 236,
+     "gen_tps": 30.372585067249428,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 8.45005395897897,
+     "content_chars": 24,
+     "reasoning_chars": 810
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "seo-cold-spam",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:06:37.244194+00:00",
+   "end_utc": "2026-11-09T07:06:47.474316+00:00",
+   "wall_s": 10.230023209005594,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 462.0689262549846,
+     "gen_tokens": 289,
+     "gen_tps": 30.257197960990773,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 10.228920207999181,
+     "content_chars": 19,
+     "reasoning_chars": 1115
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "friend-dinner",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:06:47.474590+00:00",
+   "end_utc": "2026-11-09T07:06:55.260945+00:00",
+   "wall_s": 7.786305833986262,
+   "calls": [
+    {
+     "prompt_tokens": 194,
+     "prompt_tps": 431.820535642023,
+     "gen_tokens": 216,
+     "gen_tps": 30.407971146374884,
+     "peak_memory_gb": 8.27276519,
+     "finish_reason": "stop",
+     "wall_s": 7.785213750001276,
+     "content_chars": 24,
+     "reasoning_chars": 828
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "production-down",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:06:55.261200+00:00",
+   "end_utc": "2026-11-09T07:07:04.905821+00:00",
+   "wall_s": 9.644564584014006,
+   "calls": [
+    {
+     "prompt_tokens": 206,
+     "prompt_tps": 460.42972508872884,
+     "gen_tokens": 272,
+     "gen_tps": 30.330533822243186,
+     "peak_memory_gb": 8.285626704,
+     "finish_reason": "stop",
+     "wall_s": 9.64351983301458,
+     "content_chars": 22,
+     "reasoning_chars": 1148
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "gdpr-data-request",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:07:04.906070+00:00",
+   "end_utc": "2026-11-09T07:07:13.319673+00:00",
+   "wall_s": 8.413551875011763,
+   "calls": [
+    {
+     "prompt_tokens": 196,
+     "prompt_tps": 436.5890588862997,
+     "gen_tokens": 235,
+     "gen_tps": 30.39738141139422,
+     "peak_memory_gb": 8.27448551,
+     "finish_reason": "stop",
+     "wall_s": 8.412552958994638,
+     "content_chars": 22,
+     "reasoning_chars": 1009
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "conference-invite",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:07:13.319944+00:00",
+   "end_utc": "2026-11-09T07:07:23.045794+00:00",
+   "wall_s": 9.725797374994727,
+   "calls": [
+    {
+     "prompt_tokens": 217,
+     "prompt_tps": 467.20864578028284,
+     "gen_tokens": 274,
+     "gen_tps": 30.299438485886956,
+     "peak_memory_gb": 8.302584144,
+     "finish_reason": "stop",
+     "wall_s": 9.725033292023,
+     "content_chars": 24,
+     "reasoning_chars": 1118
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "promo-code",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:07:23.045938+00:00",
+   "end_utc": "2026-11-09T07:07:31.072384+00:00",
+   "wall_s": 8.026403333002236,
+   "calls": [
+    {
+     "prompt_tokens": 199,
+     "prompt_tps": 441.96919486379545,
+     "gen_tokens": 220,
+     "gen_tps": 29.838685115952234,
+     "peak_memory_gb": 8.280006918,
+     "finish_reason": "stop",
+     "wall_s": 8.025993957999162,
+     "content_chars": 19,
+     "reasoning_chars": 805
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-question-no-rush",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:07:31.072477+00:00",
+   "end_utc": "2026-11-09T07:07:40.878639+00:00",
+   "wall_s": 9.806108999997377,
+   "calls": [
+    {
+     "prompt_tokens": 205,
+     "prompt_tps": 447.41618516518673,
+     "gen_tokens": 276,
+     "gen_tps": 30.195049077894502,
+     "peak_memory_gb": 8.281497936,
+     "finish_reason": "stop",
+     "wall_s": 9.805315875011729,
+     "content_chars": 22,
+     "reasoning_chars": 1148
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "agency-whitelabel-offer",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:07:40.878894+00:00",
+   "end_utc": "2026-11-09T07:07:49.617373+00:00",
+   "wall_s": 8.73842654202599,
+   "calls": [
+    {
+     "prompt_tokens": 221,
+     "prompt_tps": 491.5706389764545,
+     "gen_tokens": 243,
+     "gen_tps": 30.177524098940196,
+     "peak_memory_gb": 8.309170512,
+     "finish_reason": "stop",
+     "wall_s": 8.73737612500554,
+     "content_chars": 24,
+     "reasoning_chars": 972
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "invoice-error-client",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:07:49.617645+00:00",
+   "end_utc": "2026-11-09T07:08:01.208479+00:00",
+   "wall_s": 11.590769750007894,
+   "calls": [
+    {
+     "prompt_tokens": 219,
+     "prompt_tps": 481.21759073274865,
+     "gen_tokens": 329,
+     "gen_tps": 30.15839873935394,
+     "peak_memory_gb": 8.30748296,
+     "finish_reason": "stop",
+     "wall_s": 11.589762666990282,
+     "content_chars": 22,
+     "reasoning_chars": 1325
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "dpa-signature-compliance",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:08:01.208735+00:00",
+   "end_utc": "2026-11-09T07:08:11.688752+00:00",
+   "wall_s": 10.479957208008273,
+   "calls": [
+    {
+     "prompt_tokens": 208,
+     "prompt_tps": 463.717453365366,
+     "gen_tokens": 297,
+     "gen_tps": 30.295981926304236,
+     "peak_memory_gb": 8.287101264,
+     "finish_reason": "stop",
+     "wall_s": 10.478947041992797,
+     "content_chars": 22,
+     "reasoning_chars": 1252
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-fake-urgency",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T07:08:11.689007+00:00",
+   "end_utc": "2026-11-09T07:08:22.572272+00:00",
+   "wall_s": 10.88320291598211,
+   "calls": [
+    {
+     "prompt_tokens": 213,
+     "prompt_tps": 475.7176035235389,
+     "gen_tokens": 308,
+     "gen_tps": 30.172941651048255,
+     "peak_memory_gb": 8.29609608,
+     "finish_reason": "stop",
+     "wall_s": 10.882173000019975,
+     "content_chars": 22,
+     "reasoning_chars": 1320
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "paid-workshop-invite",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T07:08:22.572546+00:00",
+   "end_utc": "2026-11-09T07:08:34.278007+00:00",
+   "wall_s": 11.705397625017213,
+   "calls": [
+    {
+     "prompt_tokens": 225,
+     "prompt_tps": 505.93575065310347,
+     "gen_tokens": 333,
+     "gen_tps": 30.178194648631845,
+     "peak_memory_gb": 8.310399302,
+     "finish_reason": "stop",
+     "wall_s": 11.704343290999532,
+     "content_chars": 22,
+     "reasoning_chars": 1464
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "intro-no-ask",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:08:34.278225+00:00",
+   "end_utc": "2026-11-09T07:08:44.727313+00:00",
+   "wall_s": 10.449028834002092,
+   "calls": [
+    {
+     "prompt_tokens": 213,
+     "prompt_tps": 472.21981277962414,
+     "gen_tokens": 296,
+     "gen_tps": 30.267823971234467,
+     "peak_memory_gb": 8.29609608,
+     "finish_reason": "stop",
+     "wall_s": 10.448068541008979,
+     "content_chars": 24,
+     "reasoning_chars": 1230
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "disk-warning-no-action",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:08:44.727575+00:00",
+   "end_utc": "2026-11-09T07:08:55.846217+00:00",
+   "wall_s": 11.11857695801882,
+   "calls": [
+    {
+     "prompt_tokens": 212,
+     "prompt_tps": 468.9914863593738,
+     "gen_tokens": 316,
+     "gen_tps": 30.242387471850797,
+     "peak_memory_gb": 8.294326608,
+     "finish_reason": "stop",
+     "wall_s": 11.11750895899604,
+     "content_chars": 19,
+     "reasoning_chars": 1334
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "long-ramble-buried-incident",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:08:55.846502+00:00",
+   "end_utc": "2026-11-09T07:09:09.506121+00:00",
+   "wall_s": 13.659545624977909,
+   "calls": [
+    {
+     "prompt_tokens": 436,
+     "prompt_tps": 529.9272140127582,
+     "gen_tokens": 377,
+     "gen_tps": 29.91123919268702,
+     "peak_memory_gb": 8.52648152,
+     "finish_reason": "stop",
+     "wall_s": 13.658107374998508,
+     "content_chars": 38,
+     "reasoning_chars": 1539
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-injection-urgent",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T07:09:09.506387+00:00",
+   "end_utc": "2026-11-09T07:09:20.097389+00:00",
+   "wall_s": 10.590945916017517,
+   "calls": [
+    {
+     "prompt_tokens": 215,
+     "prompt_tps": 474.9146587063951,
+     "gen_tokens": 300,
+     "gen_tps": 30.25108030915577,
+     "peak_memory_gb": 8.299798864,
+     "finish_reason": "stop",
+     "wall_s": 10.590105042007053,
+     "content_chars": 38,
+     "reasoning_chars": 1169
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "cold-sales-injection-urgent",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T07:09:20.097569+00:00",
+   "end_utc": "2026-11-09T07:09:32.742539+00:00",
+   "wall_s": 12.644901958003175,
+   "calls": [
+    {
+     "prompt_tokens": 231,
+     "prompt_tps": 463.4353752204836,
+     "gen_tokens": 360,
+     "gen_tps": 30.189086723318734,
+     "peak_memory_gb": 8.32272007,
+     "finish_reason": "stop",
+     "wall_s": 12.643918749992736,
+     "content_chars": 22,
+     "reasoning_chars": 1449
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "nl-client-bug-buried",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:09:32.742820+00:00",
+   "end_utc": "2026-11-09T07:09:45.533600+00:00",
+   "wall_s": 12.79070887499256,
+   "calls": [
+    {
+     "prompt_tokens": 297,
+     "prompt_tps": 482.93608906067476,
+     "gen_tokens": 359,
+     "gen_tps": 30.056759134572054,
+     "peak_memory_gb": 8.368944138,
+     "finish_reason": "stop",
+     "wall_s": 12.789532333001262,
+     "content_chars": 22,
+     "reasoning_chars": 1460
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-tax-authority-documents",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:09:45.533858+00:00",
+   "end_utc": "2026-11-09T07:09:56.168034+00:00",
+   "wall_s": 10.634112875006394,
+   "calls": [
+    {
+     "prompt_tokens": 242,
+     "prompt_tps": 482.0145013015584,
+     "gen_tokens": 299,
+     "gen_tps": 30.166316790722707,
+     "peak_memory_gb": 8.343068998,
+     "finish_reason": "stop",
+     "wall_s": 10.633114541007672,
+     "content_chars": 22,
+     "reasoning_chars": 1299
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "stripe-payout-notice",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:09:56.168251+00:00",
+   "end_utc": "2026-11-09T07:10:05.467654+00:00",
+   "wall_s": 9.299347124993801,
+   "calls": [
+    {
+     "prompt_tokens": 229,
+     "prompt_tps": 456.02041538022524,
+     "gen_tokens": 256,
+     "gen_tps": 29.870597450509337,
+     "peak_memory_gb": 8.319066438,
+     "finish_reason": "stop",
+     "wall_s": 9.298367666982813,
+     "content_chars": 19,
+     "reasoning_chars": 1060
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-domain-newsletter-nl",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:10:05.467908+00:00",
+   "end_utc": "2026-11-09T07:10:15.293573+00:00",
+   "wall_s": 9.825605749996612,
+   "calls": [
+    {
+     "prompt_tokens": 237,
+     "prompt_tps": 478.25507461916226,
+     "gen_tokens": 276,
+     "gen_tps": 30.307687264848173,
+     "peak_memory_gb": 8.332042566,
+     "finish_reason": "stop",
+     "wall_s": 9.82458262500586,
+     "content_chars": 19,
+     "reasoning_chars": 1060
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "calendar-accept-notice",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:10:15.293849+00:00",
+   "end_utc": "2026-11-09T07:10:23.530988+00:00",
+   "wall_s": 8.237088041001698,
+   "calls": [
+    {
+     "prompt_tokens": 257,
+     "prompt_tps": 518.5952727163871,
+     "gen_tokens": 228,
+     "gen_tps": 30.345099645711016,
+     "peak_memory_gb": 8.371643682,
+     "finish_reason": "stop",
+     "wall_s": 8.236062374984613,
+     "content_chars": 19,
+     "reasoning_chars": 992
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "proposal-accept-conditional",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:10:23.531241+00:00",
+   "end_utc": "2026-11-09T07:10:34.948595+00:00",
+   "wall_s": 11.417290416022297,
+   "calls": [
+    {
+     "prompt_tokens": 242,
+     "prompt_tps": 484.9620842827241,
+     "gen_tokens": 323,
+     "gen_tps": 30.214078084297565,
+     "peak_memory_gb": 8.343068998,
+     "finish_reason": "stop",
+     "wall_s": 11.41624462499749,
+     "content_chars": 22,
+     "reasoning_chars": 1395
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-networking-coffee",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:10:34.948837+00:00",
+   "end_utc": "2026-11-09T07:10:43.310114+00:00",
+   "wall_s": 8.361221541010309,
+   "calls": [
+    {
+     "prompt_tokens": 254,
+     "prompt_tps": 506.97506472815655,
+     "gen_tokens": 231,
+     "gen_tps": 30.283207308004418,
+     "peak_memory_gb": 8.364368198,
+     "finish_reason": "stop",
+     "wall_s": 8.360156999988249,
+     "content_chars": 24,
+     "reasoning_chars": 867
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "busy-day-standard",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:10:43.314861+00:00",
+   "end_utc": "2026-11-09T07:11:11.554607+00:00",
+   "wall_s": 28.239611041994067,
+   "calls": [
+    {
+     "prompt_tokens": 923,
+     "prompt_tps": 527.9510293534852,
+     "gen_tokens": 779,
+     "gen_tps": 29.658051800409222,
+     "peak_memory_gb": 8.675615932,
+     "finish_reason": "stop",
+     "wall_s": 28.233814540988533,
+     "content_chars": 278,
+     "reasoning_chars": 2582
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-automated",
+   "split": "train",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T07:11:11.554824+00:00",
+   "end_utc": "2026-11-09T07:11:26.758508+00:00",
+   "wall_s": 15.203603417001432,
+   "calls": [
+    {
+     "prompt_tokens": 575,
+     "prompt_tps": 540.2734720084112,
+     "gen_tokens": 416,
+     "gen_tps": 29.902362765515633,
+     "peak_memory_gb": 8.565646544,
+     "finish_reason": "stop",
+     "wall_s": 15.198931999999331,
+     "content_chars": 108,
+     "reasoning_chars": 1456
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "compression-heavy",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:11:26.758740+00:00",
+   "end_utc": "2026-11-09T07:11:58.884662+00:00",
+   "wall_s": 32.12577279200195,
+   "calls": [
+    {
+     "prompt_tokens": 1168,
+     "prompt_tps": 531.8623533679211,
+     "gen_tokens": 877,
+     "gen_tps": 29.528916349904755,
+     "peak_memory_gb": 8.70796102,
+     "finish_reason": "stop",
+     "wall_s": 32.12007341699791,
+     "content_chars": 336,
+     "reasoning_chars": 2855
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-and-dates",
+   "split": "train",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:11:58.884894+00:00",
+   "end_utc": "2026-11-09T07:12:25.705559+00:00",
+   "wall_s": 26.82053520801128,
+   "calls": [
+    {
+     "prompt_tokens": 761,
+     "prompt_tps": 519.2435398343729,
+     "gen_tokens": 747,
+     "gen_tps": 29.73220704649714,
+     "peak_memory_gb": 8.543577276,
+     "finish_reason": "stop",
+     "wall_s": 26.81606729197665,
+     "content_chars": 308,
+     "reasoning_chars": 2138
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:12:25.705775+00:00",
+   "end_utc": "2026-11-09T07:12:59.399255+00:00",
+   "wall_s": 33.69332491699606,
+   "calls": [
+    {
+     "prompt_tokens": 1162,
+     "prompt_tps": 521.7439231553494,
+     "gen_tokens": 918,
+     "gen_tps": 29.38772585967006,
+     "peak_memory_gb": 8.70411078,
+     "finish_reason": "stop",
+     "wall_s": 33.687749457982136,
+     "content_chars": 265,
+     "reasoning_chars": 2970
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-newsletters",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:12:59.399493+00:00",
+   "end_utc": "2026-11-09T07:13:15.436780+00:00",
+   "wall_s": 16.03720349998912,
+   "calls": [
+    {
+     "prompt_tokens": 520,
+     "prompt_tps": 520.7269134211438,
+     "gen_tokens": 443,
+     "gen_tps": 29.909457809798884,
+     "peak_memory_gb": 8.537629914,
+     "finish_reason": "stop",
+     "wall_s": 16.032351750007365,
+     "content_chars": 226,
+     "reasoning_chars": 1545
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-with-receipt",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:13:15.436991+00:00",
+   "end_utc": "2026-11-09T07:13:38.045974+00:00",
+   "wall_s": 22.60887645801995,
+   "calls": [
+    {
+     "prompt_tokens": 653,
+     "prompt_tps": 528.5119947202696,
+     "gen_tokens": 631,
+     "gen_tps": 29.823884995855238,
+     "peak_memory_gb": 8.583472336,
+     "finish_reason": "stop",
+     "wall_s": 22.605150791991036,
+     "content_chars": 245,
+     "reasoning_chars": 2161
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "rounding-bait",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:13:38.046109+00:00",
+   "end_utc": "2026-11-09T07:14:02.178770+00:00",
+   "wall_s": 24.13254670900642,
+   "calls": [
+    {
+     "prompt_tokens": 666,
+     "prompt_tps": 516.4028831692765,
+     "gen_tokens": 674,
+     "gen_tps": 29.796011049148202,
+     "peak_memory_gb": 8.58414411,
+     "finish_reason": "stop",
+     "wall_s": 24.12792066601105,
+     "content_chars": 258,
+     "reasoning_chars": 2051
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "two-urgent-among-noise",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:14:02.178952+00:00",
+   "end_utc": "2026-11-09T07:14:34.517951+00:00",
+   "wall_s": 32.33885062500485,
+   "calls": [
+    {
+     "prompt_tokens": 1044,
+     "prompt_tps": 523.5420276011357,
+     "gen_tokens": 891,
+     "gen_tps": 29.586251587650036,
+     "peak_memory_gb": 8.74023754,
+     "finish_reason": "stop",
+     "wall_s": 32.3335788330005,
+     "content_chars": 404,
+     "reasoning_chars": 2664
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-xl",
+   "split": "train",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T07:14:34.518161+00:00",
+   "end_utc": "2026-11-09T07:15:31.631005+00:00",
+   "wall_s": 57.11259020800935,
+   "calls": [
+    {
+     "prompt_tokens": 1984,
+     "prompt_tps": 547.235184904324,
+     "gen_tokens": 1547,
+     "gen_tps": 29.048274115831084,
+     "peak_memory_gb": 8.78835015,
+     "finish_reason": "stop",
+     "wall_s": 57.106022749998374,
+     "content_chars": 617,
+     "reasoning_chars": 4552
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "very-long-day",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T07:15:31.631211+00:00",
+   "end_utc": "2026-11-09T07:16:21.498462+00:00",
+   "wall_s": 49.86703116600984,
+   "calls": [
+    {
+     "prompt_tokens": 1633,
+     "prompt_tps": 548.7771785467432,
+     "gen_tokens": 1366,
+     "gen_tps": 29.269178163831114,
+     "peak_memory_gb": 8.773129404,
+     "finish_reason": "stop",
+     "wall_s": 49.86123958398821,
+     "content_chars": 669,
+     "reasoning_chars": 3890
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-heldout-xl",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T07:16:21.498654+00:00",
+   "end_utc": "2026-11-09T07:17:30.837563+00:00",
+   "wall_s": 69.33860849999473,
+   "calls": [
+    {
+     "prompt_tokens": 2603,
+     "prompt_tps": 553.9620996651992,
+     "gen_tokens": 1857,
+     "gen_tps": 28.829841037087014,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 69.33230779098812,
+     "content_chars": 493,
+     "reasoning_chars": 5480
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-quiet-day",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T07:17:30.837755+00:00",
+   "end_utc": "2026-11-09T07:18:14.571933+00:00",
+   "wall_s": 43.73398449999513,
+   "calls": [
+    {
+     "prompt_tokens": 1767,
+     "prompt_tps": 536.8700453020042,
+     "gen_tokens": 1176,
+     "gen_tps": 29.245073552414038,
+     "peak_memory_gb": 8.695387324,
+     "finish_reason": "stop",
+     "wall_s": 43.727855500008445,
+     "content_chars": 372,
+     "reasoning_chars": 3601
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical-xl",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:18:14.573560+00:00",
+   "end_utc": "2026-11-09T07:19:00.901583+00:00",
+   "wall_s": 46.327816542005166,
+   "calls": [
+    {
+     "prompt_tokens": 2118,
+     "prompt_tps": 540.6636166795194,
+     "gen_tokens": 1228,
+     "gen_tps": 29.11255514204792,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 46.320965124992654,
+     "content_chars": 285,
+     "reasoning_chars": 4015
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-at-length",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:19:00.901816+00:00",
+   "end_utc": "2026-11-09T07:20:02.128989+00:00",
+   "wall_s": 61.22690954100108,
+   "calls": [
+    {
+     "prompt_tokens": 1871,
+     "prompt_tps": 542.1989936997732,
+     "gen_tokens": 1674,
+     "gen_tps": 29.086601459946383,
+     "peak_memory_gb": 8.7378055,
+     "finish_reason": "stop",
+     "wall_s": 61.221284166997066,
+     "content_chars": 492,
+     "reasoning_chars": 4731
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-2",
+   "split": "train",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T07:20:02.130281+00:00",
+   "end_utc": "2026-11-09T07:20:58.726914+00:00",
+   "wall_s": 56.59176862501772,
+   "calls": [
+    {
+     "prompt_tokens": 1698,
+     "prompt_tps": 533.4548878262051,
+     "gen_tokens": 1553,
+     "gen_tps": 29.20527631261004,
+     "peak_memory_gb": 8.783516826,
+     "finish_reason": "stop",
+     "wall_s": 56.58580583400908,
+     "content_chars": 640,
+     "reasoning_chars": 4937
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-train-3",
+   "split": "train",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_compression"
+    }
+   ],
+   "start_utc": "2026-11-09T07:20:58.727152+00:00",
+   "end_utc": "2026-11-09T07:22:02.835489+00:00",
+   "wall_s": 64.10741666602553,
+   "calls": [
+    {
+     "prompt_tokens": 2345,
+     "prompt_tps": 548.4616653217023,
+     "gen_tokens": 1724,
+     "gen_tps": 28.925134979215798,
+     "peak_memory_gb": 8.811454142,
+     "finish_reason": "stop",
+     "wall_s": 64.1008894169936,
+     "content_chars": 765,
+     "reasoning_chars": 5277
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "dependency-delivery-vs-install",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:22:02.837075+00:00",
+   "end_utc": "2026-11-09T07:22:29.317015+00:00",
+   "wall_s": 26.479773250001017,
+   "calls": [
+    {
+     "prompt_tokens": 825,
+     "prompt_tps": 519.3880612885259,
+     "gen_tokens": 730,
+     "gen_tps": 29.597786055458275,
+     "peak_memory_gb": 8.585602236,
+     "finish_reason": "stop",
+     "wall_s": 26.47502120799618,
+     "content_chars": 306,
+     "reasoning_chars": 2300
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "near-duplicate-invoices",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:22:29.317220+00:00",
+   "end_utc": "2026-11-09T07:22:58.025328+00:00",
+   "wall_s": 28.707936165999854,
+   "calls": [
+    {
+     "prompt_tokens": 779,
+     "prompt_tps": 510.0410234287162,
+     "gen_tokens": 799,
+     "gen_tps": 29.64530528541442,
+     "peak_memory_gb": 8.562795708,
+     "finish_reason": "stop",
+     "wall_s": 28.70299662501202,
+     "content_chars": 319,
+     "reasoning_chars": 2332
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-big-amount-decoy",
+   "split": "heldout",
+   "load": 2,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T07:22:58.027076+00:00",
+   "end_utc": "2026-11-09T07:23:22.440861+00:00",
+   "wall_s": 24.41364041599445,
+   "calls": [
+    {
+     "prompt_tokens": 736,
+     "prompt_tps": 523.0805593951476,
+     "gen_tokens": 678,
+     "gen_tps": 29.764867533524985,
+     "peak_memory_gb": 8.64779591,
+     "finish_reason": "stop",
+     "wall_s": 24.408741791994544,
+     "content_chars": 300,
+     "reasoning_chars": 2268
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "automated-but-actionable",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:23:22.441070+00:00",
+   "end_utc": "2026-11-09T07:23:42.687608+00:00",
+   "wall_s": 20.24641300001531,
+   "calls": [
+    {
+     "prompt_tokens": 722,
+     "prompt_tps": 513.6103177420131,
+     "gen_tokens": 555,
+     "gen_tps": 29.81366739893364,
+     "peak_memory_gb": 8.643470574,
+     "finish_reason": "stop",
+     "wall_s": 20.24180216700188,
+     "content_chars": 264,
+     "reasoning_chars": 1852
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-last-en",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:23:42.689198+00:00",
+   "end_utc": "2026-11-09T07:24:12.198461+00:00",
+   "wall_s": 29.509086916979868,
+   "calls": [
+    {
+     "prompt_tokens": 774,
+     "prompt_tps": 507.0829742896688,
+     "gen_tokens": 825,
+     "gen_tps": 29.724344803178482,
+     "peak_memory_gb": 8.55866694,
+     "finish_reason": "stop",
+     "wall_s": 29.503871458000503,
+     "content_chars": 268,
+     "reasoning_chars": 2866
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "meeting-moved-date-decoy",
+   "split": "heldout",
+   "load": 2,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T07:24:12.198700+00:00",
+   "end_utc": "2026-11-09T07:24:35.391103+00:00",
+   "wall_s": 23.192263083008584,
+   "calls": [
+    {
+     "prompt_tokens": 726,
+     "prompt_tps": 523.7616888069916,
+     "gen_tokens": 643,
+     "gen_tps": 29.78804135122111,
+     "peak_memory_gb": 8.647353582,
+     "finish_reason": "stop",
+     "wall_s": 23.187292540998897,
+     "content_chars": 237,
+     "reasoning_chars": 1939
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "c2bfb30c87033bb226ba7379e4c159739630c7445ade53fc04d7eadfd3bbeeb3"
+}
