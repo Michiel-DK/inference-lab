@@ -57,7 +57,7 @@ How to read the table:
 - Local wall is mlx on this M-series laptop. Hosted wall is a network round trip, Anthropic's own compute, ~2–3 s.
 - The $ cells are list-price arithmetic over metered tokens, not an invoice.
 
-**Detail** (same script):
+**Detail** (same script; its "Derived figures" and probe sections print every number below):
 - **Haiku per sit:** email 19 · 18 · 19; call-fields 13 · 15 · 15; recap 7 · 5 · 6.
   - Majority 40; stable-pass 35/55.
   - The 7 ids that moved between sits are recap `amounts-at-length`, `buried-last-en`, `quiet-day-with-receipt`,
@@ -74,9 +74,10 @@ How to read the table:
     `two-urgent-among-noise`, and call-fields `support-heldout-long`. All three hosted models fail them.
   - Hosted-only / local-only passes: Haiku 7 / 8, Sonnet 9 / 6, Opus 7 / 8.
 - **Against wilco's 28 Oct probe** (same models, same exams, same provider, one pass each):
-  - Opus 40 = 40, cell for cell.
-  - Haiku 42 → 40 (recap 8 → 6).
-  - Sonnet 41 → 44 (call 18 → 17, recap 3 → 7).
+  - Opus 40 = 40 per exam. By id, 2 recap cases swapped (`meeting-moved-date-decoy`, `rounding-bait`).
+  - Haiku 42 → 40 (email and call-fields identical by id; recap 8 → 6, 4 ids moved).
+  - Sonnet 41 → 44 (call 18 → 17 on `support-heldout-long`; recap 3 → 7, 4 ids up).
+  - Every case id matches between the probe and this lane, and all moves are on recap except Sonnet's one call-fields case.
   - Sonnet's recap moving 4 cases between two days is the sampling noise this table cannot remove with one sit.
 
 **Prediction vs result** (`predictions/hosted-baseline.md`):
@@ -100,7 +101,7 @@ How to read the table:
   recap cases between two days, more than the 0–4 per exam the band allowed for.
 - **"Hosted cost is thinking."** On these short-answer exams the 5.5 family mostly does not think. The bill is the prompt.
   Prompt caching of the fixed system prompt, not effort, is the lever. Not tested here: the lane is list price, uncached.
-- **Wall.** Hosted is 2.5–11× faster per case than the laptop (2.08–2.84 s vs 6.99–22.37 s), the reverse of a cost-per-case story. The laptop's wall is
+- **Wall.** Hosted is 2.5–10.7× faster per case than the laptop (2.08–2.84 s vs 6.99–22.37 s), the reverse of a cost-per-case story. The laptop's wall is
   its own compute; hosted wall is someone else's.
 
 **What was refused or voided.**
