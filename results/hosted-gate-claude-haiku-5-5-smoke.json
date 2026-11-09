@@ -1,0 +1,235 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "hosted-gate-claude-haiku-5-5-smoke",
+ "posted": false,
+ "prediction": "predictions/hosted-baseline.md",
+ "prediction_commit": "1088b19eb4b65ffdb594ed70016f112d99dcf518",
+ "lab_commit": "1cf5497eecf51177cf96de297dd9aba6664b547b",
+ "model": {
+  "ref": "claude-haiku-5-5",
+  "provider": "anthropic (wilco sandbox/router.py PROVIDERS, get_adapter)",
+  "endpoint": "https://api.anthropic.com/v1/chat/completions",
+  "response_models": [
+   "claude-haiku-5-5"
+  ],
+  "effort": "API default (this endpoint sends none): haiku/opus medium, sonnet high (rank C)",
+  "temperature": "not sent (wilco drop_body_keys); the endpoint samples, so sits are samples, not loads",
+  "loads": [
+   {
+    "load": 0,
+    "n_rows": 3
+   }
+  ],
+  "load_protocol": "'load' = one sit: every case once, sequentially, one process; hosted, so no weights are loaded and n_unstable counts sampling disagreement between sits"
+ },
+ "prices": {
+  "input_usd_per_mtok": 0.1,
+  "output_usd_per_mtok": 0.5,
+  "source": "claude-api reference model table, cached 2026-10-06 (rank C); the same rates wilco's docs/probes/frontier-direct-2026-10-28 used",
+  "tier": "standard, no prompt caching, no batch"
+ },
+ "ceiling_usd": 2.0,
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/sched-lab-inf-09-hosted-baseline/../wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af"
+  },
+  "grader": "sandbox/runner.py run_exam (per case, provider='anthropic'), adapter_for -> lab.hosted.MeteredHosted around router.get_adapter('anthropic')",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over sits, stable = all agree",
+  "tier": "agents say tier: local; lifted for this lane by the operator's go (synthetic public cases)",
+  "agents": {
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "python": "3.10.6"
+ },
+ "exams": [
+  "email-triage",
+  "call-fields"
+ ],
+ "plan": [
+  [
+   "email-triage",
+   [
+    "client-quote-request",
+    "overdue-invoice"
+   ]
+  ],
+  [
+   "call-fields",
+   [
+    "support-long-train"
+   ]
+  ]
+ ],
+ "metric": "pass_rate",
+ "headline": 1.0,
+ "aggregates": {
+  "n_cases": 3,
+  "n_calls": 3,
+  "pass_rate": 1.0,
+  "gen_tokens_total": 494,
+  "gen_tps": null,
+  "prompt_tps": null,
+  "peak_memory_gb_max": null,
+  "wall_s_total": 5.20113591599511,
+  "wall_s_per_case": 1.73371197199837,
+  "wh_per_case": null,
+  "prompt_tokens_total": 4757,
+  "cost_usd_total": 0.0007227,
+  "cost_usd_per_case": 0.00024089999999999997,
+  "unmetered_calls": 0,
+  "n_loads": 1,
+  "call-fields.n_cases": 1,
+  "call-fields.train_n": 1,
+  "call-fields.train_majority_pass": 1,
+  "call-fields.heldout_n": 0,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 1,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": null,
+  "call-fields.peak_memory_gb_max": null,
+  "call-fields.wall_s_per_case": 2.5595073330041487,
+  "call-fields.min_per_1000_cases": 42.65845555006914,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "call-fields.cost_usd_per_case": 0.000651,
+  "call-fields.length_no_answer_cases": 0,
+  "email-triage.n_cases": 2,
+  "email-triage.train_n": 2,
+  "email-triage.train_majority_pass": 2,
+  "email-triage.heldout_n": 0,
+  "email-triage.heldout_majority_pass": 0,
+  "email-triage.heldout_stable_pass": 0,
+  "email-triage.all_majority_pass": 2,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": null,
+  "email-triage.peak_memory_gb_max": null,
+  "email-triage.wall_s_per_case": 1.3208142914954806,
+  "email-triage.min_per_1000_cases": 22.013571524924675,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "email-triage.cost_usd_per_case": 3.5850000000000004e-05,
+  "email-triage.length_no_answer_cases": 0,
+  "heldout_n": 0,
+  "heldout_majority_pass": 0,
+  "heldout_stable_pass": 0,
+  "n_unstable": 0,
+  "n_unique_cases": 3,
+  "heldout_pass_per_load": [
+   0
+  ],
+  "heldout_pass_spread": 0,
+  "heldout_majority_pass_rate": null
+ },
+ "energy": null,
+ "energy_note": "hosted: no local energy to meter; cost is $ from metered tokens x list price",
+ "rows": [
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:45:08.152218+00:00",
+   "end_utc": "2026-11-09T13:45:08.925714+00:00",
+   "wall_s": 0.7733324999862816,
+   "calls": [
+    {
+     "prompt_tokens": 290,
+     "prompt_tps": null,
+     "gen_tokens": 13,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 0.7680414160131477,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 13,
+      "prompt_tokens": 290,
+      "total_tokens": 303
+     },
+     "response_model": "claude-haiku-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "email-triage",
+   "case": "overdue-invoice",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:45:08.926870+00:00",
+   "end_utc": "2026-11-09T13:45:10.795188+00:00",
+   "wall_s": 1.8682960830046795,
+   "calls": [
+    {
+     "prompt_tokens": 297,
+     "prompt_tps": null,
+     "gen_tokens": 13,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 1.8654055419901852,
+     "content_chars": 22,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 13,
+      "prompt_tokens": 297,
+      "total_tokens": 310
+     },
+     "response_model": "claude-haiku-5-5"
+    }
+   ],
+   "http_failures": []
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T13:45:10.801911+00:00",
+   "end_utc": "2026-11-09T13:45:13.361428+00:00",
+   "wall_s": 2.5595073330041487,
+   "calls": [
+    {
+     "prompt_tokens": 4170,
+     "prompt_tps": null,
+     "gen_tokens": 468,
+     "gen_tps": null,
+     "peak_memory_gb": null,
+     "finish_reason": "stop",
+     "wall_s": 2.5564094590081368,
+     "content_chars": 226,
+     "reasoning_chars": 0,
+     "usage": {
+      "completion_tokens": 468,
+      "prompt_tokens": 4170,
+      "total_tokens": 4638
+     },
+     "response_model": "claude-haiku-5-5"
+    }
+   ],
+   "http_failures": []
+  }
+ ],
+ "rows_sha256": "7ff580a0ce356b128bc7dba1067cea94660f9b583f01d19b0c4e0a3cddd66c22"
+}
