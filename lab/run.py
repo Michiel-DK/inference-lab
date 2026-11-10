@@ -132,7 +132,7 @@ def _battery():
     return subprocess.run(["pmset", "-g", "batt"], capture_output=True, text=True).stdout.strip().replace("\t", " ")
 
 
-def sit_load(model_ref, plan, load_idx, partial_path, context=None):
+def sit_load(model_ref, plan, load_idx, partial_path, context=None, spec=None):
     """One FRESH load (this process) sits every (exam, case) in plan; one JSON line per row, flushed as it lands.
 
     The last line is a footer {"_footer": ...}: a partial file without it is an interrupted load and is never assembled.
@@ -141,7 +141,13 @@ def sit_load(model_ref, plan, load_idx, partial_path, context=None):
     from .metering import MeteredMLX
     path, _ = resolve_model(model_ref)
     t_load = time.perf_counter()
-    adapter = MeteredMLX(path, empty_answer_exc=router.TerminationError, context=context)
+    if spec is not None:                                 # lane 06 (lab/spec.py): control or draft arm, raw text kept
+        from .spec import SpecMLX
+        dpath = resolve_model(spec["draft"])[0] if spec.get("draft") else None
+        adapter = SpecMLX(path, draft_ref=dpath, num_draft_tokens=spec.get("num_draft_tokens"),
+                          empty_answer_exc=router.TerminationError)
+    else:
+        adapter = MeteredMLX(path, empty_answer_exc=router.TerminationError, context=context)
     load_s = time.perf_counter() - t_load
     batt0 = _battery()
     real_adapter_for = runner.adapter_for
@@ -184,7 +190,8 @@ def _read_partial(path):
     return lines[:-1], lines[-1]["_footer"]
 
 
-def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out_path, scratch, posted, context=None):
+def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out_path, scratch, posted, context=None,
+              spec=None):
     """Orchestrate N fresh loads (one subprocess each; a load whose partial file is complete is reused, so an interrupted
     evening resumes at the next load), then write ONE results file. Never overwrites out_path (the CLI checks)."""
     import mlx.core as mx
@@ -199,6 +206,8 @@ def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out
             cmd = [sys.executable, "-m", "lab", "sit", model_ref, "--plan", plan_arg, "--load", str(i), "--out", str(part)]
             if context is not None:
                 cmd += ["--context", json.dumps(context)]
+            if spec is not None:
+                cmd += ["--spec", json.dumps(spec)]
             rc = subprocess.run(cmd).returncode
             if rc != 0:
                 raise SystemExit(f"load {i} exited {rc}; partial kept at {part}")
@@ -233,6 +242,8 @@ def run_loads(model_ref, name, plan, n_loads, prediction, prediction_commit, out
     }
     if context is not None:
         doc["context"] = _context_stamp(context, model_ref, rows)
+    if spec is not None:
+        doc["speculative"] = _spec_stamp(spec, model_ref)
     Path(out_path).write_text(json.dumps(doc, indent=1) + "\n")
     return doc
 
@@ -258,3 +269,17 @@ def _context_stamp(context, model_ref, rows):
             "rows_padded": len(padded), "rows_total": len(rows),
             "quantization": cfg.get("quantization") or cfg.get("quantization_config"),
             "chat_template_sha256": hashlib.sha256(tsrc.encode()).hexdigest()}
+
+
+def _spec_stamp(spec, model_ref):
+    """Lane 06's stamp: both packs by snapshot, tokenizer identity, num_draft_tokens, and the cache classes each model
+    builds (read off fresh caches in this process: no generation, weights already in the page cache)."""
+    from .spec import tokenizer_files_sha
+    tpath, tsnap = resolve_model(model_ref)
+    out = {"requested": spec, "target": {"ref": model_ref, "snapshot": tsnap, "tokenizer_sha256": tokenizer_files_sha(tpath)},
+           "prompt_cache": "not passed: speculative_generate_step builds one per model (make_prompt_cache)"}
+    if spec.get("draft"):
+        dpath, dsnap = resolve_model(spec["draft"])
+        out["draft"] = {"ref": spec["draft"], "snapshot": dsnap, "tokenizer_sha256": tokenizer_files_sha(dpath)}
+        out["tokenizer_identical"] = out["draft"]["tokenizer_sha256"] == out["target"]["tokenizer_sha256"]
+    return out

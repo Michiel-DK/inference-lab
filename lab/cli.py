@@ -46,6 +46,17 @@ def main(argv=None):
     s.add_argument("model"); s.add_argument("--plan", required=True)
     s.add_argument("--load", type=int, required=True); s.add_argument("--out", required=True)
     s.add_argument("--context", help="lane 05: JSON of lab/context.py settings (pad_to, kv_bits, ...)")
+    s.add_argument("--spec", help="lane 06: JSON {draft, num_draft_tokens} (draft null = the control arm)")
+    q = sub.add_parser("spec", help="lane 06: one model sits every case of the three exams, with or without a draft model")
+    q.add_argument("model"); q.add_argument("--name", required=True)
+    q.add_argument("--draft", help="draft model on disk (HF id or path); omit for the control arm")
+    q.add_argument("--num-draft-tokens", type=int, default=3)
+    qg = q.add_mutually_exclusive_group(required=True)
+    qg.add_argument("--smoke", action="store_true", help="train-only gate: email-triage overdue-invoice, client-quote-request + call-fields support-long-train")
+    qg.add_argument("--all", action="store_true", help="every case (train + held-out) of the three exams (83 at the pin)")
+    q.add_argument("--loads", type=int, default=1)
+    q.add_argument("--prediction", default="speculative"); q.add_argument("--post", action="store_true")
+    q.add_argument("--scratch", default=".lab-scratch")
     x = sub.add_parser("context", help="lane 05: one model sits held-out (or the gate smoke) padded to --pad-to tokens")
     x.add_argument("model"); x.add_argument("--name", required=True)
     xg = x.add_mutually_exclusive_group(required=True)
@@ -107,7 +118,8 @@ def main(argv=None):
         if problems:
             print("refused: wilco pin does not hold:\n  " + "\n  ".join(problems), file=sys.stderr)
             return 2
-        sit_load(a.model, json.loads(a.plan), a.load, a.out, context=json.loads(a.context) if a.context else None)
+        sit_load(a.model, json.loads(a.plan), a.load, a.out, context=json.loads(a.context) if a.context else None,
+                 spec=json.loads(a.spec) if a.spec else None)
         return 0
     if a.cmd == "context":
         import json
@@ -138,6 +150,33 @@ def main(argv=None):
                     for e in sorted(C.EXAMS)]
         from .run import run_loads
         run_loads(a.model, a.name, plan, a.loads, a.prediction, commit, out, a.scratch, a.post, context=ctx)
+        ok, msg = results.check(str(out))
+        print(msg)
+        return 0 if ok else 1
+    if a.cmd == "spec":
+        import json
+        ok, why, commit = _prediction_committed(a.prediction)
+        if not ok:
+            print(f"refused: {why}", file=sys.stderr)
+            return 2
+        problems = C.verify_pin()
+        if problems:
+            print("refused: wilco pin does not hold:\n  " + "\n  ".join(problems), file=sys.stderr)
+            return 2
+        out = Path("results") / f"{a.name}.json"
+        if out.exists():
+            print(f"refused: {out} exists; results are never overwritten", file=sys.stderr)
+            return 2
+        if a.loads < 1 or a.num_draft_tokens < 1:
+            print("refused: loads < 1 or num_draft_tokens < 1", file=sys.stderr)
+            return 2
+        spec = {"draft": a.draft, "num_draft_tokens": a.num_draft_tokens if a.draft else None}
+        if a.smoke:
+            plan = [["email-triage", ["overdue-invoice", "client-quote-request"]], ["call-fields", ["support-long-train"]]]
+        else:
+            plan = [[e, [x["id"] for x in json.loads(C.cases_path(e).read_text())["cases"]]] for e in sorted(C.EXAMS)]
+        from .run import run_loads
+        run_loads(a.model, a.name, plan, a.loads, a.prediction, commit, out, a.scratch, a.post, spec=spec)
         ok, msg = results.check(str(out))
         print(msg)
         return 0 if ok else 1
