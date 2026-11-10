@@ -33,7 +33,7 @@ $P -m lab run <model> --name <run> --smoke       # refuses without a committed p
 
 | path | what |
 |---|---|
-| `lab/` | `cases.py` (pin + hashes), `run.py` (wilco `run_exam` per case, mlx-lm in-process), `metering.py`, `energy.py`, `results.py` (derive + check) |
+| `lab/` | `cases.py` (pin + hashes), `run.py` (wilco `run_exam` per case, mlx-lm in-process), `metering.py`, `context.py` (lane 05: padding + KV settings, `lab context`), `energy.py`, `results.py` (derive + check) |
 | `predictions/` | one file per run, committed before it (format in `predictions/README.md`) |
 | `results/` | committed evidence, never regenerated |
 | `LESSONS.md` · `SHOWCASE.md` · `LITERATURE.md` | prediction → result rows · the post · only what a lane ran against |

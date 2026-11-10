@@ -1,0 +1,2548 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "ctx-lfm2.5-8b-a1b-mlx-4bit-2k",
+ "posted": false,
+ "prediction": "predictions/context-kv.md",
+ "prediction_commit": "ca6038f48d317cedc975f3f111398715f59bf88b",
+ "lab_commit": "1fff5e7f757ec5468e22d0eb6142c61d1ea798bf",
+ "model": {
+  "ref": "LiquidAI/LFM2.5-8B-A1B-MLX-4bit",
+  "snapshot": "2e92b640a63d47ad4dcf81a19a366b902356b3bc",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 2.9622178749996237,
+    "n_rows": 55
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "recap": "315a6132da7f78c8f9e8a140ff711656f24b8ce12d893e8bc248ecd931aaf120"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   },
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "recap": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "call-fields",
+  "email-triage",
+  "recap"
+ ],
+ "plan": [
+  [
+   "call-fields",
+   [
+    "discovery-heldout-easy",
+    "discovery-heldout-hard",
+    "discovery-heldout-long",
+    "renewal-heldout-medium",
+    "renewal-heldout-digits",
+    "renewal-heldout-short",
+    "support-heldout-short",
+    "support-heldout-long",
+    "pricing-objection-heldout-medium",
+    "pricing-objection-heldout-short",
+    "quiet-checkin-heldout-short",
+    "quiet-checkin-heldout-medium",
+    "mixed-heldout-dense",
+    "longcall-pricing-heldout-1",
+    "longcall-scoping-heldout-1",
+    "longcall-discovery-heldout-2",
+    "longcall-renewal-heldout-2",
+    "longcall-support-heldout-2",
+    "longcall-mixed-heldout-3"
+   ]
+  ],
+  [
+   "email-triage",
+   [
+    "production-down",
+    "gdpr-data-request",
+    "conference-invite",
+    "promo-code",
+    "invoice-error-client",
+    "dpa-signature-compliance",
+    "recruiter-fake-urgency",
+    "paid-workshop-invite",
+    "intro-no-ask",
+    "disk-warning-no-action",
+    "long-ramble-buried-incident",
+    "newsletter-injection-urgent",
+    "cold-sales-injection-urgent",
+    "nl-client-bug-buried",
+    "fr-tax-authority-documents",
+    "stripe-payout-notice",
+    "client-domain-newsletter-nl",
+    "calendar-accept-notice",
+    "proposal-accept-conditional",
+    "fr-networking-coffee"
+   ]
+  ],
+  [
+   "recap",
+   [
+    "buried-critical",
+    "quiet-day-newsletters",
+    "quiet-day-with-receipt",
+    "rounding-bait",
+    "two-urgent-among-noise",
+    "very-long-day",
+    "long-day-heldout-xl",
+    "long-quiet-day",
+    "buried-critical-xl",
+    "amounts-at-length",
+    "dependency-delivery-vs-install",
+    "near-duplicate-invoices",
+    "quiet-day-big-amount-decoy",
+    "automated-but-actionable",
+    "buried-last-en",
+    "meeting-moved-date-decoy"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": 0.2545454545454545,
+ "aggregates": {
+  "n_cases": 55,
+  "n_calls": 55,
+  "pass_rate": 0.2545454545454545,
+  "gen_tokens_total": 68836,
+  "gen_tps": 90.17658834552107,
+  "prompt_tps": 786.0059059580674,
+  "peak_memory_gb_max": 5.888032352,
+  "wall_s_total": 950.9880292930175,
+  "wall_s_per_case": 17.290691441691227,
+  "wh_per_case": null,
+  "n_loads": 1,
+  "call-fields.n_cases": 19,
+  "call-fields.train_n": 0,
+  "call-fields.train_majority_pass": 0,
+  "call-fields.heldout_n": 19,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 0,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 88.89926288646258,
+  "call-fields.peak_memory_gb_max": 5.888032352,
+  "call-fields.wall_s_per_case": 23.849503438625682,
+  "call-fields.min_per_1000_cases": 397.4917239770947,
+  "call-fields.finish_length_calls": 1,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 20,
+  "email-triage.train_n": 0,
+  "email-triage.train_majority_pass": 0,
+  "email-triage.heldout_n": 20,
+  "email-triage.heldout_majority_pass": 13,
+  "email-triage.heldout_stable_pass": 13,
+  "email-triage.all_majority_pass": 13,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 92.39753515551635,
+  "email-triage.peak_memory_gb_max": 5.759884714,
+  "email-triage.wall_s_per_case": 6.644283708304283,
+  "email-triage.min_per_1000_cases": 110.73806180507138,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "recap.n_cases": 16,
+  "recap.train_n": 0,
+  "recap.train_majority_pass": 0,
+  "recap.heldout_n": 16,
+  "recap.heldout_majority_pass": 1,
+  "recap.heldout_stable_pass": 1,
+  "recap.all_majority_pass": 1,
+  "recap.n_unstable": 0,
+  "recap.gen_tps": 91.08862102493488,
+  "recap.peak_memory_gb_max": 5.75986833,
+  "recap.wall_s_per_case": 22.81011186206524,
+  "recap.min_per_1000_cases": 380.1685310344207,
+  "recap.finish_length_calls": 7,
+  "recap.wh_per_1000_cases": null,
+  "heldout_n": 55,
+  "heldout_majority_pass": 14,
+  "heldout_stable_pass": 14,
+  "n_unstable": 0,
+  "n_unique_cases": 55,
+  "heldout_majority_pass_rate": 0.2545454545454545
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-easy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:07:21.439237+00:00",
+   "end_utc": "2026-11-09T23:07:42.026119+00:00",
+   "wall_s": 20.586327333992813,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 762.5743194599524,
+     "gen_tokens": 1620,
+     "gen_tps": 91.26626599406838,
+     "peak_memory_gb": 5.75986829,
+     "finish_reason": "stop",
+     "wall_s": 20.584715416975087,
+     "content_chars": 226,
+     "reasoning_chars": 6384,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 2918,
+       "pad_sha256": "bbdb7cf8eec7fd18c177d5038aabe25cec68e1f7bee0180512a131645d853130",
+       "base_tokens": 1246,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-hard",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:07:42.026329+00:00",
+   "end_utc": "2026-11-09T23:07:54.711955+00:00",
+   "wall_s": 12.68554779200349,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.0060899181294,
+     "gen_tokens": 913,
+     "gen_tps": 91.90564325441262,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 12.684446707979077,
+     "content_chars": 239,
+     "reasoning_chars": 3469,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 1939,
+       "pad_sha256": "52ad9021cfaaac8db6bdb6feb756c7d6615d6eb058bebd258d627ff0954ae36b",
+       "base_tokens": 1501,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:07:54.712095+00:00",
+   "end_utc": "2026-11-09T23:08:15.451651+00:00",
+   "wall_s": 20.739434832998086,
+   "calls": [
+    {
+     "prompt_tokens": 2367,
+     "prompt_tps": 786.5752399783788,
+     "gen_tokens": 1604,
+     "gen_tps": 90.9096647622002,
+     "peak_memory_gb": 5.755825574,
+     "finish_reason": "stop",
+     "wall_s": 20.738267334003467,
+     "content_chars": 240,
+     "reasoning_chars": 6403,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 2367,
+       "padded_tokens": 2367
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:08:15.451771+00:00",
+   "end_utc": "2026-11-09T23:08:35.440085+00:00",
+   "wall_s": 19.988197416998446,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 786.6209021928064,
+     "gen_tokens": 1577,
+     "gen_tps": 91.45209530328535,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 19.987184625002556,
+     "content_chars": 191,
+     "reasoning_chars": 6334,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 2252,
+       "pad_sha256": "b2b652cc4421038878184952775ab6dccfa9258d7c69bcc2ab9ff6a4dd34b9f5",
+       "base_tokens": 1414,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-digits",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:08:35.440210+00:00",
+   "end_utc": "2026-11-09T23:08:59.210391+00:00",
+   "wall_s": 23.77004320899141,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 783.1668955656633,
+     "gen_tokens": 1916,
+     "gen_tps": 91.16425219377275,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 23.76897712497157,
+     "content_chars": 226,
+     "reasoning_chars": 7683,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 501,
+       "pad_sha256": "fbdf628ae40153c16812d3efee4a1b4c565f92faded286348926f788f85bf3e9",
+       "base_tokens": 1884,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:08:59.211681+00:00",
+   "end_utc": "2026-11-09T23:09:15.875049+00:00",
+   "wall_s": 16.66326633299468,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 786.7697695963857,
+     "gen_tokens": 1276,
+     "gen_tps": 91.64883535866858,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 16.6622743330081,
+     "content_chars": 224,
+     "reasoning_chars": 4940,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 3536,
+       "pad_sha256": "c9ea0bf0a9b7b6b35883b1c0a3e0aee58c00b3b4490150011d732e607844518f",
+       "base_tokens": 1094,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:09:15.875173+00:00",
+   "end_utc": "2026-11-09T23:09:31.101157+00:00",
+   "wall_s": 15.225889708002796,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 787.7109652327337,
+     "gen_tokens": 1144,
+     "gen_tps": 91.60590649474726,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 15.224426166998455,
+     "content_chars": 204,
+     "reasoning_chars": 4539,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 3119,
+       "pad_sha256": "287cb806ff20a1feee42dd6391c811efb94e8fa202bb85ba56d191606defd099",
+       "base_tokens": 1195,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:09:31.101342+00:00",
+   "end_utc": "2026-11-09T23:09:53.237146+00:00",
+   "wall_s": 22.135671291995095,
+   "calls": [
+    {
+     "prompt_tokens": 2440,
+     "prompt_tps": 785.5872217226001,
+     "gen_tokens": 1719,
+     "gen_tps": 90.74975351989004,
+     "peak_memory_gb": 5.755825574,
+     "finish_reason": "stop",
+     "wall_s": 22.134455499995966,
+     "content_chars": 201,
+     "reasoning_chars": 6961,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 2440,
+       "padded_tokens": 2440
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:09:53.237254+00:00",
+   "end_utc": "2026-11-09T23:10:13.840888+00:00",
+   "wall_s": 20.60350929197739,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 786.2409244867408,
+     "gen_tokens": 1626,
+     "gen_tps": 91.04247560821521,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 20.601991875009844,
+     "content_chars": 225,
+     "reasoning_chars": 6401,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 2319,
+       "pad_sha256": "1c61ed40bcfca8c7a63fb1dfddee7929fd80d71e4c061b613b6bbcd313ca33d1",
+       "base_tokens": 1396,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:10:13.841915+00:00",
+   "end_utc": "2026-11-09T23:10:31.030048+00:00",
+   "wall_s": 17.188027041993337,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 781.8454321006951,
+     "gen_tokens": 1322,
+     "gen_tps": 91.59973947750991,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 17.186864624993177,
+     "content_chars": 221,
+     "reasoning_chars": 4954,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 3352,
+       "pad_sha256": "6c7a2afdfd924fd41530e07e19a4f385ef4d1c3a62c48af34996e21e66882875",
+       "base_tokens": 1136,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:10:31.030162+00:00",
+   "end_utc": "2026-11-09T23:10:52.847595+00:00",
+   "wall_s": 21.81730387499556,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.3999340164532,
+     "gen_tokens": 1743,
+     "gen_tps": 91.38892207398969,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 21.81616391602438,
+     "content_chars": 189,
+     "reasoning_chars": 7112,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 3513,
+       "pad_sha256": "fd34a7b2eed434840ff30956f22390c0729b49eda876bfe050d60c51c1ab6ebc",
+       "base_tokens": 1100,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:10:52.848987+00:00",
+   "end_utc": "2026-11-09T23:11:10.368198+00:00",
+   "wall_s": 17.519106790976366,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.7628193418634,
+     "gen_tokens": 1351,
+     "gen_tps": 91.44504320646736,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 17.517654458002653,
+     "content_chars": 184,
+     "reasoning_chars": 5339,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 2957,
+       "pad_sha256": "eccc6bef6412784e893f3e0666b7037863ab06f2091170964ceb8d3485054ccf",
+       "base_tokens": 1237,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "mixed-heldout-dense",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:11:10.368313+00:00",
+   "end_utc": "2026-11-09T23:11:35.961185+00:00",
+   "wall_s": 25.592724290996557,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.9229762566921,
+     "gen_tokens": 2080,
+     "gen_tps": 91.05512584017316,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 25.59150262500043,
+     "content_chars": 191,
+     "reasoning_chars": 8424,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 1679,
+       "pad_sha256": "90bdb0fc35116631946ac33023032591942ccd39897d2c904c1bcefebedde61c",
+       "base_tokens": 1575,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-pricing-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:11:35.961803+00:00",
+   "end_utc": "2026-11-09T23:12:00.026478+00:00",
+   "wall_s": 24.06452858299599,
+   "calls": [
+    {
+     "prompt_tokens": 5084,
+     "prompt_tps": 793.076136459097,
+     "gen_tokens": 1540,
+     "gen_tps": 87.702155541343,
+     "peak_memory_gb": 5.83768432,
+     "finish_reason": "stop",
+     "wall_s": 24.06233612500364,
+     "content_chars": 211,
+     "reasoning_chars": 5948,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 5084,
+       "padded_tokens": 5084
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-scoping-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:12:00.026601+00:00",
+   "end_utc": "2026-11-09T23:12:55.759150+00:00",
+   "wall_s": 55.73223012499511,
+   "calls": [
+    {
+     "prompt_tokens": 5930,
+     "prompt_tps": 792.060296757463,
+     "gen_tokens": 4096,
+     "gen_tps": 85.07744997964328,
+     "peak_memory_gb": 5.83768432,
+     "finish_reason": "length",
+     "wall_s": 55.72849987499649,
+     "content_chars": 0,
+     "reasoning_chars": 15651,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 5930,
+       "padded_tokens": 5930
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:12:55.759379+00:00",
+   "end_utc": "2026-11-09T23:13:21.867319+00:00",
+   "wall_s": 26.107781458995305,
+   "calls": [
+    {
+     "prompt_tokens": 6501,
+     "prompt_tps": 787.7085597662002,
+     "gen_tokens": 1526,
+     "gen_tps": 85.96398586416174,
+     "peak_memory_gb": 5.862850144,
+     "finish_reason": "stop",
+     "wall_s": 26.10478704198613,
+     "content_chars": 236,
+     "reasoning_chars": 6061,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 6501,
+       "padded_tokens": 6501
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:13:21.867546+00:00",
+   "end_utc": "2026-11-09T23:13:54.201157+00:00",
+   "wall_s": 32.33342766700662,
+   "calls": [
+    {
+     "prompt_tokens": 7425,
+     "prompt_tps": 787.4352135415138,
+     "gen_tokens": 1931,
+     "gen_tps": 84.69419869458358,
+     "peak_memory_gb": 5.862850144,
+     "finish_reason": "stop",
+     "wall_s": 32.33003441701294,
+     "content_chars": 196,
+     "reasoning_chars": 7986,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 7425,
+       "padded_tokens": 7425
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:13:54.201982+00:00",
+   "end_utc": "2026-11-09T23:14:22.506144+00:00",
+   "wall_s": 28.30399795799167,
+   "calls": [
+    {
+     "prompt_tokens": 9296,
+     "prompt_tps": 781.043173627137,
+     "gen_tokens": 1352,
+     "gen_tps": 82.99678428901612,
+     "peak_memory_gb": 5.888032352,
+     "finish_reason": "stop",
+     "wall_s": 28.29918629201711,
+     "content_chars": 210,
+     "reasoning_chars": 5392,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 9296,
+       "padded_tokens": 9296
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-mixed-heldout-3",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-09T23:14:22.506292+00:00",
+   "end_utc": "2026-11-09T23:14:54.590032+00:00",
+   "wall_s": 32.083550332987215,
+   "calls": [
+    {
+     "prompt_tokens": 6119,
+     "prompt_tps": 792.0368304849138,
+     "gen_tokens": 2088,
+     "gen_tps": 86.07321901597054,
+     "peak_memory_gb": 5.852494624,
+     "finish_reason": "stop",
+     "wall_s": 32.080387624999275,
+     "content_chars": 226,
+     "reasoning_chars": 8378,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 6119,
+       "padded_tokens": 6119
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "production-down",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:14:54.593748+00:00",
+   "end_utc": "2026-11-09T23:14:59.344409+00:00",
+   "wall_s": 4.750623666011961,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 788.5339539560746,
+     "gen_tokens": 188,
+     "gen_tps": 92.98006871137675,
+     "peak_memory_gb": 5.759884714,
+     "finish_reason": "stop",
+     "wall_s": 4.749665374984033,
+     "content_chars": 23,
+     "reasoning_chars": 781,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7062,
+       "pad_sha256": "cf5fedd65f8a6ae808e205e73d2331d292ac5df20669ace905848a455786d18e",
+       "base_tokens": 207,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "gdpr-data-request",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:14:59.344516+00:00",
+   "end_utc": "2026-11-09T23:15:04.020949+00:00",
+   "wall_s": 4.676398917014012,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 786.6557374821771,
+     "gen_tokens": 180,
+     "gen_tps": 92.66221237200702,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 4.67509829197661,
+     "content_chars": 23,
+     "reasoning_chars": 690,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7092,
+       "pad_sha256": "f00659e9096b41f8e662b8299ccc8a0f1ae3d4d6f1ee65207860774f29a9f17b",
+       "base_tokens": 199,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "conference-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:15:04.021065+00:00",
+   "end_utc": "2026-11-09T23:15:10.596699+00:00",
+   "wall_s": 6.57558937498834,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 783.1068032218255,
+     "gen_tokens": 353,
+     "gen_tps": 92.09612207222794,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 6.574549750017468,
+     "content_chars": 25,
+     "reasoning_chars": 1434,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7002,
+       "pad_sha256": "87382001e1afab1f0bb5099f05a5b115357e7e3a192422a14894520a97a3f1e3",
+       "base_tokens": 220,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "promo-code",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:15:10.596804+00:00",
+   "end_utc": "2026-11-09T23:15:15.952144+00:00",
+   "wall_s": 5.355299290997209,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.3887775085145,
+     "gen_tokens": 242,
+     "gen_tps": 92.52414617706815,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 5.354180833004648,
+     "content_chars": 24,
+     "reasoning_chars": 985,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7088,
+       "pad_sha256": "135f5ea2d2a809d20853a856d51fe2b2b438e68173ea83cab930b7e939811860",
+       "base_tokens": 200,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "invoice-error-client",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:15:15.952264+00:00",
+   "end_utc": "2026-11-09T23:15:20.410462+00:00",
+   "wall_s": 4.458165000018198,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.6326802403352,
+     "gen_tokens": 159,
+     "gen_tps": 92.68853813126056,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 4.457256041991059,
+     "content_chars": 23,
+     "reasoning_chars": 564,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7025,
+       "pad_sha256": "f054c411bdc3a326fefa71de6ab84e9dafd01d5844165238ac58b4f3fa541293",
+       "base_tokens": 214,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "dpa-signature-compliance",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:15:20.410566+00:00",
+   "end_utc": "2026-11-09T23:15:27.925103+00:00",
+   "wall_s": 7.514487000007648,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.422898524641,
+     "gen_tokens": 442,
+     "gen_tps": 92.57735406062459,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 7.513488583004801,
+     "content_chars": 23,
+     "reasoning_chars": 1851,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7011,
+       "pad_sha256": "96d100e94d4a68824a7b6531695916ecdb8adefc00438a1edf33ffb0137f0af4",
+       "base_tokens": 217,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-fake-urgency",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T23:15:27.925218+00:00",
+   "end_utc": "2026-11-09T23:15:34.580326+00:00",
+   "wall_s": 6.65506358401035,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 788.0132970256332,
+     "gen_tokens": 363,
+     "gen_tps": 92.49052032430134,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 6.65406083301059,
+     "content_chars": 23,
+     "reasoning_chars": 1435,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7022,
+       "pad_sha256": "ecc051f1c1fd2df3df4acc13e6cdbf16a04608470f7518bc3b3797503aba80b4",
+       "base_tokens": 215,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "paid-workshop-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:15:34.580436+00:00",
+   "end_utc": "2026-11-09T23:15:41.665396+00:00",
+   "wall_s": 7.084913500002585,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.1245728759492,
+     "gen_tokens": 402,
+     "gen_tps": 92.46609490298319,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 7.0838917499931995,
+     "content_chars": 25,
+     "reasoning_chars": 1664,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6992,
+       "pad_sha256": "7148491072f67b2fa8217d10e65d5ef4d8d03be88072d4fa6b3875338e0e9969",
+       "base_tokens": 224,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "intro-no-ask",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T23:15:41.665515+00:00",
+   "end_utc": "2026-11-09T23:15:49.785641+00:00",
+   "wall_s": 8.120070833014324,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.2326727962081,
+     "gen_tokens": 496,
+     "gen_tps": 92.2510147322658,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 8.118998999998439,
+     "content_chars": 20,
+     "reasoning_chars": 2298,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7025,
+       "pad_sha256": "f054c411bdc3a326fefa71de6ab84e9dafd01d5844165238ac58b4f3fa541293",
+       "base_tokens": 214,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "disk-warning-no-action",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:15:49.786864+00:00",
+   "end_utc": "2026-11-09T23:15:54.473353+00:00",
+   "wall_s": 4.686453959002392,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 788.1442781216277,
+     "gen_tokens": 182,
+     "gen_tps": 92.98264765739872,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 4.6854008749942295,
+     "content_chars": 24,
+     "reasoning_chars": 751,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 7035,
+       "pad_sha256": "2894e23f84bfa5e1f9b95a1b69accbe9ab3fbdc5aecf202ceab4b25acefac556",
+       "base_tokens": 212,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "long-ramble-buried-incident",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T23:15:54.473467+00:00",
+   "end_utc": "2026-11-09T23:16:08.027874+00:00",
+   "wall_s": 13.554323958989698,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 788.5712109462366,
+     "gen_tokens": 992,
+     "gen_tps": 91.6538445409591,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 13.553237415995682,
+     "content_chars": 20,
+     "reasoning_chars": 4329,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6114,
+       "pad_sha256": "4ec78967e22302cc6b2230c79915e957ee5647ba8c5f86085f3920f58574ec97",
+       "base_tokens": 448,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T23:16:08.027995+00:00",
+   "end_utc": "2026-11-09T23:16:12.385041+00:00",
+   "wall_s": 4.357013625005493,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 786.8959538489439,
+     "gen_tokens": 151,
+     "gen_tps": 93.02811516708077,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 4.35599995800294,
+     "content_chars": 23,
+     "reasoning_chars": 521,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6992,
+       "pad_sha256": "7148491072f67b2fa8217d10e65d5ef4d8d03be88072d4fa6b3875338e0e9969",
+       "base_tokens": 224,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "cold-sales-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T23:16:12.385142+00:00",
+   "end_utc": "2026-11-09T23:16:16.551388+00:00",
+   "wall_s": 4.166214374999981,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 789.0456092221799,
+     "gen_tokens": 134,
+     "gen_tps": 93.13582595955859,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 4.165293416008353,
+     "content_chars": 23,
+     "reasoning_chars": 471,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6946,
+       "pad_sha256": "51f7716368d2d3560062746f57fe0b82958a6fdba81e25c3baef1af4fed9f940",
+       "base_tokens": 236,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "nl-client-bug-buried",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T23:16:16.551497+00:00",
+   "end_utc": "2026-11-09T23:16:23.997084+00:00",
+   "wall_s": 7.445537208026508,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.1129350967403,
+     "gen_tokens": 436,
+     "gen_tps": 92.53663477305865,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 7.444393916986883,
+     "content_chars": 29,
+     "reasoning_chars": 1747,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6621,
+       "pad_sha256": "91a59144efd0824b51a1058132b9b6572ea556ed8726886dd95bcebdaff09ae4",
+       "base_tokens": 314,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-tax-authority-documents",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:16:23.997225+00:00",
+   "end_utc": "2026-11-09T23:16:32.928385+00:00",
+   "wall_s": 8.931101833994035,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 787.0735089858651,
+     "gen_tokens": 572,
+     "gen_tps": 92.32758073674088,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 8.93005858300603,
+     "content_chars": 27,
+     "reasoning_chars": 2350,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6878,
+       "pad_sha256": "9fede6c2b8ba8ca1b69e313637efee5a53444a58f8b1969b8ed35208e1bf4f73",
+       "base_tokens": 251,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "stripe-payout-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:16:32.929637+00:00",
+   "end_utc": "2026-11-09T23:16:38.167494+00:00",
+   "wall_s": 5.237818166991929,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 788.313483555874,
+     "gen_tokens": 233,
+     "gen_tps": 92.89064165123581,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 5.236614542023744,
+     "content_chars": 24,
+     "reasoning_chars": 913,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6988,
+       "pad_sha256": "38b7b23335d7baeb6b2476d113d97b6b9ac79b3b9ac3166cd7386f787d57d735",
+       "base_tokens": 227,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-domain-newsletter-nl",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:16:38.167592+00:00",
+   "end_utc": "2026-11-09T23:16:45.434680+00:00",
+   "wall_s": 7.2670407079858705,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.3130370540274,
+     "gen_tokens": 419,
+     "gen_tps": 92.52537153599074,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 7.266172500007087,
+     "content_chars": 20,
+     "reasoning_chars": 1691,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6918,
+       "pad_sha256": "0d87ced89ad0c09b09de6775de95e5ce7250edde9056185fd3431e05a21fdc87",
+       "base_tokens": 243,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "calendar-accept-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-09T23:16:45.434775+00:00",
+   "end_utc": "2026-11-09T23:16:52.812469+00:00",
+   "wall_s": 7.377643457992235,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.9576110779635,
+     "gen_tokens": 429,
+     "gen_tps": 92.44582313613758,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 7.376648875011597,
+     "content_chars": 23,
+     "reasoning_chars": 1693,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6874,
+       "pad_sha256": "89508417103c2594803d57a43882c65d6e5b255c27d8e350c2bd8e6100ef4a9f",
+       "base_tokens": 252,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "proposal-accept-conditional",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:16:52.813896+00:00",
+   "end_utc": "2026-11-09T23:16:59.743306+00:00",
+   "wall_s": 6.929363166011171,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 782.8054815897303,
+     "gen_tokens": 387,
+     "gen_tps": 92.53594487972781,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 6.928325582994148,
+     "content_chars": 23,
+     "reasoning_chars": 1592,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6895,
+       "pad_sha256": "cf6f266498e9f5a45b7b4121dcdd9f2de7101332d1a84b3308276c89b794430b",
+       "base_tokens": 247,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-networking-coffee",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:16:59.743415+00:00",
+   "end_utc": "2026-11-09T23:17:07.486019+00:00",
+   "wall_s": 7.742552541021723,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 787.7900869890129,
+     "gen_tokens": 463,
+     "gen_tps": 92.37293271803262,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 7.7415559999935795,
+     "content_chars": 25,
+     "reasoning_chars": 1867,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 6826,
+       "pad_sha256": "27febded4b70d66aba5af1c8a8f7bd3d2b06f9d907b516449046cc031832e821",
+       "base_tokens": 262,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:17:07.488702+00:00",
+   "end_utc": "2026-11-09T23:17:32.722344+00:00",
+   "wall_s": 25.233495833002962,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.2291067113871,
+     "gen_tokens": 2048,
+     "gen_tps": 91.08554945044726,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "length",
+     "wall_s": 25.230365374998655,
+     "content_chars": 0,
+     "reasoning_chars": 8401,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 3002,
+       "pad_sha256": "1c7622df4b018c2e2005554ed8dd6ab2a93ba6ad39a9a87ee21a146d5d857d75",
+       "base_tokens": 1143,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-newsletters",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T23:17:32.722463+00:00",
+   "end_utc": "2026-11-09T23:17:57.402386+00:00",
+   "wall_s": 24.67978116698214,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 786.3477917930571,
+     "gen_tokens": 1993,
+     "gen_tps": 90.81440885359517,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 24.67703308298951,
+     "content_chars": 298,
+     "reasoning_chars": 7812,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 5182,
+       "pad_sha256": "555a2b231334976509c4e93c1df44670fa80c2e5af052558b9a3ac48415fea94",
+       "base_tokens": 509,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-with-receipt",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    }
+   ],
+   "start_utc": "2026-11-09T23:17:57.402493+00:00",
+   "end_utc": "2026-11-09T23:18:14.979899+00:00",
+   "wall_s": 17.5773005829833,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.7494916048006,
+     "gen_tokens": 1358,
+     "gen_tps": 91.5165983428783,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 17.574564667011146,
+     "content_chars": 367,
+     "reasoning_chars": 4893,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4747,
+       "pad_sha256": "d3672455b1af3e3792053be2b2a91ad1aacd6ae2b2d31ee8d3f3f1b8e3e4c1a7",
+       "base_tokens": 636,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "rounding-bait",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:18:14.981051+00:00",
+   "end_utc": "2026-11-09T23:18:40.186258+00:00",
+   "wall_s": 25.205061041022418,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.7930181602152,
+     "gen_tokens": 2048,
+     "gen_tps": 91.1539591068337,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "length",
+     "wall_s": 25.20289854099974,
+     "content_chars": 0,
+     "reasoning_chars": 7688,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4719,
+       "pad_sha256": "9b3f17c99443190dae9aed2a57ca32224c7854258f6e67624acad595c0c67598",
+       "base_tokens": 643,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "two-urgent-among-noise",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T23:18:40.186381+00:00",
+   "end_utc": "2026-11-09T23:19:04.824890+00:00",
+   "wall_s": 24.638360167009523,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 787.8078781943638,
+     "gen_tokens": 1994,
+     "gen_tps": 91.05020908186103,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 24.63462037499994,
+     "content_chars": 203,
+     "reasoning_chars": 8400,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 3350,
+       "pad_sha256": "7afea1aa7a018ce42b2f6a89779e07de190a585b1ca5038f05765a9fbf3747ed",
+       "base_tokens": 1037,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "very-long-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T23:19:04.825112+00:00",
+   "end_utc": "2026-11-09T23:19:20.899284+00:00",
+   "wall_s": 16.07407470900216,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.411568252067,
+     "gen_tokens": 1221,
+     "gen_tps": 91.62823027500363,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 16.071127625007648,
+     "content_chars": 102,
+     "reasoning_chars": 4854,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 1373,
+       "pad_sha256": "bfda35823d485acea9fcd218e54455fc24ad9c33e386fdd874ddb487285965b3",
+       "base_tokens": 1612,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-heldout-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:19:20.899386+00:00",
+   "end_utc": "2026-11-09T23:19:46.914136+00:00",
+   "wall_s": 25.99580304202391,
+   "calls": [
+    {
+     "prompt_tokens": 2556,
+     "prompt_tps": 787.2295213138526,
+     "gen_tokens": 2048,
+     "gen_tps": 90.36586399070178,
+     "peak_memory_gb": 5.755825574,
+     "finish_reason": "length",
+     "wall_s": 25.993465625011595,
+     "content_chars": 0,
+     "reasoning_chars": 7574,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 2556,
+       "padded_tokens": 2556
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-quiet-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-09T23:19:46.914262+00:00",
+   "end_utc": "2026-11-09T23:20:08.616774+00:00",
+   "wall_s": 21.697265249997145,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.8018374192337,
+     "gen_tokens": 1727,
+     "gen_tps": 91.13623147017135,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 21.694312125007855,
+     "content_chars": 65,
+     "reasoning_chars": 6789,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 874,
+       "pad_sha256": "547c74cf6662097d490966fbdc7aa85c08784cc1bb0454599258cf2b8a0e596e",
+       "base_tokens": 1760,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:20:08.617938+00:00",
+   "end_utc": "2026-11-09T23:20:33.901794+00:00",
+   "wall_s": 25.28224008399411,
+   "calls": [
+    {
+     "prompt_tokens": 2111,
+     "prompt_tps": 779.5089222979642,
+     "gen_tokens": 2048,
+     "gen_tps": 91.0700029411147,
+     "peak_memory_gb": 5.755825574,
+     "finish_reason": "length",
+     "wall_s": 25.280036541982554,
+     "content_chars": 0,
+     "reasoning_chars": 8213,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 2111,
+       "padded_tokens": 2111
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-at-length",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T23:20:33.901926+00:00",
+   "end_utc": "2026-11-09T23:20:58.764929+00:00",
+   "wall_s": 24.86245612500352,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.111555417764,
+     "gen_tokens": 2016,
+     "gen_tps": 91.16509002140897,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 24.8595802920172,
+     "content_chars": 212,
+     "reasoning_chars": 8083,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 663,
+       "pad_sha256": "a0474531e823dba506a2931261891db2ab80db4b8387513a25d6afb16be057bf",
+       "base_tokens": 1825,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "dependency-delivery-vs-install",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:20:58.765027+00:00",
+   "end_utc": "2026-11-09T23:21:24.006871+00:00",
+   "wall_s": 25.241495624999516,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 780.8076860746756,
+     "gen_tokens": 2048,
+     "gen_tps": 91.08542386764991,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "length",
+     "wall_s": 25.239313874975778,
+     "content_chars": 0,
+     "reasoning_chars": 7485,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4130,
+       "pad_sha256": "1e32d04a3c46b6a9d3a8660e61dc27304d71c0b5b89fb02bb35880f591f40c71",
+       "base_tokens": 809,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "near-duplicate-invoices",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T23:21:24.006984+00:00",
+   "end_utc": "2026-11-09T23:21:38.348560+00:00",
+   "wall_s": 14.341396417003125,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.7298270343791,
+     "gen_tokens": 1065,
+     "gen_tps": 91.80579146621953,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 14.338639624998905,
+     "content_chars": 90,
+     "reasoning_chars": 4081,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4351,
+       "pad_sha256": "4757c994001d3c18f0c69a67544b06e6d578534b04d2aa5e25a9ec0b85567872",
+       "base_tokens": 741,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-big-amount-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:21:38.348680+00:00",
+   "end_utc": "2026-11-09T23:22:03.591896+00:00",
+   "wall_s": 25.242915625014575,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 785.4068995841751,
+     "gen_tokens": 2048,
+     "gen_tps": 91.00963390312712,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "length",
+     "wall_s": 25.240852124989033,
+     "content_chars": 0,
+     "reasoning_chars": 7844,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4405,
+       "pad_sha256": "af26a581ecee3f956838f966b59e1814c008caa32d35e039fbe9469af18716ad",
+       "base_tokens": 727,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "automated-but-actionable",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T23:22:03.592032+00:00",
+   "end_utc": "2026-11-09T23:22:26.254306+00:00",
+   "wall_s": 22.662005792022683,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 787.449687178895,
+     "gen_tokens": 1815,
+     "gen_tps": 91.07234696559887,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 22.65931141699548,
+     "content_chars": 227,
+     "reasoning_chars": 7100,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4481,
+       "pad_sha256": "ecfce26ee270b38f1bb81e41bdc53121a19ab01102b3fe66ebd869c2ada8b1cc",
+       "base_tokens": 705,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-last-en",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "termination",
+     "check": "termination"
+    }
+   ],
+   "start_utc": "2026-11-09T23:22:26.255646+00:00",
+   "end_utc": "2026-11-09T23:22:51.499066+00:00",
+   "wall_s": 25.24312374999863,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 787.0137226698796,
+     "gen_tokens": 2048,
+     "gen_tps": 90.97901914879985,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "length",
+     "wall_s": 25.241019375011092,
+     "content_chars": 0,
+     "reasoning_chars": 7962,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4334,
+       "pad_sha256": "7af91e2ac40d0621b1905d2758e2243e4957a2de49ba423069657dee306e5853",
+       "base_tokens": 748,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "meeting-moved-date-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_abstention"
+    },
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-09T23:22:51.499177+00:00",
+   "end_utc": "2026-11-09T23:23:12.484440+00:00",
+   "wall_s": 20.98501458298415,
+   "calls": [
+    {
+     "prompt_tokens": 2048,
+     "prompt_tps": 784.8571497987824,
+     "gen_tokens": 1664,
+     "gen_tps": 91.22269988396879,
+     "peak_memory_gb": 5.75986833,
+     "finish_reason": "stop",
+     "wall_s": 20.981864708999638,
+     "content_chars": 202,
+     "reasoning_chars": 6446,
+     "context": {
+      "pad": {
+       "target": 2048,
+       "pad_chars": 4467,
+       "pad_sha256": "558a595e03ace2988139a52c6a8c3c7bd15642f5e9f705b7a1357b814ec51dc0",
+       "base_tokens": 710,
+       "padded_tokens": 2048
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "895083cd9470b6f61fd9b82bf79d875616d9c06af456b745c4135d320bfdf138",
+ "context": {
+  "requested": {
+   "pad_to": 2048
+  },
+  "applied_cache_classes": [
+   {
+    "ArraysCache": 18,
+    "KVCache": 6
+   }
+  ],
+  "prefill_step_size": 2048,
+  "prefill_step_size_source": "mlx_lm.generate.generate_step default (stream_generate is passed none)",
+  "padding_rule": {
+   "header": "Earlier messages from this session, already handled. Do not act on them; your task is the next message.\n\n",
+   "ack": "Understood.",
+   "sep": "\n\n--- earlier message ---\n\n",
+   "slack_tokens": 64,
+   "pool": "sitting exam's train inputs, then the other exams' train inputs (sorted), minus the case and any train input containing its text"
+  },
+  "rows_padded": 45,
+  "rows_total": 55,
+  "quantization": {
+   "group_size": 64,
+   "bits": 4,
+   "mode": "affine",
+   "model.embed_tokens": {
+    "group_size": 64,
+    "bits": 6,
+    "mode": "affine"
+   }
+  },
+  "chat_template_sha256": "f434e8c96e6c0a63a022a3ad0a299bb94e58aa90e3c9ebe65034f8e8c6188aa9"
+ }
+}

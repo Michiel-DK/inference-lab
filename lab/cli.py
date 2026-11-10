@@ -45,6 +45,17 @@ def main(argv=None):
     s = sub.add_parser("sit", help=argparse.SUPPRESS)        # internal: one fresh load, run by `lab run --exams`
     s.add_argument("model"); s.add_argument("--plan", required=True)
     s.add_argument("--load", type=int, required=True); s.add_argument("--out", required=True)
+    s.add_argument("--context", help="lane 05: JSON of lab/context.py settings (pad_to, kv_bits, ...)")
+    x = sub.add_parser("context", help="lane 05: one model sits held-out (or the gate smoke) padded to --pad-to tokens")
+    x.add_argument("model"); x.add_argument("--name", required=True)
+    xg = x.add_mutually_exclusive_group(required=True)
+    xg.add_argument("--smoke", action="store_true", help="train-only gate: support-long-train, client-quote-request, busy-day-standard")
+    xg.add_argument("--heldout", action="store_true", help="every held-out case of the three exams (55 at the pin)")
+    x.add_argument("--pad-to", type=int, required=True)
+    x.add_argument("--kv-bits", type=int, choices=[4, 8]); x.add_argument("--max-kv-size", type=int)
+    x.add_argument("--loads", type=int, default=1, help="fresh loads (lane 05 pre-registers 1; 2 for the stability check)")
+    x.add_argument("--prediction", default="context-kv"); x.add_argument("--post", action="store_true")
+    x.add_argument("--scratch", default=".lab-scratch")
     e = sub.add_parser("energy", help="new results file = SRC + Wh integrated from an operator powermetrics capture")
     e.add_argument("src"); e.add_argument("--capture", required=True)
     e.add_argument("--idle-start", required=True); e.add_argument("--idle-end", required=True)
@@ -96,8 +107,40 @@ def main(argv=None):
         if problems:
             print("refused: wilco pin does not hold:\n  " + "\n  ".join(problems), file=sys.stderr)
             return 2
-        sit_load(a.model, json.loads(a.plan), a.load, a.out)
+        sit_load(a.model, json.loads(a.plan), a.load, a.out, context=json.loads(a.context) if a.context else None)
         return 0
+    if a.cmd == "context":
+        import json
+        from . import context as X
+        ok, why, commit = _prediction_committed(a.prediction)
+        if not ok:
+            print(f"refused: {why}", file=sys.stderr)
+            return 2
+        problems = C.verify_pin()
+        if problems:
+            print("refused: wilco pin does not hold:\n  " + "\n  ".join(problems), file=sys.stderr)
+            return 2
+        out = Path("results") / f"{a.name}.json"
+        if out.exists():
+            print(f"refused: {out} exists; results are never overwritten", file=sys.stderr)
+            return 2
+        if a.loads < 1:
+            print("refused: loads < 1", file=sys.stderr)
+            return 2
+        ctx = X.check_settings({"pad_to": a.pad_to,
+                                **({"kv_bits": a.kv_bits, "kv_group_size": 64, "quantized_kv_start": 0} if a.kv_bits else {}),
+                                **({"max_kv_size": a.max_kv_size} if a.max_kv_size else {})})
+        if a.smoke:
+            plan = [["call-fields", ["support-long-train"]], ["email-triage", ["client-quote-request"]],
+                    ["recap", ["busy-day-standard"]]]
+        else:
+            plan = [[e, [x["id"] for x in json.loads(C.cases_path(e).read_text())["cases"] if x["split"] == "heldout"]]
+                    for e in sorted(C.EXAMS)]
+        from .run import run_loads
+        run_loads(a.model, a.name, plan, a.loads, a.prediction, commit, out, a.scratch, a.post, context=ctx)
+        ok, msg = results.check(str(out))
+        print(msg)
+        return 0 if ok else 1
     if a.cmd == "hosted":
         import json
         from . import hosted as H
