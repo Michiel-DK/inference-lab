@@ -4,8 +4,8 @@ Hand-written Metal compute kernels, and a lab that measures inference on one lap
 
 ## The lab
 
-**The question.** What does a small local model pass, and what does a held-out case cost, on a laptop? Three 4-bit models run
-under mlx-lm (in-process, temperature 0, cached models only, no hosted model calls) and sit wilco's three office exams:
+**The question.** What does a small local model pass, and what does a held-out case cost, on a laptop? Three models (4-bit baselines,
+then 8-bit and bf16 in lane 04) run under mlx-lm (in-process, temperature 0, cached models only, no hosted model calls) and sit wilco's three office exams:
 email-triage, call-fields and recap, with wilco's own scorer. Each case is metered for tokens/s, peak memory and wall time;
 Wh comes only from an operator-started `sudo powermetrics` capture (`lab/energy.py`) and is `null` without one.
 
@@ -13,8 +13,17 @@ Wh comes only from an operator-started `sudo powermetrics` capture (`lab/energy.
 `docs/CASES.md`), grading is deterministic, negatives stay in, `results/*.json` are committed evidence that is never
 regenerated, and a number is posted only with the command that re-derives it.
 
-**Headline.** Held-out passes over 55 cases: e4b 36 · Llama-3.1-8B 31 · e2b 23, with 0 of 83 cases unstable on any model.
-Re-derive it (no model, no GPU, no wilco checkout needed):
+**Default local pack (house rule, lanes 04 and 10).** Use 8-bit where its peak fits the box with the headroom (peak + 2.0 GB
+≤ free RAM). Use 4-bit only when it does not, and then take the largest model whose 4-bit fits. bf16 never, on this box.
+- Lane 04: 8-bit beat 4-bit on all three models, held-out e2b 23 → 32, e4b 36 → 41, Llama-3.1-8B 31 → 37 /55, 0 of
+  83 unstable, for +2.3 to +3.9 GB peak and ≤ ×1.16 wall.
+- Lane 10: re-sat e4b-8bit: 41/55 again, 0 of 83 flips, peak 9.18 GB (`results/champion-e4b-8bit.json`).
+- The local champion is `mlx-community/gemma-4-e4b-it-8bit`. The rule is measured on mlx-community affine packs under mlx-lm only, not on Ollama GGUF (SHOWCASE lane 10).
+- Re-derive: `python3 -m lab check results/quant-*.json results/champion-e4b-8bit.json results/dense-*.json`; flip ids and
+  wall ratios from `scripts/lane04_rows.py` (commands in SHOWCASE lanes 04 and 10).
+
+**Headline (lane 02, the 4-bit baselines).** Held-out passes over 55 cases: e4b 36 · Llama-3.1-8B 31 · e2b 23, with 0 of
+83 cases unstable on any model. Re-derive it (no model, no GPU, no wilco checkout needed):
 
 ```sh
 ~/.pyenv/versions/lewagon/bin/python3 -m lab check results/dense-gemma-4-e2b-it-4bit.json \

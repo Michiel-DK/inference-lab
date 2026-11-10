@@ -3,6 +3,84 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
+## Lane 10: the 8-bit e4b as the local champion (10 Nov 2026)
+
+**Question.** Is the 8-bit e4b the lab's default local pack? Lane 04 measured it once. This lane checks that the
+measurement repeats before the rule goes into the docs. It is a **reproduction, not a first measurement**, and the
+prediction says so: `predictions/8bit-champion.md` (`b9c802f`), committed before the run, written after lane 04's
+numbers were read.
+
+**Protocol.** As lane 04:
+- pack `mlx-community/gemma-4-e4b-it-8bit@4255b21b`, cached;
+- all 83 cases, three fresh loads, wilco pin `62fcd449`, wilco's `run_exam`, majority/stable rule;
+- mlx 0.32.2, mlx-lm 0.31.3, `lab_commit` `b9c802f` (lane 04 ran at `410d9c3`).
+
+What did not move: wilco's remote moved to `2585a34`, and `git diff --quiet 62fcd449 2585a34 -- sandbox/runner.py
+sandbox/router.py evals agents` exits 0. The run used the pin clone (`LAB_WILCO_DIR`) with `HF_HUB_OFFLINE=1`.
+
+Memory rule (scheduler rule 7): `ram_free_gb()` read 13.6 GB against 9.18 + 2.0 GB needed, so the pack ran. n8n was not
+running and no Ollama model was resident.
+
+**Headline.** **41/55 held-out again: email-triage 16/20 · call-fields 13/19 · recap 12/16. 0 of 83 verdicts flip
+against lane 04, and 0 of 83 cases are unstable.**
+- All 249 rows have identical per-call `gen_tokens`.
+- Peak 9.18 GB (+0.00), 29.3 tok/s, wall 95.1 min per 3 × 83 (lane 04: 94.5).
+
+Against the 4-bit e4b (lane 02's file, not re-sat), the re-sit is 36 → 41, so the kill clause (re-sat total < 36) did not
+fire.
+
+| e4b | email-triage | call-fields | recap | total | gen tok/s | peak GB | wall 3 × 83 min | Wh |
+|---|---|---|---|---|---|---|---|---|
+| 4-bit (lane 02) | 16/20 | 10/19 | 10/16 | 36/55 | 41.9 | 5.45 | 81.5 | not metered |
+| 8-bit (lane 04) | 16/20 | 13/19 | 12/16 | 41/55 | 29.3 | 9.18 | 94.5 | not metered |
+| **8-bit (lane 10 re-sit)** | **16/20** | **13/19** | **12/16** | **41/55** | 29.3 | 9.18 | 95.1 | not metered |
+
+Re-derive:
+```sh
+P=~/.pyenv/versions/lewagon/bin/python3
+$P -m lab check results/champion-e4b-8bit.json results/quant-gemma-4-e4b-it-8bit.json results/dense-gemma-4-e4b-it-4bit.json
+$P scripts/lane04_rows.py quant-gemma-4-e4b-it-8bit champion-e4b-8bit     # 0 of 83 flipped; wall 94.5 -> 95.1
+$P scripts/lane04_rows.py dense-gemma-4-e4b-it-4bit champion-e4b-8bit     # 36 -> 41, 16 ids, the same ids as lane 04
+$P scripts/lane10_tokens.py quant-gemma-4-e4b-it-8bit champion-e4b-8bit   # 249 of 249 rows, identical per-call gen_tokens
+```
+
+**Prediction vs result.**
+
+| claim | predicted | result | |
+|---|---|---|---|
+| held-out email · call · recap | 16 · 13 · 12 (±1 each), total 40–42 | 16 · 13 · 12 = 41 | **held** |
+| flips vs lane 04 / unstable | 0 / 0 of 83 | 0 / 0 | **held** |
+| gen tok/s | 27–32 | 29.3 | held |
+| peak GB | 9.1–9.3 | 9.18 | held |
+| wall 3 × 83 | 85–105 min | 95.1 | held |
+| kill: re-sat total < 36 (4-bit e4b) | | 41 | did not fire |
+| Wh | `null` | not metered | void |
+
+**The house rule (now in README.md).** The default local pack is 8-bit where its peak fits the box with the headroom
+(peak + 2.0 GB ≤ free). Use 4-bit only when it does not fit. Even then, take the largest model whose 4-bit fits, not a
+smaller model at 8-bit. bf16 never, on this box. The basis:
+- lane 04 (+9 / +5 / +6 held-out across e2b / e4b / Llama, 0 unstable);
+- this lane (the e4b gain repeats token for token).
+
+On this 16 GB box the e4b-8bit peak (9.18 GB) fits with the headroom when ≥ 11.2 GB is free; it read 13.6 GB tonight.
+
+**Not run: the flow arm (b).** roger3000_automations' 155 flow sentences run on Ollama. `ollama show` reads every gemma4 tag
+as Q4_0 or Q4_K_M. The manifests hold only `gemma4/{e2b, e2b-it-qat, e4b, e4b-it-qat}`, so no Q8_0 gemma4 base is on disk
+to build a 16k tag from. The only 16k Q8_0 tag is qwen3-8b, a different model, which would confound model and
+precision. For context: agent-sandbox's e31 probe killed a qwen3 Q8_0 arm at 16k at about 14× the 4k wall. So the local
+flow arm stays `gemma4-e2b-ctx16k` (76/155), and this rule does not reach it. The mlx pack has no Ollama equivalent here.
+
+**What this does not show.**
+- That the rule transfers to Ollama GGUF Q8_0 (the e31 probe saw no 8-bit gain for qwen3 on task-intake).
+- That 8-bit beats a 5- or 6-bit pack (lane 04's gap, still open).
+- Whether the result survives a different wilco pin or runtime.
+
+**Reopen threshold.**
+- A Q8_0 gemma4 base lands in the Ollama store; that unblocks the flow arm.
+- mlx or mlx-lm moves off 0.32.2 / 0.31.3, or the wilco pin moves.
+- A re-sit flips any of the 83 cases.
+- A 5- or 6-bit pack recovers ≥ 4 of the e4b's 4 → 8 gain under 9.18 GB peak; that would move the rule.
+
 ## Lane 06: speculative decoding (10 Nov 2026)
 
 **Question.** Where mlx-lm supports a draft model, what tokens/s gain do the exams see, with the pass fraction unchanged?
