@@ -1,0 +1,266 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "spec-gate-gemma-4-e4b-it-4bit-e2b-k3-smoke",
+ "posted": false,
+ "prediction": "predictions/speculative.md",
+ "prediction_commit": "5f1d13193e77d94689fcecdd769adda29fea69a1",
+ "lab_commit": "5f1d13193e77d94689fcecdd769adda29fea69a1",
+ "model": {
+  "ref": "mlx-community/gemma-4-e4b-it-4bit",
+  "snapshot": "475b9088d29754a3379866cf5aeb6b41acd313c2",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 5.395411250006873,
+    "n_rows": 3
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "email-triage",
+  "call-fields"
+ ],
+ "plan": [
+  [
+   "email-triage",
+   [
+    "overdue-invoice",
+    "client-quote-request"
+   ]
+  ],
+  [
+   "call-fields",
+   [
+    "support-long-train"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": null,
+ "aggregates": {
+  "n_cases": 3,
+  "n_calls": 4,
+  "pass_rate": 0.6666666666666666,
+  "gen_tokens_total": 1989,
+  "gen_tps": 19.832474544101284,
+  "prompt_tps": 393.4466788886389,
+  "peak_memory_gb_max": 7.697341616,
+  "wall_s_total": 119.83076975002768,
+  "wall_s_per_case": 39.9435899166759,
+  "wh_per_case": null,
+  "n_loads": 1,
+  "call-fields.n_cases": 1,
+  "call-fields.train_n": 1,
+  "call-fields.train_majority_pass": 0,
+  "call-fields.heldout_n": 0,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 0,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 19.013186174936536,
+  "call-fields.peak_memory_gb_max": 7.697341616,
+  "call-fields.wall_s_per_case": 93.49648975001764,
+  "call-fields.min_per_1000_cases": 1558.2748291669607,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 2,
+  "email-triage.train_n": 2,
+  "email-triage.train_majority_pass": 2,
+  "email-triage.heldout_n": 0,
+  "email-triage.heldout_majority_pass": 0,
+  "email-triage.heldout_stable_pass": 0,
+  "email-triage.all_majority_pass": 2,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 22.447951751120726,
+  "email-triage.peak_memory_gb_max": 7.195021972,
+  "email-triage.wall_s_per_case": 13.16714000000502,
+  "email-triage.min_per_1000_cases": 219.452333333417,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "heldout_n": 0,
+  "heldout_majority_pass": 0,
+  "heldout_stable_pass": 0,
+  "n_unstable": 0,
+  "n_unique_cases": 3,
+  "heldout_majority_pass_rate": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "email-triage",
+   "case": "overdue-invoice",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-10T03:06:33.743015+00:00",
+   "end_utc": "2026-11-10T03:06:44.872525+00:00",
+   "wall_s": 11.129046334011946,
+   "calls": [
+    {
+     "prompt_tokens": 211,
+     "prompt_tps": 159.0308413924189,
+     "gen_tokens": 245,
+     "gen_tps": 25.606124621801072,
+     "peak_memory_gb": 7.195021972,
+     "finish_reason": "stop",
+     "wall_s": 11.128411166981095,
+     "content_chars": 38,
+     "reasoning_chars": 981,
+     "spec": {
+      "draft": true,
+      "num_draft_tokens": 3,
+      "from_draft_tokens": 167,
+      "raw_chars": 1046,
+      "raw_sha256": "6a287e880f65c294bd3942909b16da30703bd59cdfe4fc0d949dd46711eef612",
+      "raw": "<|channel>thought\nThinking Process:\n\n1.  **Analyze the email content:** The email is a payment reminder for an overdue invoice (#4482, EUR 214.50). It threatens service interruption if payment is not made within 7 days.\n2.  **Determine the urgency/topic:** This is a financial matter (money owed/owed) and relates directly to the service agreement (potential service interruption).\n3.  **Apply the classification rules:**\n    *   \"reply_now\": needs a response today \u2014 client requests, money matters, legal/compliance requests, production incidents.\n    *   \"reply_later\": worth answering but not urgent \u2014 networking, invitations, non-urgent personal messages, recruiter outreach.\n    *   \"ignore\": no reply needed \u2014 newsletters, promotions, cold sales spam, automated notifications that require no action.\n4.  **Match to the category:** Since it involves money matters and potential service interruption, it falls under \"reply_now.\"\n5.  **Format the output:** JSON object with the determined label.<channel|>```json\n{\n  \"label\": \"reply_now\"\n}\n```"
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-10T03:06:44.872697+00:00",
+   "end_utc": "2026-11-10T03:07:00.078034+00:00",
+   "wall_s": 15.205233665998094,
+   "calls": [
+    {
+     "prompt_tokens": 204,
+     "prompt_tps": 308.3790478231372,
+     "gen_tokens": 292,
+     "gen_tps": 20.342788586279756,
+     "peak_memory_gb": 7.182003198,
+     "finish_reason": "stop",
+     "wall_s": 15.20438587499666,
+     "content_chars": 38,
+     "reasoning_chars": 1178,
+     "spec": {
+      "draft": true,
+      "num_draft_tokens": 3,
+      "from_draft_tokens": 172,
+      "raw_chars": 1243,
+      "raw_sha256": "808397bb3d934d1aca50addb270973fdfbf0904600750d6752c89ac0101bc83e",
+      "raw": "<|channel>thought\nThinking Process:\n\n1.  **Analyze the email content:** The email is a request for a quote regarding an AI chatbot for a bakery's webshop. They are asking for a call this week to discuss it.\n2.  **Determine the urgency/nature:** This is a potential new business lead/client inquiry. It requires action (a call/response) to move the sales process forward.\n3.  **Evaluate the labels:**\n    *   \"reply_now\": Needs a response today/soon. This is a potential paying client, and a timely response is crucial for securing the business and maintaining professionalism.\n    *   \"reply_later\": Worth answering but not urgent. While the initial call doesn't have to happen *today*, the sales cycle is time-sensitive (they want to go live before September).\n    *   \"ignore\": Not applicable. This is a qualified lead.\n4.  **Select the best fit:** Since this is a direct business opportunity and the client is expecting a follow-up this week, it falls under the category requiring prompt attention to capitalize on the lead. \"reply_now\" is the most appropriate label because it involves a potential client/business matter that needs immediate engagement.\n\n5.  **Final decision:** \"reply_now\".<channel|>```json\n{\n  \"label\": \"reply_now\"\n}\n```"
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '```json\\n{\\n  name\": \"Grace\",\\n\"companycompany\",\\n\"amount\": \"not stated\",\\n\"currency\": \"not stated\",\\n\"decision_maker\": \"not stated\",\\n\"next_step_date\": \"end of day tomorrow\",\\n\"competitor\": \"not stated\",\\n\"ti'",
+   "start_utc": "2026-11-10T03:07:00.083787+00:00",
+   "end_utc": "2026-11-10T03:08:33.580847+00:00",
+   "wall_s": 93.49648975001764,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 419.0953874027654,
+     "gen_tokens": 726,
+     "gen_tps": 19.036119962579228,
+     "peak_memory_gb": 7.693147312,
+     "finish_reason": "stop",
+     "wall_s": 45.67293491700548,
+     "content_chars": 226,
+     "reasoning_chars": 2285,
+     "spec": {
+      "draft": true,
+      "num_draft_tokens": 3,
+      "from_draft_tokens": 441,
+      "raw_chars": 2538,
+      "raw_sha256": "30e96f94e58c2ead2b7cffa0c00bb39b25624ac5045050e3318b0d2230b69087",
+      "raw": "<|channel>thought\nThinking Process:\n\n1.  **Analyze the Request:** The goal is to extract specific CRM transcript content in-like the fields, and `stated`.\n\n2.  **Scan Transcript for Data points:\n    *   `contact_name` (Customer's name)\n    *   `company`\n    (Customer's company name\n    *   `amount`\n    (Price/Amount)\n    *   `currency`\n    (Currency token)\n    *   `decision_maker`\n    (Approver, if needed)\n    *   `next_step_date`\n    (Agreed follow-up timing/date)\n    *   `competitor`\n    (Named competitor)\n    *   `ticket_id`\n    (Support/reference ID)\n\n3.  **Extraction Pass:**\n\n    *   **`contact_name`**: The customer speaks about \"our office managers run the IT lead\". The main speaker, but the account is \"Larkspur Clinics\". The contact name is not given, the customer. I's name. The customer says \"Our account is Larkspur Clinics\". No specific first name is used by the REP calls the customer's account is Larkspur Clinics\". I will use \"Grace\" as the contact if she is the IT lead. Let's check if a first name used for the customer is used. I will use \"Grace\" as the primary contact.\n    * *Self-Correction:* The customer's or prospect's person name, while the IT lead, but no first name is given. I will use \"Grace\" as the primary contact_name: Grace (Wait, let's check. The customer says \"Our account is Larkspur Clinics\". The customer's. I will use `s`company. I will use the IT lead mentioned as the contact name.\n\n    **`company`**: CUSTOM: account is Larkspur Clinics\".\n    `amount`**: No pricing discussed.\n    *   not stated.\n    *   maker`: No specific person mentioned approval.\n    * `next_step_date`: The REP says follow up with you by end of day tomorrow with a specific timing.\n    next_step_date: tomorrow.\n\n    **competitor`**: No competitor is mentioned.\n    * `ticket_id`**: \"LC-40217\".\n\n4.  **Final Review and Refinement (Crucial Check all values are prose is.\n\n    *   `contact_name`: The IT lead mentioned as primary contact since no first name is given for the main contact, but I will use the name mentioned person.\n    *   `company`: Larkspur Clinics.\n    *   `amount`: not stated\n    *   `currency`: not stated.\n    *   `decision_maker`: not stated.\n    *   `next_step_date`: end of day tomorrow. (The REP used follow up with you by end of day tomorrow\").\n    *\n\n<channel|>```json\n{\n  name\": \"Grace\",\n\"companycompany\",\n\"amount\": \"not stated\",\n\"currency\": \"not stated\",\n\"decision_maker\": \"not stated\",\n\"next_step_date\": \"end of day tomorrow\",\n\"competitor\": \"not stated\",\n\"ticket_id\": \"LC-40217\"\n}\n```"
+     }
+    },
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 417.8666319511074,
+     "gen_tokens": 726,
+     "gen_tps": 18.99030757981521,
+     "peak_memory_gb": 7.697341616,
+     "finish_reason": "stop",
+     "wall_s": 45.805601042025955,
+     "content_chars": 226,
+     "reasoning_chars": 2285,
+     "spec": {
+      "draft": true,
+      "num_draft_tokens": 3,
+      "from_draft_tokens": 441,
+      "raw_chars": 2538,
+      "raw_sha256": "30e96f94e58c2ead2b7cffa0c00bb39b25624ac5045050e3318b0d2230b69087",
+      "raw": "<|channel>thought\nThinking Process:\n\n1.  **Analyze the Request:** The goal is to extract specific CRM transcript content in-like the fields, and `stated`.\n\n2.  **Scan Transcript for Data points:\n    *   `contact_name` (Customer's name)\n    *   `company`\n    (Customer's company name\n    *   `amount`\n    (Price/Amount)\n    *   `currency`\n    (Currency token)\n    *   `decision_maker`\n    (Approver, if needed)\n    *   `next_step_date`\n    (Agreed follow-up timing/date)\n    *   `competitor`\n    (Named competitor)\n    *   `ticket_id`\n    (Support/reference ID)\n\n3.  **Extraction Pass:**\n\n    *   **`contact_name`**: The customer speaks about \"our office managers run the IT lead\". The main speaker, but the account is \"Larkspur Clinics\". The contact name is not given, the customer. I's name. The customer says \"Our account is Larkspur Clinics\". No specific first name is used by the REP calls the customer's account is Larkspur Clinics\". I will use \"Grace\" as the contact if she is the IT lead. Let's check if a first name used for the customer is used. I will use \"Grace\" as the primary contact.\n    * *Self-Correction:* The customer's or prospect's person name, while the IT lead, but no first name is given. I will use \"Grace\" as the primary contact_name: Grace (Wait, let's check. The customer says \"Our account is Larkspur Clinics\". The customer's. I will use `s`company. I will use the IT lead mentioned as the contact name.\n\n    **`company`**: CUSTOM: account is Larkspur Clinics\".\n    `amount`**: No pricing discussed.\n    *   not stated.\n    *   maker`: No specific person mentioned approval.\n    * `next_step_date`: The REP says follow up with you by end of day tomorrow with a specific timing.\n    next_step_date: tomorrow.\n\n    **competitor`**: No competitor is mentioned.\n    * `ticket_id`**: \"LC-40217\".\n\n4.  **Final Review and Refinement (Crucial Check all values are prose is.\n\n    *   `contact_name`: The IT lead mentioned as primary contact since no first name is given for the main contact, but I will use the name mentioned person.\n    *   `company`: Larkspur Clinics.\n    *   `amount`: not stated\n    *   `currency`: not stated.\n    *   `decision_maker`: not stated.\n    *   `next_step_date`: end of day tomorrow. (The REP used follow up with you by end of day tomorrow\").\n    *\n\n<channel|>```json\n{\n  name\": \"Grace\",\n\"companycompany\",\n\"amount\": \"not stated\",\n\"currency\": \"not stated\",\n\"decision_maker\": \"not stated\",\n\"next_step_date\": \"end of day tomorrow\",\n\"competitor\": \"not stated\",\n\"ticket_id\": \"LC-40217\"\n}\n```"
+     }
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "d9dcf484d5a4089ce602a603c3fdbe82191a20cab82a42b8ef77d875e68051c8",
+ "speculative": {
+  "requested": {
+   "draft": "mlx-community/gemma-4-e2b-it-4bit",
+   "num_draft_tokens": 3
+  },
+  "target": {
+   "ref": "mlx-community/gemma-4-e4b-it-4bit",
+   "snapshot": "475b9088d29754a3379866cf5aeb6b41acd313c2",
+   "tokenizer_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+  },
+  "prompt_cache": "not passed: speculative_generate_step builds one per model (make_prompt_cache)",
+  "draft": {
+   "ref": "mlx-community/gemma-4-e2b-it-4bit",
+   "snapshot": "238767527555cb75a05732a84dff5d6ba0dd6809",
+   "tokenizer_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+  },
+  "tokenizer_identical": true
+ }
+}
