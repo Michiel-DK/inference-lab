@@ -141,9 +141,30 @@ def main():
         past = lambda k: max(c["prompt_tokens"] + (c["gen_tokens"] or 0) for c in srow[k]["calls"]) >= WINDOW
         for lab_, ks in (("arm sitting passed 512", [k for k in srow if past(k)]),
                          ("arm sitting stayed under 512", [k for k in srow if not past(k)])):
-            st = {x["case"]: x["status"] for x in cmp}
-            print(f"  {lab_}: n={len(ks)}; bytes differ {sum(st[k[1]] == 'differs' for k in ks)}; verdict flips vs control "
+            st = {(x["exam"], x["case"]): x["status"] for x in cmp}
+            print(f"  {lab_}: n={len(ks)}; bytes differ {sum(st[k] == 'differs' for k in ks)}; verdict flips vs control "
                   f"{sum(k in flips_c for k in ks)}")
+        em = [k for k in srow if k[0] == "email-triage" and past(k)]
+        mx_ = [max(c["prompt_tokens"] + (c["gen_tokens"] or 0) for c in srow[k]["calls"]) for k in em]
+        print(f"  (post-hoc split, classed on the arm's own length) email sittings past 512: {len(em)}, reaching "
+              f"{min(mx_, default=None)}-{max(mx_, default=None)}; their flips {sum(k in flips_c for k in em)}")
+        if tok is not None and arm == "k3":
+            print("  email flips: the arm's text around the point its first call's cache reaches 512")
+            for k in em:
+                if k not in flips_c:
+                    continue
+                c0 = srow[k]["calls"][0]
+                raw = c0["spec"]["raw"]
+                need = WINDOW - c0["prompt_tokens"]
+                ids = tok.encode(raw, add_special_tokens=False)
+                if need >= len(ids):
+                    print(f"    {k[1]}: first call ends under 512 (a later call passes it)")
+                    continue
+                cut = len(tok.decode(ids[:need]))
+                print(f"    {k[1]}: ...{raw[max(0, cut - 150):cut]!r} || {raw[cut:cut + 150]!r}...")
+        cpast = [k for k in crow if any(c["prompt_tokens"] + (c["gen_tokens"] or 0) >= WINDOW for c in crow[k]["calls"])]
+        print(f"  control sittings past 512: {len(cpast)}, passing {sum(crow[k]['passed'] for k in cpast)}"
+              f" (same ids in lane 02 majority: {sum(bmaj[k] for k in cpast)})")
         nf_flips = [k for k in flips_c if not S.is_fault_row(srow[k])]
         print(f"  of the flips vs control, on non-fault cases: {len(nf_flips)}")
         hs = lambda rows: {e: sum(r["passed"] for r in rows if r["exam"] == e and r["split"] == "heldout") for e in EXAMS}

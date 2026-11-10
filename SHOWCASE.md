@@ -48,6 +48,10 @@ what had been seen before it was written: the mlx-lm source, lane 02's token cou
   - **No call raised.** 0 runtime faults on all three arms.
 - **The kill clause fired on bytes on 81 of 83 cases. Where the bytes moved and where the verdicts moved are two
   different places.**
+  - By the addendum's pre-registered rule, a byte diff is attributed to the cache rewind only if its *first* divergence
+    is past 512. On that rule the 26 email diffs are all arithmetic: each first diverges under 512.
+  - The split below is **post-hoc**. It classes each sitting on the draft arm's own length, which is an outcome of the
+    treatment. The direct check under it uses the committed raw text, so it needs no rerun.
   - **14 sittings stayed under the 512-token sliding window for the whole call (draft arm).** 12 of them differ in
     bytes, and none flipped a verdict.
     - The post-hoc probe (below) re-sat the control path and read the top-1 / top-2 log-prob gap at the token where the
@@ -67,6 +71,13 @@ what had been seen before it was written: the mlx-lm source, lane 02's token cou
     - wilco's no-JSON error bucket rose from 1 case to 15.
     - Held-out call-fields fell 10 → 1, recap 10 → 0, and email-triage 16 → 7. All 9 email flips are sittings that ran
       past 512.
+    - Direct check (printed by the script). In each of the 9 email flips, the arm's text is fluent up to the point where
+      its cache reaches 512, and broken right after it:
+      - `...doesn't fit the critical, time-sensitive nature` || `of the_later"}`;
+      - `...it falls` || `under "client requests. 5. **Final label": "reply_now". {""reply_now""}}`.
+      The near-tie had already changed the wording earlier in those calls. The text breaks where the window wraps.
+    - Plain decode past 512 does no such damage. The control's 71 sittings past 512 pass 41, the same 41 as lane 02's
+      majority on those ids.
     - The first divergence there is not always a near-tie. On a 9-case probe sample (call-fields train), the gap at
       divergence was 0–3.0 nats, two of them 1.0 and 3.0, beyond anything seen under the window.
     - This matches the mechanism read in the addendum (source, not instrumented):
@@ -104,7 +115,7 @@ what had been seen before it was written: the mlx-lm source, lane 02's token cou
 | addendum: control reproduces lane 02 load 0 on ≥ 80 of 83 | 83 of 83 | **held** |
 | under-512 cases byte-identical on ≥ 9 of 12 | 2 of 12 (26 of 28 email cases differ, all at near-ties under 512) | **refuted** |
 | start-over-512 cases: ≥ 45 of 55 differ or fault; lean wrong text (≥ 30 differ) | 55 differ, 0 fault | **held** |
-| email cases crossing 512 in generation: ≥ 10 of 16 differ or fault | 16 of 16 differ; the first divergence is under 512 on all 16 (a near-tie), and the 9 email flips are all in sittings that then ran past 512 | **held** in count; the first byte is arithmetic, the verdict damage is the window |
+| email cases crossing 512 in generation: ≥ 10 of 16 differ or fault | 16 of 16 differ; the first divergence is under 512 on all 16 (a near-tie), and the 9 email flips are all in sittings that then ran past 512 | **held** in count. By the pre-registered rule these diffs are arithmetic (first divergence under 512); post-hoc, the 9 flips break where the arm's cache reaches 512 |
 | ≥ 5 verdict flips, net negative, held-out ≥ 3 below control | 37 (+1/−36); 36 → 8 | **held** (far beyond the size) |
 | spec / control gen tok/s 0.5–0.9× on byte-identical cases | ×0.549 (n = 2); ×0.494 over all 83 | **held** on the identical cases; at the floor over all |
 | acceptance 0.45–0.70 | 0.625 | **held** |
@@ -122,8 +133,8 @@ draft arm's first diverging token. It refuses (void) if its re-sit text differs 
 
 **What did not hold.**
 - **"mlx-lm refuses what it cannot do."** It does not here. The trimmability guard reads a fresh cache, so Gemma 4's
-  sliding window passes it, and the run halves its speed and scores 8 / 55 without an error. This is the third mlx-lm
-  setting in two lanes that is accepted and then not applied as asked, after lane 05's `max_kv_size` and `kv_bits`.
+  sliding window passes it, and the run halves its speed and scores 8 / 55 without an error. It is the second
+  accepted-and-not-applied setting, after lane 05's `max_kv_size`. Lane 05's `kv_bits` at least raised on Gemma.
 - **"Speculative decoding is exact at temperature 0."** It is exact in exact arithmetic. On a 4-bit Gemma, the 4-wide
   verify flips a near-tie token within the first ~200 tokens of 26 of 28 short email answers. Byte equality is the wrong
   bar for a speculative path. On the 14 sittings that stayed in the window, verdicts held (0 flips), so verdicts against
