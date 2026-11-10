@@ -1,0 +1,240 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "spec-gate-gemma-4-e4b-it-4bit-control-smoke",
+ "posted": false,
+ "prediction": "predictions/speculative.md",
+ "prediction_commit": "5f1d13193e77d94689fcecdd769adda29fea69a1",
+ "lab_commit": "5f1d13193e77d94689fcecdd769adda29fea69a1",
+ "model": {
+  "ref": "mlx-community/gemma-4-e4b-it-4bit",
+  "snapshot": "475b9088d29754a3379866cf5aeb6b41acd313c2",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 3.0363939160015434,
+    "n_rows": 3
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "email-triage",
+  "call-fields"
+ ],
+ "plan": [
+  [
+   "email-triage",
+   [
+    "overdue-invoice",
+    "client-quote-request"
+   ]
+  ],
+  [
+   "call-fields",
+   [
+    "support-long-train"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": null,
+ "aggregates": {
+  "n_cases": 3,
+  "n_calls": 3,
+  "pass_rate": 0.6666666666666666,
+  "gen_tokens_total": 1264,
+  "gen_tps": 42.36098994342621,
+  "prompt_tps": 514.404364597391,
+  "peak_memory_gb_max": 5.14673179,
+  "wall_s_total": 37.28640974900918,
+  "wall_s_per_case": 12.428803249669727,
+  "wh_per_case": null,
+  "n_loads": 1,
+  "call-fields.n_cases": 1,
+  "call-fields.train_n": 1,
+  "call-fields.train_majority_pass": 0,
+  "call-fields.heldout_n": 0,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 0,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 41.17527855720392,
+  "call-fields.peak_memory_gb_max": 5.14673179,
+  "call-fields.wall_s_per_case": 23.438440083002206,
+  "call-fields.min_per_1000_cases": 390.64066805003677,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 2,
+  "email-triage.train_n": 2,
+  "email-triage.train_majority_pass": 2,
+  "email-triage.heldout_n": 0,
+  "email-triage.heldout_majority_pass": 0,
+  "email-triage.heldout_stable_pass": 0,
+  "email-triage.all_majority_pass": 2,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 44.039477792950365,
+  "email-triage.peak_memory_gb_max": 4.586588354,
+  "email-triage.wall_s_per_case": 6.923984833003487,
+  "email-triage.min_per_1000_cases": 115.39974721672479,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "heldout_n": 0,
+  "heldout_majority_pass": 0,
+  "heldout_stable_pass": 0,
+  "n_unstable": 0,
+  "n_unique_cases": 3,
+  "heldout_majority_pass_rate": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "email-triage",
+   "case": "overdue-invoice",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-10T03:05:49.208070+00:00",
+   "end_utc": "2026-11-10T03:05:55.594297+00:00",
+   "wall_s": 6.385824208002305,
+   "calls": [
+    {
+     "prompt_tokens": 211,
+     "prompt_tps": 360.805390956405,
+     "gen_tokens": 245,
+     "gen_tps": 44.11911714975644,
+     "peak_memory_gb": 4.586588354,
+     "finish_reason": "stop",
+     "wall_s": 6.383101874991553,
+     "content_chars": 38,
+     "reasoning_chars": 972,
+     "spec": {
+      "draft": false,
+      "num_draft_tokens": null,
+      "from_draft_tokens": 0,
+      "raw_chars": 1037,
+      "raw_sha256": "182b5bcdc10c300d5746df8f590c66d5a543105e0d7e6b2ec0311e0f0e62449a",
+      "raw": "<|channel>thought\nThinking Process:\n\n1.  **Analyze the email content:** The email is a payment reminder for an overdue invoice (#4482, EUR 214.50). It threatens service interruption if payment is not made within 7 days.\n2.  **Determine the urgency/topic:** This is a financial matter (money owed/owed) and relates directly to the service agreement (avoiding interruption).\n3.  **Apply the classification rules:**\n    *   \"reply_now\": needs a response today \u2014 client requests, money matters, legal/compliance requests, production incidents.\n    *   \"reply_later\": worth answering but not urgent \u2014 networking, invitations, non-urgent personal messages, recruiter outreach.\n    *   \"ignore\": no reply needed \u2014 newsletters, promotions, cold sales spam, automated notifications that require no action.\n4.  **Match to the category:** Since it involves money matters and potential service interruption, it falls under \"reply_now.\"\n5.  **Format the output:** JSON object with the determined label.<channel|>```json\n{\n  \"label\": \"reply_now\"\n}\n```"
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-10T03:05:55.594678+00:00",
+   "end_utc": "2026-11-10T03:06:03.056881+00:00",
+   "wall_s": 7.46214545800467,
+   "calls": [
+    {
+     "prompt_tokens": 204,
+     "prompt_tps": 450.14708325660604,
+     "gen_tokens": 299,
+     "gen_tps": 43.97443546163692,
+     "peak_memory_gb": 4.573374556,
+     "finish_reason": "stop",
+     "wall_s": 7.461431874980917,
+     "content_chars": 22,
+     "reasoning_chars": 1214,
+     "spec": {
+      "draft": false,
+      "num_draft_tokens": null,
+      "from_draft_tokens": 0,
+      "raw_chars": 1263,
+      "raw_sha256": "29bddd9ffe53cf91238c2b8754c27167dff0dbc79b025a0cdb14afc6e8ca20c2",
+      "raw": "<|channel>thought\nThinking Process:\n\n1.  **Analyze the email content:** The email is a request for a quote regarding an AI chatbot for a bakery's webshop. They are asking for a call this week to discuss it.\n2.  **Determine the urgency/nature of the request:**\n    *   It is a potential new business opportunity (a quote/project).\n    *   It requires action (a call this week).\n    *   It involves starting a paid engagement.\n3.  **Evaluate against the labels:**\n    *   *reply_now*: Needs a response today/urgent. This is a new business lead that requires immediate follow-up to secure the project and discuss pricing/scope. This fits the \"client requests\" category.\n    *   *reply_later*: Worth answering but not urgent. While the initial call isn't a \"production incident,\" the business development aspect makes it high priority.\n    *   *ignore*: No reply needed. This is clearly not spam or an automated notification.\n4.  **Select the best label:** Since this is a potential client lead asking for a call this week to move forward on a paid project, it falls under high-priority client interaction. \"reply_now\" is the most appropriate label to ensure the lead is followed up on promptly.\n5.  **Format the output:** JSON object.<channel|>{\"label\": \"reply_now\"}"
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-10T03:06:03.062218+00:00",
+   "end_utc": "2026-11-10T03:06:26.500812+00:00",
+   "wall_s": 23.438440083002206,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 535.1380092808158,
+     "gen_tokens": 720,
+     "gen_tps": 41.17527855720392,
+     "peak_memory_gb": 5.14673179,
+     "finish_reason": "stop",
+     "wall_s": 23.435554458992556,
+     "content_chars": 251,
+     "reasoning_chars": 2384,
+     "spec": {
+      "draft": false,
+      "num_draft_tokens": null,
+      "from_draft_tokens": 0,
+      "raw_chars": 2662,
+      "raw_sha256": "f22a384849736a1747010b26a42752c119e0e4920ceee332a480f709260b4b74",
+      "raw": "<|channel>thought\nThinking Process:\n\n1.  **Analyze the Request:** The goal is to extract specific information from the transcript and populate 8 CRM fields into a JSON object. All values must be verbatim transcript text or `not stated`.\n\n2.  **Scan Transcript for Data Points:**\n\n    *   **`contact_name`:** The customer is the main speaker. The transcript refers to the customer as \"Grace\" (IT lead) and the account is \"Larkspur Clinics.\" The main contact seems to be the person speaking, but the REP addresses them as \"Grace\" at the end. Let's check the context. The customer says: \"Our account is Larkspur Clinics...\" and later, \"Our IT lead, Grace, thinks it might be related to daylight saving time...\" The REP addresses the customer at the end: \"talk to you tomorrow, Grace\". I will use \"Grace\" as the contact name, as she is the primary technical contact mentioned.\n    *   **`company`:** The customer states: \"Our account is Larkspur Clinics.\" -> `Larkspur Clinics`.\n    *   **`amount`:** No pricing, renewal, or transaction amount is discussed. -> `not stated`.\n    *   **`currency`:** Since no amount was discussed. -> `not stated`.\n    *   **`decision_maker`:** The issue is technical support/bug fixing. The customer is the primary contact (Grace), and the issue is being logged against the account. No specific person (other than Grace) needs to approve the *fix* or the *ticket*, though a service credit is mentioned. The REP says they will flag the credit to the \"account team.\" No specific name is given for the approver. -> `not stated`.\n    *   **`next_step_date`:** The REP commits: \"I'll personally follow up with you by end of day tomorrow with a status update.\" -> `tomorrow`.\n    *   **`competitor`:** No competitor is mentioned. -> `not stated`.\n    *   **`ticket_id`:** The account ID and ticket number are mentioned multiple times: \"LC-40217.\" -> `LC-40217`.\n\n3.  **Review and Refine Values:**\n\n    *   `contact_name`: Grace (The primary technical contact mentioned and addressed).\n    *   `company`: Larkspur Clinics.\n    *   `amount`: not stated.\n    *   `currency`: not stated.\n    *   `decision_maker`: not stated (Credit mentioned, but no specific approver named).\n    *   `next_step_date`: tomorrow (REP follow-up).\n    *   `competitor`: not stated.\n    *   `ticket_id`: LC-40217.\n\n4.  **Final JSON Construction.** (Ensure all 8 keys are present, even if `not stated`).<channel|>```json\n{\n  \"contact_name\": \"Grace\",\n  \"company\": \"Larkspur Clinics\",\n  \"amount\": \"not stated\",\n  \"currency\": \"not stated\",\n  \"decision_maker\": \"not stated\",\n  \"next_step_date\": \"tomorrow\",\n  \"competitor\": \"not stated\",\n  \"ticket_id\": \"LC-40217\"\n}\n```"
+     }
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "f4c378dabf95d7b90290b942bcd9aed517a56a1d604a248a22062fc37daaaef5",
+ "speculative": {
+  "requested": {
+   "draft": null,
+   "num_draft_tokens": null
+  },
+  "target": {
+   "ref": "mlx-community/gemma-4-e4b-it-4bit",
+   "snapshot": "475b9088d29754a3379866cf5aeb6b41acd313c2",
+   "tokenizer_sha256": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f"
+  },
+  "prompt_cache": "not passed: speculative_generate_step builds one per model (make_prompt_cache)"
+ }
+}
