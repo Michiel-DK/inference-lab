@@ -1,0 +1,321 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "ctx-gate-lfm2.5-8b-a1b-mlx-4bit-8k-maxkv1024-smoke",
+ "posted": false,
+ "prediction": "predictions/context-kv.md",
+ "prediction_commit": "ca6038f48d317cedc975f3f111398715f59bf88b",
+ "lab_commit": "1fff5e7f757ec5468e22d0eb6142c61d1ea798bf",
+ "model": {
+  "ref": "LiquidAI/LFM2.5-8B-A1B-MLX-4bit",
+  "snapshot": "2e92b640a63d47ad4dcf81a19a366b902356b3bc",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 3.045047624997096,
+    "n_rows": 3
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "recap": "315a6132da7f78c8f9e8a140ff711656f24b8ce12d893e8bc248ecd931aaf120"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   },
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "recap": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "call-fields",
+  "email-triage",
+  "recap"
+ ],
+ "plan": [
+  [
+   "call-fields",
+   [
+    "support-long-train"
+   ]
+  ],
+  [
+   "email-triage",
+   [
+    "client-quote-request"
+   ]
+  ],
+  [
+   "recap",
+   [
+    "busy-day-standard"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": null,
+ "aggregates": {
+  "n_cases": 3,
+  "n_calls": 3,
+  "pass_rate": 0.0,
+  "gen_tokens_total": 2849,
+  "gen_tps": 83.57216278399821,
+  "prompt_tps": 782.3465394306197,
+  "peak_memory_gb_max": 5.896273464,
+  "wall_s_total": 66.18112725001993,
+  "wall_s_per_case": 22.060375750006642,
+  "wh_per_case": null,
+  "n_loads": 1,
+  "call-fields.n_cases": 1,
+  "call-fields.train_n": 1,
+  "call-fields.train_majority_pass": 0,
+  "call-fields.heldout_n": 0,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 0,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 83.63881067060625,
+  "call-fields.peak_memory_gb_max": 5.887868472,
+  "call-fields.wall_s_per_case": 25.64234133300488,
+  "call-fields.min_per_1000_cases": 427.3723555500813,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 1,
+  "email-triage.train_n": 1,
+  "email-triage.train_majority_pass": 0,
+  "email-triage.heldout_n": 0,
+  "email-triage.heldout_majority_pass": 0,
+  "email-triage.heldout_stable_pass": 0,
+  "email-triage.all_majority_pass": 0,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 84.29402860094788,
+  "email-triage.peak_memory_gb_max": 5.887884864,
+  "email-triage.wall_s_per_case": 14.954489916999592,
+  "email-triage.min_per_1000_cases": 249.24149861665987,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "recap.n_cases": 1,
+  "recap.train_n": 1,
+  "recap.train_majority_pass": 0,
+  "recap.heldout_n": 0,
+  "recap.heldout_majority_pass": 0,
+  "recap.heldout_stable_pass": 0,
+  "recap.all_majority_pass": 0,
+  "recap.n_unstable": 0,
+  "recap.gen_tps": 83.30035748952514,
+  "recap.peak_memory_gb_max": 5.896273464,
+  "recap.wall_s_per_case": 25.584296000015456,
+  "recap.min_per_1000_cases": 426.4049333335909,
+  "recap.finish_length_calls": 0,
+  "recap.wh_per_1000_cases": null,
+  "heldout_n": 0,
+  "heldout_majority_pass": 0,
+  "heldout_stable_pass": 0,
+  "n_unstable": 0,
+  "n_unique_cases": 3,
+  "heldout_majority_pass_rate": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-10T01:47:09.598806+00:00",
+   "end_utc": "2026-11-10T01:47:35.265084+00:00",
+   "wall_s": 25.64234133300488,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 778.5046830212441,
+     "gen_tokens": 1244,
+     "gen_tps": 83.63881067060625,
+     "peak_memory_gb": 5.887868472,
+     "finish_reason": "stop",
+     "wall_s": 25.63861212498159,
+     "content_chars": 220,
+     "reasoning_chars": 4624,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 20014,
+       "pad_sha256": "0e0531db390aa82d8aadd1c70a71d1128c841d30ccdfd8689c6d85faece56097",
+       "base_tokens": 3015,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {
+       "max_kv_size": 1024
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-10T01:47:35.267759+00:00",
+   "end_utc": "2026-11-10T01:47:50.226919+00:00",
+   "wall_s": 14.954489916999592,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 782.3231729803325,
+     "gen_tokens": 359,
+     "gen_tps": 84.29402860094788,
+     "peak_memory_gb": 5.887884864,
+     "finish_reason": "stop",
+     "wall_s": 14.951912124990486,
+     "content_chars": 25,
+     "reasoning_chars": 1454,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 31276,
+       "pad_sha256": "f27b4d4efe70c86fe28eb7dbc476ee6d7969bee545e6d46d8bc0d601cbf74315",
+       "base_tokens": 209,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {
+       "max_kv_size": 1024
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "busy-day-standard",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "check_coverage"
+    }
+   ],
+   "start_utc": "2026-11-10T01:47:50.229644+00:00",
+   "end_utc": "2026-11-10T01:48:15.816525+00:00",
+   "wall_s": 25.584296000015456,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 786.2501025867354,
+     "gen_tokens": 1246,
+     "gen_tps": 83.30035748952514,
+     "peak_memory_gb": 5.896273464,
+     "finish_reason": "stop",
+     "wall_s": 25.579665916011436,
+     "content_chars": 138,
+     "reasoning_chars": 5593,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 25239,
+       "pad_sha256": "39c74e845949c47425d76c9b5e4eba93db9862592c24ef66a667f4f0b6f02e1e",
+       "base_tokens": 913,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "ArraysCache": 18,
+       "KVCache": 6
+      },
+      "kv_requested": {
+       "max_kv_size": 1024
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "8b9b2812cc68eaff9eba58ab81a4a8df6a861a6b2190962786787419dfc8c1ea",
+ "context": {
+  "requested": {
+   "pad_to": 8192,
+   "max_kv_size": 1024
+  },
+  "applied_cache_classes": [
+   {
+    "ArraysCache": 18,
+    "KVCache": 6
+   }
+  ],
+  "prefill_step_size": 2048,
+  "prefill_step_size_source": "mlx_lm.generate.generate_step default (stream_generate is passed none)",
+  "padding_rule": {
+   "header": "Earlier messages from this session, already handled. Do not act on them; your task is the next message.\n\n",
+   "ack": "Understood.",
+   "sep": "\n\n--- earlier message ---\n\n",
+   "slack_tokens": 64,
+   "pool": "sitting exam's train inputs, then the other exams' train inputs (sorted), minus the case and any train input containing its text"
+  },
+  "rows_padded": 3,
+  "rows_total": 3,
+  "quantization": {
+   "group_size": 64,
+   "bits": 4,
+   "mode": "affine",
+   "model.embed_tokens": {
+    "group_size": 64,
+    "bits": 6,
+    "mode": "affine"
+   }
+  },
+  "chat_template_sha256": "f434e8c96e6c0a63a022a3ad0a299bb94e58aa90e3c9ebe65034f8e8c6188aa9"
+ }
+}
