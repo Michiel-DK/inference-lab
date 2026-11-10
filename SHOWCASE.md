@@ -75,19 +75,26 @@ flow arm stays `gemma4-e2b-ctx16k`, at 76/155 on all three passes (roger3000_aut
 **Update, 10 Nov evening: the flow arm ran, and the rule does not carry over to it.** The operator pulled
 `gemma4:e4b-it-q8_0` at 11:14, which met the first reopen threshold below. This job built `gemma4-e4b-ctx16k-q8` from
 it (`num_ctx 16384`, digest `0f992909c10f…`). It ran roger3000_automations experiment 15-local-8bit once, with the
-prediction committed first. That repo's draft PR #50 holds the files, and its `node experiments/check.js` exits 0.
+prediction committed first. That repo's draft PR #50 holds the files, and its `node experiments/check.js` exits 0. The
+three totals are table rows in `experiments/RESULTS.md` at `de60f16`: 99 at :193, 105 at :163, 76 at :133.
 - **Pass count: 99/155.** The prediction was 107, band 102–112.
 - **Against 76** (the e2b-ctx16k arm): +23.
 - **Against 105** (stock `gemma4:e4b` with Q4_K/Q6_K blocks and a BF16 per-layer embedding, three passes): −6. The
   prediction's kill "below 100" fired.
 - **Attribution:** the gain over 76 is size (+29 at 4-bit). 8-bit gets no credit for it.
 - **Where it loses:** recruitment-monthly-report, 20 → 9. The Q8_0 sentences there run 9 to 11 words against the
-  12-word floor. The other eight flows net +5.
-- **Memory:** the `llama-server` footprint peaked at 16.99 GB, and swap grew by 2.9 GB during the run. Under the
-  peak + 2.0 GB rule that aborts the pass 2 the prediction called for, so 99 is one unconfirmed pass.
-- **Conclusion:** on Ollama this box should not default to the Q8_0 e4b. It loses to its own 4-bit tag on the flows,
-  and it does not fit with the headroom. The local flow arm stays `gemma4-e2b-ctx16k`, and the better local e4b for the
-  flows is the 4-bit one.
+  12-word floor (8 to 11 words). The other eight flows net +5. The per-flow figures come from
+  `python3 experiments/probes/15-local-8bit/per_check.py` there.
+- **Memory:** the `llama-server` footprint peaked at 16.99 GB, and swap grew by 2.9 GB during the run (raw samples in
+  `experiments/probes/15-local-8bit/memory-2026-11-10.txt` there). Under the peak + 2.0 GB rule that aborts the pass 2
+  the prediction called for, so 99 is one unconfirmed pass. The 4-bit tag's peak was never measured, and it is the
+  larger file (9.61 GB, with a 5.64 GB BF16 embedding), so memory does not separate the two tags.
+- **Conclusion:** on score alone (105 over three passes against 99 over one), the better local e4b for the flows is the
+  4-bit one. The local flow arm stays `gemma4-e2b-ctx16k`. Whether the 8-bit rule carries over to Ollama is not shown
+  either way: this one pass changes runtime and task together.
+- **Reopen threshold (flow arm):** a pass 2 of `gemma4-e4b-ctx16k-q8` at ≥ 102 on a box with room, or a Q8_0 e2b tag at
+  16k (precision at the champion's own size). The first reopen line below ("a Q8_0 gemma4 base lands") has fired and
+  is spent.
 
 **What this does not show.**
 - That the rule transfers to Ollama GGUF Q8_0 (the e31 probe saw no 8-bit gain for qwen3 on task-intake).
