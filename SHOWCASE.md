@@ -29,7 +29,7 @@ KV-exposure probe, which was ungraded and was seen before the addendum was writt
     train input that contains the sitting case.
 - Loads: one load per arm, plus a second load of each model's 8k arm as the stability check.
 - Baselines: the 0-padding row is the committed lane 02 / 03 file (3 loads, majority). Rows the padding rule left
-  unpadded reproduce those files' load 0 exactly: **18 of 18 per model**, summed over the 2k, 4k, 8k and repeat arms
+  unpadded reproduce those files' load 0 exactly: **18 of 18 per model** (printed by the script), summed over the 2k, 4k, 8k and repeat arms
   (verdict and gen tokens per call). So the lane-05 code path is the old path in effect.
 
 **Headline.**
@@ -39,15 +39,22 @@ KV-exposure probe, which was ungraded and was seen before the addendum was writt
     with length: they are lane 04's ±4 perturbation floor, not a context effect.
 - **The MoE lost a third of its passes as soon as any history turn was present, and more length did not add to it.**
   LFM2.5 scored **21 → 14 / 16 / 14**.
-  - Recap went 5 → 1 / 2 / 0. Recap sittings that ended with no answer (thinking hit the token cap) went 4 → 7 / 4 / 11
-    per load.
+  - Recap went 5 → 1 / 2 / 0. Recap sittings that ended with no answer went 4 → 7 / 4 / 11 per load. In every padded
+    arm, every no-answer sitting had a length-capped call: thinking ran to `max_tokens`.
+  - This is one model, not "MoEs". LFM2.5 differs from the e4b in more than active size: it is hybrid-conv, from
+    another family, with another chat template. The inserted assistant turn renders cleanly in both templates
+    (`<|im_start|>assistant\nUnderstood.<|im_end|>` / `<|turn>model\nUnderstood.<turn|>`, decoded), but the turn is a
+    template-dependent structure, and this lane cannot separate model from template.
   - Twice, both in the `kv_bits` arms, it answered the padding turn itself ("Understood. I will await your next
-    message."; wilco's `no JSON` error string). The default arms store no answer text, so how often this happens there
-    is unmeasured.
-- **Latency is prefill, linear and predictable.** p50 per held-out sitting:
-  - e4b 15.3 → 16.3 / 21.5 / 31.5 s, p95 42.8 → 37.9 / 40.3 / 50.7 s. Prompt throughput is flat at 529–536 tok/s,
-    decode −10% at 8k (41.9 → 37.8 tok/s).
-  - LFM 12.4 → 17.6 / 17.7 / 25.7 s, p95 31.1 → 29.4 / 32.4 / 53.3 s.
+    message."; wilco's `no JSON` error string). Rows store answer text only in that error string, so how often a
+    *graded* answer does this is unmeasured.
+- **Latency: on the dense model, p50 grows by about the prefill time.** p50 per held-out sitting:
+  - e4b 15.3 → 16.3 / 21.5 / 31.5 s. Extra prompt tokens ÷ prompt tok/s accounts for +2.4 / +6.2 / +14.0 s of the
+    measured +1.0 / +6.2 / +16.2 s. Prompt throughput is flat at 529–536 tok/s; decode is −9.7% at 8k.
+  - e4b p95 42.8 → 37.9 / 40.3 / 50.7 s is not monotone. Padding removed the baseline's length-capped tails (2 length-capped
+    calls per load at baseline and at 2k, 0 at 4k and 8k).
+  - LFM 12.4 → 17.6 / 17.7 / 25.7 s grows by more than its prefill (+1.7 / +4.2 / +9.2 s): it thinks longer
+    (1166 → 1395 gen tokens per sitting at 8k). p95 31.1 → 29.4 / 32.4 / 53.3 s.
 - **The KV-cache type, as mlx-lm 0.31.3 exposes it:**
   - **`max_kv_size` is accepted and silently ignored on both models.** Both define `make_cache`, so
     `make_prompt_cache` never reads it. On the graded train smoke at `max_kv_size=1024` with 8k prompts, verdicts, gen
@@ -61,7 +68,8 @@ KV-exposure probe, which was ungraded and was seen before the addendum was writt
     ~10× LFM's whole fp16 KV at 8k (6 layers × 8 heads × 64 × 2 × 2 B ≈ 12 KB/token ≈ 0.1 GB), so it is a conversion
     transient, not the cache. The mechanism was not isolated.
 
-**The table** (`python3 scripts/lane05_rows.py`, which runs `lab check` on all 15 files first and exits 1 on drift):
+**The table** (`python3 scripts/lane05_rows.py`, which runs `lab check` on all 15 files first and exits 1 on drift; its
+"Derived figures" blocks print every delta, ratio and count quoted in this section):
 
 | model | arm | email /20 | call /19 | recap /16 | **total /55** | ids moved (vs) | p50 s | p95 s | prompt tok/s p50 | gen tok/s | peak GB | no-answer sittings (call · recap) |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -95,12 +103,12 @@ How to read the table:
 | e4b 8k absolute 15 · 12 · 10 | 17 · 11 · 10 | **refuted** (recap held) |
 | LFM (addendum) 2k ±1 per exam; 8k email −1 to −3, call 1–3, recap 3–6, total 15–21 | 2k −1 · −2 · −4; 8k 13 · 1 · 0 = 14 | **refuted** (8k email and call held; recap and total below) |
 | mechanism: distraction grows with length | the MoE step happens at 2k and does not grow; the dense model shows none | **refuted** |
-| e4b latency: +15–30 s at 8k; email p50 ~9 → 25–40 s, p95 ~14 → 35–50; recap p50 ~18 → 35–50; prefill 250–450 tok/s | +16.2 s overall p50; email 7.8 → 24.1 / 12.3 → 28.0; recap 20.7 → 34.5; 529 tok/s | **mostly refuted** (the shift is in band; the endpoints and the prefill rate are not) |
-| e4b gen tok/s −5 to −10% at 8k | −9.8% | **held** |
+| e4b latency: +15–30 s at 8k; email p50 ~9 → 25–40 s, p95 ~14 → 35–50; recap p50 ~18 → 35–50; prefill 250–450 tok/s | p50 +16.2 s; email 7.8 → 24.1 / 12.3 → 28.0; recap 20.7 → 34.5; 529 tok/s | **mostly refuted** (the shift is in band; the endpoints and the prefill rate are not) |
+| e4b gen tok/s −5 to −10% at 8k | −9.7% | **held** |
 | LFM +8–12 s per call at 8k (addendum) | email p50 +10.3, call +8.9, recap +16.5 s | **held** on email and call; recap thinks longer |
-| KV type changes memory by < 5% of peak | e4b void; LFM +1.04 / +1.01 GB (+18%) | **refuted** (the probe had already shown it) |
+| KV type changes memory by < 5% of peak | e4b void; LFM +1.04 / +1.01 GB (+18% / +17%) | **refuted** (the probe had already shown it) |
 | LFM kv8 0–2 flips; kv4 1–4, on call-fields exact tokens | kv8 6 (+3/−3); kv4 4 (+4/−0), on email and recap | **refuted** on kv8; kv4 count held, its place and direction refuted |
-| quantised KV 5–15% slower | prompt −8% / −11%; decode −1%; p50 +0.4 / +0.6 s | **held** on prefill only |
+| quantised KV 5–15% slower | prompt −8% / −11%; decode ≤ −1%; p50 +0.4 / +0.5 s | **held** on prefill only |
 | `max_kv_size` below the prompt is the num_ctx failure (email ≤ 10/20) | void: mlx-lm ignores `max_kv_size` on both models | **void**; the silent no-op is the finding |
 | stability (addendum gate: > 3 of 55 moved voids small effects) | 0 of 55 on both repeats | did not fire |
 
@@ -146,8 +154,8 @@ python3 scripts/lane05_rows.py
 
 **Reopen threshold.** Re-sit lane 05 when any of these holds:
 - **an mlx-lm version** that implements `RotatingKVCache.to_quantized` or makes `make_cache` honour `max_kv_size`;
-- **a model whose mlx-lm class has no `make_cache`**. Only 39 of 108 files in mlx-lm 0.31.3's `models/` define one
-  (grep; a few of the 108 may be helpers). Classes without one include `qwen3`, `qwen2`, `mistral3` and `phi3`. Lane 02's Llama-3.1-8B is *not* one: `llama.py` defines `make_cache`. On those classes
+- **a model whose mlx-lm class has no `make_cache`**, e.g. `qwen3`, `qwen2`, `mistral3`, `phi3` in mlx-lm 0.31.3
+  (`grep -L "def make_cache" mlx_lm/models/{qwen3,qwen2,mistral3,phi3}.py` lists all four). Lane 02's Llama-3.1-8B is *not* one: `llama.py` defines `make_cache`. On those classes
   `max_kv_size` *does* build `RotatingKVCache(keep=4)`, which silently drops the head of a longer prompt. That is the
   truncation this lane could not reach, and the first arm to run;
 - prompts beyond 8k (the e4b's 7 global layers, of which 4 hold their own cache, have not yet been asked to carry more);

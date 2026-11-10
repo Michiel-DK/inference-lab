@@ -95,6 +95,7 @@ def main():
     if rc.returncode:
         print(rc.stdout, rc.stderr); return 1
 
+    repro = {k: [0, 0] for k in MODELS}
     for key, (base_p, stem) in MODELS.items():
         base = load(base_p)
         print(f"\n## {key} ({stem})  baseline {base_p} (3 loads, majority; walls over all 3 loads' held-out sittings; count columns per load)")
@@ -131,7 +132,39 @@ def main():
                     eq = (br["passed"] == r["passed"] and [c["gen_tokens"] for c in br["calls"]] == [c["gen_tokens"] for c in r["calls"]])
                     same += eq; diff += not eq
             print(f"  unpadded rows in {s}: {same} reproduce baseline load 0 (verdict + gen tokens per call), {diff} do not")
+            repro[key] = [repro[key][0] + same, repro[key][1] + same + diff]
+        derived(key, base, {s: d for s, d in rows[1:]}, repro[key])
     return 0
+
+
+def derived(key, base, arms, repro):
+    """Every delta, ratio and count the SHOWCASE quotes that the table does not print as-is."""
+    print(f"\nDerived figures ({key}):")
+    print(f"  unpadded rows reproducing baseline load 0, summed over padded default arms: {repro[0]} of {repro[1]}")
+    b = summary(base)
+    for s, d in arms.items():
+        m = summary(d)
+        h = [r for r in d["rows"] if r["split"] == "heldout"]
+        understood = sum(1 for r in h if "Understood" in r.get("wilco_error", ""))
+        len_na = sum(1 for r in h if any(c["bucket"] == "termination" for c in r["failed_checks"])
+                     and any(c["finish_reason"] == "length" for c in r["calls"]))
+        na = sum(m["no_answer"].values())
+        pe = " · ".join(f"{m['per_exam_wall'][e][0] - b['per_exam_wall'][e][0]:+.1f}" for e in ["email-triage", "call-fields", "recap"])
+        print(f"  {s}: p50 {m['p50'] - b['p50']:+.1f} s vs baseline (email · call · recap {pe}); "
+              f"gen tok/s x{m['gen_tps'] / b['gen_tps']:.3f}; peak {m['peak_gb'] - b['peak_gb']:+.2f} GB; "
+              f"no-answer sittings {na}, of which with a length-capped call {len_na}; "
+              f"rows whose wilco error is an 'Understood' reply {understood}")
+        # prefill account: extra first-call prompt tokens / that arm's prompt tok/s, vs the measured p50 shift
+        extra = st.median([r["calls"][0]["prompt_tokens"] for r in h]) - b["prompt_tok_p50"]
+        print(f"      prefill account: median prompt +{extra:.0f} tok / {m['prompt_tps_p50']:.0f} tok/s = {extra / m['prompt_tps_p50']:+.1f} s")
+    if "8k" in arms:
+        e8 = summary(arms["8k"])
+        for s in ("8k-kv8", "8k-kv4"):
+            if s in arms:
+                m = summary(arms[s])
+                print(f"  {s} vs 8k: prompt tok/s x{m['prompt_tps_p50'] / e8['prompt_tps_p50']:.3f}; gen tok/s "
+                      f"x{m['gen_tps'] / e8['gen_tps']:.3f}; p50 {m['p50'] - e8['p50']:+.1f} s; peak "
+                      f"{m['peak_gb'] - e8['peak_gb']:+.2f} GB ({(m['peak_gb'] / e8['peak_gb'] - 1) * 100:+.0f}%)")
 
 
 if __name__ == "__main__":
