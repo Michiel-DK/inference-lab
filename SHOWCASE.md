@@ -3,6 +3,157 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
+## Lane 06: speculative decoding (10 Nov 2026)
+
+**Question.** Where mlx-lm supports a draft model, what tokens/s gain do the exams see, with the pass fraction unchanged?
+At temperature 0, speculative decoding must not change outputs. If it does, the harness is broken, and that is the
+finding. The prediction was committed first: `predictions/speculative.md` (`043e8bd`, 6 Nov). The addendum (`5f1d131`)
+was committed before any Gemma sitting. It fixes the pair, the arms and the reading of the kill clause, and it discloses
+what had been seen before it was written: the mlx-lm source, lane 02's token counts and the Qwen wiring smoke.
+
+**Protocol.**
+- **Pair.** The pair was forced by the cache. Of lane 02's three targets, only the e4b has a cached same-family draft.
+  The cache holds no Llama-3.2-1B weights (tokenizer and config only) and no Qwen3, and a run never downloads.
+  - target `mlx-community/gemma-4-e4b-it-4bit@475b9088`;
+  - draft `mlx-community/gemma-4-e2b-it-4bit@23876752` (the two `tokenizer.json` hashes are equal; stamped);
+  - `num_draft_tokens` 3. The prediction's Qwen3 / Llama branch is void for this run.
+- **Cases.** All 83 cases (train + held-out) of the three exams at wilco pin `62fcd449`, graded by wilco's `run_exam`
+  as in lanes 02–05.
+- **Arms.** Each arm is one fresh load, through `lab spec` (`lab/spec.py`). Every call keeps its raw text and its
+  sha256, because lane 02's file has no text and cannot show a byte difference.
+  1. control: no draft;
+  2. draft e2b, k = 3;
+  3. arm 2 again.
+- **Wiring control.** `Qwen2.5-Coder-1.5B-bf16` drafted for itself on the 3-case train smoke. It uses a plain
+  `KVCache`, so every cache is trimmable.
+- **Control = lane 02.** The control arm reproduces lane 02's load 0 on **83 of 83** cases: verdict, plus per-call
+  `gen_tokens`, `content_chars` and `reasoning_chars`. So the control-vs-draft diff is also a diff against lane 02.
+- **Repeat arm interrupted.** The drive script hit the job runner's 2 h background limit after 61 of 83 repeat rows. The
+  repeat was re-sat in full with the same command. The 61 interrupted rows matched arm 2 byte for byte as well. That
+  partial is not committed, so the posted repeat figure is the full re-sit's 83 of 83.
+
+**Headline.**
+- **Speculative decoding on this pair halves the speed and changes almost every output.**
+  - Decode: **21.2 tok/s against the control's 42.9 (×0.494)**. Lane 02's row is 41.9, so ×0.506 against it.
+    - per exam: call-fields ×0.519, email-triage ×0.510, recap ×0.464 (the repeat: ×0.519, ×0.514, ×0.463);
+    - wall per case 39.1 s against 19.2 s;
+    - draft acceptance 0.625 (37,443 of 59,926 tokens came from the draft);
+    - peak memory 7.85 GB against 5.45 GB.
+  - Bytes: the draft arm's text differs from the control's on **81 of 83 cases**. Byte-identical: held-out email-triage
+    `invoice-error-client` and `dpa-signature-compliance`.
+  - Verdicts: **37 flipped (+1 / −36)**. Held-out fell **36 → 8 / 55**: call-fields 10 → 1, email-triage 16 → 7, recap
+    10 → 0.
+  - The arm-3 repeat is byte-identical to arm 2 on **83 of 83**, so this is the engine's deterministic behaviour, not
+    load noise.
+  - **No call raised.** 0 runtime faults on all three arms.
+- **The kill clause fired on bytes on 81 of 83 cases. Where the bytes moved and where the verdicts moved are two
+  different places.**
+  - **14 sittings stayed under the 512-token sliding window for the whole call (draft arm).** 12 of them differ in
+    bytes, and none flipped a verdict.
+    - The post-hoc probe (below) re-sat the control path and read the top-1 / top-2 log-prob gap at the token where the
+      arm first departs. On all 26 differing email-triage cases (every email prompt starts under 512, and every one of
+      them diverges under 512, at cache position ~215–464), the gap is **≤ 0.375 nats**: 6 exact ties, 15 at 0.125
+      (bf16 logits come in 0.125 steps). The calls' median gaps are 2.75–9.5, so these tokens sit in the bottom
+      0.8–10.4% of their call.
+    - The texts stay fluent ("an acquaintance" / "an old acquaintance"). Read: the 4-wide verify on 4-bit weights does
+      not reproduce the single-token decode's arithmetic, and greedy decoding turns a bf16 tie into another wording.
+      On these 14 sittings that did not change an answer.
+  - **69 sittings passed 512.** All 69 differ, and they hold **all 37 verdict flips**. They are the 55 call-fields and
+    recap cases, which start over the window, plus the 14 email cases whose draft-arm generation ran past it (to
+    519–905).
+    - The text loses grammar within its first sentences. For example, recap `quiet-day-newsletters`: "The goal is to
+      summarize a busy owner (small) in a short recap, few sentences). The output must be a specific rules: no rounding,
+      be a quiet day is a honest."
+    - wilco's no-JSON error bucket rose from 1 case to 15.
+    - Held-out call-fields fell 10 → 1, recap 10 → 0, and email-triage 16 → 7. All 9 email flips are sittings that ran
+      past 512.
+    - The first divergence there is not always a near-tie. On a 9-case probe sample (call-fields train), the gap at
+      divergence was 0–3.0 nats, two of them 1.0 and 3.0, beyond anything seen under the window.
+    - This matches the mechanism read in the addendum (source, not instrumented):
+      - `RotatingKVCache.is_trimmable()` is checked once, on the fresh cache (offset 0 < 512), so the guard passes.
+      - Once the window has wrapped, `trim(n)` only lowers `offset` and `_idx`.
+      - The next 4-token verify re-orders the buffer as if it had wrapped, so the target attends to the wrong keys.
+- **The Qwen wiring control.** It had a plain `KVCache` and a perfect draft (self-draft, 100% acceptance).
+  - 1 of 3 cases stayed byte-identical over 2 × 4,096 tokens.
+  - The other 2 diverged only past char 8,000, inside a degenerate `<|repo_name|>` loop.
+  - So the lab's adapter passes bytes through intact. Near-tie flips happen on both models, much sooner on the 4-bit
+    Gemma (gen token ~3–190).
+
+**The table** (`python3 scripts/lane06_rows.py`, which runs `lab check` on every file first and exits 1 on drift):
+
+| arm | email /20 | call /19 | recap /16 | **total /55** | byte-identical /83 | flips vs control (all 83) | gen tok/s | ×control | acceptance | wall s/case | peak GB | wilco error-bucket cases | Wh/case |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| lane 02 (3 loads, majority) | 16 | 10 | 10 | **36** | – | – | 41.9 | – | – | 19.6 | 5.45 | – | null |
+| control (1 load) | 16 | 10 | 10 | **36** | – | – | 42.9 | 1 | – | 19.2 | 5.45 | 1 | null |
+| e2b draft, k=3 | 7 | 1 | 0 | **8** | 2 | 37 (+1/−36) | 21.2 | ×0.494 | 0.625 | 39.1 | 7.85 | 15 | null |
+| e2b draft, k=3, repeat | 7 | 1 | 0 | **8** | 2 (83/83 = arm 2) | 37 (+1/−36) | 21.2 | ×0.494 | 0.625 | 39.1 | 7.85 | 15 | null |
+
+- Per-exam speed: call-fields 21.4 / 41.1, email-triage 23.2 / 45.5, recap 20.3 / 43.7 tok/s.
+- Acceptance: call-fields 0.640, email-triage 0.632, recap 0.600.
+- On the 2 byte-identical cases only: ×0.549.
+- Every differing id, its window class and its divergence position are in the script's output.
+- The arm files carry `posted: false`, because the drive script did not pass `--post`. They are not rewritten (results
+  files never are). This section posts them.
+
+**Prediction vs result** (`predictions/speculative.md` + addendum):
+
+| predicted | result | verdict |
+|---|---|---|
+| Gemma pair: the harness breaks, 0 gradable answers on ≥ 80 of 83 (S1's `broadcast_shapes`) | 83 of 83 graded, 0 faults; the break is silent: wrong text, wrong verdicts | **refuted** in form; held in substance (the pair cannot be used) |
+| draft > ¼ of the target's bytes ⇒ gain ≤ 1.2× or negative | ×0.494 | **held** |
+| addendum: control reproduces lane 02 load 0 on ≥ 80 of 83 | 83 of 83 | **held** |
+| under-512 cases byte-identical on ≥ 9 of 12 | 2 of 12 (26 of 28 email cases differ, all at near-ties under 512) | **refuted** |
+| start-over-512 cases: ≥ 45 of 55 differ or fault; lean wrong text (≥ 30 differ) | 55 differ, 0 fault | **held** |
+| email cases crossing 512 in generation: ≥ 10 of 16 differ or fault | 16 of 16 differ; the first divergence is under 512 on all 16 (a near-tie), and the 9 email flips are all in sittings that then ran past 512 | **held** in count; the first byte is arithmetic, the verdict damage is the window |
+| ≥ 5 verdict flips, net negative, held-out ≥ 3 below control | 37 (+1/−36); 36 → 8 | **held** (far beyond the size) |
+| spec / control gen tok/s 0.5–0.9× on byte-identical cases | ×0.549 (n = 2); ×0.494 over all 83 | **held** on the identical cases; at the floor over all |
+| acceptance 0.45–0.70 | 0.625 | **held** |
+| peak 8.5–9.5 GB | 7.85 | **refuted** (below) |
+| repeat byte-identical on ≥ 80 of 83 | 83 of 83 | **held** |
+| original branch-1: "below 512 the drafted text was wrong and 2× slower" (S1) | wrong text and ×0.49 in-process too | **held** |
+| original numerics clause: 0–3 byte diffs, 0–1 verdict flips on a full-attention pair | not run (no full-attention pair cached); the Qwen self-draft wiring smoke diffed 2 of 3 deep in a loop | **void** for the lane |
+| energy 0.7–0.9× | no powermetrics capture | **void** (Wh null, not 0) |
+| kill clause (addendum reading: bytes, per case the draft arm completed) | fires on 81 of 83 (every id in the script's output); verdicts vs control and vs lane 02 majority: 37 (+1/−36) | **fired**: on this pair, speculative decoding is not usable |
+
+**Post-hoc probe (not pre-registered, ungraded).** `scripts/lane06_margin.py` re-sits the control path of each
+differing case's first call. It records the top-1 / top-2 log-prob gap per generated token and reports the gap at the
+draft arm's first diverging token. It refuses (void) if its re-sit text differs from the committed control raw. Output:
+`docs/probes/lane06-margin-2026-11-10.txt`.
+
+**What did not hold.**
+- **"mlx-lm refuses what it cannot do."** It does not here. The trimmability guard reads a fresh cache, so Gemma 4's
+  sliding window passes it, and the run halves its speed and scores 8 / 55 without an error. This is the third mlx-lm
+  setting in two lanes that is accepted and then not applied as asked, after lane 05's `max_kv_size` and `kv_bits`.
+- **"Speculative decoding is exact at temperature 0."** It is exact in exact arithmetic. On a 4-bit Gemma, the 4-wide
+  verify flips a near-tie token within the first ~200 tokens of 26 of 28 short email answers. Byte equality is the wrong
+  bar for a speculative path. On the 14 sittings that stayed in the window, verdicts held (0 flips), so verdicts against
+  a repeat are the bar.
+
+**What was refused or voided.**
+- The Qwen3 / Llama branch: no cached draft, and a run never downloads.
+- `num_draft_tokens` other than 3: one value was pre-registered.
+- Wh: no capture.
+- A hand-built non-rotating cache for Gemma's sliding layers: that is not what mlx-lm exposes, and it would change the
+  model's attention.
+
+**Re-derive.**
+```sh
+python3 -m lab check results/spec-*.json
+python3 scripts/lane06_rows.py
+HF_HUB_OFFLINE=1 python3 scripts/lane06_margin.py results/spec-gemma-4-e4b-it-4bit-control.json \
+  results/spec-gemma-4-e4b-it-4bit-e2b-k3.json email-triage/friend-dinner   # GPU; one id, ~10 s
+```
+
+**Reopen threshold.** Re-sit lane 06 when any of these holds:
+- **The operator caches a full-attention pair with a lane-02 target.** `mlx-community/Llama-3.2-1B-Instruct-4bit`
+  drafting lane 02's Llama-3.1-8B-4bit is the first arm, since `llama.py` builds plain `KVCache`s. This is the question
+  this lane could not reach: does a draft that is ~⅛ of the target's bytes pay on these exams? Bytes are expected to move
+  at near-ties, so the pre-registered reading there should be verdict flips against a repeat.
+- **An mlx-lm version that makes `RotatingKVCache` rewindable after the window wraps**, or that refuses speculative
+  decoding on it, re-sits this exact pair.
+- **A Gemma draft that is ≤ ¼ of the e4b's bytes.**
+- **A new case pin.**
+
 ## Lane 05: context length and KV cache (10 Nov 2026)
 
 **Question.** As the exam prompts grow to 2k, 4k and 8k tokens, padded with the session's earlier inputs and keeping the

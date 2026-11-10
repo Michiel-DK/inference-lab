@@ -138,6 +138,12 @@ def main():
         print(f"  verdict flips vs control: {len(flips_c)} (+{up(flips_c, lambda k: crow[k]['passed'])}/"
               f"-{len(flips_c) - up(flips_c, lambda k: crow[k]['passed'])}); "
               f"vs lane 02 majority: {len(flips_b)} (+{up(flips_b, lambda k: bmaj[k])}/-{len(flips_b) - up(flips_b, lambda k: bmaj[k])})")
+        past = lambda k: max(c["prompt_tokens"] + (c["gen_tokens"] or 0) for c in srow[k]["calls"]) >= WINDOW
+        for lab_, ks in (("arm sitting passed 512", [k for k in srow if past(k)]),
+                         ("arm sitting stayed under 512", [k for k in srow if not past(k)])):
+            st = {x["case"]: x["status"] for x in cmp}
+            print(f"  {lab_}: n={len(ks)}; bytes differ {sum(st[k[1]] == 'differs' for k in ks)}; verdict flips vs control "
+                  f"{sum(k in flips_c for k in ks)}")
         nf_flips = [k for k in flips_c if not S.is_fault_row(srow[k])]
         print(f"  of the flips vs control, on non-fault cases: {len(nf_flips)}")
         hs = lambda rows: {e: sum(r["passed"] for r in rows if r["exam"] == e and r["split"] == "heldout") for e in EXAMS}
@@ -165,6 +171,13 @@ def main():
         acc = S.acceptance([c for x in ks for c in srow[(x["exam"], x["case"])]["calls"]])
         print(f"    byte-identical cases only: n={len(ks)} arm {fmt(a_, 1)} / control {fmt(c_, 1)} = "
               f"x{fmt(a_ / c_ if a_ and c_ else None, 3)}; acceptance {acc[0]}/{acc[1]}")
+        cnt = lambda rows: (sum(len(r["calls"]) for r in rows), sum("wilco_error" in r for r in rows),
+                            sum(c["gen_tokens"] or 0 for r in rows for c in r["calls"]))
+        print("  calls · cases in wilco's error bucket (no parseable answer) · gen tokens: arm %s, control %s"
+              % (cnt(d["rows"]), cnt(ctl["rows"])))
+        print("  identical ids:", [f"{x['exam']}/{x['case']} ({x['split']})" for x in cmp if x["status"] == "identical"])
+        print("  flips by exam and split:", {f"{e}/{sp}": sum(1 for k in flips_c if k[0] == e and srow[k]["split"] == sp)
+                                             for e in EXAMS for sp in ("train", "heldout")})
         wall = lambda rows: sum(r["wall_s"] for r in rows) / len(rows)
         print(f"  wall per case: arm {wall(d['rows']):.2f} s, control {wall(ctl['rows']):.2f} s; "
               f"peak GB arm {d['aggregates']['peak_memory_gb_max']:.2f}, control {ctl['aggregates']['peak_memory_gb_max']:.2f}; "
