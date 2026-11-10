@@ -60,7 +60,8 @@ $P scripts/lane10_tokens.py quant-gemma-4-e4b-it-8bit champion-e4b-8bit   # 249 
 (peak + 2.0 GB ≤ free). Use 4-bit only when it does not fit. Even then, take the largest model whose 4-bit fits, not a
 smaller model at 8-bit. bf16 never, on this box. The basis:
 - lane 04 (+9 / +5 / +6 held-out across e2b / e4b / Llama, 0 unstable);
-- this lane (the e4b gain repeats token for token).
+- this lane: the e4b gain repeats with identical verdicts and identical per-call token counts (249/249). Lane 04 kept no
+  raw text, so byte identity is not shown.
 
 On this 16 GB box the e4b-8bit peak (9.18 GB) fits with the headroom when ≥ 11.2 GB is free; it read 13.6 GB tonight.
 
@@ -68,7 +69,8 @@ On this 16 GB box the e4b-8bit peak (9.18 GB) fits with the headroom when ≥ 11
 as Q4_0 or Q4_K_M. The manifests hold only `gemma4/{e2b, e2b-it-qat, e4b, e4b-it-qat}`, so no Q8_0 gemma4 base is on disk
 to build a 16k tag from. The only 16k Q8_0 tag is qwen3-8b, a different model, which would confound model and
 precision. For context: agent-sandbox's e31 probe killed a qwen3 Q8_0 arm at 16k at about 14× the 4k wall. So the local
-flow arm stays `gemma4-e2b-ctx16k` (76/155), and this rule does not reach it. The mlx pack has no Ollama equivalent here.
+flow arm stays `gemma4-e2b-ctx16k`, at 76/155 on all three passes (roger3000_automations
+`experiments/RESULTS.md:133,143,153`, read-only), and this rule does not reach it. The mlx pack has no Ollama equivalent here.
 
 **What this does not show.**
 - That the rule transfers to Ollama GGUF Q8_0 (the e31 probe saw no 8-bit gain for qwen3 on task-intake).
