@@ -18,6 +18,10 @@ regenerated, and a number is posted only with the command that re-derives it.
 - Lane 04: 8-bit beat 4-bit on all three models, held-out e2b 23 → 32, e4b 36 → 41, Llama-3.1-8B 31 → 37 /55, 0 of
   83 unstable, for +2.3 to +3.9 GB peak and ≤ ×1.16 wall.
 - Lane 10: re-sat e4b-8bit: 41/55 again, 0 of 83 flips, peak 9.18 GB (`results/champion-e4b-8bit.json`).
+- Scope: the rule holds for mlx packs on the wilco exams. It does not hold for Ollama GGUF tags. In roger3000_automations
+  experiment 15-local-8bit (10 Nov, PR #50 there, one pass), Q8_0 e4b at 16k scored 99/155 flow sentences. Stock
+  `gemma4:e4b` (Q4_K/Q6_K blocks) scored 105, and the e2b-ctx16k arm 76. The Q8_0 runner's footprint peaked at
+  16.99 GB on this 16 GB box. See SHOWCASE lane 10.
 - The local champion is `mlx-community/gemma-4-e4b-it-8bit`. The rule is measured on mlx-community affine packs under mlx-lm only, not on Ollama GGUF (SHOWCASE lane 10).
 - Re-derive: `python3 -m lab check results/quant-*.json results/champion-e4b-8bit.json results/dense-*.json` (exits 0); flip ids and
   wall ratios from `scripts/lane04_rows.py` (commands in SHOWCASE lanes 04 and 10).
