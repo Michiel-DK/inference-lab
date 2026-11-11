@@ -3,6 +3,109 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
+## Lane 13: `max_kv_size` on a class with no `make_cache` (Qwen3-4B-4bit, 11 Nov 2026)
+
+origin: {"kind": "lane", "url": "https://github.com/Michiel-DK/inference-lab/pull/9", "label": "lab-inf-05-context-kv"}
+
+**Question.** Lane 05 could not reach a truncating `max_kv_size`, because both of its models define `make_cache` and mlx-lm
+ignores the setting on them. On a model whose mlx-lm class has no `make_cache`, does `max_kv_size` below the prompt
+reproduce the num_ctx failure? The prediction was committed first: `predictions/context-kv-truncation.md` (`b1df658`). It
+includes the step-0 readings and the counting rule for "format failure", both fixed before any sitting.
+
+**Protocol.**
+- Model: `mlx-community/Qwen3-4B-4bit@4dcb3d10`, fetched once with a pinned revision, then `HF_HUB_OFFLINE=1`. mlx-lm
+  0.31.3: `models/qwen3.py` has 0 `def make_cache` (`llama.py`, `gemma4.py` and `lfm2.py` have 1 each). So
+  `make_prompt_cache` builds `RotatingKVCache(max_size, keep=4)` per layer when `max_kv_size` is given.
+- Thinking stayed on, as the pack ships; wilco grades `content` only.
+- Cases: the 55 held-out cases at wilco pin `62fcd449`, padded to 8,192 tokens with lane 05's rule (`lab/context.py`).
+  First-call prompts ran 8,192–8,485 tokens; 54 of 55 were padded.
+- Arms, one fresh load each, after two train smokes:
+  - arm 1, the control: default `KVCache`;
+  - arm 2: `--max-kv-size 4096`, below every prompt;
+  - arm 3: arm 2 again, the repeat that is the stability gate.
+- Driver: `scripts/lane13_drive.sh`, which applies the time, memory and kill-(i) gates before each arm. All arms sat;
+  there were no runtime faults.
+
+**Headline.**
+- **The setting is applied, and the exams do not survive it: held-out 27 → 0 of 55.**
+  - Arm 2's stamp reads `{"RotatingKVCache": 36}`; arm 1's reads `{"KVCache": 36}`.
+  - All 27 control passes go (+0 / −27), on every exam: email 16 → 0, call-fields 6 → 0, recap 5 → 0.
+- **Every truncated sitting is a format failure, not a wrong answer.**
+  - All 55 end in wilco's `no JSON object found in model output` (`{"bucket": "quality", "check": "error"}`). That is
+    39 of 39 email + call sittings against the predicted ≥ 25.
+  - wilco re-asked all 55, and the re-ask failed too, although it sits at the tail inside the window (110 calls).
+  - The model writes prose replies to the case's message: "**Subject:** Re: …", "Dear [Name]", "**Root Cause Analysis:**",
+    a French reply to the French tax letter. It never writes the JSON contract, which lived in the evicted system prompt.
+  - The thinking structure also breaks. Only 26 of 55 sittings produced reasoning (control: 55). 29 stored answers open
+    with stray `</think>` tokens.
+  - Generated tokens rose from 565 to 1,439 per sitting.
+- **The repeat is identical.** It moved 0 of 55 verdicts, and per-call `gen_tokens` and wilco's error string match on
+  55 of 55 rows. This is not load noise.
+- **Cost of the setting:** peak memory −0.56 GB (4.59 → 4.03), the one thing `max_kv_size` is for. Decode is ×1.378
+  faster. But p50 wall per sitting doubles (41.4 → 84.8 s), because the model writes 2.5× more and every sitting is
+  re-asked.
+
+**The table** (`python3 scripts/lane13_rows.py`, which runs `lab check` on all 7 files first and exits 1 on drift):
+
+| arm | email /20 | call /19 | recap /16 | **total /55** | applied cache | format-fail sittings e·c·r | reasoning > 0 /55 | gen tok / sitting | prompt tok/s p50 | gen tok/s | p50 s | p95 s | peak GB |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 control (8k, default) | 16 | 6 | 5 | **27** | `KVCache` × 36 | 0 · 0 · 0 | 55 | 565 | 286 | 32.2 | 41.4 | 59.7 | 4.59 |
+| 2 `max_kv_size` 4096 | 0 | 0 | 0 | **0** | `RotatingKVCache` × 36 | 20 · 19 · 16 | 26 | 1439 | 292 | 44.3 | 84.8 | 125.9 | 4.03 |
+| 3 repeat of 2 | 0 | 0 | 0 | **0** | `RotatingKVCache` × 36 | 20 · 19 · 16 | 26 | 1439 | 292 | 45.0 | 84.6 | 125.8 | 4.02 |
+| lane 05 e4b 8k (scale) | 17 | 11 | 10 | **38** | `KVCache` 4, `RotatingKVCache` 20 | 0 · 0 · 0 | 55 | 616 | 529 | 37.8 | 31.5 | 50.7 | 5.45 |
+| lane 05 LFM2.5 8k (scale) | 13 | 1 | 0 | **14** | `ArraysCache` 18, `KVCache` 6 | 0 · 0 · 1 | 55 | 1395 | 809 | 85.3 | 25.7 | 53.3 | 5.90 |
+
+How to read the table:
+- "Format-fail" counts sittings whose `failed_checks` hold bucket `format` or check `error`; the rule was fixed in the
+  addendum before any sitting.
+- Termination (no answer): 1 control sitting (call-fields, a length-capped call), 0 in arms 2 and 3.
+- Length-capped calls (e·c·r): control 0 · 1 · 0; arms 2 and 3 0 · 2 · 2.
+- The moved ids, per-exam walls and the kill reading are in the script's output.
+
+**Prediction vs result** (`predictions/context-kv-truncation.md`):
+
+| predicted | result | verdict |
+|---|---|---|
+| arm 2 stamps `RotatingKVCache` on 36 layers, arm 1 `KVCache` on 36 | `{"RotatingKVCache": 36}` / `{"KVCache": 36}` | **held** |
+| control held-out 28–40 | 27 | **refuted** (one below) |
+| control thinking: reasoning on ≥ 50 sittings, 300–1,500 gen tok per sitting, 0–5 recap length-capped | 55; 565; 0 | **held** |
+| control prompt 400–700 tok/s, gen 35–55 tok/s | 286; 32.2 | **refuted** (slower on both) |
+| control p50 35–60 s, peak 4.0–4.8 GB | 41.4 s; 4.59 GB | **held** |
+| arm 2 total ≤ 19, ≥ 15 below control; email ≤ 10, call ≤ 5, recap ≤ 4 | 0, 27 below; 0 · 0 · 0 | **held** |
+| format/schema fail on ≥ 25 of 39 email + call sittings | 39 of 39 | **held** |
+| peak 0.5–0.9 GB below control | −0.56 GB | **held** |
+| gen tok/s ×1.05–1.3; prompt tok/s ±15 % | ×1.378; ×1.023 | **refuted** on gen (faster); **held** on prompt |
+| repeat identical on ≥ 52 of 55 | 55 of 55 | **held** |
+| kill (i) no `RotatingKVCache` · (ii) > 5 faults · (iii) repeat moves > 3 | none fired | – |
+| Wh | null (no powermetrics capture) | – |
+
+**What this changes.** Lane 05's lesson was "on mlx-lm the num_ctx failure is the safe direction (no truncation)". That
+holds only for classes that own their cache. On a class without `make_cache`, `max_kv_size` is applied silently: no
+warning and no error. A 4096 window under 8.2–8.5k prompts evicts wilco's system prompt, and every answer loses the
+output contract. That is Ollama's `num_ctx` failure reproduced on mlx-lm. As in lane 05, the requested kwargs do not
+tell you the outcome; the stamp has to carry the cache classes *built*.
+
+**What was refused or voided.**
+- Wh: no powermetrics capture, so it is null.
+- The smokes are committed and not posted: `results/ctx-gate-qwen3-4b-4bit-*.json`. Default 2/3 in 162 s, peak 4.12 GB;
+  `max_kv_size` 4096 0/3 in 379 s, peak 4.02 GB.
+- No `max_kv_size` 2048 or 6144 arm, so the shape of the drop is unmeasured. One model, one class.
+- Not shown: whether a window that keeps the system prompt (a larger `keep`) would hold. mlx-lm's API fixes `keep=4`.
+
+**Re-derive.**
+```sh
+python3 -m lab check results/ctx-qwen3-4b-4bit-*.json results/ctx-gate-qwen3-4b-4bit-*.json
+python3 scripts/lane13_rows.py
+```
+
+**Reopen threshold.** Re-sit lane 13 when any of these holds:
+- a second no-`make_cache` class (`qwen2`, `mistral3`, `phi3`), to show it is the class and not Qwen3;
+- `max_kv_size` 2048 and 6144, for the shape of the drop;
+- the 8B pack;
+- an mlx-lm whose `make_cache` models honour `max_kv_size`, or one that changes `keep`;
+- a wilco pin move;
+- a re-sit that flips > 3 of 55.
+
 ## Lane 10: the 8-bit e4b as the local champion (10 Nov 2026)
 
 **Question.** Is the 8-bit e4b the lab's default local pack? Lane 04 measured it once. This lane checks that the
@@ -327,6 +430,9 @@ KV-exposure probe, which was ungraded and was seen before the addendum was writt
     tokens and the applied cache classes all equal the default's. This is the num_ctx-style failure in mlx form: the
     setting meant to bound the context took no effect and raised no error. Nothing was truncated, because these caches
     (`KVCache`, `ArraysCache`, and Gemma's fixed 512-token sliding windows) have no context bound to truncate at.
+    *Lane 13 (11 Nov):* on Qwen3, a class with no `make_cache`, the setting is applied, and 27 of 27 control passes go
+    with the system prompt: held-out 27 → 0 of 55 at `max_kv_size=4096`, every sitting a no-JSON answer. The safe
+    direction holds only for classes that own their cache.
   - **`kv_bits` cannot run on Gemma 4.** `RotatingKVCache Quantization NYI` is raised on its sliding layers. The run
     aborts (lab adapter → `RuntimeError`); it is never scored as a FAIL.
   - **On LFM at 8k, `kv_bits` moves verdicts and costs memory.** kv8 scored 14 (+3/−3 ids, same total), kv4 scored 18
