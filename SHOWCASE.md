@@ -79,11 +79,16 @@ How to read the table:
 | kill (i) no `RotatingKVCache` · (ii) > 5 faults · (iii) repeat moves > 3 | none fired | – |
 | Wh | null (no powermetrics capture) | – |
 
-**What this changes.** Lane 05's lesson was "on mlx-lm the num_ctx failure is the safe direction (no truncation)". That
-holds only for classes that own their cache. On a class without `make_cache`, `max_kv_size` is applied silently: no
-warning and no error. A 4096 window under 8.2–8.5k prompts evicts wilco's system prompt, and every answer loses the
-output contract. That is Ollama's `num_ctx` failure reproduced on mlx-lm. As in lane 05, the requested kwargs do not
-tell you the outcome; the stamp has to carry the cache classes *built*.
+**What this changes.** Lane 05's lesson was "on mlx-lm the num_ctx failure is the safe direction (no truncation) on the
+two models run". Two parts, with different evidence:
+- **Applied silently, by source, for every class without `make_cache`.** `make_prompt_cache` is class-agnostic: any such
+  class in mlx-lm 0.31.3 gets `RotatingKVCache(keep=4)` from `max_kv_size`, with no warning and no error. Run here on
+  Qwen3 only, where the stamp confirms it.
+- **The eviction effect, on Qwen3-4B-4bit only.** A 4096 window under 8.2–8.5k prompts evicted wilco's system prompt,
+  and every held-out answer lost the output contract. That is Ollama's `num_ctx` failure reproduced on mlx-lm, shown on
+  one model.
+
+As in lane 05, the requested kwargs do not tell you the outcome; the stamp has to carry the cache classes *built*.
 
 **What was refused or voided.**
 - Wh: no powermetrics capture, so it is null.
@@ -430,9 +435,8 @@ KV-exposure probe, which was ungraded and was seen before the addendum was writt
     tokens and the applied cache classes all equal the default's. This is the num_ctx-style failure in mlx form: the
     setting meant to bound the context took no effect and raised no error. Nothing was truncated, because these caches
     (`KVCache`, `ArraysCache`, and Gemma's fixed 512-token sliding windows) have no context bound to truncate at.
-    *Lane 13 (11 Nov):* on Qwen3, a class with no `make_cache`, the setting is applied, and 27 of 27 control passes go
-    with the system prompt: held-out 27 → 0 of 55 at `max_kv_size=4096`, every sitting a no-JSON answer. The safe
-    direction holds only for classes that own their cache.
+    *Lane 13 (11 Nov):* on Qwen3, a class with no `make_cache`, the setting is applied and 27 of 55 held-out answers
+    go with the system prompt (27 → 0 at `max_kv_size=4096`; Qwen3-4B-4bit, one model).
   - **`kv_bits` cannot run on Gemma 4.** `RotatingKVCache Quantization NYI` is raised on its sliding layers. The run
     aborts (lab adapter → `RuntimeError`); it is never scored as a FAIL.
   - **On LFM at 8k, `kv_bits` moves verdicts and costs memory.** kv8 scored 14 (+3/−3 ids, same total), kv4 scored 18
