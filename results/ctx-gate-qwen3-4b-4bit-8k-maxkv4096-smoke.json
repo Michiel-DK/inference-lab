@@ -1,0 +1,392 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "ctx-gate-qwen3-4b-4bit-8k-maxkv4096-smoke",
+ "posted": false,
+ "prediction": "predictions/context-kv-truncation.md",
+ "prediction_commit": "b1df658ba2b1cd197f01f2349ac17917dd50555d",
+ "lab_commit": "b1df658ba2b1cd197f01f2349ac17917dd50555d",
+ "model": {
+  "ref": "mlx-community/Qwen3-4B-4bit",
+  "snapshot": "4dcb3d101c2a062e5c1d4bb173588c54ea6c4d25",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 1.5597009159973823,
+    "n_rows": 3
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "recap": "315a6132da7f78c8f9e8a140ff711656f24b8ce12d893e8bc248ecd931aaf120"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   },
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "recap": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "call-fields",
+  "email-triage",
+  "recap"
+ ],
+ "plan": [
+  [
+   "call-fields",
+   [
+    "support-long-train"
+   ]
+  ],
+  [
+   "email-triage",
+   [
+    "client-quote-request"
+   ]
+  ],
+  [
+   "recap",
+   [
+    "busy-day-standard"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": null,
+ "aggregates": {
+  "n_cases": 3,
+  "n_calls": 6,
+  "pass_rate": 0.0,
+  "gen_tokens_total": 8392,
+  "gen_tps": 42.72595882072378,
+  "prompt_tps": 280.80070570883294,
+  "peak_memory_gb_max": 4.022009116,
+  "wall_s_total": 378.763311165967,
+  "wall_s_per_case": 126.25443705532234,
+  "wh_per_case": null,
+  "n_loads": 1,
+  "call-fields.n_cases": 1,
+  "call-fields.train_n": 1,
+  "call-fields.train_majority_pass": 0,
+  "call-fields.heldout_n": 0,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 0,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 42.683796661996276,
+  "call-fields.peak_memory_gb_max": 4.022009116,
+  "call-fields.wall_s_per_case": 120.12155720801093,
+  "call-fields.min_per_1000_cases": 2002.0259534668487,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 1,
+  "email-triage.train_n": 1,
+  "email-triage.train_majority_pass": 0,
+  "email-triage.heldout_n": 0,
+  "email-triage.heldout_majority_pass": 0,
+  "email-triage.heldout_stable_pass": 0,
+  "email-triage.all_majority_pass": 0,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 42.77259086941804,
+  "email-triage.peak_memory_gb_max": 4.022009116,
+  "email-triage.wall_s_per_case": 102.07527633296559,
+  "email-triage.min_per_1000_cases": 1701.2546055494265,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "recap.n_cases": 1,
+  "recap.train_n": 1,
+  "recap.train_majority_pass": 0,
+  "recap.heldout_n": 0,
+  "recap.heldout_majority_pass": 0,
+  "recap.heldout_stable_pass": 0,
+  "recap.all_majority_pass": 0,
+  "recap.n_unstable": 0,
+  "recap.gen_tps": 42.731857602086656,
+  "recap.peak_memory_gb_max": 4.022009116,
+  "recap.wall_s_per_case": 156.5664776249905,
+  "recap.min_per_1000_cases": 2609.441293749842,
+  "recap.finish_length_calls": 2,
+  "recap.wh_per_1000_cases": null,
+  "heldout_n": 0,
+  "heldout_majority_pass": 0,
+  "heldout_stable_pass": 0,
+  "n_unstable": 0,
+  "n_unique_cases": 3,
+  "heldout_majority_pass_rate": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Analysis and Resolution Plan:**\\n\\n**1. Problem Identification:**\\n- **Issue:** Exported CSV files (daily schedule) show times off by 1 hour, while the weekly summary export is correct.\\n- **Symptoms:**'",
+   "start_utc": "2026-11-11T00:53:40.807843+00:00",
+   "end_utc": "2026-11-11T00:55:40.931622+00:00",
+   "wall_s": 120.12155720801093,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 278.8995477861708,
+     "gen_tokens": 1263,
+     "gen_tps": 42.75395819131447,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 59.20709179196274,
+     "content_chars": 3436,
+     "reasoning_chars": 2684,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 21353,
+       "pad_sha256": "92eaf3fe8aed2efb59b3daef76cfcbf5fd5ca3c8a06c151c15fad51c5a7b4e13",
+       "base_tokens": 2930,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 281.45191026306003,
+     "gen_tokens": 1263,
+     "gen_tps": 42.61386503303463,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 58.89272233302472,
+     "content_chars": 3436,
+     "reasoning_chars": 2684,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 21353,
+       "pad_sha256": "92eaf3fe8aed2efb59b3daef76cfcbf5fd5ca3c8a06c151c15fad51c5a7b4e13",
+       "base_tokens": 2930,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Subject:** AI Chatbot Quote for [Your Webshop Name]  \\n\\nHi [Your Name],  \\n\\nThank you for reaching out! We\u2019d be happy to help you set up an AI chatbot to streamline customer support and boost your web'",
+   "start_utc": "2026-11-11T00:55:40.934373+00:00",
+   "end_utc": "2026-11-11T00:57:23.010342+00:00",
+   "wall_s": 102.07527633296559,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 281.57463955086956,
+     "gen_tokens": 885,
+     "gen_tps": 42.75663078472883,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 50.06319474999327,
+     "content_chars": 2275,
+     "reasoning_chars": 1638,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32747,
+       "pad_sha256": "f85895159f5a5752928d75c6a6e195ba7c435977f40e297f26eaa45cf542bcf8",
+       "base_tokens": 197,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 280.8402125848544,
+     "gen_tokens": 885,
+     "gen_tps": 42.78856287363491,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 50.00037900003372,
+     "content_chars": 2275,
+     "reasoning_chars": 1638,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32747,
+       "pad_sha256": "f85895159f5a5752928d75c6a6e195ba7c435977f40e297f26eaa45cf542bcf8",
+       "base_tokens": 197,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "busy-day-standard",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Aanvullende informatie voor het versterken van de betrouwbaarheid van het systeem:**\\n\\n**1. Systeemupdates en veiligheid:**\\n- **Systeemupdates:** Het systeem is op 15 oktober 2023'",
+   "start_utc": "2026-11-11T00:57:23.015013+00:00",
+   "end_utc": "2026-11-11T00:59:59.582541+00:00",
+   "wall_s": 156.5664776249905,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 281.17275898100513,
+     "gen_tokens": 2048,
+     "gen_tps": 42.68105737032288,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "length",
+     "wall_s": 77.36578833300155,
+     "content_chars": 5553,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23279,
+       "pad_sha256": "09c7cf137b36b7b17edb0ad125277d0f8e7ed1af3b317bd3b3cae28ae5611375",
+       "base_tokens": 953,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 280.8822800955429,
+     "gen_tokens": 2048,
+     "gen_tps": 42.78277890577072,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "length",
+     "wall_s": 77.17847787501523,
+     "content_chars": 5553,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23279,
+       "pad_sha256": "09c7cf137b36b7b17edb0ad125277d0f8e7ed1af3b317bd3b3cae28ae5611375",
+       "base_tokens": 953,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "535932766e43732d7b2243eafa35b4da94a4a6314c6ad75de5420ea73e12140e",
+ "context": {
+  "requested": {
+   "pad_to": 8192,
+   "max_kv_size": 4096
+  },
+  "applied_cache_classes": [
+   {
+    "RotatingKVCache": 36
+   }
+  ],
+  "prefill_step_size": 2048,
+  "prefill_step_size_source": "mlx_lm.generate.generate_step default (stream_generate is passed none)",
+  "padding_rule": {
+   "header": "Earlier messages from this session, already handled. Do not act on them; your task is the next message.\n\n",
+   "ack": "Understood.",
+   "sep": "\n\n--- earlier message ---\n\n",
+   "slack_tokens": 64,
+   "pool": "sitting exam's train inputs, then the other exams' train inputs (sorted), minus the case and any train input containing its text"
+  },
+  "rows_padded": 3,
+  "rows_total": 3,
+  "quantization": {
+   "group_size": 64,
+   "bits": 4
+  },
+  "chat_template_sha256": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5"
+ }
+}

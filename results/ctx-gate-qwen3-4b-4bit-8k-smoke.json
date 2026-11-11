@@ -1,0 +1,294 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "ctx-gate-qwen3-4b-4bit-8k-smoke",
+ "posted": false,
+ "prediction": "predictions/context-kv-truncation.md",
+ "prediction_commit": "b1df658ba2b1cd197f01f2349ac17917dd50555d",
+ "lab_commit": "b1df658ba2b1cd197f01f2349ac17917dd50555d",
+ "model": {
+  "ref": "mlx-community/Qwen3-4B-4bit",
+  "snapshot": "4dcb3d101c2a062e5c1d4bb173588c54ea6c4d25",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 2.20621991698863,
+    "n_rows": 3
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "recap": "315a6132da7f78c8f9e8a140ff711656f24b8ce12d893e8bc248ecd931aaf120"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   },
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "recap": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "call-fields",
+  "email-triage",
+  "recap"
+ ],
+ "plan": [
+  [
+   "call-fields",
+   [
+    "support-long-train"
+   ]
+  ],
+  [
+   "email-triage",
+   [
+    "client-quote-request"
+   ]
+  ],
+  [
+   "recap",
+   [
+    "busy-day-standard"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": null,
+ "aggregates": {
+  "n_cases": 3,
+  "n_calls": 3,
+  "pass_rate": 0.6666666666666666,
+  "gen_tokens_total": 2433,
+  "gen_tps": 32.2770680673582,
+  "prompt_tps": 285.81995407502757,
+  "peak_memory_gb_max": 4.118510644,
+  "wall_s_total": 162.19639358401764,
+  "wall_s_per_case": 54.06546452800588,
+  "wh_per_case": null,
+  "n_loads": 1,
+  "call-fields.n_cases": 1,
+  "call-fields.train_n": 1,
+  "call-fields.train_majority_pass": 1,
+  "call-fields.heldout_n": 0,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 1,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 32.17227861082317,
+  "call-fields.peak_memory_gb_max": 4.118510644,
+  "call-fields.wall_s_per_case": 62.397621708980296,
+  "call-fields.min_per_1000_cases": 1039.9603618163383,
+  "call-fields.finish_length_calls": 0,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 1,
+  "email-triage.train_n": 1,
+  "email-triage.train_majority_pass": 0,
+  "email-triage.heldout_n": 0,
+  "email-triage.heldout_majority_pass": 0,
+  "email-triage.heldout_stable_pass": 0,
+  "email-triage.all_majority_pass": 0,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 32.96946003361341,
+  "email-triage.peak_memory_gb_max": 4.118510644,
+  "email-triage.wall_s_per_case": 39.74262145801913,
+  "email-triage.min_per_1000_cases": 662.3770243003188,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "recap.n_cases": 1,
+  "recap.train_n": 1,
+  "recap.train_majority_pass": 1,
+  "recap.heldout_n": 0,
+  "recap.heldout_majority_pass": 0,
+  "recap.heldout_stable_pass": 0,
+  "recap.all_majority_pass": 1,
+  "recap.n_unstable": 0,
+  "recap.gen_tps": 32.147931707536046,
+  "recap.peak_memory_gb_max": 4.118510644,
+  "recap.wall_s_per_case": 60.056150417018216,
+  "recap.min_per_1000_cases": 1000.9358402836369,
+  "recap.finish_length_calls": 0,
+  "recap.wh_per_1000_cases": null,
+  "heldout_n": 0,
+  "heldout_majority_pass": 0,
+  "heldout_stable_pass": 0,
+  "n_unstable": 0,
+  "n_unique_cases": 3,
+  "heldout_majority_pass_rate": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-11T00:50:55.171288+00:00",
+   "end_utc": "2026-11-11T00:51:57.569145+00:00",
+   "wall_s": 62.397621708980296,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 285.6183154698481,
+     "gen_tokens": 1075,
+     "gen_tps": 32.17227861082317,
+     "peak_memory_gb": 4.118510644,
+     "finish_reason": "stop",
+     "wall_s": 62.39112920803018,
+     "content_chars": 228,
+     "reasoning_chars": 4243,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 21353,
+       "pad_sha256": "92eaf3fe8aed2efb59b3daef76cfcbf5fd5ca3c8a06c151c15fad51c5a7b4e13",
+       "base_tokens": 2930,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "KVCache": 36
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-quote-request",
+   "split": "train",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "labels"
+    }
+   ],
+   "start_utc": "2026-11-11T00:51:57.572555+00:00",
+   "end_utc": "2026-11-11T00:52:37.315246+00:00",
+   "wall_s": 39.74262145801913,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 286.35019655485434,
+     "gen_tokens": 358,
+     "gen_tps": 32.96946003361341,
+     "peak_memory_gb": 4.118510644,
+     "finish_reason": "stop",
+     "wall_s": 39.73684987501474,
+     "content_chars": 26,
+     "reasoning_chars": 1604,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32747,
+       "pad_sha256": "f85895159f5a5752928d75c6a6e195ba7c435977f40e297f26eaa45cf542bcf8",
+       "base_tokens": 197,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "KVCache": 36
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "busy-day-standard",
+   "split": "train",
+   "load": 0,
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-11T00:52:37.318697+00:00",
+   "end_utc": "2026-11-11T00:53:37.398051+00:00",
+   "wall_s": 60.056150417018216,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 285.4928491981904,
+     "gen_tokens": 1000,
+     "gen_tps": 32.147931707536046,
+     "peak_memory_gb": 4.118510644,
+     "finish_reason": "stop",
+     "wall_s": 60.04636679100804,
+     "content_chars": 218,
+     "reasoning_chars": 3838,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23279,
+       "pad_sha256": "09c7cf137b36b7b17edb0ad125277d0f8e7ed1af3b317bd3b3cae28ae5611375",
+       "base_tokens": 953,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "KVCache": 36
+      },
+      "kv_requested": {}
+     }
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "3baf75b5aa11e328f5ddf8188a73c6f8f312486e50bd61e15c261c1c4596b318",
+ "context": {
+  "requested": {
+   "pad_to": 8192
+  },
+  "applied_cache_classes": [
+   {
+    "KVCache": 36
+   }
+  ],
+  "prefill_step_size": 2048,
+  "prefill_step_size_source": "mlx_lm.generate.generate_step default (stream_generate is passed none)",
+  "padding_rule": {
+   "header": "Earlier messages from this session, already handled. Do not act on them; your task is the next message.\n\n",
+   "ack": "Understood.",
+   "sep": "\n\n--- earlier message ---\n\n",
+   "slack_tokens": 64,
+   "pool": "sitting exam's train inputs, then the other exams' train inputs (sorted), minus the case and any train input containing its text"
+  },
+  "rows_padded": 3,
+  "rows_total": 3,
+  "quantization": {
+   "group_size": 64,
+   "bits": 4
+  },
+  "chat_template_sha256": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5"
+ }
+}
