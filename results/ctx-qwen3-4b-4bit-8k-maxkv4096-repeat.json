@@ -1,0 +1,4136 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "ctx-qwen3-4b-4bit-8k-maxkv4096-repeat",
+ "posted": true,
+ "prediction": "predictions/context-kv-truncation.md",
+ "prediction_commit": "b1df658ba2b1cd197f01f2349ac17917dd50555d",
+ "lab_commit": "cfd8353802efce262c796c92cbc5e8e24e45a1cb",
+ "model": {
+  "ref": "mlx-community/Qwen3-4B-4bit",
+  "snapshot": "4dcb3d101c2a062e5c1d4bb173588c54ea6c4d25",
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3",
+  "loads": [
+   {
+    "load": 0,
+    "load_s": 1.5543582920217887,
+    "n_rows": 55
+   }
+  ],
+  "load_protocol": "each load is its own python process (fresh mlx-lm load, weights re-read from disk)"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": {
+   "call-fields": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+   "email-triage": "955dd3000007048b6472b802a5b8825144bcafa63e584f3096df5a8939314bfd",
+   "recap": "315a6132da7f78c8f9e8a140ff711656f24b8ce12d893e8bc248ecd931aaf120"
+  },
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "snapshot_rule": "sandbox/runner.py aggregate_loads: majority verdict over loads, stable = all agree",
+  "agents": {
+   "call-fields": {
+    "temperature": 0.0,
+    "max_tokens": 4096
+   },
+   "email-triage": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   },
+   "recap": {
+    "temperature": 0.0,
+    "max_tokens": 2048
+   }
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6",
+  "power": [
+   {
+    "load": 0,
+    "battery_start": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true",
+    "battery_end": "Now drawing from 'AC Power'\n -InternalBattery-0 (id=22151267) 100%; charged; 0:00 remaining present: true"
+   }
+  ]
+ },
+ "exams": [
+  "call-fields",
+  "email-triage",
+  "recap"
+ ],
+ "plan": [
+  [
+   "call-fields",
+   [
+    "discovery-heldout-easy",
+    "discovery-heldout-hard",
+    "discovery-heldout-long",
+    "renewal-heldout-medium",
+    "renewal-heldout-digits",
+    "renewal-heldout-short",
+    "support-heldout-short",
+    "support-heldout-long",
+    "pricing-objection-heldout-medium",
+    "pricing-objection-heldout-short",
+    "quiet-checkin-heldout-short",
+    "quiet-checkin-heldout-medium",
+    "mixed-heldout-dense",
+    "longcall-pricing-heldout-1",
+    "longcall-scoping-heldout-1",
+    "longcall-discovery-heldout-2",
+    "longcall-renewal-heldout-2",
+    "longcall-support-heldout-2",
+    "longcall-mixed-heldout-3"
+   ]
+  ],
+  [
+   "email-triage",
+   [
+    "production-down",
+    "gdpr-data-request",
+    "conference-invite",
+    "promo-code",
+    "invoice-error-client",
+    "dpa-signature-compliance",
+    "recruiter-fake-urgency",
+    "paid-workshop-invite",
+    "intro-no-ask",
+    "disk-warning-no-action",
+    "long-ramble-buried-incident",
+    "newsletter-injection-urgent",
+    "cold-sales-injection-urgent",
+    "nl-client-bug-buried",
+    "fr-tax-authority-documents",
+    "stripe-payout-notice",
+    "client-domain-newsletter-nl",
+    "calendar-accept-notice",
+    "proposal-accept-conditional",
+    "fr-networking-coffee"
+   ]
+  ],
+  [
+   "recap",
+   [
+    "buried-critical",
+    "quiet-day-newsletters",
+    "quiet-day-with-receipt",
+    "rounding-bait",
+    "two-urgent-among-noise",
+    "very-long-day",
+    "long-day-heldout-xl",
+    "long-quiet-day",
+    "buried-critical-xl",
+    "amounts-at-length",
+    "dependency-delivery-vs-install",
+    "near-duplicate-invoices",
+    "quiet-day-big-amount-decoy",
+    "automated-but-actionable",
+    "buried-last-en",
+    "meeting-moved-date-decoy"
+   ]
+  ]
+ ],
+ "metric": "heldout_majority_pass_rate",
+ "headline": 0.0,
+ "aggregates": {
+  "n_cases": 55,
+  "n_calls": 110,
+  "pass_rate": 0.0,
+  "gen_tokens_total": 79162,
+  "gen_tps": 45.00950688384496,
+  "prompt_tps": 292.28223563348735,
+  "peak_memory_gb_max": 4.022156572,
+  "wall_s_total": 4977.391122747038,
+  "wall_s_per_case": 90.49802041358251,
+  "wh_per_case": null,
+  "n_loads": 1,
+  "call-fields.n_cases": 19,
+  "call-fields.train_n": 0,
+  "call-fields.train_majority_pass": 0,
+  "call-fields.heldout_n": 19,
+  "call-fields.heldout_majority_pass": 0,
+  "call-fields.heldout_stable_pass": 0,
+  "call-fields.all_majority_pass": 0,
+  "call-fields.n_unstable": 0,
+  "call-fields.gen_tps": 45.05226522061159,
+  "call-fields.peak_memory_gb_max": 4.022156572,
+  "call-fields.wall_s_per_case": 83.95354464684466,
+  "call-fields.min_per_1000_cases": 1399.2257441140778,
+  "call-fields.finish_length_calls": 2,
+  "call-fields.wh_per_1000_cases": null,
+  "email-triage.n_cases": 20,
+  "email-triage.train_n": 0,
+  "email-triage.train_majority_pass": 0,
+  "email-triage.heldout_n": 20,
+  "email-triage.heldout_majority_pass": 0,
+  "email-triage.heldout_stable_pass": 0,
+  "email-triage.all_majority_pass": 0,
+  "email-triage.n_unstable": 0,
+  "email-triage.gen_tps": 45.01398022755059,
+  "email-triage.peak_memory_gb_max": 4.022009116,
+  "email-triage.wall_s_per_case": 88.3889608478028,
+  "email-triage.min_per_1000_cases": 1473.14934746338,
+  "email-triage.finish_length_calls": 0,
+  "email-triage.wh_per_1000_cases": null,
+  "recap.n_cases": 16,
+  "recap.train_n": 0,
+  "recap.train_majority_pass": 0,
+  "recap.heldout_n": 16,
+  "recap.heldout_majority_pass": 0,
+  "recap.heldout_stable_pass": 0,
+  "recap.all_majority_pass": 0,
+  "recap.n_unstable": 0,
+  "recap.gen_tps": 44.9753451601775,
+  "recap.peak_memory_gb_max": 4.022009116,
+  "recap.wall_s_per_case": 100.90590984380833,
+  "recap.min_per_1000_cases": 1681.7651640634722,
+  "recap.finish_length_calls": 2,
+  "recap.wh_per_1000_cases": null,
+  "heldout_n": 55,
+  "heldout_majority_pass": 0,
+  "heldout_stable_pass": 0,
+  "n_unstable": 0,
+  "n_unique_cases": 55,
+  "heldout_majority_pass_rate": 0.0
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-easy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"**Customer Service Response:**\\n\\n**Subject:** Re: Product Issue - [Product Name]  \\n\\nDear [Customer's Name],  \\n\\nThank you for reaching out and sharing your concerns. I sincerely apologize for the inconv\"",
+   "start_utc": "2026-11-11T03:06:55.420229+00:00",
+   "end_utc": "2026-11-11T03:08:16.722549+00:00",
+   "wall_s": 81.3015355829848,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.63046292660664,
+     "gen_tokens": 510,
+     "gen_tps": 45.00658783791083,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 39.7257922499557,
+     "content_chars": 1338,
+     "reasoning_chars": 1107,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28390,
+       "pad_sha256": "bb666fd604532e44f5228df9e536f2288764fdfc905a7edba7183184ea0fde9b",
+       "base_tokens": 1226,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.67404302246956,
+     "gen_tokens": 510,
+     "gen_tps": 45.05523656200546,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 39.55165366601432,
+     "content_chars": 1338,
+     "reasoning_chars": 1107,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28390,
+       "pad_sha256": "bb666fd604532e44f5228df9e536f2288764fdfc905a7edba7183184ea0fde9b",
+       "base_tokens": 1226,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-hard",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**[Meeting Summary: Procurement Platform Needs Discussion]**\\n\\n**Attendees:**\\n- **Sam** (Ridgeline Data)\\n- **Petra** (Amsel Logistics)\\n- **Henrik** (CFO, Amsel Logistics)\\n- **Sanne*'",
+   "start_utc": "2026-11-11T03:08:16.722863+00:00",
+   "end_utc": "2026-11-11T03:09:43.999130+00:00",
+   "wall_s": 87.27557837497443,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.1774038639923,
+     "gen_tokens": 647,
+     "gen_tps": 45.03221421554701,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 42.69693737500347,
+     "content_chars": 3148,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 27268,
+       "pad_sha256": "5f837b78e15e8c2588a84479d86d5df593e78bf31c8331008126e852f2c0b154",
+       "base_tokens": 1485,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.9456673588057,
+     "gen_tokens": 647,
+     "gen_tps": 45.03193160579564,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 42.557754791982006,
+     "content_chars": 3148,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 27268,
+       "pad_sha256": "5f837b78e15e8c2588a84479d86d5df593e78bf31c8331008126e852f2c0b154",
+       "base_tokens": 1485,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "discovery-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\nOkay, let's break down the user's query. They provided a detailed scenario involving a healthcare organization, Corbin Health, and a project to improve patient intake processes. The user is a\"",
+   "start_utc": "2026-11-11T03:09:43.999400+00:00",
+   "end_utc": "2026-11-11T03:11:19.822812+00:00",
+   "wall_s": 95.82265808299417,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.2683267449822,
+     "gen_tokens": 836,
+     "gen_tps": 44.78853046287115,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 46.981069375004154,
+     "content_chars": 4125,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23543,
+       "pad_sha256": "69272443241cc30e318a7e9ef348a9dce52cd51127d41acd76361c2983b4096b",
+       "base_tokens": 2335,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.8335158011755,
+     "gen_tokens": 836,
+     "gen_tps": 44.92799281341959,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 46.82100283302134,
+     "content_chars": 4125,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23543,
+       "pad_sha256": "69272443241cc30e318a7e9ef348a9dce52cd51127d41acd76361c2983b4096b",
+       "base_tokens": 2335,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Subject: Re: Renewal Check-In for Vantable Contract**\\n\\n**To:** [Your Name]  \\n**From:** [Your Name]  \\n**Date:** [Insert Date]  \\n**Subject:** Renewal Check-In for Vantable Contract'",
+   "start_utc": "2026-11-11T03:11:19.823076+00:00",
+   "end_utc": "2026-11-11T03:12:37.166269+00:00",
+   "wall_s": 77.3425823340076,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.1875371930771,
+     "gen_tokens": 422,
+     "gen_tps": 44.75027352596833,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.76877708302345,
+     "content_chars": 2008,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 27666,
+       "pad_sha256": "24a499439d435ee019f1a687dc9765b8d6e741da9ebe1049d3c65dec9c8dc21d",
+       "base_tokens": 1398,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.9991770937154,
+     "gen_tokens": 422,
+     "gen_tps": 45.029101722644754,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.55258349998621,
+     "content_chars": 2008,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 27666,
+       "pad_sha256": "24a499439d435ee019f1a687dc9765b8d6e741da9ebe1049d3c65dec9c8dc21d",
+       "base_tokens": 1398,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-digits",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Subject: Re: Annual Renewal Agreement and SCIM Setup Document**\\n\\n**To:** [Recipient Name]  \\n**From:** [Your Name]  \\n**Date:** [Insert Date]  \\n**CC:** [Relevant Stakehold'",
+   "start_utc": "2026-11-11T03:12:37.167920+00:00",
+   "end_utc": "2026-11-11T03:13:52.955350+00:00",
+   "wall_s": 75.78682720899815,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.95447749108837,
+     "gen_tokens": 388,
+     "gen_tps": 45.10062495747405,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 36.93520849995548,
+     "content_chars": 1790,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 25504,
+       "pad_sha256": "f303e6e93349f6442b368ca33e01c61202581af35650cb25d2f40f5ccbf3f2d9",
+       "base_tokens": 1888,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.50421386304015,
+     "gen_tokens": 388,
+     "gen_tps": 45.106360259976036,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 36.830480208969675,
+     "content_chars": 1790,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 25504,
+       "pad_sha256": "f303e6e93349f6442b368ca33e01c61202581af35650cb25d2f40f5ccbf3f2d9",
+       "base_tokens": 1888,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "renewal-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Subject: Invoice for Annual Renewal**\\n\\nDear [Customer Name],\\n\\nI hope this message finds you well.\\n\\nI am writing to confirm the annual renewal of your account with our service. Th'",
+   "start_utc": "2026-11-11T03:13:52.957296+00:00",
+   "end_utc": "2026-11-11T03:14:59.630618+00:00",
+   "wall_s": 66.67279874999076,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.0213086617542,
+     "gen_tokens": 184,
+     "gen_tps": 45.135820652097074,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 32.417293458012864,
+     "content_chars": 836,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 29047,
+       "pad_sha256": "acca9a6e0877f95e3262388f139515ecba8af7729845dc421a2b7d4232c8ff44",
+       "base_tokens": 1081,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.9980664653461,
+     "gen_tokens": 184,
+     "gen_tps": 45.30614441734654,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 32.23714149999432,
+     "content_chars": 836,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 29047,
+       "pad_sha256": "acca9a6e0877f95e3262388f139515ecba8af7729845dc421a2b7d4232c8ff44",
+       "base_tokens": 1081,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Subject: Update on FD-1190**\\n\\nDear Team,\\n\\nI hope this message finds you well. I wanted to provide an update on the issue related to the authentication system and the recent login'",
+   "start_utc": "2026-11-11T03:14:59.631157+00:00",
+   "end_utc": "2026-11-11T03:16:11.265994+00:00",
+   "wall_s": 71.63426279096166,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.0422710161466,
+     "gen_tokens": 295,
+     "gen_tps": 45.11279086593082,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.89484724996146,
+     "content_chars": 1602,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28604,
+       "pad_sha256": "c70302c12164aa8a52ccd0b9e1523d4bcfcea19237fc22674143010748b942ba",
+       "base_tokens": 1175,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.2291634299349,
+     "gen_tokens": 295,
+     "gen_tps": 45.100633755907374,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.71824124996783,
+     "content_chars": 1602,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28604,
+       "pad_sha256": "c70302c12164aa8a52ccd0b9e1523d4bcfcea19237fc22674143010748b942ba",
+       "base_tokens": 1175,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "support-heldout-long",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Subject: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: Re: '",
+   "start_utc": "2026-11-11T03:16:11.267934+00:00",
+   "end_utc": "2026-11-11T03:20:11.641821+00:00",
+   "wall_s": 240.37201150000328,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.11674798769707,
+     "gen_tokens": 4096,
+     "gen_tps": 45.07956710744527,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "length",
+     "wall_s": 119.19088637502864,
+     "content_chars": 8214,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23478,
+       "pad_sha256": "e74c3bc0b9f6bb23c8ca5552c3b6c496605db3c6289eecbfebe8099fb1840c68",
+       "base_tokens": 2350,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.0117957866996,
+     "gen_tokens": 4096,
+     "gen_tps": 45.01734268107367,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "length",
+     "wall_s": 119.16494370799046,
+     "content_chars": 8214,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23478,
+       "pad_sha256": "e74c3bc0b9f6bb23c8ca5552c3b6c496605db3c6289eecbfebe8099fb1840c68",
+       "base_tokens": 2350,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\n\\n</think>\\n\\n**Subject: Re: Team Plan Agreement Draft**\\n\\nHi [Name],\\n\\nI hope this message finds you well. I wanted to follow up on the Team Plan Agreement draft I sent earlier. I've reviewed the\"",
+   "start_utc": "2026-11-11T03:20:11.643116+00:00",
+   "end_utc": "2026-11-11T03:21:25.695332+00:00",
+   "wall_s": 74.069942000031,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.23034662064725,
+     "gen_tokens": 352,
+     "gen_tps": 45.22531077589647,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 36.09823608404258,
+     "content_chars": 1643,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 27693,
+       "pad_sha256": "e34704cab9542de0b569f5b9c07900876362364f8046ec0c869bbbd25b878a64",
+       "base_tokens": 1390,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.17874121977957,
+     "gen_tokens": 352,
+     "gen_tps": 45.23600625446631,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 35.95345208304934,
+     "content_chars": 1643,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 27693,
+       "pad_sha256": "e34704cab9542de0b569f5b9c07900876362364f8046ec0c869bbbd25b878a64",
+       "base_tokens": 1390,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "pricing-objection-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Subject: Follow-Up on the 780 EUR Monthly Quote**\\n\\nHi Niklas,\\n\\nI hope this message finds you well. I wanted to follow up on the quote we discussed regarding the 780 EUR '",
+   "start_utc": "2026-11-11T03:21:25.696139+00:00",
+   "end_utc": "2026-11-11T03:22:32.833929+00:00",
+   "wall_s": 67.13761758297915,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3080659567462,
+     "gen_tokens": 194,
+     "gen_tps": 45.32426474258552,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 32.60119412501808,
+     "content_chars": 888,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28800,
+       "pad_sha256": "0a7a43a510dbd2ed90fb26ddc27fe6e02bb903b48f4857bd612238fd689ece54",
+       "base_tokens": 1133,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.72464006265295,
+     "gen_tokens": 194,
+     "gen_tps": 45.26335074898573,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 32.51503516698722,
+     "content_chars": 888,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28800,
+       "pad_sha256": "0a7a43a510dbd2ed90fb26ddc27fe6e02bb903b48f4857bd612238fd689ece54",
+       "base_tokens": 1133,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-short",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\n\\n</think>\\n\\n**Subject: Monthly Check-In Update**\\n\\nHi Iris,\\n\\nI hope you're doing well. I wanted to take a moment to check in and see how things are going with the team. As always, I appreciate \"",
+   "start_utc": "2026-11-11T03:22:32.834892+00:00",
+   "end_utc": "2026-11-11T03:23:41.981934+00:00",
+   "wall_s": 69.14671683299821,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.1055905731653,
+     "gen_tokens": 239,
+     "gen_tps": 45.11073020626161,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 33.63039495801786,
+     "content_chars": 1051,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 29033,
+       "pad_sha256": "0eea4f00a49c060fda2c4b59048235d90b718f1d972a1c487ab58e5d37d90595",
+       "base_tokens": 1083,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 291.98958283814443,
+     "gen_tokens": 239,
+     "gen_tps": 45.18647456283852,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 33.49480800004676,
+     "content_chars": 1051,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 29033,
+       "pad_sha256": "0eea4f00a49c060fda2c4b59048235d90b718f1d972a1c487ab58e5d37d90595",
+       "base_tokens": 1083,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "quiet-checkin-heldout-medium",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Subject: Re: Quarterly Check-In \u2013 Team Update**\\n\\n**To:** Bram  \\n**From:** [Your Name]  \\n**Date:** [Insert Date]  \\n**Subject:** Re: Quarterly Check-In \u2013 Team Update\\n\\nHi B'",
+   "start_utc": "2026-11-11T03:23:41.983984+00:00",
+   "end_utc": "2026-11-11T03:24:54.323722+00:00",
+   "wall_s": 72.33930354099721,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 286.2210964675712,
+     "gen_tokens": 299,
+     "gen_tps": 45.17580650454569,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 35.531468666973524,
+     "content_chars": 1354,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28465,
+       "pad_sha256": "de619d74a4d7fb1ef128816b199111fbba70d4ed10de496b4c0566d310a73634",
+       "base_tokens": 1206,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.23596386343144,
+     "gen_tokens": 299,
+     "gen_tps": 45.093204564371504,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.785197041986976,
+     "content_chars": 1354,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 28465,
+       "pad_sha256": "de619d74a4d7fb1ef128816b199111fbba70d4ed10de496b4c0566d310a73634",
+       "base_tokens": 1206,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "mixed-heldout-dense",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Subject: Follow-Up on Support Ticket and Renewal**\\n\\n**To:** [Recipient Name]  \\n**From:** [Your Name]  \\n**Date:** [Insert Date]  \\n**Subject:** Follow-Up on Support Ticket and Rene'",
+   "start_utc": "2026-11-11T03:24:54.325816+00:00",
+   "end_utc": "2026-11-11T03:26:05.563130+00:00",
+   "wall_s": 71.23697870899923,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.2811633651435,
+     "gen_tokens": 286,
+     "gen_tps": 45.081678225644126,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.66857191699091,
+     "content_chars": 1274,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 26983,
+       "pad_sha256": "ee3712278c31c0f1740eb11937757af409b66ff24e5e16ad177138dfc10b09de",
+       "base_tokens": 1548,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.2346911498273,
+     "gen_tokens": 286,
+     "gen_tps": 44.902880053127085,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.54700929200044,
+     "content_chars": 1274,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 26983,
+       "pad_sha256": "ee3712278c31c0f1740eb11937757af409b66ff24e5e16ad177138dfc10b09de",
+       "base_tokens": 1548,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-pricing-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\n</think>\\n\\n</think>\\n\\n**Subject: Follow-Up on the Pricing Call Discussion**\\n\\nHi [Name],\\n\\nI hope you're doing well. I wanted to follow up on the recent call regarding the pricing and roadmap dis\"",
+   "start_utc": "2026-11-11T03:26:05.564888+00:00",
+   "end_utc": "2026-11-11T03:27:13.785456+00:00",
+   "wall_s": 68.22024062502896,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.63859479366266,
+     "gen_tokens": 220,
+     "gen_tps": 45.12776426480735,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 33.1707040410256,
+     "content_chars": 1080,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 14041,
+       "pad_sha256": "73f922ab9505940df44750fe0e89d166c303b3429c2912a782bbc13b386a44c3",
+       "base_tokens": 4703,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.39447290876797,
+     "gen_tokens": 220,
+     "gen_tps": 45.18227788827292,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 33.028986042016186,
+     "content_chars": 1080,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 14041,
+       "pad_sha256": "73f922ab9505940df44750fe0e89d166c303b3429c2912a782bbc13b386a44c3",
+       "base_tokens": 4703,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-scoping-heldout-1",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**[Response to the provided conversation, formatted as a natural continuation of the dialogue, with a clear, professional tone and structured as a response from the AI assistant.]*'",
+   "start_utc": "2026-11-11T03:27:13.787283+00:00",
+   "end_utc": "2026-11-11T03:28:43.296582+00:00",
+   "wall_s": 89.50887575000525,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.5453141166164,
+     "gen_tokens": 698,
+     "gen_tps": 44.961698898809345,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 43.82486845803214,
+     "content_chars": 3480,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 11022,
+       "pad_sha256": "26b14c0b70b889fca4b000e0dd21c8cc954645d58e13cfe662006830f55b3ef7",
+       "base_tokens": 5438,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.270972706751,
+     "gen_tokens": 698,
+     "gen_tps": 45.01194569810375,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 43.66868541599251,
+     "content_chars": 3480,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 11022,
+       "pad_sha256": "26b14c0b70b889fca4b000e0dd21c8cc954645d58e13cfe662006830f55b3ef7",
+       "base_tokens": 5438,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-discovery-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Final Answer:**\\n\\n\\\\boxed{The final response is a detailed summary of the conversation, including the key points and the structured conclusion as per the instructions.}'",
+   "start_utc": "2026-11-11T03:28:43.298647+00:00",
+   "end_utc": "2026-11-11T03:29:43.434105+00:00",
+   "wall_s": 60.135170500027016,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3784000908094,
+     "gen_tokens": 38,
+     "gen_tps": 46.02455120702726,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 29.153174332983326,
+     "content_chars": 188,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 8815,
+       "pad_sha256": "4198a63ab390e23ee5485bece1285b3a95cd9a41d4af7033460b119287b2a5f5",
+       "base_tokens": 5967,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.47246537371433,
+     "gen_tokens": 38,
+     "gen_tps": 46.0520585170661,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 28.962645124993287,
+     "content_chars": 188,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 8815,
+       "pad_sha256": "4198a63ab390e23ee5485bece1285b3a95cd9a41d4af7033460b119287b2a5f5",
+       "base_tokens": 5967,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-renewal-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\n\\n</think>\\n\\n**Final Answer:**\\n\\n**The team's rollout has been pretty smooth, honestly.** The team adjusted faster than expected, and the overall experience has been positive. There were a few m\"",
+   "start_utc": "2026-11-11T03:29:43.435038+00:00",
+   "end_utc": "2026-11-11T03:30:49.184173+00:00",
+   "wall_s": 65.74882133299252,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.5167353388405,
+     "gen_tokens": 164,
+     "gen_tps": 45.172281819237035,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 31.93981775001157,
+     "content_chars": 774,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 5279,
+       "pad_sha256": "64dc9da65d68a5af773eced1ab44dfed89f1fb799ca25724b72a0f675aa22808",
+       "base_tokens": 6809,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3478911986542,
+     "gen_tokens": 164,
+     "gen_tps": 45.27812902532201,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 31.791012667003088,
+     "content_chars": 774,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 5279,
+       "pad_sha256": "64dc9da65d68a5af773eced1ab44dfed89f1fb799ca25724b72a0f675aa22808",
+       "base_tokens": 6809,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-support-heldout-2",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Final Answer:**\\n\\nThe system has been successfully analyzed, and the following is the final response:\\n\\n**Final Answer:**\\n\\\\boxed{The system has been analyzed, and the final respons'",
+   "start_utc": "2026-11-11T03:30:49.185959+00:00",
+   "end_utc": "2026-11-11T03:31:51.705559+00:00",
+   "wall_s": 62.51926520804409,
+   "calls": [
+    {
+     "prompt_tokens": 8485,
+     "prompt_tps": 291.97553838636264,
+     "gen_tokens": 48,
+     "gen_tps": 45.990060029016405,
+     "peak_memory_gb": 4.022156572,
+     "finish_reason": "stop",
+     "wall_s": 30.248115750029683,
+     "content_chars": 215,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 8485,
+       "padded_tokens": 8485
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8485,
+     "prompt_tps": 291.8725014657387,
+     "gen_tokens": 48,
+     "gen_tps": 46.03534202120482,
+     "peak_memory_gb": 4.022156572,
+     "finish_reason": "stop",
+     "wall_s": 30.260398165963124,
+     "content_chars": 215,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 0,
+       "pad_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+       "base_tokens": 8485,
+       "padded_tokens": 8485
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "call-fields",
+   "case": "longcall-mixed-heldout-3",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\nHere\\'s a polished and professional version of the text you provided, with improved flow, grammar, and clarity:\\n\\n---\\n\\n**Final Version:**\\n\\n**\"So overall, how has the rollout been fee'",
+   "start_utc": "2026-11-11T03:31:51.707424+00:00",
+   "end_utc": "2026-11-11T03:33:30.554047+00:00",
+   "wall_s": 98.84616158303106,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3487814816813,
+     "gen_tokens": 908,
+     "gen_tps": 44.99211219646194,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 48.51885791699169,
+     "content_chars": 3786,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 10193,
+       "pad_sha256": "f3455c93dc7d73cb859f5e44a797a8070464895d54a470855e3ab19912de887c",
+       "base_tokens": 5632,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4584486559383,
+     "gen_tokens": 908,
+     "gen_tps": 45.06542266184433,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 48.30644137499621,
+     "content_chars": 3786,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 10193,
+       "pad_sha256": "f3455c93dc7d73cb859f5e44a797a8070464895d54a470855e3ab19912de887c",
+       "base_tokens": 5632,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "production-down",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Root Cause Analysis:**\\n\\nThe service is crashing repeatedly with exit code **137**, which indicates the process was terminated by the kernel. This typically occurs due to:\\n\\n1. **Segmentation Fault (S'",
+   "start_utc": "2026-11-11T03:33:30.557976+00:00",
+   "end_utc": "2026-11-11T03:35:23.740771+00:00",
+   "wall_s": 113.19611633301247,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.558901648074,
+     "gen_tokens": 1230,
+     "gen_tps": 44.955147850950674,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 55.627076582983136,
+     "content_chars": 3423,
+     "reasoning_chars": 2082,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32716,
+       "pad_sha256": "40515b348bf4511b363cf2076c13c86863b09b4acf9eab8de9882e13eea123e7",
+       "base_tokens": 193,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3937623729253,
+     "gen_tokens": 1230,
+     "gen_tps": 44.91051039908415,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 55.55117637501098,
+     "content_chars": 3423,
+     "reasoning_chars": 2082,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32716,
+       "pad_sha256": "40515b348bf4511b363cf2076c13c86863b09b4acf9eab8de9882e13eea123e7",
+       "base_tokens": 193,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "gdpr-data-request",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Response to Personal Data Access Request**  \\n\\nDear [Data Subject Name],  \\n\\nThank you for your request under the General Data Protection Regulation (GDPR). We are required to respond to your data acc'",
+   "start_utc": "2026-11-11T03:35:23.741021+00:00",
+   "end_utc": "2026-11-11T03:37:00.518214+00:00",
+   "wall_s": 96.78852941596415,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.62136884936626,
+     "gen_tokens": 862,
+     "gen_tps": 44.984687854906326,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 47.43158904201118,
+     "content_chars": 2262,
+     "reasoning_chars": 1740,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32754,
+       "pad_sha256": "79842e7174964526d3fdb666f2a69f7b3ffdb54e561cb2571ea45105f48e122c",
+       "base_tokens": 184,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.2832646735761,
+     "gen_tokens": 862,
+     "gen_tps": 44.98900372292162,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 47.33595070801675,
+     "content_chars": 2262,
+     "reasoning_chars": 1740,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32754,
+       "pad_sha256": "79842e7174964526d3fdb666f2a69f7b3ffdb54e561cb2571ea45105f48e122c",
+       "base_tokens": 184,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "conference-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"**Response to Invitation:**  \\n\\nDear [Event Organizers' Name],  \\n\\nThank you for the invitation to speak at the AI in Practice Brussels event. I would be honored to present a 25-minute talk on [insert t\"",
+   "start_utc": "2026-11-11T03:37:00.520301+00:00",
+   "end_utc": "2026-11-11T03:38:25.138336+00:00",
+   "wall_s": 84.61801995901624,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.47384154046,
+     "gen_tokens": 589,
+     "gen_tps": 45.038000285725694,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.367357290990185,
+     "content_chars": 744,
+     "reasoning_chars": 2147,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32650,
+       "pad_sha256": "d175c02c4ed47008f861c62f842e2f459b5831a42b7eee81d5c07327345fceb8",
+       "base_tokens": 204,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.2495374470298,
+     "gen_tokens": 589,
+     "gen_tps": 45.11789923825853,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.22964037494967,
+     "content_chars": 744,
+     "reasoning_chars": 2147,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32650,
+       "pad_sha256": "d175c02c4ed47008f861c62f842e2f459b5831a42b7eee81d5c07327345fceb8",
+       "base_tokens": 204,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "promo-code",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Deal Summary: 20% Off Laptops with Code WEEKEND20**  \\n\\n**Key Details:**  \\n- **Discount:** 20% off all laptops (a significant savings).  \\n- **Code:** Use **WEEKEND20** at checkout to apply the discou'",
+   "start_utc": "2026-11-11T03:38:25.140271+00:00",
+   "end_utc": "2026-11-11T03:39:44.906508+00:00",
+   "wall_s": 79.76620579202427,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3768087314445,
+     "gen_tokens": 480,
+     "gen_tps": 45.02304634774366,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 38.94580645801034,
+     "content_chars": 1026,
+     "reasoning_chars": 903,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32744,
+       "pad_sha256": "655a11a8e42f34ab9a6ede68d803b2623b332a1def3f38ce4aeedb4536174284",
+       "base_tokens": 187,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.296760958906,
+     "gen_tokens": 480,
+     "gen_tps": 45.105760497069284,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 38.797708290978335,
+     "content_chars": 1026,
+     "reasoning_chars": 903,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32744,
+       "pad_sha256": "655a11a8e42f34ab9a6ede68d803b2623b332a1def3f38ce4aeedb4536174284",
+       "base_tokens": 187,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "invoice-error-client",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Response:**\\n\\nHi Michiel,  \\n\\nYes, invoice **2026-031** does count the training session **twice**. It appears the session is being billed for two separate entries, which may be a system error or a dup'",
+   "start_utc": "2026-11-11T03:39:44.906773+00:00",
+   "end_utc": "2026-11-11T03:41:01.777012+00:00",
+   "wall_s": 76.87021329201525,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.5217551599356,
+     "gen_tokens": 414,
+     "gen_tps": 44.903055562285054,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.49432024999987,
+     "content_chars": 502,
+     "reasoning_chars": 1429,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32628,
+       "pad_sha256": "aced9032c5657f022fd1fc1f3163f90cdcc12f1c88361b37bef97a972da466eb",
+       "base_tokens": 210,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.26789748368856,
+     "gen_tokens": 414,
+     "gen_tps": 45.05060459990107,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.35770308302017,
+     "content_chars": 502,
+     "reasoning_chars": 1429,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32628,
+       "pad_sha256": "aced9032c5657f022fd1fc1f3163f90cdcc12f1c88361b37bef97a972da466eb",
+       "base_tokens": 210,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "dpa-signature-compliance",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Subject:** Re: Data Processing Agreement for Vendor Onboarding  \\n\\n**Dear [Vendor Name],**  \\n\\nThank you for your prompt response. I understand the importance of this matter, and I appreciate your coo'",
+   "start_utc": "2026-11-11T03:41:01.778329+00:00",
+   "end_utc": "2026-11-11T03:42:48.245773+00:00",
+   "wall_s": 106.46740924997721,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.40603293156806,
+     "gen_tokens": 1080,
+     "gen_tps": 45.05950099410742,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 52.29039816604927,
+     "content_chars": 2748,
+     "reasoning_chars": 2537,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32684,
+       "pad_sha256": "ae039d794861acc6681a6299f22297b93d30ea1be5bb1dde1af213c7348e42c5",
+       "base_tokens": 200,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4790260904224,
+     "gen_tokens": 1080,
+     "gen_tps": 44.96398111950063,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 52.15916679101065,
+     "content_chars": 2748,
+     "reasoning_chars": 2537,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32684,
+       "pad_sha256": "ae039d794861acc6681a6299f22297b93d30ea1be5bb1dde1af213c7348e42c5",
+       "base_tokens": 200,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "recruiter-fake-urgency",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Subject:** Re: AI Lead Role Opportunity  \\n\\nHi Michiel,  \\n\\nThank you for the opportunity! I\u2019d be honored to take on the AI Lead role, given the competitive package and the chance to contribute to you'",
+   "start_utc": "2026-11-11T03:42:48.245880+00:00",
+   "end_utc": "2026-11-11T03:44:02.647548+00:00",
+   "wall_s": 74.4016423750436,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4610123603518,
+     "gen_tokens": 360,
+     "gen_tps": 45.069943622845415,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 36.26465945801465,
+     "content_chars": 739,
+     "reasoning_chars": 962,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32671,
+       "pad_sha256": "bf47106043bb6d2d9cfd80e84ae0713461610ef36194f34a331aeff2b125fdda",
+       "base_tokens": 201,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.65689047679246,
+     "gen_tokens": 360,
+     "gen_tps": 45.03248906637302,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 36.116830291983206,
+     "content_chars": 739,
+     "reasoning_chars": 962,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32671,
+       "pad_sha256": "bf47106043bb6d2d9cfd80e84ae0713461610ef36194f34a331aeff2b125fdda",
+       "base_tokens": 201,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "paid-workshop-invite",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Response:**  \\n\\nDear Nathalie,  \\n\\nThank you for your message. I confirm my availability for the AI-for-SMEs workshop in Leuven, as requested. I am happy to proceed with the 1500 EUR honorarium, and I'",
+   "start_utc": "2026-11-11T03:44:02.648318+00:00",
+   "end_utc": "2026-11-11T03:45:24.388365+00:00",
+   "wall_s": 81.74000941601116,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.8421000873581,
+     "gen_tokens": 524,
+     "gen_tps": 45.09778877914237,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 39.87493708304828,
+     "content_chars": 712,
+     "reasoning_chars": 1760,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32604,
+       "pad_sha256": "47186e0000d4f6ebd238d1478307fdd135135faf460ca3fd7ec0ae1e51c7b933",
+       "base_tokens": 215,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4614508763269,
+     "gen_tokens": 524,
+     "gen_tps": 44.799871482530754,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 39.84394891699776,
+     "content_chars": 712,
+     "reasoning_chars": 1760,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32604,
+       "pad_sha256": "47186e0000d4f6ebd238d1478307fdd135135faf460ca3fd7ec0ae1e51c7b933",
+       "base_tokens": 215,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "intro-no-ask",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Subject:** Re: Intro: Anna from Retail United  \\n\\nHi Thomas,  \\n\\nThanks for the message and for connecting with Anna! I\u2019m glad to hear about the progress on the project and the exciting opportunities '",
+   "start_utc": "2026-11-11T03:45:24.388639+00:00",
+   "end_utc": "2026-11-11T03:46:39.912475+00:00",
+   "wall_s": 75.52380595798604,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.7525260678156,
+     "gen_tokens": 385,
+     "gen_tps": 44.9936892681269,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 36.81689433398424,
+     "content_chars": 693,
+     "reasoning_chars": 1217,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32685,
+       "pad_sha256": "265a2f7a4902610531072ca0d05b2f0ce869d29da62917dee7d50c52bcdda43d",
+       "base_tokens": 199,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.36835351219713,
+     "gen_tokens": 385,
+     "gen_tps": 45.113447577550374,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 36.68870200001402,
+     "content_chars": 693,
+     "reasoning_chars": 1217,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32685,
+       "pad_sha256": "265a2f7a4902610531072ca0d05b2f0ce869d29da62917dee7d50c52bcdda43d",
+       "base_tokens": 199,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "disk-warning-no-action",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Action Required: High Disk Usage on [mast-production]**\\n\\n**Alert Summary:**  \\nThe [mast-production] service has reached **82% disk usage** (out of 100% quota). This is a critical threshold, as excee'",
+   "start_utc": "2026-11-11T03:46:39.914414+00:00",
+   "end_utc": "2026-11-11T03:48:28.383613+00:00",
+   "wall_s": 108.46915999997873,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.47868801890684,
+     "gen_tokens": 1125,
+     "gen_tps": 44.97507751052115,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 53.300844666024204,
+     "content_chars": 2821,
+     "reasoning_chars": 2370,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32691,
+       "pad_sha256": "806ff5b04f49cb347c7be7c8ccbf84d8523c30943f58d792c43a7e04a0200eba",
+       "base_tokens": 198,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.0498388555188,
+     "gen_tokens": 1125,
+     "gen_tps": 45.08964143733735,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 53.14749100001063,
+     "content_chars": 2821,
+     "reasoning_chars": 2370,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32691,
+       "pad_sha256": "806ff5b04f49cb347c7be7c8ccbf84d8523c30943f58d792c43a7e04a0200eba",
+       "base_tokens": 198,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "long-ramble-buried-incident",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Response:**\\n\\nHi Peter,  \\n\\nThanks for the update \u2014 it\u2019s good to hear the project is moving forward, even if not without a few hiccups. The chatbot and kitchen setup are definitely on track, and the t'",
+   "start_utc": "2026-11-11T03:48:28.385509+00:00",
+   "end_utc": "2026-11-11T03:49:52.793941+00:00",
+   "wall_s": 84.40839825000148,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.6999874548999,
+     "gen_tokens": 585,
+     "gen_tps": 45.133199647049935,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.225420458999,
+     "content_chars": 1105,
+     "reasoning_chars": 1559,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 31708,
+       "pad_sha256": "4b86759625681ee399056270b72b12976e0d5c4c018c9de9c2d47928224b4646",
+       "base_tokens": 426,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.28765466107484,
+     "gen_tokens": 585,
+     "gen_tps": 44.996730381798024,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.16198995796731,
+     "content_chars": 1105,
+     "reasoning_chars": 1559,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 31708,
+       "pad_sha256": "4b86759625681ee399056270b72b12976e0d5c4c018c9de9c2d47928224b4646",
+       "base_tokens": 426,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "newsletter-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Classification:** reply_now  \\n\\n**Reasoning:** The email is a weekly infrastructure update from a service (cloudmetrics.io) that includes new dashboards, a changelog, and community plugins. While it '",
+   "start_utc": "2026-11-11T03:49:52.795798+00:00",
+   "end_utc": "2026-11-11T03:51:22.206174+00:00",
+   "wall_s": 89.3928431670065,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3913511813324,
+     "gen_tokens": 695,
+     "gen_tps": 44.960737955718905,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 43.75533725001151,
+     "content_chars": 545,
+     "reasoning_chars": 2690,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32650,
+       "pad_sha256": "d175c02c4ed47008f861c62f842e2f459b5831a42b7eee81d5c07327345fceb8",
+       "base_tokens": 204,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4078137842582,
+     "gen_tokens": 695,
+     "gen_tps": 44.94926662694611,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 43.61700637504691,
+     "content_chars": 545,
+     "reasoning_chars": 2690,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32650,
+       "pad_sha256": "d175c02c4ed47008f861c62f842e2f459b5831a42b7eee81d5c07327345fceb8",
+       "base_tokens": 204,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "cold-sales-injection-urgent",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Classification:** reply_now  \\n\\n**Reasoning:** The message is a direct request for assistance with a webinar booking, requiring an immediate response to secure a slot or confirm registration. The sys'",
+   "start_utc": "2026-11-11T03:51:22.206501+00:00",
+   "end_utc": "2026-11-11T03:52:33.604255+00:00",
+   "wall_s": 71.39732175000245,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.469223634429,
+     "gen_tokens": 292,
+     "gen_tps": 45.10235066932662,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.75994512496982,
+     "content_chars": 360,
+     "reasoning_chars": 1132,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32596,
+       "pad_sha256": "aa76f052f8a011234589ff88471c9da872339b3274d6aa2f9715a2048dc01204",
+       "base_tokens": 218,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.42558653155726,
+     "gen_tokens": 292,
+     "gen_tps": 45.153348874009886,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.62426037498517,
+     "content_chars": 360,
+     "reasoning_chars": 1132,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32596,
+       "pad_sha256": "aa76f052f8a011234589ff88471c9da872339b3274d6aa2f9715a2048dc01204",
+       "base_tokens": 218,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "nl-client-bug-buried",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Subject:** Re: even bijpraten  \\n\\n**To:** Michiel  \\n**From:** An  \\n**Date:** [Insert Date]  \\n\\n**Body:**  \\n\\nDag Michiel,  \\n\\nBedankt voor je vorige mail. Ik wil je even informeren over de situatie met '",
+   "start_utc": "2026-11-11T03:52:33.604586+00:00",
+   "end_utc": "2026-11-11T03:54:11.569547+00:00",
+   "wall_s": 97.96461999998428,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.26187236365894,
+     "gen_tokens": 889,
+     "gen_tps": 45.0244963466518,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 48.052683208021335,
+     "content_chars": 1516,
+     "reasoning_chars": 2376,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32191,
+       "pad_sha256": "bcff1a3d0e2f267491a076ec23472185b6849e807fe0292c483e7d5e466da4db",
+       "base_tokens": 312,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.24537101691425,
+     "gen_tokens": 889,
+     "gen_tps": 45.092647447287916,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 47.891534416005015,
+     "content_chars": 1516,
+     "reasoning_chars": 2376,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32191,
+       "pad_sha256": "bcff1a3d0e2f267491a076ec23472185b6849e807fe0292c483e7d5e466da4db",
+       "base_tokens": 312,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-tax-authority-documents",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**R\u00e9ponse :**  \\n\\nMadame, Monsieur,  \\n\\nMerci pour votre courrier. Nous vous confirmons que nous avons bien re\u00e7u votre demande de renseignements en lien avec la d\u00e9claration TVA du troisi\u00e8me trimestre 20'",
+   "start_utc": "2026-11-11T03:54:11.571077+00:00",
+   "end_utc": "2026-11-11T03:55:48.411663+00:00",
+   "wall_s": 96.84024858300108,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.6583123757293,
+     "gen_tokens": 864,
+     "gen_tps": 45.0427209869043,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 47.44176499999594,
+     "content_chars": 2015,
+     "reasoning_chars": 1456,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32428,
+       "pad_sha256": "d0774a66a2bd61fe8f5170f33e29f450861a1ba9563769d45fbe2885b23f579b",
+       "base_tokens": 252,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.08020963947627,
+     "gen_tokens": 864,
+     "gen_tps": 45.03337229021221,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 47.3776201250148,
+     "content_chars": 2015,
+     "reasoning_chars": 1456,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32428,
+       "pad_sha256": "d0774a66a2bd61fe8f5170f33e29f450861a1ba9563769d45fbe2885b23f579b",
+       "base_tokens": 252,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "stripe-payout-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Subject:** Your payout of EUR 1,240.00 is on its way  \\n\\n**Message:**  \\nHi [Your Name],  \\n\\nYour payout of **EUR 1,240.00** has been initiated and is on its way to your bank account. The funds should '",
+   "start_utc": "2026-11-11T03:55:48.411972+00:00",
+   "end_utc": "2026-11-11T03:57:19.038054+00:00",
+   "wall_s": 90.62576266599353,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.56865570022705,
+     "gen_tokens": 724,
+     "gen_tps": 44.98348433734501,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 44.37706879194593,
+     "content_chars": 1368,
+     "reasoning_chars": 1885,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32600,
+       "pad_sha256": "7277b86bab2fc4ea6e4d980748c7c40363490abad6e5c41872f8a08c51247737",
+       "base_tokens": 217,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.30772829065563,
+     "gen_tokens": 724,
+     "gen_tps": 45.05667798691148,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 44.227664958976675,
+     "content_chars": 1368,
+     "reasoning_chars": 1885,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32600,
+       "pad_sha256": "7277b86bab2fc4ea6e4d980748c7c40363490abad6e5c41872f8a08c51247737",
+       "base_tokens": 217,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "client-domain-newsletter-nl",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Antwoord:**  \\nBeste klant,  \\n\\nWat een leuk nieuws! De herfstcollectie is geweldig, en de 10% korting met de code **HERFST10** is een super deal. Ik ben al blij dat ik de broden en speculaastaarten k'",
+   "start_utc": "2026-11-11T03:57:19.038345+00:00",
+   "end_utc": "2026-11-11T03:58:29.190456+00:00",
+   "wall_s": 70.1518620410352,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.5325247965212,
+     "gen_tokens": 263,
+     "gen_tps": 44.787636881313794,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 34.149831416027155,
+     "content_chars": 439,
+     "reasoning_chars": 554,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32523,
+       "pad_sha256": "32e7096b49239429f032e428a5851597446aedf34c09e963e6ce074bc19376bd",
+       "base_tokens": 235,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3580024478046,
+     "gen_tokens": 263,
+     "gen_tps": 45.15781809113059,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 33.98198612499982,
+     "content_chars": 439,
+     "reasoning_chars": 554,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32523,
+       "pad_sha256": "32e7096b49239429f032e428a5851597446aedf34c09e963e6ce074bc19376bd",
+       "base_tokens": 235,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "calendar-accept-notice",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Meeting Confirmation: Chatbot Project Kick-off**  \\n**Date:** Thursday, [Insert Date]  \\n**Time:** 10:00 AM \u2013 11:00 AM (CEST)  \\n**Location:** [Join via Google Meet link: meet.google.com/xqv-hbtp-rwd] '",
+   "start_utc": "2026-11-11T03:58:29.192205+00:00",
+   "end_utc": "2026-11-11T03:59:56.613110+00:00",
+   "wall_s": 87.42060229199706,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.38407825212283,
+     "gen_tokens": 652,
+     "gen_tps": 45.071373578965556,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 42.7574734580121,
+     "content_chars": 1224,
+     "reasoning_chars": 1688,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32482,
+       "pad_sha256": "aeff7791a8ab830123b2a9f572b47c8bce4ebcb2bb012244ab158a4b8dc470ee",
+       "base_tokens": 241,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.28020483424245,
+     "gen_tokens": 652,
+     "gen_tps": 45.04600137308746,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 42.6430322919623,
+     "content_chars": 1224,
+     "reasoning_chars": 1688,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32482,
+       "pad_sha256": "aeff7791a8ab830123b2a9f572b47c8bce4ebcb2bb012244ab158a4b8dc470ee",
+       "base_tokens": 241,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "proposal-accept-conditional",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Response:**\\n\\nSubject: RE: Proposal Chatbot Showroom  \\n\\nHi Koen,  \\n\\nThank you for the update and the clear timeline. We\u2019re happy to confirm our agreement to the proposal and look forward to starting '",
+   "start_utc": "2026-11-11T03:59:56.614613+00:00",
+   "end_utc": "2026-11-11T04:01:14.899124+00:00",
+   "wall_s": 78.28423445799854,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3855979448548,
+     "gen_tokens": 446,
+     "gen_tps": 45.04686812574041,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 38.2005157090025,
+     "content_chars": 850,
+     "reasoning_chars": 1216,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32532,
+       "pad_sha256": "20184e1d4afb6b430d6c3dded39822ebc7632ea51d2f3dcd72e60626d8493547",
+       "base_tokens": 232,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3431942350195,
+     "gen_tokens": 446,
+     "gen_tps": 45.03045683145752,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 38.062719625013415,
+     "content_chars": 850,
+     "reasoning_chars": 1216,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32532,
+       "pad_sha256": "20184e1d4afb6b430d6c3dded39822ebc7632ea51d2f3dcd72e60626d8493547",
+       "base_tokens": 232,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "email-triage",
+   "case": "fr-networking-coffee",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Summary of the Email:**\\n\\n**Subject:** \"A coffee in Li\u00e8ge?\"  \\n**From:** Camille (founder of a startup in Li\u00e8ge)  \\n**To:** Michiel  \\n**Context:** Camille is the founder of a young startup in Li\u00e8ge foc'",
+   "start_utc": "2026-11-11T04:01:14.901072+00:00",
+   "end_utc": "2026-11-11T04:02:58.353648+00:00",
+   "wall_s": 103.45221195800696,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4343934599829,
+     "gen_tokens": 1011,
+     "gen_tps": 45.03022779243056,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 50.745021374954376,
+     "content_chars": 2325,
+     "reasoning_chars": 2433,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32421,
+       "pad_sha256": "7878380fa52a31f7604cb0fad214cd75bd6d8c22b3adcc5c0f24710d2498bb10",
+       "base_tokens": 253,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.27843423255996,
+     "gen_tokens": 1011,
+     "gen_tps": 44.89749698341168,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 50.68660633300897,
+     "content_chars": 2325,
+     "reasoning_chars": 2433,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 32421,
+       "pad_sha256": "7878380fa52a31f7604cb0fad214cd75bd6d8c22b3adcc5c0f24710d2498bb10",
+       "base_tokens": 253,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Aanmelding voor het weekrapport:**\\n\\n**Naam:** [Vul uw naam in]  \\n**Organisatie:** [Vul uw organisatie in]  \\n**Datum:** [Vul de datum in]  \\n**E-mailadres:** [Vul uw e-mai'",
+   "start_utc": "2026-11-11T04:02:58.358349+00:00",
+   "end_utc": "2026-11-11T04:04:27.473264+00:00",
+   "wall_s": 89.1146007089992,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3625551034383,
+     "gen_tokens": 690,
+     "gen_tps": 45.00895091042468,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 43.58465129096294,
+     "content_chars": 2257,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 22169,
+       "pad_sha256": "d66701519f213f689ee169ef54a1c1d3bc297d4c9a061084b484ad9fff8ca8cc",
+       "base_tokens": 1198,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3685700276288,
+     "gen_tokens": 690,
+     "gen_tps": 44.96492430444058,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 43.51003324997146,
+     "content_chars": 2257,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 22169,
+       "pad_sha256": "d66701519f213f689ee169ef54a1c1d3bc297d4c9a061084b484ad9fff8ca8cc",
+       "base_tokens": 1198,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-newsletters",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\nOkay, let's tackle this. The user provided a query in Dutch about a business scenario involving a company that sells office supplies, specifically printers. The main issue is that the company\"",
+   "start_utc": "2026-11-11T04:04:27.474861+00:00",
+   "end_utc": "2026-11-11T04:06:30.178933+00:00",
+   "wall_s": 122.68691908300389,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.67028057191635,
+     "gen_tokens": 1444,
+     "gen_tps": 44.86663646657557,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 60.41823537502205,
+     "content_chars": 6109,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 25059,
+       "pad_sha256": "b2ae710ecb7c15324d48ddc80011c7ce38a4d1ce0ce2dd7047c7a4275567df8d",
+       "base_tokens": 525,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.61241085203955,
+     "gen_tokens": 1444,
+     "gen_tps": 44.96322209367882,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 60.246998957998585,
+     "content_chars": 6109,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 25059,
+       "pad_sha256": "b2ae710ecb7c15324d48ddc80011c7ce38a4d1ce0ce2dd7047c7a4275567df8d",
+       "base_tokens": 525,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-with-receipt",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\nOkay, let's see. The user provided a series of messages, some in Dutch and some in English, and I need to process them. The first message is from a telecom provider, stating that the monthly \"",
+   "start_utc": "2026-11-11T04:06:30.180692+00:00",
+   "end_utc": "2026-11-11T04:07:54.449646+00:00",
+   "wall_s": 84.26825491699856,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.6182496648933,
+     "gen_tokens": 580,
+     "gen_tps": 44.96216380500219,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.13148358394392,
+     "content_chars": 2912,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 24053,
+       "pad_sha256": "e532fd80841dc04177d0d91b47ce4f93735dcdd965270cb6de4f448ef8c134df",
+       "base_tokens": 662,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.33660527817955,
+     "gen_tokens": 580,
+     "gen_tps": 44.78081153327474,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.11464108299697,
+     "content_chars": 2912,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 24053,
+       "pad_sha256": "e532fd80841dc04177d0d91b47ce4f93735dcdd965270cb6de4f448ef8c134df",
+       "base_tokens": 662,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "rounding-bait",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Antwoord:**\\n\\n1. **Prijsaanpassing (verkoop@hostingpartner.be):**  \\n   De tarieven voor het gebruik van onze dienst zijn vanaf 1 januari verhoogd. U moet uw budget aanpassen voor de nieuwe prijs. De '",
+   "start_utc": "2026-11-11T04:07:54.451507+00:00",
+   "end_utc": "2026-11-11T04:09:27.210656+00:00",
+   "wall_s": 92.7585445830482,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.66556193010706,
+     "gen_tokens": 774,
+     "gen_tps": 45.067373320324286,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 45.410916958004236,
+     "content_chars": 1358,
+     "reasoning_chars": 1698,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23988,
+       "pad_sha256": "c33dd41473252fc34d58687e3652cc4784a8de1f65de83f5d1a69057c8aeec6b",
+       "base_tokens": 680,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.57232544161855,
+     "gen_tokens": 774,
+     "gen_tps": 44.992781755812956,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 45.32466895901598,
+     "content_chars": 1358,
+     "reasoning_chars": 1698,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23988,
+       "pad_sha256": "c33dd41473252fc34d58687e3652cc4784a8de1f65de83f5d1a69057c8aeec6b",
+       "base_tokens": 680,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "two-urgent-among-noise",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Aanvullende informatie voor het document:**\\n\\n**1. Aanvullende details over het document:**\\n\\n- **Documenttitel:** \"Aanvullende informatie voor het document\"\\n- **Documentn'",
+   "start_utc": "2026-11-11T04:09:27.212431+00:00",
+   "end_utc": "2026-11-11T04:11:24.955297+00:00",
+   "wall_s": 117.74210637499345,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.5808838973264,
+     "gen_tokens": 1333,
+     "gen_tps": 44.920971252185396,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 57.91797733301064,
+     "content_chars": 4663,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 22559,
+       "pad_sha256": "ba3aff5d90ea8cc5befa3a858e5a7f80a0edbf3a835154bdc28200b59f218a17",
+       "base_tokens": 1075,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.322259080448,
+     "gen_tokens": 1333,
+     "gen_tps": 44.97992924618331,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 57.80225666699698,
+     "content_chars": 4663,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 22559,
+       "pad_sha256": "ba3aff5d90ea8cc5befa3a858e5a7f80a0edbf3a835154bdc28200b59f218a17",
+       "base_tokens": 1075,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "very-long-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Subject: Automatische back-up voltooid \u2013 Geen fouten gemeld**\\n\\nDe automatische back-up van je bestanden is voltooid en er zijn geen fouten gemeld. Dit betekent dat de ba'",
+   "start_utc": "2026-11-11T04:11:24.955599+00:00",
+   "end_utc": "2026-11-11T04:12:38.399551+00:00",
+   "wall_s": 73.4434698750265,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4273128201072,
+     "gen_tokens": 338,
+     "gen_tps": 45.037268337420834,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 35.7715157920029,
+     "content_chars": 1139,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 20524,
+       "pad_sha256": "5fda2c973c6dfecb8d2173d61d7105540fac651c158e9534c4b76700f45e24d3",
+       "base_tokens": 1710,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4873306292891,
+     "gen_tokens": 338,
+     "gen_tps": 45.034266013453035,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 35.6517548749689,
+     "content_chars": 1139,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 20524,
+       "pad_sha256": "5fda2c973c6dfecb8d2173d61d7105540fac651c158e9534c4b76700f45e24d3",
+       "base_tokens": 1710,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-day-heldout-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\nIk heb begrepen dat je een overzicht van de laatste 31 items hebt ontvangen, waarin elk item een specifieke informatie of actie bevat. Hieronder vind je een overzicht van '",
+   "start_utc": "2026-11-11T04:12:38.401374+00:00",
+   "end_utc": "2026-11-11T04:14:51.540240+00:00",
+   "wall_s": 133.1380055839545,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4226341913099,
+     "gen_tokens": 1679,
+     "gen_tps": 44.992283884376256,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 65.58698854100658,
+     "content_chars": 5178,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 17298,
+       "pad_sha256": "df0807d5808e5b53d9c2ce382fa59a73da345e6a1f7f2fae9008eb543318a085",
+       "base_tokens": 2756,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.41993241547937,
+     "gen_tokens": 1679,
+     "gen_tps": 44.914810344766416,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 65.52710875001503,
+     "content_chars": 5178,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 17298,
+       "pad_sha256": "df0807d5808e5b53d9c2ce382fa59a73da345e6a1f7f2fae9008eb543318a085",
+       "base_tokens": 2756,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "long-quiet-day",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\nHieronder vind je een overzicht van de belangrijkste punten uit de laatste update:\\n\\n---\\n\\n### **1. Weekoverzicht voor ondernemers (Item 1)**\\n- **Tijd**: 2025-04-07\\n- **Taal'",
+   "start_utc": "2026-11-11T04:14:51.542109+00:00",
+   "end_utc": "2026-11-11T04:16:51.357733+00:00",
+   "wall_s": 119.8148463749676,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.73024518423006,
+     "gen_tokens": 1380,
+     "gen_tps": 44.90439031649493,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 58.96636820799904,
+     "content_chars": 3973,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 20024,
+       "pad_sha256": "9df5c05043e27c0fb50cf4c63e5d89f1497e6f9da10b4c635dc60c8c12510987",
+       "base_tokens": 1875,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4196779851021,
+     "gen_tokens": 1380,
+     "gen_tps": 45.00195942052231,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 58.82553962501697,
+     "content_chars": 3973,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 20024,
+       "pad_sha256": "9df5c05043e27c0fb50cf4c63e5d89f1497e6f9da10b4c635dc60c8c12510987",
+       "base_tokens": 1875,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-critical-xl",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: 'Hieronder vindt u een overzicht van de ontvangen items en een samenvatting van de belangrijkste informatie:\\n\\n1. **Weekoverzicht voor ondernemers**  \\n   - De weekagenda bevat tips voor het vereenvoudig'",
+   "start_utc": "2026-11-11T04:16:51.359452+00:00",
+   "end_utc": "2026-11-11T04:18:33.105594+00:00",
+   "wall_s": 101.74548020795919,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.44121825215046,
+     "gen_tokens": 975,
+     "gen_tps": 44.95235983558011,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 49.949457707989495,
+     "content_chars": 1742,
+     "reasoning_chars": 2024,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 18919,
+       "pad_sha256": "0953bf49dabaa7f9ea046e1ea10b21be7428a64e106c159346f5866a95936811",
+       "base_tokens": 2247,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.29553377182054,
+     "gen_tokens": 975,
+     "gen_tps": 45.11980488255968,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 49.773533958999906,
+     "content_chars": 1742,
+     "reasoning_chars": 2024,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 18919,
+       "pad_sha256": "0953bf49dabaa7f9ea046e1ea10b21be7428a64e106c159346f5866a95936811",
+       "base_tokens": 2247,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "amounts-at-length",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: \"</think>\\nOkay, let's see. The user provided a list of items, each with a subject and a message. The task is to process these items and generate a response. \\n\\nFirst, I need to understand what each item\"",
+   "start_utc": "2026-11-11T04:18:33.106277+00:00",
+   "end_utc": "2026-11-11T04:21:02.604766+00:00",
+   "wall_s": 149.50557587499497,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.63248816951034,
+     "gen_tokens": 2048,
+     "gen_tps": 45.02780685532419,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "length",
+     "wall_s": 73.72295591601869,
+     "content_chars": 10008,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 19892,
+       "pad_sha256": "8373e5fa66894712f75ba82c1a69bf3e3a3795dc2ad0ba9e468d2bbb929db215",
+       "base_tokens": 1919,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.40702011391534,
+     "gen_tokens": 2048,
+     "gen_tps": 44.89423468734491,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "length",
+     "wall_s": 73.76308462495217,
+     "content_chars": 10008,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 19892,
+       "pad_sha256": "8373e5fa66894712f75ba82c1a69bf3e3a3795dc2ad0ba9e468d2bbb929db215",
+       "base_tokens": 1919,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "dependency-delivery-vs-install",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\n**Aanvullende informatie voor het vertrouwelijk rapport:**\\n\\n**1. Overzicht van het verzoek:**\\n\\n- **Aanvraag:** De klant heeft een verzoek gedaan naar een vertrouwelijk rapport over'",
+   "start_utc": "2026-11-11T04:21:02.604873+00:00",
+   "end_utc": "2026-11-11T04:22:38.809333+00:00",
+   "wall_s": 96.20553816703614,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.66642539601474,
+     "gen_tokens": 851,
+     "gen_tps": 45.06779240513218,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 47.10370962496381,
+     "content_chars": 2606,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23359,
+       "pad_sha256": "887010d0fc5d8b5cd6475a95b903a84440daad010553632b8528dd139724bb64",
+       "base_tokens": 842,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.07944117731085,
+     "gen_tokens": 851,
+     "gen_tps": 45.00268991547707,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 47.08976820798125,
+     "content_chars": 2606,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23359,
+       "pad_sha256": "887010d0fc5d8b5cd6475a95b903a84440daad010553632b8528dd139724bb64",
+       "base_tokens": 842,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "near-duplicate-invoices",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Antwoord:**\\n\\nBeste [Naam],  \\n\\nBedankt voor uw reactie. Uw betaling van \u20ac1.250,00 voor de factuur van 20 oktober 2023 is aangekondigd en is op 25 oktober 2023 ontvangen. De factuur is correct verwerk'",
+   "start_utc": "2026-11-11T04:22:38.810554+00:00",
+   "end_utc": "2026-11-11T04:24:04.319878+00:00",
+   "wall_s": 85.50891437497921,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.522730066226,
+     "gen_tokens": 610,
+     "gen_tps": 45.026502478256354,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.782793707970995,
+     "content_chars": 644,
+     "reasoning_chars": 1868,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23585,
+       "pad_sha256": "648808fe24705643dc91e6aabcfe34b9a8725f70ada08280be148c635bda8de6",
+       "base_tokens": 786,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.5169729644365,
+     "gen_tokens": 610,
+     "gen_tps": 45.00659235909724,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 41.706905041995924,
+     "content_chars": 644,
+     "reasoning_chars": 1868,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23585,
+       "pad_sha256": "648808fe24705643dc91e6aabcfe34b9a8725f70ada08280be148c635bda8de6",
+       "base_tokens": 786,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "quiet-day-big-amount-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n</think>\\n\\n</think>\\n\\n**Aankondiging:**\\n\\nDeze week is er een nieuwe koffiemachine op de tweede verdieping van het kantoorcomplex. De nieuwe machine is speciaal aangekondigd voor het team. De ou'",
+   "start_utc": "2026-11-11T04:24:04.321815+00:00",
+   "end_utc": "2026-11-11T04:25:22.214968+00:00",
+   "wall_s": 77.89277841697913,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.5768725911879,
+     "gen_tokens": 438,
+     "gen_tps": 45.087783943492205,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.956801041960716,
+     "content_chars": 1500,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23736,
+       "pad_sha256": "f21ec952c3e37b8a269701a7c493fa89d57f1af17a56b9fe55122d1598d218f5",
+       "base_tokens": 754,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3513167425324,
+     "gen_tokens": 438,
+     "gen_tps": 44.90118165162503,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.91328679100843,
+     "content_chars": 1500,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23736,
+       "pad_sha256": "f21ec952c3e37b8a269701a7c493fa89d57f1af17a56b9fe55122d1598d218f5",
+       "base_tokens": 754,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "automated-but-actionable",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Antwoord:**\\n\\nHieronder vindt u een overzicht van de ontvangen berichten en hun betekenis:\\n\\n---\\n\\n### **1. Automatische back-up voltooid**  \\n**Bron:** `no-reply@backupservice.be`  \\n**Bijlage:** Automa'",
+   "start_utc": "2026-11-11T04:25:22.216732+00:00",
+   "end_utc": "2026-11-11T04:27:08.988101+00:00",
+   "wall_s": 106.77085974998772,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.4928315689591,
+     "gen_tokens": 1087,
+     "gen_tps": 45.02211162505893,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 52.38538737501949,
+     "content_chars": 2285,
+     "reasoning_chars": 1949,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23821,
+       "pad_sha256": "1f708e96c0a8d4f31b59b62811f0f3ea5a3280fbd25b9bf802c340d797140b12",
+       "base_tokens": 729,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.3634711337308,
+     "gen_tokens": 1087,
+     "gen_tps": 44.9164953230641,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 52.36337375000585,
+     "content_chars": 2285,
+     "reasoning_chars": 1949,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23821,
+       "pad_sha256": "1f708e96c0a8d4f31b59b62811f0f3ea5a3280fbd25b9bf802c340d797140b12",
+       "base_tokens": 729,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "buried-last-en",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '</think>\\n\\n</think>\\n\\nHere is the translation of the provided text into English:\\n\\n---\\n\\n**Item 1:**\\nFrom: newsletter@saasweekly.io  \\nSubject: SaaS Weekly #212  \\nThis week: pricing pages that convert, a t'",
+   "start_utc": "2026-11-11T04:27:08.988395+00:00",
+   "end_utc": "2026-11-11T04:28:25.254713+00:00",
+   "wall_s": 76.26595120801358,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.50382014748584,
+     "gen_tokens": 402,
+     "gen_tps": 45.10506555677194,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.160030625003856,
+     "content_chars": 1641,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23778,
+       "pad_sha256": "94a7505774de975a30e4ff5f31e84cc50264456146cfd0dac50ea3a70ee9e766",
+       "base_tokens": 741,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.26231681014656,
+     "gen_tokens": 402,
+     "gen_tps": 45.00212584843227,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 37.08502141694771,
+     "content_chars": 1641,
+     "reasoning_chars": 0,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23778,
+       "pad_sha256": "94a7505774de975a30e4ff5f31e84cc50264456146cfd0dac50ea3a70ee9e766",
+       "base_tokens": 741,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  },
+  {
+   "exam": "recap",
+   "case": "meeting-moved-date-decoy",
+   "split": "heldout",
+   "load": 0,
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "error"
+    }
+   ],
+   "wilco_error": "no JSON object found in model output: '**Antwoord:**\\n\\nBeste klant,  \\n\\nU heeft verschillende berichten ontvangen, waaronder:  \\n1. **Een melding over een verplaatst workshop** (van Sarah).  \\n2. **Een aanbod van 20% korting op printerpapier**'",
+   "start_utc": "2026-11-11T04:28:25.254971+00:00",
+   "end_utc": "2026-11-11T04:29:52.888099+00:00",
+   "wall_s": 87.63271199999144,
+   "calls": [
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.6644745307751,
+     "gen_tokens": 658,
+     "gen_tps": 45.05610336716492,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 42.83045712497551,
+     "content_chars": 994,
+     "reasoning_chars": 1712,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23813,
+       "pad_sha256": "2dfcf3d13c672db5655130ab4d3e862e19cb7f922a279e2b8ac277e74ed31002",
+       "base_tokens": 732,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    },
+    {
+     "prompt_tokens": 8192,
+     "prompt_tps": 292.30581349417383,
+     "gen_tokens": 658,
+     "gen_tps": 45.014404951548734,
+     "peak_memory_gb": 4.022009116,
+     "finish_reason": "stop",
+     "wall_s": 42.78210983402096,
+     "content_chars": 994,
+     "reasoning_chars": 1712,
+     "context": {
+      "pad": {
+       "target": 8192,
+       "pad_chars": 23813,
+       "pad_sha256": "2dfcf3d13c672db5655130ab4d3e862e19cb7f922a279e2b8ac277e74ed31002",
+       "base_tokens": 732,
+       "padded_tokens": 8192
+      },
+      "cache_applied": {
+       "RotatingKVCache": 36
+      },
+      "kv_requested": {
+       "max_kv_size": 4096
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "e71802461f2099e242cfcffa1696c981e9e115f6fe786c5b7c1e0f67b921ab4b",
+ "context": {
+  "requested": {
+   "pad_to": 8192,
+   "max_kv_size": 4096
+  },
+  "applied_cache_classes": [
+   {
+    "RotatingKVCache": 36
+   }
+  ],
+  "prefill_step_size": 2048,
+  "prefill_step_size_source": "mlx_lm.generate.generate_step default (stream_generate is passed none)",
+  "padding_rule": {
+   "header": "Earlier messages from this session, already handled. Do not act on them; your task is the next message.\n\n",
+   "ack": "Understood.",
+   "sep": "\n\n--- earlier message ---\n\n",
+   "slack_tokens": 64,
+   "pool": "sitting exam's train inputs, then the other exams' train inputs (sorted), minus the case and any train input containing its text"
+  },
+  "rows_padded": 54,
+  "rows_total": 55,
+  "quantization": {
+   "group_size": 64,
+   "bits": 4
+  },
+  "chat_template_sha256": "87a2728cb8dc9fe424d624542f6060ec05a1d285ebbec578bb078900e33396b5"
+ }
+}
