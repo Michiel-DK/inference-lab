@@ -56,15 +56,15 @@ $P -m lab run <model> --name <run> --smoke       # refuses without a committed p
 # Metal kernels
 
 **Why this repo exists.** An on-device inference posting (2026-10-28) asked for Metal Shading Language, mobile
-GPU kernels and measured latency / memory wins. The portfolio's serving story lives in `agent-sandbox`
+GPU kernels and measured latency / memory wins. The portfolio's serving story lives in [wilco](https://github.com/Michiel-DK/wilco)
 (quantisation, KV-cache type, prefix cache, a 27B paged on 16 GB, an MLX-served adapter), all of it
 *measurement* through an exam runner; none of it is kernel code. This repo is where the kernel craft is
 learned, one rung at a time, each rung ending in a number. `docs/posting-gap-2026-10-28.md` has the
 honest gap and the sentence each rung earns.
 
-**Why it is not inside agent-sandbox.** That repo owns an instrument (registered predictions, three-load
+**Why it is not inside wilco.** That repo owns an instrument (registered predictions, three-load
 snapshots, a Linux CI gate where MLX does not exist, a curated public cut). A kernel is engine code,
-Mac-only, iterated dozens of times a day. agent-sandbox treats engines as runtimes it stamps and measures
+Mac-only, iterated dozens of times a day. wilco treats engines as runtimes it stamps and measures
 (Ollama, `mlx_lm.server`); this repo is one more such runtime. `docs/projects.md` §"How a kernel reaches
 wilco" has the three-step hand-off.
 
@@ -106,4 +106,4 @@ No Xcode needed: Command Line Tools only; MLX compiles the MSL body itself.
 - A kernel is not done until it has a test against the stock op, a benchmark row, and a patch function.
 - Benchmark against what mlx-lm *actually runs* (usually `mx.compile`d), never only against separate ops.
 - Wall times here are microbenchmarks on a shared laptop. An exam-level claim (tok/s, verdict flips, peak
-  memory on a champion) is taken in agent-sandbox under its rules, with this repo's commit hash stamped.
+  memory on a champion) is taken in wilco under its rules, with this repo's commit hash stamped.
