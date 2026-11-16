@@ -11,6 +11,10 @@ Numbers marked **(computed)** are my arithmetic on a read formula and our posted
 Before this read, `LITERATURE.md` held no paper at all: its rows are mlx-lm source, wilco snapshots, vendor cards and agent-sandbox
 probes, and the closest papers were named only in `predictions/*.md` mechanisms ("rank C, not read") or not at all.
 
+## 0. Decider outcome
+
+The decider flips "when a full read shows a published result already answers one of the lab's open questions, or that our setup or metric is not comparable to the one the field reports." **The second condition fired, for quantisation and for KIVI**: the field's headline numbers are for calibrated GPTQ/AWQ at group 128 on vLLM and for score averages (Kurtić) or perplexity (AWQ), ours are for calibration-free affine packs under mlx-lm and exact-field pass counts on 55 cases. The first condition did not fire: no [F] paper answers lane 07 (the only open lane) for an L4 with these exams. **What it means for the cards:** the recommendation (house rule: 8-bit where it fits, local champion `gemma-4-e4b-it-8bit`) is not contradicted by any paper and is not supported by one either; it rests on lane 04 / 10 alone. The README's scope line ("measured on mlx-community affine packs under mlx-lm only") must stay, and the cards must not say the field agrees. Whether a calibrated 4-bit (GPTQ/AWQ-class) pack would close the 4 → 8 gap is unmeasured; that is the one open question this read adds, and it is the operator's to queue or not.
+
 ## 1. Papers (final rank)
 
 | # | paper (arXiv, date) | rank | why it is on the list |
@@ -30,7 +34,7 @@ Fetched and **not read**, so not ranked and not used: GPTQ 2210.17323, Chen et a
 (its text is on disk, I did not read it; a search snippet says it compares against mlx-lm and llama.cpp on an M4 Max, not enough for any claim).
 Not found / not attempted: a 2025–26 low-bit study on Gemma-class models, an Apple-silicon MoE study, a MLX-vs-GGUF *accuracy* comparison. The
 absence is a finding for the card ("no [F] source covers this"), not proof none exists.
-Not checked: that no paper in the last 90 days cites two of the above and reports the same metric (one standard search per topic was run; none surfaced that I read).
+**Not met: the method's "last 90 days, cites two of these, same metric" pick.** Everything read is dated before mid-August 2026 except 2603.08960 (9 Mar) and the v4 of 2411.02355 (26 May); two web searches (Apple-silicon runtimes, MoE at inference) surfaced no newer paper I read. I did not search for a recent KV-eviction or low-bit-Gemma paper.
 
 ## 2. Paper table
 
@@ -40,7 +44,7 @@ Metric definitions are the paper's. "Comparable" is judged against our nearest r
 - **Setup.** Llama-3.1-Instruct 8B / 70B / 405B (plus DeepSeek-R1-Distill Llama and Qwen, §4.3). vLLM 0.6.4.post1 on A6000 / A100 / H100. Formats: W8A8-FP (RTN, dynamic per-token activations), W8A8-INT (GPTQ weights + dynamic activations, SmoothQuant at 70B), W4A16-INT (GPTQ with MSE-optimal clipping, group 128, calibrated on OpenPlatypus). Calibration data matters: random tokens "degrade accuracy" at INT4 (§3.2).
 - **n.** "Over 500,000 evaluations": Open LLM Leaderboard V1 (8 tasks) and V2 (6), Arena-Hard-Auto-v0.1 (500 prompts, LLM judge, two runs averaged), HumanEval/+, RULER; reasoning sets sampled at T = 0.6, 20 responses per query. Text-similarity study (ROUGE-1/L, BERTScore, STS) at greedy on Arena-Hard prompts.
 - **Metric.** "Recovery %" = quantized average / BF16 average.
-- **Numbers.** Table 2, Llama-3.1-8B, V1 average: BF16 74.06, W8A8-FP 73.55, W8A8-INT 74.29, W4A16-INT 73.11 (98.72 % recovery). Table 3, 8B, V2 average: 27.6 / 27.9 / 28.0 / 26.5 (W4A16 96.1 %); Arena-Hard 25.8 / 26.8 / 27.2 / 24.0; HumanEval 67.3 / 67.3 / 67.1 / 67.1. Table 1: GPTQ vs AWQ 4-bit on 8B, real-world average 52.3 vs 49.4. Fig. 1 / §4.4: 8B quantized output vs BF16 ROUGE-1 0.62, ROUGE-L 0.46 (larger models 0.7 / 0.56): same meaning, different words. §5, Tables 5–6: W4A16 is the cheapest per query synchronously, W8A8 under continuous batching (A6000 / A100 / H100, seven use cases).
+- **Numbers.** Table 2, Llama-3.1-8B, V1 average: BF16 74.06, W8A8-FP 73.55, W8A8-INT 74.29, W4A16-INT 73.11 (98.72 % recovery). Table 3, 8B, V2 average: 27.6 / 27.9 / 28.0 / 26.5 (W4A16 96.1 %); Arena-Hard 25.8 / 26.8 / 27.2 / 24.0; HumanEval 67.3 / 67.3 / 67.1 / 67.1. Table 1: GPTQ vs AWQ 4-bit on 8B, real-world average 52.3 vs 49.4. Fig. 1 / §4.4: 8B quantized output vs BF16 ROUGE-1 0.62, ROUGE-L 0.46 (larger models 0.7 / 0.56): same meaning, different words. §5, Tables 5–6 (A6000 / A100 / H100, seven use cases, Lambda on-demand prices): synchronous (one query at a time), Table 5, 8B on 1×A6000, docstring generation: BF16 3.2 s / 1,395 queries per USD, INT8 2.1 s / 2,157, INT4 1.4 s / 3,290. Asynchronous at maximum throughput (setups tuned for BF16, Table 6), same cell: BF16 5.6 QPS / 25.1k Q/$, INT8 7.7 / 34.6k, INT4 5.3 / 24.0k; on code completion INT8 and INT4 tie (2.2 QPS). Text: W8A8 "yield the highest throughput, though W4A16-INT remains competitive and can outperform W8A8 in some scenarios"; W4A16 is more efficient at low latency (Figs. 2–3).
 - **To match.** Same quantiser (calibrated GPTQ g128), same engine, benchmark averages over thousands of items.
 - **Comparable to our lane 02 / 04 rows?** **No for the number, yes for the question.** Different quantiser (ours has no calibration, see 2), different engine and hardware, aggregate over thousands of items vs 55 held-out cases with exact-field scoring.
 
@@ -89,7 +93,7 @@ Metric definitions are the paper's. "Comparable" is judged against our nearest r
 ### 9. 2603.08960 qs inequality (F)
 - **Setup.** An analytic decode-cost model (no measurement). DeepSeek-V3, Qwen3-235B-A22B, Grok-1, Switch-C against quality-matched dense baselines, 128k context, a reference cluster with 8 TB/s HBM; "All throughput results are evaluated at batch size B = n_eff,max" (the largest batch the KV budget allows).
 - **Definitions.** s = active fraction; q = factor by which a dense model must grow to match the MoE's quality (taken from Table 1 as input, not measured); "reuse fragmentation": expert-local batch ≈ B·k/E.
-- **Headline.** 4.5× throughput for a quality-matched dense model on DeepSeek-V3 at 128k.
+- **Headline.** Table 4 / §5.3 text: on 64 GPUs at 128k context, a hypothetical "Dense-5" (dense FFN 5× DeepSeek-V3's active FFN, q = 5 assumed) has a 4.5× throughput advantage; the advantage is 1.0× at extreme context, where both collapse to single-sequence execution.
 - **Comparable to lane 03?** **No.** Cluster HBM, saturated batches, assumed q; says nothing about batch 1 on one 16 GB device, and its own scope sentence is "HBM-centric".
 
 ### 10. 2511.05502 Apple-silicon runtimes (F)
@@ -101,6 +105,16 @@ Metric definitions are the paper's. "Comparable" is judged against our nearest r
 
 ## 3. Our results beside the field
 
+**Commands for the computed numbers** (stdlib only, no model):
+```sh
+# sign test, 32 discordant held-out ids, 6 on the minority side (26 up / 6 down, LESSONS lane 04)
+python3 -c "from math import comb; n=32;k=6; print(sum(comb(n,i) for i in range(k+1))*2/2**n)"   # 0.000535
+# Leviathan Thm 3.8, gamma=3, c=0.7: (1-a^(g+1))/((1-a)(g*c+1)) for a in .5 .6 .7 .8 .9
+python3 -c "g=3;c=.7;[print(a,round((1-a**(g+1))/((1-a)*(g*c+1)),3)) for a in (.5,.6,.7,.8,.9)]"   # 0.605 0.702 0.817 0.952 1.109
+# acceptance 0.625 read as d accepted per round with d/(d+1)=0.625
+python3 -c "d=.625/(1-.625); print((d+1)/(3*.7+1))"   # 0.860
+```
+
 Our numbers are from `LESSONS.md` / `SHOWCASE.md` and are re-derivable with `$P -m lab check results/<run>.json`; I re-derived none (no run was needed, and the rule is that a lane reads them).
 
 **Lane 02 / 04, 4-bit vs 8-bit vs bf16** (`dense-*`, `quant-*`; held-out /55, 1 pass at T = 0, 0 of 83 unstable). Ours: 4 → 8 on e2b 23 → 32, e4b 36 → 41, Llama-3.1-8B 31 → 37; 16 / 16 / 14 flipped ids, held-out pooled 26 up / 6 down; e2b bf16 28.
@@ -111,7 +125,7 @@ Differences: quantiser (no calibration vs calibrated GPTQ), engine and hardware,
 **Lane 05, KV-cache quantisation** (`ctx-lfm2.5-…-8k-kv{8,4}`; LFM2.5-8B-A1B, 55 held-out; kv8 14 (+3/−3), kv4 18 (+4/−0), repeat 0 moved; peak 5.90 → 6.94 / 6.91 GB).
 Field [F]: KIVI Table 3: 4-bit per-token KV on Llama-2-7B changes CoQA +0.94, TruthfulQA −0.91, GSM8K −1.22 vs 16-bit; memory saved at large batch × long context where KV dominates (Fig. 5).
 Differences: fake-quant vs real, group 32 vs mlx's 64 (`kv_group_size` default, `generate.py`), only 6 of LFM's 24 layers are attention (the 18 conv caches have no `to_quantized`), batch 1, benchmark averages vs one-sitting verdicts.
-*Can claim:* quantised KV at 4 or 8 bits moved a handful of verdicts (4–6 of 55) against a repeat that moved none, on one hybrid model; that is the size of effect KIVI reports at 4-bit. *Cannot claim:* anything about 2-bit KIVI, about memory savings (KIVI's saving needs a KV-dominated regime; ours is not one, and our peak rose), or a direction (our +4/−0 and +3/−3 are 55 cases).
+*Can claim:* quantised KV at 4 or 8 bits moved a handful of verdicts (4–6 of 55) against a repeat that moved none, on one hybrid model. KIVI reports small accuracy deltas (about 1 point) at 4-bit; both are "small", but they are not the same metric (a verdict flip count over 55 cases vs an averaged score), so I set no equivalence. *Cannot claim:* anything about 2-bit KIVI, about memory savings (KIVI's saving needs a KV-dominated regime; ours is not one, and our peak rose), or a direction (our +4/−0 and +3/−3 are 55 cases).
 
 **Lane 05 / 13, `max_kv_size`** (`ctx-qwen3-4b-…-maxkv4096`; control 27 → 0/55 held-out, 39 of 39 email + call sittings fail with wilco's "no JSON object found", 0 of 55 moved on the repeat; cache stamped `RotatingKVCache` × 36, `keep` = 4 by mlx-lm source).
 Field [F]: StreamingLLM: evicting the initial tokens collapses window attention (Table 1: PPL 5158 vs 5.40 with 4 + 1020); four initial tokens restore stability; "does not extend… long-term memory"; retrieval drops to zero past the cache (Table 7).
@@ -135,7 +149,7 @@ Field [F]: Mixtral §3: active parameters track compute, memory tracks total, ro
 
 Open or queued items for this lab (`queues/labs.json`, cwd inference-lab) with no result: **lab-inf-07-rented-box** (held by the operator on 16 Nov; `predictions/rented-box.md`, no results file). Lanes 11 (thinking off) and 12 (speculative on a Llama pair) were dropped on 12 Nov and are not re-opened by anything here.
 
-- **lab-inf-07-rented-box.** Not answered by a published result: no [F] paper covers an L4 with these exams. One design point falls below the Kurtić bar (§5, Tables 5–6, A6000 / A100 / H100): W4A16 is cheapest per query for *synchronous* serving, but W8A8 (FP8 on Ada / Hopper) wins under continuous batching, which is exactly the "16–32 concurrent" regime the prediction's throughput claim rests on. The prediction names AWQ/GPTQ 4-bit for the 14B and bf16 for the e4b and no FP8 arm. Concrete change for the operator to make openly, with a dated note, before any go: add an FP8 arm (L4 is Ada, which has FP8 support; ⚠️ not checked against the vLLM release the lane would use) or state why not, and report a synchronous and a concurrent cost line separately, as the paper does.
+- **lab-inf-07-rented-box.** Not answered by a published result: no [F] paper covers an L4 with these exams. One design point falls below the Kurtić bar (§5, Tables 5–6, A6000 / A100 / H100, 8B–405B): the paper reports a synchronous and a maximum-throughput cost line separately, and the 4-bit-vs-8-bit order flips between them on its 8B / 1×A6000 docstring cell (Table 5: INT4 3,290 Q/$ vs INT8 2,157; Table 6: INT8 34.6k vs INT4 24.0k). The prediction's throughput claim rests on 16–32 concurrent requests and names AWQ/GPTQ 4-bit for the 14B and bf16 for the e4b, with one cost line. Concrete change for the operator to make openly, with a dated note, before any go: report a synchronous and a concurrent cost line separately, and either add an 8-bit-weight-and-activation arm (the paper's W8A8; FP8 on an L4 is ⚠️ unchecked against the vLLM release the lane would use) or state why the lane has none. The paper's rows do not predict an L4 outcome (no 24 GB card, no 14B, 16–32 concurrency is below its maximum-throughput setting).
 - **A dropped lane's decider.** Lane 12's brief (spec decoding on a Llama pair) would now start from EAGLE's 13B/7B no-gain row: a 1B draft for an 8B target is 0.125 of the bytes, within the range where papers report gains (EAGLE 33B/7B 0.21 → 1.12×; 70B/7B 0.10 → 1.88×). It is dropped, so this is a note only: nothing published already answers it for mlx-lm, and the paper rows above do not substitute for the run.
 - **Design below the field bar, for any future lane (not edited here).** (a) Quantisation lanes are single-pass on 55 cases with one quantiser class; the field varies the quantiser (GPTQ vs AWQ vs RTN, Table 1 here and AWQ Table 4) and reports confidence intervals (Kurtić Table 4, ±). (b) KV lanes: KIVI's full-precision residual window (R = 128) is the part that matters for GSM8K-type tasks (§4.1 there) and mlx-lm's `quantized_kv_start` is the nearest knob, never varied in lane 05. (c) Speculative: the field reports α in the paper's definition and acceptance length τ; ours reports the share of output tokens from the draft. A lane that wants to set its numbers beside Leviathan's formula needs per-round accepted counts.
 
@@ -144,7 +158,7 @@ Open or queued items for this lab (`queues/labs.json`, cwd inference-lab) with n
 **May:**
 - On mlx-community affine 4-bit and 8-bit packs under mlx-lm 0.31.3, at T = 0, on the three pinned wilco exams, 8-bit passes more held-out cases than 4-bit on all three models measured (lane 04 numbers, `lab check`).
 - Our affine packs are calibration-free (round-to-nearest class); the field's near-lossless 4-bit results are for calibrated GPTQ/AWQ with group 128, so the two are not the same experiment.
-- Quantised KV at 4–8 bits moved a few verdicts on one hybrid model; no more than that.
+- Quantised KV at 4–8 bits moved a few verdicts on one hybrid model; no more than that, and no equivalence with KIVI's score deltas.
 - `max_kv_size` on a class without `make_cache` evicts the head of the prompt, and the StreamingLLM paper's own limitation (a sink keeps stability, not content) matches the observed failure.
 - A draft that is ~70 % of the target's bytes did not pay (×0.494); EAGLE's own baseline for a 13B target with a 7B draft is also no gain.
 - "Memory like the total, speed like the active size" for MoEs on 16 GB, with Mixtral's text for the same distinction.
