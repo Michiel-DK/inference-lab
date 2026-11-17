@@ -1,0 +1,80 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "calib4-gate-qat-mixed-call",
+ "posted": false,
+ "prediction_commit": "d4ca681aa4627ebfb0e78522e4e82ef1891fb1f8",
+ "lab_commit": "c594cc5dd93d70f3d270d936f2a0b766942c44e8",
+ "model": {
+  "ref": "mlx-community/gemma-4-E4B-it-qat-4bit",
+  "snapshot": "0f35c6f6d386f7f74e628bd7c6526ce531212300",
+  "load_s": 2.926070334011456,
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "agent": {
+   "temperature": 0.0,
+   "max_tokens": 4096
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6"
+ },
+ "exam": "call-fields",
+ "case_ids": [
+  "support-long-train"
+ ],
+ "metric": "pass_rate",
+ "headline": 0.0,
+ "aggregates": {
+  "n_cases": 1,
+  "n_calls": 1,
+  "pass_rate": 0.0,
+  "gen_tokens_total": 744,
+  "gen_tps": 29.887181313604003,
+  "prompt_tps": 513.2596106398727,
+  "peak_memory_gb_max": 6.79980883,
+  "wall_s_total": 31.133134833013173,
+  "wall_s_per_case": 31.133134833013173,
+  "wh_per_case": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "passed": false,
+   "failed_checks": [
+    {
+     "bucket": "quality",
+     "check": "fields"
+    }
+   ],
+   "start_utc": "2026-11-17T00:19:42.315704+00:00",
+   "end_utc": "2026-11-17T00:20:13.449463+00:00",
+   "wall_s": 31.133134833013173,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 513.2596106398727,
+     "gen_tokens": 744,
+     "gen_tps": 29.887181313604003,
+     "peak_memory_gb": 6.79980883,
+     "finish_reason": "stop",
+     "wall_s": 31.129657207988203,
+     "content_chars": 221,
+     "reasoning_chars": 2524
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "5d496f2a88793ebe3e366256227d1c89f0b144d4d13dfe5f7a6ee34574635935"
+}

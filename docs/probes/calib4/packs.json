@@ -1,0 +1,33 @@
+{
+  "sources": {
+    "qat": "gemma-4-E4B-it-qat-4bit/snapshots/0f35c6f6d386f7f74e628bd7c6526ce531212300",
+    "q4": "gemma-4-e4b-it-4bit/snapshots/475b9088d29754a3379866cf5aeb6b41acd313c2",
+    "q8": "gemma-4-e4b-it-8bit/snapshots/4255b21bd9a9d3fc807ef7abd80373f5e3a52a73"
+  },
+  "packs": {
+    "gemma-4-e4b-it-qat-4bit-requant": {
+      ".gitattributes": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+      "README.md": "a0926a969c8716fd42e9287b0040aff2f9f4198294ad30de999cb34cdfaf65d9",
+      "chat_template.jinja": "33204f1acb5bd0002713e16a593847f24ceeafe711ed88bda2a352dc996a3373",
+      "config.json": "aacaf9169871a078e1c93a4f4b6809f4c59b477177084aefc16769cf68c88445",
+      "generation_config.json": "b69207f9be617e982d13cc273cce6fd88c98dda99a4bdc5e2d52ffe0a0d9f0a9",
+      "model.safetensors": "c34638cebe4989c0f09b38cd2936e71533aeb273ca2f6ff21cf1e928cb57ee76",
+      "model.safetensors.index.json": "e8bfaa1dd57de58eb616b006397be7aa11660555607fd59d54f2b570b24b1113",
+      "processor_config.json": "1bd0d00776284f369c1eff5fb631e865dfcdca861e0b7d60dbef27fcf37436a8",
+      "tokenizer.json": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "tokenizer_config.json": "080d9e1aff284e2f6043889cd05367966f7c7b80e025fbc0b06745e218158656"
+    },
+    "gemma-4-e4b-it-splice-mlp8": {
+      ".gitattributes": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+      "README.md": "8e9717df49219943b8992eeccecd8050535318d34fffbbaeaac924ed01f27155",
+      "chat_template.jinja": "2f1b4d75d067bae3fe44e676721c7f077d243bc007156cb9c2f8b5836613d082",
+      "config.json": "49a24fd5d967b89db5ef88015919683aa63365384b1fa12a5a02b9d693e06b14",
+      "generation_config.json": "d4226bbe3117d2d253ba4609720ba82c6c4ce4627a9a6ae05387c78983ac03de",
+      "model.safetensors": "66927eb78d12d30e6716b38e0560b1cf47d390f150348d163cc1278dde5b645c",
+      "model.safetensors.index.json": "6b198459e2cf6ce001d1cc5950efc8fe59636dede70485044d9c96b8f7d7ae34",
+      "processor_config.json": "de3e580aebdc98272d4c4547daffe6525fcbae18a83a0e0bcf0d7444d4ee6f37",
+      "tokenizer.json": "cc8d3a0ce36466ccc1278bf987df5f71db1719b9ca6b4118264f45cb627bfe0f",
+      "tokenizer_config.json": "080d9e1aff284e2f6043889cd05367966f7c7b80e025fbc0b06745e218158656"
+    }
+  }
+}

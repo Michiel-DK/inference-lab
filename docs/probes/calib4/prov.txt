@@ -1,0 +1,30 @@
+[1] headers C-splice-mlp8 vs A-qat-mixed: 2770 vs 2770 tensors; differing (dtype/shape) groups: []
+[1] headers B-qat-4bit-requant vs plain-4bit: 2770 vs 2770 tensors; differing (dtype/shape) groups: []
+[1] headers A-qat-mixed vs plain-4bit: 2770 vs 2770 tensors; differing (dtype/shape) groups: ['language_model.model.layers.N.mlp.down_proj.weight', 'language_model.model.layers.N.mlp.gate_proj.weight', 'language_model.model.layers.N.mlp.up_proj.weight']
+[2] rel L2 vs plain-8bit: key | plain-4bit | A | B | C
+    layers.0.self_attn.q_proj | 0.0931 | 0.2979 | 0.2979 | 0.0931
+    layers.0.self_attn.o_proj | 0.0913 | 0.2486 | 0.2486 | 0.0913
+    layers.0.mlp.gate_proj | 0.0958 | 0.2725 | 0.2797 | 0.0000
+    layers.0.mlp.down_proj | 0.0951 | 0.5271 | 0.5293 | 0.0000
+    layers.10.self_attn.q_proj | 0.0941 | 0.2869 | 0.2869 | 0.0941
+    layers.10.self_attn.o_proj | 0.0912 | 0.2427 | 0.2427 | 0.0912
+    layers.10.mlp.gate_proj | 0.0990 | 0.2740 | 0.2819 | 0.0000
+    layers.10.mlp.down_proj | 0.1010 | 0.5190 | 0.5219 | 0.0000
+    layers.20.self_attn.q_proj | 0.0995 | 0.1860 | 0.1860 | 0.0995
+    layers.20.self_attn.o_proj | 0.0908 | 0.1525 | 0.1525 | 0.0908
+    layers.20.mlp.gate_proj | 0.0995 | 0.1586 | 0.1741 | 0.0000
+    layers.20.mlp.down_proj | 0.1021 | 0.3214 | 0.3282 | 0.0000
+    layers.41.self_attn.q_proj | 0.1007 | 0.1976 | 0.1976 | 0.1007
+    layers.41.self_attn.o_proj | 0.0914 | 0.2583 | 0.2583 | 0.0914
+    layers.41.mlp.gate_proj | 0.0946 | 0.2058 | 0.2155 | 0.0000
+    layers.41.mlp.down_proj | 0.0975 | 0.3956 | 0.3997 | 0.0000
+[3] plain-4bit: layer0 mlp.gate_proj bits=4 gs=64; self_attn.q_proj bits=4 gs=64
+[3] plain-8bit: layer0 mlp.gate_proj bits=8 gs=64; self_attn.q_proj bits=8 gs=64
+[3] A-qat-mixed: layer0 mlp.gate_proj bits=8 gs=64; self_attn.q_proj bits=4 gs=64
+[3] B-qat-4bit-requant: layer0 mlp.gate_proj bits=4 gs=64; self_attn.q_proj bits=4 gs=64
+[3] C-splice-mlp8: layer0 mlp.gate_proj bits=8 gs=64; self_attn.q_proj bits=4 gs=64
+[4] plain-4bit: rendered prompts of 8 email-triage train cases identical to plain-4bit: True
+[4] plain-8bit: rendered prompts of 8 email-triage train cases identical to plain-4bit: True
+[4] A-qat-mixed: rendered prompts of 8 email-triage train cases identical to plain-4bit: True
+[4] B-qat-4bit-requant: rendered prompts of 8 email-triage train cases identical to plain-4bit: True
+[4] C-splice-mlp8: rendered prompts of 8 email-triage train cases identical to plain-4bit: True
