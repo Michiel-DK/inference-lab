@@ -22,16 +22,22 @@ free_gb() { vm_stat | awk '/page size of/ {ps=$8} /Pages free/ {f=$3} /Pages ina
 arm() {   # tag model
   local tag=$1 model=$2
   local S=calib4-gate-$tag-smoke C=calib4-gate-$tag-call R=calib4-gemma-4-e4b-it-$tag
+  if [[ -f results/$S.json && -f results/$C.json ]]; then log "SMOKE $tag: committed smoke files reused (never re-sat)"; else
   log "SMOKE $tag"
   $P -m lab run $model --name $S --prediction $PRED --smoke 2> .lab-scratch/$S.stderr | tail -2
   $P -m lab run $model --name $C --prediction $PRED --exam call-fields --cases support-long-train 2> .lab-scratch/$C.stderr | tail -2
+  fi
   [[ -f results/$S.json && -f results/$C.json ]] || { log "NOT SAT (smoke did not complete): $tag"; return; }
   local left=$(( (DEADLINE - $(date +%s)) / 60 ))
   $P scripts/lane04_gate.py $S $C $BASE --minutes-left $left || { log "NOT SAT (time or working set): $tag"; return; }
   local peak=$($P -c "import json;print(max(json.load(open(f'results/{r}.json'))['aggregates']['peak_memory_gb_max'] for r in ('$S','$C')))")
-  local fr=$(free_gb)
-  log "MEMORY $tag: smoke peak $peak + 2.0 vs free $fr GB"
-  $P -c "import sys; sys.exit(0 if $peak + 2.0 <= $fr else 1)" || { log "NOT SAT (memory): $tag"; return; }
+  local fr ok=1 try
+  for try in 1 2 3; do   # 17 Nov: one read taken right after the call smoke exited saw 6.80 GB (8.77 a minute before)
+    fr=$(free_gb); log "MEMORY $tag (read $try): smoke peak $peak + 2.0 vs free $fr GB"
+    $P -c "import sys; sys.exit(0 if $peak + 2.0 <= $fr else 1)" && { ok=0; break; }
+    sleep 30
+  done
+  (( ok == 0 )) || { log "NOT SAT (memory): $tag"; return; }
   local s0=$(swap_mb)
   log "START $R (swap at start ${s0} MB)"
   $P -m lab run $model --name $R --prediction $PRED --exams all --loads 3 --post 2> .lab-scratch/$R.stderr &
@@ -45,7 +51,8 @@ arm() {   # tag model
   wait $pid; log "END $R rc=$?"
 }
 
-arm qat-mixed mlx-community/gemma-4-E4B-it-qat-4bit
+# arm A sat 00:20-01:55 (results/calib4-gemma-4-e4b-it-qat-mixed.json); restarted 17 Nov ~02:00 for B and C only.
+(( $# )) && [[ $1 == --from-b ]] || arm qat-mixed mlx-community/gemma-4-E4B-it-qat-4bit
 arm qat-4bit-requant $PK/gemma-4-e4b-it-qat-4bit-requant
 arm splice-mlp8 $PK/gemma-4-e4b-it-splice-mlp8
 log DONE

@@ -1,0 +1,75 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "calib4-gate-qat-4bit-requant-call",
+ "posted": false,
+ "prediction_commit": "d4ca681aa4627ebfb0e78522e4e82ef1891fb1f8",
+ "lab_commit": "796c9468ac0bf9e08052d428abaa541bbfc4f826",
+ "model": {
+  "ref": "/Users/michieldekoninck/.cache/inference-lab/packs/gemma-4-e4b-it-qat-4bit-requant",
+  "snapshot": "gemma-4-e4b-it-qat-4bit-requant",
+  "load_s": 2.418461749999551,
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "agent": {
+   "temperature": 0.0,
+   "max_tokens": 4096
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "14.3.1",
+  "python": "3.10.6"
+ },
+ "exam": "call-fields",
+ "case_ids": [
+  "support-long-train"
+ ],
+ "metric": "pass_rate",
+ "headline": 1.0,
+ "aggregates": {
+  "n_cases": 1,
+  "n_calls": 1,
+  "pass_rate": 1.0,
+  "gen_tokens_total": 848,
+  "gen_tps": 42.6449500150119,
+  "prompt_tps": 534.8262476686936,
+  "peak_memory_gb_max": 5.146728766,
+  "wall_s_total": 25.872743040992646,
+  "wall_s_per_case": 25.872743040992646,
+  "wh_per_case": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-17T01:55:34.570866+00:00",
+   "end_utc": "2026-11-17T01:56:00.444290+00:00",
+   "wall_s": 25.872743040992646,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 534.8262476686936,
+     "gen_tokens": 848,
+     "gen_tps": 42.6449500150119,
+     "peak_memory_gb": 5.146728766,
+     "finish_reason": "stop",
+     "wall_s": 25.868048749980517,
+     "content_chars": 226,
+     "reasoning_chars": 2888
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "320b33bc158703f84676715218afcdfe21fd4bce5f6c7444cebb0946c4ae84e0"
+}
