@@ -41,10 +41,11 @@ does not close the gap, GPTQ/AWQ is unlikely to. The prediction was committed fi
 **Headline.**
 - **B (QAT weights at the baseline's exact format) sits 40/55: +4 over plain 4-bit (36), −1 under plain 8-bit (41).**
   It costs what plain 4-bit costs: 41.0 tok/s and 5.45 GB peak, against plain 4-bit's 41.9 tok/s and 5.45 GB.
-  - That meets the operator's threshold (≥ 39). It does not clear the pre-registered ±4 floor: +4 is the floor, and
-    37–40 is "inside the floor".
-  - **By the reading written before any load, the 8-bit house rule stands. The cards may name a QAT 4-bit as an
-    alternative inside the floor.** The rule changes only if B ≥ 41.
+  - Two readings, posted at equal weight (the prediction committed to both). The operator decides:
+    - **The operator's flip condition is met.** B closes 4 of lane 04's 5 cases, which is "half or more".
+    - **The pre-registered floor is not cleared.** +4 equals the ±4 floor, on one model. The prediction says the
+      rule changes only if B ≥ 41. On this reading the cards keep 8-bit, and may name a QAT 4-bit (QAT weights,
+      mx affine 4-bit g64) as an alternative inside the floor.
 - **A (the mlx-community QAT pack as shipped) sits 43/55**, at 31.4 tok/s and 7.10 GB.
   - A is above 8-bit's 41, but that is inside the floor. This lane does not show that A beats 8-bit.
   - C was not sat, so A cannot be split into "QAT weights" and "8-bit MLPs".
@@ -62,21 +63,24 @@ does not close the gap, GPTQ/AWQ is unlikely to. The prediction was committed fi
 | C. splice control | not sat (time gate, reading contaminated: see below) | | | | | | | | |
 
 † B's load 2 ran under contention (see "What went wrong"). Per load, gen tok/s was 43.7 · 42.8 · **37.3** and wall
-1446 · 1480 · **1826** s. The aggregate includes the contended load.
+1446 · 1480 · **1826** s. The aggregate includes the contended load. These are in `docs/probes/calib4/contention.txt`
+(`python3 scripts/calib4_contention.py`).
 
 **What went wrong, kept in.**
 - **B was scored against its pre-registered stop.** The swap watcher fired at 02:46:37 (swap 3.49 → 10.70 GB, +7.2 GB;
-  cause ⚠️ unknown). The drive's `kill $pid` stopped the `lab run` parent but not its `lab sit` child, and the following
+  cause ⚠️ unknown; `docs/probes/calib4/drive-excerpt.log`). The drive's `kill $pid` stopped the `lab run` parent but not its `lab sit` child, and the following
   `pkill -P` found nothing once the parent had died. So load 2 ran to completion at 03:16:04.
   - The operator decided on 17 Nov to score B from its three complete loads and not re-sit it.
   - The verdicts did not move. On 83 of 83 cases, B's verdicts and its per-call `gen_tokens` are identical across loads
     0, 1 and 2. The contention changed speed only.
 - **C's time gate read ×62 slower, but that reading was taken under contention.** The C smoke started at 02:46:45,
   alongside the orphaned B load. Its first case ran 2,268.5 s at 0.14 tok/s, and it ended at 03:24:34, after the orphan
-  had exited. The gate then projected 5,074 min against 109 min left, and C was not sat. Peak was 6.80 GB. Swap was not
+  had exited. The gate then projected 5,074 min against 109 min left, and C was not sat (`python3 scripts/lane04_gate.py calib4-gate-splice-mlp8-smoke calib4-gate-splice-mlp8-call dense-gemma-4-e4b-it-4bit --minutes-left 109`).
+  Peak was 6.80 GB. Swap was not
   logged during the gate; the last reading was 10.70 GB at 02:46:37.
   - C's next case, sat once the box was quiet, ran at 31.24 tok/s; arm A ran the same case at 31.47.
   - C's call smoke ran at 24.98 tok/s, against A's 29.89.
+  - These per-case numbers are in `docs/probes/calib4/contention.txt`.
   - C and A have the same tensor dtypes and shapes (`docs/probes/calib4/prov.txt` [1]).
   - So the suspected cause, a spliced 8-bit MLP missing the fast quantized kernel, is ⚠️ unverified, and the uncontended
     cases argue against it. Contention is the likelier cause, also ⚠️ unverified.
