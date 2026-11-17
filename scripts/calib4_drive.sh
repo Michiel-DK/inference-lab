@@ -34,7 +34,7 @@ arm() {   # tag model
   $P -c "import sys; sys.exit(0 if $peak + 2.0 <= $fr else 1)" || { log "NOT SAT (memory): $tag"; return; }
   local s0=$(swap_mb)
   log "START $R (swap at start ${s0} MB)"
-  $P -m lab run $model --name $R --prediction $PRED --exams all --loads 3 --post --scratch .lab-scratch/$R 2> .lab-scratch/$R.stderr &
+  $P -m lab run $model --name $R --prediction $PRED --exams all --loads 3 --post 2> .lab-scratch/$R.stderr &
   local pid=$!
   while kill -0 $pid 2>/dev/null; do
     sleep 300
