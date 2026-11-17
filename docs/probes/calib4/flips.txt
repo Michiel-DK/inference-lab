@@ -1,0 +1,61 @@
+# flip ids, majority verdict over 3 loads, all 83 cases (scripts/lane04_rows.py; stdlib, reads committed results only)
+
+$ python3 scripts/lane04_rows.py dense-gemma-4-e4b-it-4bit calib4-gemma-4-e4b-it-qat-mixed calib4-gemma-4-e4b-it-qat-4bit-requant quant-gemma-4-e4b-it-8bit
+dense-gemma-4-e4b-it-4bit -> calib4-gemma-4-e4b-it-qat-mixed
+  call-fields: held-out 10 -> 14/19; up 9 ['longcall-renewal-train-1[train]', 'longcall-scoping-heldout-1[heldout]', 'mixed-heldout-dense[heldout]', 'quiet-checkin-heldout-medium[heldout]', 'quiet-checkin-medium-train[train]', 'quiet-checkin-short-train[train]', 'renewal-heldout-digits[heldout]', 'renewal-heldout-medium[heldout]', 'support-medium-train[train]']; down 3 ['longcall-quiet-train-1[train]', 'pricing-objection-medium-train[train]', 'support-heldout-long[heldout]']; rule trigger (held-out, stable fail -> stable pass) ['longcall-scoping-heldout-1', 'mixed-heldout-dense', 'quiet-checkin-heldout-medium', 'renewal-heldout-digits', 'renewal-heldout-medium']
+    min/1000 cases 374.7 -> 420.1 (x1.12); gen tokens per sitting 685.8 -> 596.9
+  email-triage: held-out 16 -> 17/20; up 2 ['client-question-no-rush[train]', 'intro-no-ask[heldout]']; down 0 []; rule trigger (held-out, stable fail -> stable pass) ['intro-no-ask']
+    min/1000 cases 138.3 -> 180.6 (x1.31); gen tokens per sitting 332.2 -> 325.3
+  recap: held-out 10 -> 12/16; up 2 ['amounts-at-length[heldout]', 'quiet-day-with-receipt[heldout]']; down 1 ['compression-heavy[train]']; rule trigger (held-out, stable fail -> stable pass) ['amounts-at-length', 'quiet-day-with-receipt']
+    min/1000 cases 491.1 -> 566.7 (x1.15); gen tokens per sitting 1118.0 -> 989.3
+  distinct case ids flipped 17 of 83; held-out total 36 -> 43/55; unstable 0 -> 0
+  gen tok/s 41.9 -> 31.4 (x0.75); peak GB 5.45 -> 7.10 (+1.65); wall 3x83 81.5 -> 94.6 min (x1.16); gen tokens per sitting 686.3 -> 614.0; Wh/case None -> None
+dense-gemma-4-e4b-it-4bit -> calib4-gemma-4-e4b-it-qat-4bit-requant
+  call-fields: held-out 10 -> 13/19; up 7 ['longcall-renewal-train-1[train]', 'longcall-scoping-heldout-1[heldout]', 'quiet-checkin-heldout-medium[heldout]', 'quiet-checkin-medium-train[train]', 'quiet-checkin-short-train[train]', 'renewal-heldout-digits[heldout]', 'support-long-train[train]']; down 0 []; rule trigger (held-out, stable fail -> stable pass) ['longcall-scoping-heldout-1', 'quiet-checkin-heldout-medium', 'renewal-heldout-digits']
+    min/1000 cases 374.7 -> 389.4 (x1.04); gen tokens per sitting 685.8 -> 657.3
+  email-triage: held-out 16 -> 16/20; up 2 ['client-question-no-rush[train]', 'intro-no-ask[heldout]']; down 1 ['paid-workshop-invite[heldout]']; rule trigger (held-out, stable fail -> stable pass) ['intro-no-ask']
+    min/1000 cases 138.3 -> 137.3 (x0.99); gen tokens per sitting 332.2 -> 308.2
+  recap: held-out 10 -> 11/16; up 2 ['amounts-at-length[heldout]', 'very-long-day[heldout]']; down 1 ['quiet-day-newsletters[heldout]']; rule trigger (held-out, stable fail -> stable pass) ['amounts-at-length', 'very-long-day']
+    min/1000 cases 491.1 -> 438.9 (x0.89); gen tokens per sitting 1118.0 -> 973.9
+  distinct case ids flipped 13 of 83; held-out total 36 -> 40/55; unstable 0 -> 0
+  gen tok/s 41.9 -> 41.0 (x0.98); peak GB 5.45 -> 5.45 (+0.00); wall 3x83 81.5 -> 79.2 min (x0.97); gen tokens per sitting 686.3 -> 627.3; Wh/case None -> None
+dense-gemma-4-e4b-it-4bit -> quant-gemma-4-e4b-it-8bit
+  call-fields: held-out 10 -> 13/19; up 9 ['longcall-pricing-heldout-1[heldout]', 'longcall-renewal-train-1[train]', 'quiet-checkin-heldout-medium[heldout]', 'quiet-checkin-medium-train[train]', 'quiet-checkin-short-train[train]', 'renewal-heldout-digits[heldout]', 'renewal-heldout-medium[heldout]', 'support-long-train[train]', 'support-medium-train[train]']; down 2 ['longcall-mixed-heldout-3[heldout]', 'longcall-support-train-1[train]']; rule trigger (held-out, stable fail -> stable pass) ['longcall-pricing-heldout-1', 'quiet-checkin-heldout-medium', 'renewal-heldout-digits', 'renewal-heldout-medium']
+    min/1000 cases 374.7 -> 403.7 (x1.08); gen tokens per sitting 685.8 -> 537.3
+  email-triage: held-out 16 -> 16/20; up 2 ['client-question-no-rush[train]', 'intro-no-ask[heldout]']; down 1 ['paid-workshop-invite[heldout]']; rule trigger (held-out, stable fail -> stable pass) ['intro-no-ask']
+    min/1000 cases 138.3 -> 168.0 (x1.22); gen tokens per sitting 332.2 -> 283.1
+  recap: held-out 10 -> 12/16; up 2 ['amounts-at-length[heldout]', 'quiet-day-with-receipt[heldout]']; down 0 []; rule trigger (held-out, stable fail -> stable pass) ['amounts-at-length', 'quiet-day-with-receipt']
+    min/1000 cases 491.1 -> 602.9 (x1.23); gen tokens per sitting 1118.0 -> 988.3
+  distinct case ids flipped 16 of 83; held-out total 36 -> 41/55; unstable 0 -> 0
+  gen tok/s 41.9 -> 29.3 (x0.70); peak GB 5.45 -> 9.18 (+3.73); wall 3x83 81.5 -> 94.5 min (x1.16); gen tokens per sitting 686.3 -> 576.5; Wh/case None -> None
+
+$ python3 scripts/lane04_rows.py quant-gemma-4-e4b-it-8bit calib4-gemma-4-e4b-it-qat-mixed calib4-gemma-4-e4b-it-qat-4bit-requant
+quant-gemma-4-e4b-it-8bit -> calib4-gemma-4-e4b-it-qat-mixed
+  call-fields: held-out 13 -> 14/19; up 4 ['longcall-mixed-heldout-3[heldout]', 'longcall-scoping-heldout-1[heldout]', 'longcall-support-train-1[train]', 'mixed-heldout-dense[heldout]']; down 5 ['longcall-pricing-heldout-1[heldout]', 'longcall-quiet-train-1[train]', 'pricing-objection-medium-train[train]', 'support-heldout-long[heldout]', 'support-long-train[train]']; rule trigger (held-out, stable fail -> stable pass) ['longcall-mixed-heldout-3', 'longcall-scoping-heldout-1', 'mixed-heldout-dense']
+    min/1000 cases 403.7 -> 420.1 (x1.04); gen tokens per sitting 537.3 -> 596.9
+  email-triage: held-out 16 -> 17/20; up 1 ['paid-workshop-invite[heldout]']; down 0 []; rule trigger (held-out, stable fail -> stable pass) ['paid-workshop-invite']
+    min/1000 cases 168.0 -> 180.6 (x1.07); gen tokens per sitting 283.1 -> 325.3
+  recap: held-out 12 -> 12/16; up 0 []; down 1 ['compression-heavy[train]']; rule trigger (held-out, stable fail -> stable pass) []
+    min/1000 cases 602.9 -> 566.7 (x0.94); gen tokens per sitting 988.3 -> 989.3
+  distinct case ids flipped 11 of 83; held-out total 41 -> 43/55; unstable 0 -> 0
+  gen tok/s 29.3 -> 31.4 (x1.07); peak GB 9.18 -> 7.10 (-2.08); wall 3x83 94.5 -> 94.6 min (x1.00); gen tokens per sitting 576.5 -> 614.0; Wh/case None -> None
+quant-gemma-4-e4b-it-8bit -> calib4-gemma-4-e4b-it-qat-4bit-requant
+  call-fields: held-out 13 -> 13/19; up 3 ['longcall-mixed-heldout-3[heldout]', 'longcall-scoping-heldout-1[heldout]', 'longcall-support-train-1[train]']; down 3 ['longcall-pricing-heldout-1[heldout]', 'renewal-heldout-medium[heldout]', 'support-medium-train[train]']; rule trigger (held-out, stable fail -> stable pass) ['longcall-mixed-heldout-3', 'longcall-scoping-heldout-1']
+    min/1000 cases 403.7 -> 389.4 (x0.96); gen tokens per sitting 537.3 -> 657.3
+  email-triage: held-out 16 -> 16/20; up 0 []; down 0 []; rule trigger (held-out, stable fail -> stable pass) []
+    min/1000 cases 168.0 -> 137.3 (x0.82); gen tokens per sitting 283.1 -> 308.2
+  recap: held-out 12 -> 11/16; up 1 ['very-long-day[heldout]']; down 2 ['quiet-day-newsletters[heldout]', 'quiet-day-with-receipt[heldout]']; rule trigger (held-out, stable fail -> stable pass) ['very-long-day']
+    min/1000 cases 602.9 -> 438.9 (x0.73); gen tokens per sitting 988.3 -> 973.9
+  distinct case ids flipped 9 of 83; held-out total 41 -> 40/55; unstable 0 -> 0
+  gen tok/s 29.3 -> 41.0 (x1.40); peak GB 9.18 -> 5.45 (-3.73); wall 3x83 94.5 -> 79.2 min (x0.84); gen tokens per sitting 576.5 -> 627.3; Wh/case None -> None
+
+$ python3 scripts/lane04_rows.py calib4-gemma-4-e4b-it-qat-mixed calib4-gemma-4-e4b-it-qat-4bit-requant
+calib4-gemma-4-e4b-it-qat-mixed -> calib4-gemma-4-e4b-it-qat-4bit-requant
+  call-fields: held-out 14 -> 13/19; up 4 ['longcall-quiet-train-1[train]', 'pricing-objection-medium-train[train]', 'support-heldout-long[heldout]', 'support-long-train[train]']; down 3 ['mixed-heldout-dense[heldout]', 'renewal-heldout-medium[heldout]', 'support-medium-train[train]']; rule trigger (held-out, stable fail -> stable pass) ['support-heldout-long']
+    min/1000 cases 420.1 -> 389.4 (x0.93); gen tokens per sitting 596.9 -> 657.3
+  email-triage: held-out 17 -> 16/20; up 0 []; down 1 ['paid-workshop-invite[heldout]']; rule trigger (held-out, stable fail -> stable pass) []
+    min/1000 cases 180.6 -> 137.3 (x0.76); gen tokens per sitting 325.3 -> 308.2
+  recap: held-out 12 -> 11/16; up 2 ['compression-heavy[train]', 'very-long-day[heldout]']; down 2 ['quiet-day-newsletters[heldout]', 'quiet-day-with-receipt[heldout]']; rule trigger (held-out, stable fail -> stable pass) ['very-long-day']
+    min/1000 cases 566.7 -> 438.9 (x0.77); gen tokens per sitting 989.3 -> 973.9
+  distinct case ids flipped 12 of 83; held-out total 43 -> 40/55; unstable 0 -> 0
+  gen tok/s 31.4 -> 41.0 (x1.31); peak GB 7.10 -> 5.45 (-1.65); wall 3x83 94.6 -> 79.2 min (x0.84); gen tokens per sitting 614.0 -> 627.3; Wh/case None -> None
