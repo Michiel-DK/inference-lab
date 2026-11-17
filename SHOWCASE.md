@@ -66,6 +66,25 @@ does not close the gap, GPTQ/AWQ is unlikely to. The prediction was committed fi
 1446 · 1480 · **1826** s. The aggregate includes the contended load. These are in `docs/probes/calib4/contention.txt`
 (`python3 scripts/calib4_contention.py`).
 
+**Why 4-bit is 1.4× faster, not 2× (effective bandwidth, added 17 Nov 2026 from the numbers above; no new run).** Decode reads the
+weights once per token, so bytes read per token × tok/s is the bandwidth each pack actually gets (`python3 scripts/calib4_bandwidth.py`;
+bytes from the safetensors headers of the snapshots in `docs/probes/calib4/packs.json`: the text model, with the tied embedding matrix
+counted once for the output head, the per-layer embedding table and the vision/audio towers left out):
+
+| arm | weight GB read / token | gen tok/s | effective GB/s | ms / token |
+|---|---|---|---|---|
+| plain 4-bit | 2.61 | 41.9 | 109 | 23.9 |
+| B. QAT, pure 4-bit g64 | 2.61 | 41.0 † | 107 | 24.4 |
+| A. QAT pack (4 attn / 8 MLP) | 4.26 | 31.4 | 134 | 31.9 |
+| plain 8-bit | 4.94 | 29.3 | 145 | 34.1 |
+
+8-bit reads 1.89× the bytes of 4-bit but takes only 1.43× the time per token. 8-bit gets 145 GB/s, close to the ~150 GB/s the dense
+lane read for the 8B and above the ~130 GB/s of the fused kernel bench; the 4-bit packs get ~108. So at 4-bit a larger share of each
+token is not weight reading: unpacking the 4-bit values, KV-cache reads, the per-layer embedding rows and fixed per-token work. Fitting
+"time = bytes / bandwidth + a fixed part" to plain 4-bit and 8-bit gives about 12 ms of the 4-bit's 24 ms as the fixed part, but at an
+implied 227 GB/s, above the M1 Pro's nominal 200, so the fixed part is not constant across packs (likely the unpacking cost per byte
+differs). ⚠️ The split is an estimate from two points, not a measurement; the bytes exclude the KV cache, which this lane did not log.
+
 **What went wrong, kept in.**
 - **B was scored against its pre-registered stop.** The swap watcher fired at 02:46:37 (swap 3.49 → 10.70 GB, +7.2 GB;
   cause ⚠️ unknown; `docs/probes/calib4/drive-excerpt.log`). The drive's `kill $pid` stopped the `lab run` parent but not its `lab sit` child, and the following
