@@ -51,3 +51,58 @@ reached the opposite conclusion at serial concurrency: a card costs more than ho
 time; batching is the unmeasured lever that sheet named, and this lane measures it. Pass fractions move by packaging (bf16 vs
 4-bit, AWQ vs affine) rather than by hardware, the same lever e31 measured on the laptop (rank A), so a ±2 band is the honest
 prediction, not equality.
+
+## Amendment 16 Nov 2026 (before any run)
+
+Written before any lane-07 run (none has happened; no `results/rented-box*.json` exists), after the full-text literature read
+(`docs/literature-2026-11-16.md` §2.1, §4). It adds to the prediction above and changes nothing in it; the brief change it rests
+on is proposed in the scheduler (`jobs/lab-inf-07-rented-box.proposed.md`) and is the operator's to approve or reject.
+
+**Why.** Kurtić et al. 2411.02355 v4 §5 (rank C here: read, not run; their setup is 8B on 1×A6000 48 GB, ours is a 24 GB L4)
+report the cost order of 4-bit vs 8-bit flipping with the serving mode. Table 5 (synchronous), docstring generation: BF16 1,395,
+INT8 2,157, INT4 3,290 queries per USD. Table 6 (max throughput, setups tuned for BF16), same cell: BF16 25.1k, INT8 34.6k, INT4
+24.0k. The prediction above has one cost line, taken at 16–32 concurrency, and no 8-bit-activation arm. So it could not see that
+flip.
+
+**Added arms.** W8A8 (8-bit weights and activations) for both models, beside the original e4b bf16 and Qwen3-14B AWQ/GPTQ 4-bit.
+⚠️ UNVERIFIED: whether the pinned vLLM runs FP8 W8A8 on the L4 or only INT8, and which checkpoints exist. Both must be named here
+before the go.
+
+**Added serving cases.** Synchronous (concurrency 1) and max-throughput (sweep to saturation). Each gets its own cost line, and
+the 16–32 point is kept separate from saturation.
+
+**Predicted per-stream decode, synchronous** (bandwidth-bound: ~300 GB/s over the weight bytes, rank C): e4b bf16 15–20 tok/s
+(as above), e4b W8A8 (~8 GB) 25–30, 14B AWQ 4-bit (~9 GB) 25–32 (as above), 14B W8A8 (~15 GB) 14–18.
+
+**Predicted cost order.**
+
+| model | synchronous (cheapest first) | max-throughput (cheapest first) |
+|---|---|---|
+| e4b | W8A8 < bf16 | W8A8 < bf16 (the gap is wider than in sync: W8A8 frees ~8 GB of KV on a 24 GB card) |
+| Qwen3-14B | AWQ 4-bit < W8A8 | email-triage: W8A8 ≤ AWQ (short prompts, the batch fits); call-fields: AWQ < W8A8 (KV-bound) |
+
+So the Kurtić flip is predicted for the 14B on short prompts only. On the 8k call-fields prompts the predicted order is the same
+in both modes. The reason: ~15 GB of W8A8 weights leave about 6 GB of KV at `--gpu-memory-utilization 0.9`, against about 12 GB
+for AWQ. At ~0.16 MB per token (⚠️ UNVERIFIED Qwen3-14B shape, 40 layers × 8 KV heads × 128 × 2 × 2 bytes, not read from a config
+today) that caps W8A8 at ~4 concurrent 8.5k-token requests, against ~8 for AWQ. The paper's 48 GB card never meets that cap. For
+the e4b there is no flip to see, because the lane has no 4-bit e4b on vLLM unless a public checkpoint exists. Confidence: low on
+the 14B email-triage order (a near-tie is the likeliest outcome), moderate on the others.
+
+**Predicted cost per 1,000 cases, synchronous** (mean output ~427 tokens, plus 1–2 s prefill, at €0.45–0.80/h): e4b bf16
+€2.8–6.8, e4b W8A8 €1.9–4.2, 14B AWQ €1.8–4.2, 14B W8A8 €3.1–7.2. That is 10–30× the concurrent line above (€0.09–0.24 at
+300–800 aggregate tok/s, €0.60/h). Command:
+
+```sh
+python3 -c "
+o=(330+400+550)/3
+for r in (.45,.8):
+  for a,(lo,hi) in {'e4b bf16':(15,20),'e4b W8A8':(25,30),'14B AWQ4':(25,32),'14B W8A8':(14,18)}.items():
+    print(r,a,round(r*(o/hi+1)/3.6,2),round(r*(o/lo+2)/3.6,2))"
+```
+
+**Total spent, revised.** It was 2–4 box-hours, €2–6. Now it is **6–10 box-hours, €3–8**: 4 arms × (249 synchronous cases + a
+sweep + a load), with a ceiling of €12 for the go note. Command:
+`python3 -c "[print(w,round(4*(0.1+249*w/3600+0.25)+0.5,1)) for w in (16,30)]"`.
+
+**Kill clause, added.** No max-throughput cost line is posted without the saturation bound named (KV preemption or a tok/s
+plateau) and the replay marked timing-only.
