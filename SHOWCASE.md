@@ -3,6 +3,95 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
+## Lane calibrated-4bit: does a properly made (QAT) 4-bit pack close the e4b's 4 → 8-bit gap? (16–17 Nov 2026)
+
+origin: {"kind": "lane", "url": null, "label": "inference literature: calibration-free 4-bit vs calibrated INT4"}
+
+**Question.** Lane 04 measured the e4b at 36 → 41 held-out /55 going from mlx-community's affine 4-bit to 8-bit. Those
+packs are round-to-nearest with no calibration data. Does a properly made 4-bit pack of the same model close half or more
+of that gap (≥ 39/55)? The decider is the operator: do the inference cards keep the 8-bit house rule? Local GPTQ/AWQ does
+not fit 16 GB (it needs the 15.88 GB bf16 model), so the properly made arm is Google's **quantisation-aware-trained (QAT)**
+checkpoint, as packed by mlx-community. QAT is not post-hoc calibration. It is a stronger 4-bit than calibration: if QAT
+does not close the gap, GPTQ/AWQ is unlikely to. The prediction was committed first: `predictions/calibrated-4bit.md`
+(`d4ca681`).
+
+**Protocol.**
+- e4b only, all 83 cases, three fresh loads per arm, wilco pin `62fcd449`, mlx 0.32.2 / mlx-lm 0.31.3, temperature 0.
+  Wh not metered (no operator `powermetrics` capture).
+- Packs and group sizes. All five are affine, group 64:
+
+| arm | weights | bits | group | GB |
+|---|---|---|---|---|
+| plain 4-bit (lane 02, not re-sat) | stock | 4 everywhere | 64 | 5.18 |
+| plain 8-bit (lane 04, not re-sat) | stock | 8 everywhere | 64 | 8.91 |
+| A. `mlx-community/gemma-4-E4B-it-qat-4bit@0f35c6f6` | QAT | 4 attention, 8 on all 126 MLP weights | 64 | 6.80 |
+| B. A re-quantised to pure 4-bit (`scripts/calib4_build.py`) | QAT | 4 everywhere | 64 | ~5.2 |
+| C. splice control: plain 4-bit with the 8-bit pack's MLPs | stock | 4 attention, 8 MLP | 64 | ~6.8 |
+
+- Confounds, stated in the prediction before any load:
+  - "QAT 4-bit" on mlx-community is **not** a 4-bit pack. About 85 % of its linear-layer bytes are 8-bit. B is the arm
+    that asks the decider's question.
+  - Google's QAT targets **Q4_0** (symmetric, block 32). Every pack here is affine group 64, so none is on the grid QAT
+    trained for. B's MLPs are rounded twice (QAT → 8-bit → 4-bit).
+  - Base checkpoint ⚠️ unverified. The mlx-community card names none. Google's unquantised QAT card names
+    `google/gemma-4-E4B-it`, the instruct model lane 04 used.
+  - The chat template differs from the plain packs by one tool-response media block. The rendered prompt ids on the
+    smoke cases are identical (`docs/probes/calib4/prov.txt` [4]).
+
+**Headline.**
+- **B (QAT weights at the baseline's exact format) sits 40/55: +4 over plain 4-bit (36), −1 under plain 8-bit (41).**
+  It costs what plain 4-bit costs: 41.0 tok/s and 5.45 GB peak, against plain 4-bit's 41.9 tok/s and 5.45 GB.
+  - That meets the operator's threshold (≥ 39). It does not clear the pre-registered ±4 floor: +4 is the floor, and
+    37–40 is "inside the floor".
+  - **By the reading written before any load, the 8-bit house rule stands. The cards may name a QAT 4-bit as an
+    alternative inside the floor.** The rule changes only if B ≥ 41.
+- **A (the mlx-community QAT pack as shipped) sits 43/55**, at 31.4 tok/s and 7.10 GB.
+  - A is above 8-bit's 41, but that is inside the floor. This lane does not show that A beats 8-bit.
+  - C was not sat, so A cannot be split into "QAT weights" and "8-bit MLPs".
+- Every arm had 0 of 83 unstable cases. Flips vs plain 4-bit (distinct case ids, majority verdict, all 83): A 17, B 13.
+  Vs plain 8-bit: A 11, B 9. The ids are in `docs/probes/calib4/flips.txt`.
+
+**The table** (`python3 scripts/lane04_rows.py dense-gemma-4-e4b-it-4bit calib4-gemma-4-e4b-it-qat-mixed calib4-gemma-4-e4b-it-qat-4bit-requant quant-gemma-4-e4b-it-8bit`):
+
+| arm | email /20 | call /19 | recap /16 | **total /55** | unstable /83 | gen tok/s | peak GB | gen tok / sitting | wall 3 × 83 min |
+|---|---|---|---|---|---|---|---|---|---|
+| plain 4-bit | 16 | 10 | 10 | **36** | 0 | 41.9 | 5.45 | 686 | 81.5 |
+| **B. QAT, pure 4-bit g64** | 16 | 13 | 11 | **40** | 0 | 41.0 † | 5.45 | 627 | 79.2 † |
+| A. QAT pack (4 attn / 8 MLP) | 17 | 14 | 12 | **43** | 0 | 31.4 | 7.10 | 614 | 94.6 |
+| plain 8-bit | 16 | 13 | 12 | **41** | 0 | 29.3 | 9.18 | 577 | 94.5 |
+| C. splice control | not sat (time gate, reading contaminated: see below) | | | | | | | | |
+
+† B's load 2 ran under contention (see "What went wrong"). Per load, gen tok/s was 43.7 · 42.8 · **37.3** and wall
+1446 · 1480 · **1826** s. The aggregate includes the contended load.
+
+**What went wrong, kept in.**
+- **B was scored against its pre-registered stop.** The swap watcher fired at 02:46:37 (swap 3.49 → 10.70 GB, +7.2 GB;
+  cause ⚠️ unknown). The drive's `kill $pid` stopped the `lab run` parent but not its `lab sit` child, and the following
+  `pkill -P` found nothing once the parent had died. So load 2 ran to completion at 03:16:04.
+  - The operator decided on 17 Nov to score B from its three complete loads and not re-sit it.
+  - The verdicts did not move. On 83 of 83 cases, B's verdicts and its per-call `gen_tokens` are identical across loads
+    0, 1 and 2. The contention changed speed only.
+- **C's time gate read ×62 slower, but that reading was taken under contention.** The C smoke started at 02:46:45,
+  alongside the orphaned B load. Its first case ran 2,268.5 s at 0.14 tok/s, and it ended at 03:24:34, after the orphan
+  had exited. The gate then projected 5,074 min against 109 min left, and C was not sat. Peak was 6.80 GB. Swap was not
+  logged during the gate; the last reading was 10.70 GB at 02:46:37.
+  - C's next case, sat once the box was quiet, ran at 31.24 tok/s; arm A ran the same case at 31.47.
+  - C's call smoke ran at 24.98 tok/s, against A's 29.89.
+  - C and A have the same tensor dtypes and shapes (`docs/probes/calib4/prov.txt` [1]).
+  - So the suspected cause, a spliced 8-bit MLP missing the fast quantized kernel, is ⚠️ unverified, and the uncontended
+    cases argue against it. Contention is the likelier cause, also ⚠️ unverified.
+  - Follow-up: re-gate C alone on a quiet box. That is the arm that would tell QAT from bits in A.
+
+**Refused.** A "calibration closes the gap" claim: nothing here was calibrated. A "QAT 4-bit beats 8-bit" claim: A's
++2 is inside the floor. Any comparison with published GPTQ/AWQ recovery percentages: they measure perplexity and
+benchmarks on other models, not pass counts on these 55 cases. Wh: `null`.
+
+**Reopen.** B ≥ 41 on a re-sit with a second model family, or a pack on QAT's own grid (Q4_0, block 32), would move the
+house rule. C sat on a quiet box splits A.
+
+**Re-derive.** `python3 -m lab check results/calib4-gemma-4-e4b-it-qat-4bit-requant.json` and
+`python3 -m lab check results/calib4-gemma-4-e4b-it-qat-mixed.json` both exit 0.
+
 ## Lane 13: `max_kv_size` on a class with no `make_cache` (Qwen3-4B-4bit, 11 Nov 2026)
 
 origin: {"kind": "lane", "url": "https://github.com/Michiel-DK/inference-lab/pull/9", "label": "lab-inf-05-context-kv"}
