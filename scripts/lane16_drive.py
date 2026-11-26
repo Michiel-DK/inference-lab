@@ -74,10 +74,19 @@ def run_job(job, base_swap):
     return rc
 
 
+# The swap budget is the LANE's, not the drive's: measured once, at the first drive start of the lane (drive-8bit.log,
+# 2026-11-26T23:18:59, 2208.5 MB used). A re-started drive must not reset its own meter.
+LANE_START_SWAP_MB = 2208.5
+
+
 def main(which):
     RAW.mkdir(parents=True, exist_ok=True)
-    base = swap_used_mb()
-    log(f"drive start ({which}): swap used {base:.1f} MB; limit start + {SWAP_LIMIT_MB} MB")
+    base = LANE_START_SWAP_MB
+    log(f"drive start ({which}): swap used {swap_used_mb():.1f} MB now; lane start {base:.1f} MB; stop at lane start + "
+        f"{SWAP_LIMIT_MB} MB")
+    if swap_used_mb() - base > SWAP_LIMIT_MB:
+        log("STOP: swap already past the lane's budget")
+        return 3
     if not (OUT / "prompts.jsonl").exists():
         subprocess.run([PY, str(ROOT / "scripts" / "lane16_batch.py"), "capture"], check=True)
     jobs = subprocess.run([PY, str(ROOT / "scripts" / "lane16_batch.py"), "plan"], capture_output=True, text=True,

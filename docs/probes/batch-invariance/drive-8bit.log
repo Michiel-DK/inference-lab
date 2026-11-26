@@ -1,0 +1,5 @@
+2026-11-26T23:18:59 drive start (gates): swap used 2208.5 MB; limit start + 2048 MB
+2026-11-26T23:19:23 gate-a: rc 0  24.2s  swap peak 2979.0 MB (start of drive 2208.5, delta +770.5)
+2026-11-26T23:19:52 gate-b: rc -9  28.7s  swap peak 4301.3 MB (start of drive 2208.5, delta +2092.8)
+2026-11-26T23:19:52 STOP: swap grew past 2048 MB over the drive's start
+2026-11-26T23:19:52 drive stopped at gate-b (rc 3)

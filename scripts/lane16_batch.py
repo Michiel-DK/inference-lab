@@ -24,8 +24,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 OUT = ROOT / "docs" / "probes" / "batch-invariance"
-MODEL = os.environ.get("LANE16_MODEL", "mlx-community/gemma-4-e4b-it-8bit")
-EXPECT_SNAPSHOT = {"mlx-community/gemma-4-e4b-it-8bit": "4255b21bd9a9d3fc807ef7abd80373f5e3a52a73"}
+# The 8-bit champion passed gate (a) and was killed in gate (b) by the swap stop (26 Nov, docs/probes/batch-invariance/
+# drive-8bit.log); the brief's fallback for gate (b) is the 4-bit e4b, so both arms run on it (prediction addendum).
+MODEL = os.environ.get("LANE16_MODEL", "mlx-community/gemma-4-e4b-it-4bit")
+EXPECT_SNAPSHOT = {"mlx-community/gemma-4-e4b-it-8bit": "4255b21bd9a9d3fc807ef7abd80373f5e3a52a73",
+                   "mlx-community/gemma-4-e4b-it-4bit": "475b9088d29754a3379866cf5aeb6b41acd313c2"}
 EXAMS = ("email-triage", "call-fields")
 
 # ---- arm 1: their prompt, and fixed mates of other lengths (English, chosen before any run; lengths differ on purpose)

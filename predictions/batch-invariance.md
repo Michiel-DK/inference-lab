@@ -69,3 +69,17 @@ Their argument: a kernel may add the same numbers in a different order when the 
 depend on order; at temperature 0 a difference in the last bits flips the choice between two near-tied tokens, and every later
 token follows. On MLX the same should hold wherever a batched matrix product or a padded attention row is computed differently from
 the single-request one. A short JSON label has few near-ties, so exam verdicts should move far less often than 200 tokens of prose.
+
+## Addendum, 26 Nov 2026 23:30 (after the 8-bit gates, before any 4-bit load)
+- **The 8-bit champion did not clear gate (b).** Gate (a) passed on `gemma-4-e4b-it-8bit` (`batch_generate` returned non-empty
+  text for 2 train prompts, peak 9.09 GB, swap +770.5 MB). Gate (b) (one batch of the 8 longest train prompts, 200 tokens) was
+  killed by the drive's swap stop after 28.7 s at swap +2092.8 MB over the lane's start (2208.5 MB), with no rows written
+  (`docs/probes/batch-invariance/drive-8bit.log`, `raw-8bit/gate-a.jsonl`). The brief's fallback for gate (b) is the 4-bit e4b.
+- **So both arms run on `mlx-community/gemma-4-e4b-it-4bit`** (snapshot `475b9088d29754a3379866cf5aeb6b41acd313c2`, the pack of
+  lane 02's `dense-gemma-4-e4b-it-4bit`), gates (a), (b) and (c) re-sat on it. Both arms on one model; arm 1 is not left on 8-bit.
+- **Kill (1)'s floor moves** to `results/dense-gemma-4-e4b-it-4bit.json` load 0 on the same 60 cases (39 pass, 0 re-asks,
+  read 26 Nov), verdicts and per-call `gen_tokens` compared as in the definitions above.
+- **The swap budget is the lane's**: stop at 2208.5 + 2048 MB used, whatever drive run is active. If the 4-bit gate (b) trips
+  it too, the lane stops at the gates with both attempts posted; no third set-up (smaller prefill steps, fewer long cases) is tried,
+  because each would change the design (chunked prefill is one of the causes the source names).
+- The scope job's numbers are unchanged; they now read for the 4-bit pack.
