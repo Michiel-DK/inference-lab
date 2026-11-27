@@ -46,9 +46,10 @@ def tps(rows):
 
 
 def swap_growth_mb():
-    """The watchdog's line in docs/probes/macos15-resit/swap.txt: peak minus base over the full load, in sysctl's M units."""
+    """The watchdog's line in docs/probes/macos15-resit/run.log (the full load's stderr, committed verbatim): peak minus
+    base over the full load, in sysctl's M units. A safety reading; the results schema keeps no swap."""
     import re
-    m = re.search(r"base (\d+) MB, peak (\d+) MB", (OUT.parent / "swap.txt").read_text())
+    m = re.search(r"base (\d+) MB, peak (\d+) MB", (OUT.parent / "run.log").read_text())
     return int(m.group(2)) - int(m.group(1))
 
 
