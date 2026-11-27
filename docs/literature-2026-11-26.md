@@ -1,314 +1,261 @@
-# Literature, full-text read: early exit and cost per correct answer, behind lanes 18 and 19 (26 Nov 2026)
+# Literature, full-text read: serving on Apple silicon, behind lane 22 (26 Nov 2026)
 
-**Who this is for, and where it is used.** The operator, for one decision: whether `lab-inf-18-early-exit-settle` and
-`lab-inf-19-cost-per-correct` run as briefed, with changed arms, or not at all. It sits in this public lab's `docs/` beside
-[`literature-2026-11-16.md`](literature-2026-11-16.md) and [`literature-2026-11-24.md`](literature-2026-11-24.md), which have no row on early
-exit, layer-wise prediction or cost per correct answer. Nobody outside asked for it; the lab's rule of 16 Nov puts the full read before a
-prediction. Reader question C2 (lane 18) and B5 (lane 19). No model was loaded, no GPU used, no key used, nothing run but `curl`,
-`pdftotext`, `gh api` read calls, and a few lines of arithmetic (section 5). This read changes no card.
+Companion to [`literature-2026-11-16.md`](literature-2026-11-16.md) and [`literature-2026-11-24.md`](literature-2026-11-24.md). It covers
+the one queued lane they do not: lane 22 (`lab-inf-22-vllm-metal`, vLLM on this laptop through vllm-metal). No model was loaded, no GPU
+used, nothing installed or run. Reader question C2; this read changes no card on its own. Decider: the operator, whether lane 22 runs as
+briefed, with changed arms, or not at all. Written for the operator and for whoever opens this public lab's literature folder.
 
-**Rank rule** (as 16 Nov). [F] = body read, setup and metric as written, the table or section the number comes from. [A] = abstract only.
-[S] = snippet only. A published number sits beside ours only at [F]. PDFs and repo files were fetched into `/tmp/lab-inf-17-lit-early-exit-cost/`
-and are not committed. Every quotation below in straight double quotes was matched against the fetched text this session (whitespace
-and typographic apostrophes normalised; the PDF text of TIDE has a spurious space in "T IDE").
+**Rank rule** (as 16 Nov). [F] = body read: setup, n, metric as written, the table, figure or file line the number comes from. A
+published number sits beside ours only at [F]. Pages and PDFs were fetched into `/tmp/lab-inf-20-lit-serving/` and are not committed.
+Every quote was matched in the fetched text this session.
 
-## 0. First lines: does a published [F] result already report a lane's number?
+## 0. First lines
 
-- **Lane 18 (settle layer and oracle saving, Gemma 4 e2b, MLX): no.** No [F] row here reports a settle layer, an oracle layer saving or an
-  early-exit rate on Apple silicon, on Gemma 4, or on a ~2B model on short structured tasks. The closest numbers are CALM's 8-layer T5 on
-  TPUv3 (1.53 layers per token for an oracle), TIDE's 8B models on an A100 (16 of 322 prefill tokens exit before the last layer), and the
-  tuned lens's Pythia 12B. The stop rule in the brief ("an [F] number for settle layers on a Gemma 4 or a ~2B model on short structured
-  tasks") **does not fire**. Limit: the six papers named plus the code rows were read; TIDE cites `2412.01455` (Shan et al., early exit
-  in pretrained LLMs without joint training), which was **not** read and is not ranked.
-- **Lane 18, the brief's own corrections: two fire in part.** (a) **TIDE's "98 to 99% of tokens exit early" is a count of exits at the
-  last layer** (section 2.1): it skips no layer. (b) **The lane's `cos(h_l, h_34)` rule is TIDE's training label, not TIDE's exit rule, and not
-  CALM's "state saturation"** (sections 2.1, 2.2). The decider's second flip ("a source defines the metric differently from the brief")
-  fires in its soft form: the brief should be amended openly, with a dated note, before its prediction is committed. Details and the
-  concrete changes in section 3.
-- **Lane 19 (hosted against local per correct answer with a review cost): no.** No [F] row prices a wrong answer or compares a hosted
-  model with a local one per correct answer. The flip does not fire. Neither paper defines "cost per correct answer", so the second
-  flip does not fire either; the brief's `r*` is a quantity of its own and should be named that way (section 4).
+- **Does an [F] row already report lane 22's number on a comparable setup? Partly, and it points the other way from the stub.** The
+  vLLM blog (22 Sep 2026) reports vllm-metal on an **M1 Pro 32 GB** with Gemma 4 E4B 4-bit at concurrency 1 and 8: output throughput
+  **18.9 → 23.8 tok/s (x1.26)**, mean TTFT **2.50 → 12.35 s** (§2 row 4, read from the chart's own SVG labels). Lane 22's stub predicts
+  x1.8 to x3.5 at concurrency 4 on the same chip family. Different model (E4B, not E2B), 32 GB not 16 GB, c=8 not c=4, mean TTFT not p95.
+  So the throughput half of the decider's flip has fired in part (an M-series laptop, a ~4B model, throughput at two concurrencies); the
+  **p95 half has not: no source below reports p95 for any request latency** (§2: PagedAttention uses a mean, SiliconBench p50, the blog a mean).
+- **The paper the brief names, `2601.19139`, does not measure vllm-metal under concurrency.** It is a different engine (`vllm-mlx`, "shares
+  no code with" vLLM), on an M4 Max 128 GB; vllm-metal appears only as one column of the single-stream Table 1.
+- **The second flip ("defines throughput or p95 differently from the brief") fires for p95 only on its letter:** nobody defines it, so the
+  brief's own definition stands, written down openly. Throughput is defined as the brief defines it by SiliconBench (§2 row 3).
+- Result for the operator: lane 22 still has something to find (p95, c=2 and c=4, a 16 GB machine, verdict equality against a control, none
+  of which any [F] source reports), but its numeric ranges should be re-anchored on the M1 Pro row before the prediction is committed (§4).
 
 ## 1. Sources and final rank
 
 | # | source | rank | why |
 |---|---|---|---|
-| 1 | Jaber & Jaber, *TIDE*, `2603.21365` v1 (22 Mar 2026) | **F** | lane 18's origin |
-| 2 | `RightNow-AI/TIDE`, README, `python/TIDE/{config,calibrate,runtime,router,scheduler,utils,__init__}.py`, `adapters/{base,universal,auto}.py` at default-branch head `8bdc187` (Apache-2.0) | **F** (code read, nothing run) | the label, spacing, threshold, KV handling |
-| 3 | Schuster et al., *CALM*, `2207.07061` (v2, 25 Oct 2022; submitted 14 Jul 2022) | **F** | the standard early-exit baseline and its confidence measures |
-| 4 | Elhoushi et al., *LayerSkip*, `2404.16710` (v4, 18 Oct 2024; submitted 25 Apr 2024) | **F** | why early exit without training degrades |
-| 5 | Belrose et al., *Tuned Lens*, `2303.08112` (**v6, 11 Nov 2025**; submitted 14 Mar 2023) | **F** | what the plain logit lens understates |
-| 6 | Kapoor et al., *AI Agents That Matter*, `2407.01502` v1 (1 Jul 2024) | **F** | cost-controlled evaluation, accuracy-cost Pareto |
-| 7 | Chen, Zaharia & Zou, *FrugalGPT*, `2305.05176` v1 (9 May 2023) | **F** | cascades, cost against accuracy |
-| 8 | `mlx-lm` 0.31.3 `models/gemma4_text.py` and the cached `mlx-community/gemma-4-e2b-it-8bit` `config.json` | **F** (code read, nothing run) | the KV-sharing boundary |
-| 9 | `RightNow-AI/inference-cost-truth`, README, `LICENSE-DATA` (head `a61c501`) | **F** (README and licence file only; the data files were not read) | what a row is, its date, its licence |
+| 1 | `2601.19139` Barrios, *Native LLM and MLLM Inference at Scale on Apple Silicon* (v2, 29 Jan 2026) | **F** | the brief's named paper; `vllm-mlx`, not vllm-metal |
+| 2 | `2309.06180` Kwon et al., *Efficient Memory Management for LLM Serving with PagedAttention* (12 Sep 2023) | **F** | the baseline claim and its metric |
+| 3 | `2609.19169` Zhang et al., *SiliconBench* (v1, 12 Sep 2026; 75 days old; cites 1 and 2 as Barrios 2026 and Kwon 2023) | **F** | added under brief item 4: the only [F] vllm-metal concurrency sweep on Apple silicon; closed loop, same throughput definition as lane 22 |
+| 4 | vLLM blog, *Announcing vllm-metal: Concurrent Serving on Apple Silicon* (22 Sep 2026) | **F** (page text; figure values read from the SVG's text labels) | the only M1 Pro number; vendor post, not a paper |
+| 5 | vllm-metal `v0.34.0`: `README.md`, `pyproject.toml`, `install.sh`, `docs/installation.md`, `docs/configuration.md`, `docs/supported_models.md`, `docs/recipes.md`, `docs/benchmarking-macos.md` | **F** (read, nothing run) | the code and docs rows lane 22 installs |
+| 6 | `mlx-lm` 0.31.3 `server.py`, `models/cache.py` (the lab env; read, nothing run) | **F** (code) | lane 22's "batching without vLLM" |
 
-All six papers are [F]: **6 of 6**, the brief asks for 5. Nothing was unfetchable. `curl -sL https://arxiv.org/pdf/<id>` returned each PDF;
-page counts and text were checked by `pdftotext`. The tuned lens file read is v6 (11 Nov 2025), not the 14 Mar 2023 version; numbers below
-are v6's.
+Brief item 4 asked for at most two added papers. One qualified and is row 3. A web search for others turned up `2607.00501` (BaseRT, July
+2026: older than 90 days, a non-MLX runtime) and `2511.05502` (already ranked on 16 Nov); neither was read for this file and neither is
+used. **[F] papers: 3** (rows 1 to 3), plus the code and post rows.
 
 ## 2. Source table
 
-### 2.1 TIDE, `2603.21365` (F) and its repository (F)
+### Row 1. `2601.19139` vllm-mlx, [F]
 
-- **Setup.** Routers (two-layer MLP, bottleneck 128, ~0.5M parameters, Eq. 2) at every 4th layer, `{c-1, 2c-1, ...}` with `c = 4`
-  (§3.1), calibrated on 2,000 WikiText-103 texts with label `y = 1[cos(h_k, h_L) > τ]`, `τ = 0.98` (§3.1, Eq. 1). One A100-SXM4-40GB,
-  bf16, PyTorch 2.10, transformers 5.3. DeepSeek R1 Distill 8B (32 layers) and Qwen3 8B (36 layers); GPT-2 (12 layers) only in the
-  calibration count. Evaluation on "16 prompts: 8 reasoning/math and 8 general knowledge" (§5), latency over 20 runs after 3 warmups.
-- **What the system does at inference, in the paper's own words (§3.3, §6).** "all layers run on every step, so the KV cache is always
-  fully populated." The router scores are evaluated after the forward pass and the logits come from the earliest layer whose score passes
-  θ. The limitation section says it plainly: it "does not achieve wall-clock layer skipping", and "A true skip mode (physically
-  bypassing layers) would require managing cache discontinuities and is a target for future work." **TIDE as published skips no
-  layer.** Its latency gain is credited to something else: "The improvement comes from the post-hoc output selection: exited tokens
-  bypass the final-layer normalization path" (§5.2).
-- **Headline numbers, the abstract page against the full text.**
+- **Setup.** "All experiments run on Apple M4 Max with 128GB unified memory", 4-bit models (§4 Setup). Text models Qwen3 0.6B to 30B-A3B,
+  Llama-3.2 1B and 3B, Gemma 3-4B, Nemotron-30B-A3B. Engine: `vllm-mlx`, "an independent project that draws architectural inspiration from
+  vLLM but shares no code with it" (§5); it "wraps mlx-lm" (§3.2). The paper calls vllm-metal "a hybrid MLX and PyTorch approach" (§5).
+- **n and repeats.** None stated for any throughput figure. No seeds, no repeats, no variance. Prompt set, output length and concurrency
+  procedure are not described.
+- **Metrics as written.** "Throughput (tok/s)" in Table 1 and Figure 2a; "Requests/sec" in Figure 2b. **Neither is defined, and no latency
+  percentile (p50, p95 or p99) appears anywhere in the paper**; Table 7 gives one TTFT per row (245 ms, 42 ms).
+- **Numbers.** Table 1 (single stream, M4 Max): Gemma 3-4B 152.5 (vllm-mlx), 117.0 (vllm-metal), 105.4 (mlx-lm), 123.2 (llama.cpp);
+  Qwen3-4B 159.0 / 137.3 / 128.9 / 118.2. Figure 2 and §4.1: Qwen3-0.6B 441 → 1642 tok/s from 1 to 16 concurrent requests (x3.7), Qwen3-8B
+  x2.6. The abstract says "4.3x aggregate throughput at 16 concurrent requests"; the text and figure give 3.7x for the same model, so the
+  abstract number is not backed by the body.
+- **Match needed.** Not stated enough to match.
+- **Comparable to lane 22: no.** Other engine, M4 Max 128 GB, no p95, no concurrency number for vllm-metal at all.
 
-  | abstract-page claim | full text |
-  |---|---|
-  | prefill latency −7.2% | Table 4: −7.2% is **θ = 0.50** (39.08 → 36.26 ms); at the default **θ = 0.85 it is −5.5%** (36.94 ms), and −5.7% on Qwen3. 20 runs (README: a single reasoning prompt). |
-  | throughput +6.6% single batch | Table 4: DeepSeek R1 BS=1, 973 → 1,037 tok/s = +6.6%. The README says +6.5% for the same row. |
-  | +8.1% at batch 8 | Table 4: **Qwen3 8B** only (1,781 → 1,926 tok/s). **DeepSeek R1 at batch 8 is −16.3%** (8,668 → 7,252 tok/s); the abstract omits it, §5.2 says "likely because the output_hidden_states overhead grows superlinearly with batch size". |
-  | "98–99% of tokens exit early" in decoding | Table 5: exit rate 98.4% (θ 0.85), 99.2% (0.70), 99.6% (0.50), **exit layer L31 in every row**. With 32 layers numbered 0 to 31 (checkpoints 3, 7, ..., 31), **L31 is the last layer**. |
-  | "100% prefill exit rate (5% of tokens exit at layer 11, the remaining at layer 31)" | Table 3: DeepSeek 16 of 322 tokens at L11, 306 at L31, at both θ. Qwen3 8B at θ 0.85: all 155 tokens at **L35 = its last layer**; at θ 0.50: 11 at L11, 5 at L23, 139 at L35. |
-  | one math example as the quality check | §5.3, Table 5: one word problem, 256 tokens, temperature 0, one model. "Unique Tokens" 99 (off) against 95 (θ ≤ 0.85); "Correct" ✓ in every row. No baseline text comparison, no benchmark number. |
+### Row 2. `2309.06180` PagedAttention / vLLM, [F]
 
-- **The last-layer finding (my reading of §3.1, §5.5 and `calibrate.py`; code read, not run).** `calibrate.py:35` builds
-  `checkpoint_layers = range(c-1, n_layers, c)`, which for 32, 36 and 12 layers ends at the **last** layer index (31, 35, 11).
-  `calibrate.py:65` reads a checkpoint as `all_hidden[layer_idx + 1]` and `calibrate.py:73` the "final" state as `all_hidden[-1]`; for the last checkpoint
-  these are the same tensor, so its cosine to the final state is 1 by construction. That is how §5.5 can report "100% of tokens converge at
-  the penultimate checkpoint in every model tested" (the paper's "penultimate checkpoint" is the last layer). **Consequence: every decode
-  "exit" in Table 5, and the 306 of 322 and 155 of 155 prefill exits at the last layer, skip zero layers. The only exits before the last
-  layer in the paper are 16 of 322 prefill tokens (5.0%) on DeepSeek at both θ, and on Qwen3 at θ 0.50 only 16 of 155 (10.3%); there are
-  none in decoding, and none on Qwen3 at the default θ.** Table 5's "95 unique tokens against 99" appears with every exit at the last
-  layer, so the output changed with no layer skipped; the paper does not explain it. ⚠️ UNVERIFIED (not run here): `runtime.py:288`
-  applies `_final_norm` to the exit layer's `hidden_states` entry, and for the last layer that entry may already be the normed state.
-- **Code rows, at head `8bdc187` (committed 18 Mar 2026).**
-  - Label: `config.py:19` `convergence_threshold = 0.98`; `calibrate.py:89-100` `labels = (cos(h_l, h_final) > threshold)`. Matches the README
-    ("cosine_sim(layer_8, layer_32) > 0.98?").
-  - Spacing: `config.py:11` `checkpoint_interval = 4`; `calibrate.py:35` as above.
-  - **Exit rule at inference is the router, not the cosine:** `config.py:12` `exit_threshold = 0.85` is a router probability
-    (`runtime.py:174`, `scores > exit_threshold`). The cosine 0.98 is only the training label. The README FAQ blurs the two: "the router only
-    exits tokens whose hidden state is >98% similar to what the final layer would produce"; no code makes that a guarantee.
-  - **`config.py:13` `min_layers = 8` and `runtime.py:169, 277`: checkpoints below index 8 are skipped**, so checkpoints 3 and 7 never
-    exit at default settings. On 32 layers the first live checkpoint is 11.
-  - **KV cache of an exited token in later layers: nothing happens, because the layers run.** `runtime.py` `_generate_with_skipping` calls
-    the whole model each step (`output_hidden_states=True`) and only picks which layer's state feeds the LM head; the cache is complete.
-    `config.py:20` `kv_cache_strategy = "zero_pad"` and `runtime.py:195` `_pad_kv_cache` (zero-fills later layers' K/V for a skipped token)
-    belong to the future skip mode. **`_pad_kv_cache` has no call site in the 11 files fetched** (`config`, `calibrate`, `runtime`, `router`,
-    `scheduler`, `utils`, `__init__`, `adapters/{base,universal,auto}`); `adapters/{llama,mistral,qwen}.py` were not fetched.
-  - The repo ships `benchmarks/modal/bench_quality.py` (MMLU, GSM8K, ARC at thresholds 0.7 to 0.95, 500 samples by default) but neither the
-    paper nor the README reports a number from it.
-  - Hygiene: Apache-2.0 per the GitHub API. The API's `pushed_at` (18 Sep 2026) is later than the default-branch head's commit date
-    (18 Mar 2026); the repository has a second branch `wip/TIDE-2026-09-17`, which may be the push. Not resolved further. The PDF footer
-    reads "37th Conference on Neural Information Processing Systems (NeurIPS 2023)" on a 2026 preprint: a template leftover; no venue is
-    cited here.
-- **Comparable to lane 18: no.** A100, 8B models, CUDA, 16 prompts, post-hoc, no layer skipped. TIDE's number is an exit count at a label
-  that is trivially true at the last layer; lane 18's oracle is a different quantity (section 3).
+- **Setup.** OPT-13B on one A100 40 GB (26 GB weights, 12 GB KV, "15.7K" slots, Table 1), OPT-66B on 4 A100, OPT-175B on 8 A100-80GB, plus
+  LLaMA-13B. ShareGPT and Alpaca length distributions with **Poisson arrivals** ("we generate request arrival times using Poisson
+  distribution with different request rates", §6.1). Baselines: FasterTransformer (with the authors' own dynamic-batching scheduler) and Orca
+  **as the authors' re-implementation** ("Orca is not publicly available", §6.1).
+- **Metric as written.** "normalized latency of the systems, the mean of every request's end-to-end latency divided by its output length"
+  (§6.1). Load is a request **rate** (open loop), not a concurrency level; throughput is read as the rate a system sustains "while
+  maintaining similar latencies" (§6.2). **No percentile.** Traces are 1 hour (15 minutes for OPT-175B).
+- **Headline.** "2-4× throughput ... with the same level of latency" (abstract); on ShareGPT "1.7×-2.7× higher request rates compared to Orca
+  (Oracle) and 2.7×-8× compared to Orca (Max)", "up to 22×" over FasterTransformer (§6.2, Fig. 12). It batches 2.2x more requests than Orca
+  (Oracle) at the same time on OPT-13B (Fig. 13a).
+- **The mechanism condition that matters for a laptop (§6.2):** where memory is plentiful and sequences short, "the performance of the systems
+  becomes compute-bound rather than memory-bound" and vLLM's edge shrinks (OPT-175B on Alpaca, Fig. 12f). The gain comes from fitting more
+  requests into a KV pool that fragmentation would otherwise fill. Lane 22's Model A is ~3.6 GB of weights against a ~11 GB working set and
+  eight or fewer streams: the pool is not the binding constraint there. **Lane 22 tests continuous batching on a small GPU, not the
+  paging claim.** Say so on the page.
+- **Comparable to lane 22: no.** A100 and 13B to 175B; open-loop rate against a mean; no Apple silicon; baselines are the authors' own.
 
-### 2.2 CALM, `2207.07061` (F)
+### Row 3. `2609.19169` SiliconBench, [F]
 
-- **Setup.** 8-layer T5 1.1 encoder-decoder, trained with a weighted early-exit loss (§3.4), TPUv3; CNN/DM (output 82 tokens), WMT15 EN-FR
-  (39), open-book SQuAD 1.1 (5) (Table 1). Calibrated risk guarantees at 95% (§4, §6.1). Metric (§5): "Our main efficiency metric is the average
-  number of decoder layers used per output token"; speedup is a TPUv3 estimate over 200 examples, batch size one (App. C.1).
-- **Three confidence measures (§3.5).** Softmax response: top-1 minus top-2 softmax margin at layer i. **Hidden-state saturation:**
-  "we take the cosine similarity" between layer i's state and layer i−1's for the same token (`sim(d_t^i, d_t^{i-1})`, i > 1). Early-exit
-  classifier: a learned linear classifier on the state. **Saturation is cosine to the previous layer, not to the final layer.**
-- **State propagation (§3.3.1), the line that matters for Gemma.** With an oracle that exits at the earliest layer whose top-1 agrees with the final
-  layer's: "while only using an average of 1.53 layers per token" with ROUGE-L 38.24 against 38.32 for the full model, "by up to ×5.2". Copying the
-  exited layer's hidden state into skipped layers' keys and values is fine; copying the projected K and V "results in a significant drop in
-  performance to 23.02 ROUGE-L".
-- **Results (Table 2, Figure 3).** Softmax response gives the largest layer cut, "up to about three times faster than running through all the
-  model's layers"; on state saturation the paper says it "often falls bellow the static baseline".
-- **Comparable to lane 18: no.** An 8-layer T5, trained for early exit, TPUv3, different tasks, a first-agree oracle. Lane 18's settle layer
-  is not CALM's oracle (section 3).
+- **Setup.** Nine engines on one Apple M5 Pro 64 GB, macOS 26.6 (Table 6: Metal's recommended working set "Hint" 51.84 GB; the same table
+  lists an M1 Pro 32 GB at 24.96 GB, used only for the left-pad memory study). Models Qwen3-0.6B (BF16), Qwen3.5-0.8B, Gemma-4-E4B-it;
+  larger dense and MoE follow-ups. Two splits of n = 100: chat (21 to 3.5K tokens) and agent (0.3K to 8.9K, ~4.3K mean) (Table 2).
+- **Protocol as written (§4).** "three warmup requests, then issues requests **in a closed loop with at most c in flight**. Payloads set
+  temperature to zero ... **Output throughput is total generated tokens divided by the measured sweep's wall time.** TTFT runs from HTTP
+  submission to the first streamed content or reasoning output. Latency summaries cover completed requests; failed requests still
+  contribute to sweep wall time." Concurrency 1, 8, 16 (1, 2, 4 for the 27B). Reports **TTFT p50 and ITL p50, plus means; no p95 or p99**
+  (grep of the full text; "ITL p50 is the median of request-level mean decode intervals", App. A).
+- **Numbers, Gemma-4-E4B-it agent split (Table 10), vllm-metal:** 21.1 tok/s (c=1), 52.3 (c=8), 63.6 (c=16: "3.0× its
+  single-stream rate"); TTFT p50 551 / 905 / 1491 ms; success 93/100 at each level (the paper attributes part of the agent failures to
+  tool-call serialization). In the same table mlx_lm completed 56/100 at every level and reaches 23.4 tok/s at c=8: its row is a partial run.
+  Qwen3-0.6B chat: vllm-metal x3.65 from c=1 to c=16, agent x2.71 (§6.1).
+- **Settings that bear on lane 22.** The harness uses `VLLM_METAL_MEMORY_FRACTION` for the vllm-metal KV budget (App. A); **that variable is
+  removed at v0.34.0** (`docs/configuration.md`, row 5), so a SiliconBench setting cannot be copied. vllm-metal "reject[s]" prompts above
+  its default context, so the harness raises per-slot context to 16384 on the agent split. No designed repeat pass: "the campaign carries no
+  formal run-to-run variance estimate" (Limitations); 8 of 9 incidental repeats moved at most 5.6%.
+- **Comparable to lane 22: partly.** Same closed-loop design and the same throughput definition, the same engine and a ~4B Gemma 4. Different
+  chip (M5 Pro, 64 GB, with a different GPU generation; the blog below shows M5 scaling far above M1), prompts (~4.3K agent tokens, no
+  grading), no verdicts, no p95.
 
-### 2.3 LayerSkip, `2404.16710` (F)
+### Row 4. vLLM blog, 22 Sep 2026, [F] (page text; chart values from SVG labels)
 
-- **Setup.** Llama2 7B and 13B (continual pretraining, Table 1 and 3), Llama2 1.5B and 7B (pretraining from scratch on 26B tokens, Table 4),
-  Llama1 7B on code (Table 5), Llama 1.5B on TOPv2 (Table 6); H100 and A100; greedy, 512 new tokens. Training adds layer dropout (low
-  rate early, high rate late) and an early-exit loss with a shared head.
-- **Why exit without training degrades (Table 1, Llama2 7B, last layer then middle layer 16, baseline against LayerSkip).** Perplexity of the
-  baseline's middle layer is 1,900 (Wikipedia), 4,390 (Books), 968 (The Stack), against 8.12, 6.53, 2.99 with LayerSkip; GSM8K at the middle
-  layer is 0 for the baseline against 2.05. On TOPv2 (§6.1): "when removing layers from the baseline model, the model is not able to
-  generate complete and accurate parses resulting in 0 EM", where LayerSkip reaches 77% at layer 12. The final layer pays a small price (the
-  paper reports a 3% regression on TOPv2).
-- **Speedups (abstract; Tables 3 to 6).** "speedups of up to 2.16× on summarization for CNN/DM documents, 1.82× on coding, and 2.0× on TOPv2
-  semantic parsing task", for **self-speculative decoding with verification**, not unverified exit.
-- **Comparable to lane 18: no, and it explains the sign of the bias.** It does not read a Gemma, and every number needs a model trained
-  for early exit. What it says for lane 18: a pretrained model not trained for exit does not decode sensibly at intermediate layers
-  through the final head.
+- **M1 Pro row (cross-machine chart, `cross-machine.svg`).** "We ran the same Gemma 4 E4B 4-bit workload at concurrency 1 and 8 on four
+  Macs." Each run: `vllm bench serve`, 100 Sonnet prompts of about 1,024 input and 128 output tokens, `--gpu-memory-utilization 0.5`, prefix
+  caching off, `--request-rate 10 --max-concurrency <c>`, fresh server per level, vllm-metal **v0.29.0** (not v0.34.0). Metrics: "Mean TTFT"
+  and "Output token throughput". The SVG's labels, matched to bars by y position (checked this session):
 
-### 2.4 Tuned lens, `2303.08112` v6 (F)
+  | machine | TTFT avg c=1 | TTFT avg c=8 | out tok/s c=1 | out tok/s c=8 | c8 / c1 |
+  |---|---|---|---|---|---|
+  | M1 Pro 32 GB | 2.50 s | 12.35 s | 18.9 | 23.8 | **x1.26** |
+  | M1 Max 64 GB | 1.15 s | 5.34 s | 31.4 | 51.1 | x1.63 |
+  | M2 Max 64 GB | 1.09 s | 5.15 s | 34.9 | 52.5 | x1.50 |
+  | M5 Pro 64 GB | 0.27 s | 1.21 s | 59.9 | 154.4 | x2.58 |
 
-- **Setup.** GPT-Neo (125M to 2.7B), Pythia (to 12B), GPT-NeoX-20B, OPT, BLOOM; a learned affine probe per layer trained with KL to the
-  final layer's distribution (Eq. 9). Metrics are perplexity, KL, a bias measure, and (§5.4) prediction depth.
-- **The plain lens is biased and unreliable (§2, Figure 3, Figure 14).** For GPT-Neo 2.7B "around 4 to 5 bits for most layers" of KL bias
-  relative to the final layer; the logit lens "struggles" on BLOOM and OPT 125M, whose top-1 is often the input token. Tuned-lens perplexity
-  is lower at every layer (Figures 4, 5).
-- **§5.4 defines the lane's quantity.** "prediction depth" is "the number of layers after which a model's top-1 prediction for x stops
-  changing", computed with the tuned lens; Table 2 compares its Spearman correlation with the iteration learned for the tuned and the logit
-  lens: the tuned lens correlates better in 8 of 11 tasks (Pythia 12B, twelve multiple-choice tasks).
-- **What it does not give.** No settle-layer distribution for either lens, no top-1 agreement rate with the final layer, no model at 2B or
-  Gemma. **The size of the bias on "settled layer" is not published.** Direction only: the plain lens understates early agreement.
-- **Comparable to lane 18: no on numbers, yes on the definition.** Lane 18's settle layer ("the smallest l from which the lens top-1 equals the
-  final top-1 at every layer up to 34") is §5.4's prediction depth, measured with the plain lens.
+  One run per cell, no spread, no failure counts in the figure (the post says to "keep the successful-request count"; none is printed).
+- **Other rows in the post (concurrent-serving claims, all M5 Pro 64 GB):** "vllm-metal has the lowest TTFT and end-to-end latency at concurrency
+  2 and 4" on Qwen3.8-27B (SiliconBench agent split, charts only; I did not read values). A table on Qwen3.6-35B-A3B shows batch wall time for
+  8 requests: mlx_lm 4.52 s (equal prompts) and 10.99 s (one long prompt), vllm-metal 3.87 s and 3.64 s. mlx_lm's padded batch grows
+  +143% when one prompt is longer. These come from the vendor, on a bigger model.
+- **Comparable to lane 22: partly (the nearest row there is).** Same chip family, same engine family, Gemma 4. E4B not E2B, 32 GB, c=8 only,
+  a mean not p95, release 0.29.0, a vendor post.
 
-### 2.5 AI Agents That Matter, `2407.01502` (F)
+### Row 5. vllm-metal `v0.34.0` code and docs, [F]
 
-- **Setup.** Re-evaluates three public HumanEval agents (LDB, LATS, Reflexion) against simple baselines (GPT-3.5, GPT-4 zero shot; retry,
-  warming, escalation) on 164 problems, five runs each, dollar cost measured (§2.2, Figure 1, Table A1); a DSPy joint-optimisation study on
-  HotPotQA (§3.2); a downstream-evaluation argument (§4); holdouts and reproducibility.
-- **Frame lane 19 may borrow (§2, §4).** "AI agent evaluations must be cost-controlled"; results as a Pareto curve of accuracy against dollars;
-  "downstream evaluations of agents should include input/output token counts in addition to dollar costs", so a reader can re-price. Table A1
-  (mean of five runs, min to max): GPT-4 baseline 89.6% at $1.93, warming (GPT-4) 93.2% at $2.45, retry 92.0% at $2.51, **escalation 85.0%
-  at $0.27** ("We start with a cheap model (Llama-3 8B) and escalate to more expensive models ... if we encounter a test case failure",
-  §2.2, which needs a pass/fail signal per call).
-- **What it does not give.** No price on a wrong answer. §5.2 says of human-in-the-loop evaluation that it "is costly and tricky" and "an
-  important direction for future research". No local-against-hosted comparison on short office tasks.
-- **Comparable to lane 19: no** (HumanEval, 2024 prices, five repeats), but the **method** (dollars with tokens, Pareto, repeats with a
-  range) is the bar lane 19 sits under.
+- **OS and Python.** "macOS 15 (Sequoia) or later" (`README.md:40`; `docs/installation.md:3`). `requires-python = ">=3.12,<3.14"`
+  (`pyproject.toml:12`).
+- **Pins.** `mlx==0.32.4` exact (`pyproject.toml:34`); mlx-lm at git sha `4cfc6478473b0668ede3eb0cc93f2a9181a15052` (`:37`); mlx-vlm at sha
+  `b7bec926…` (`:41`). Against the lab's mlx 0.32.2 and mlx-lm 0.31.3: three versions moved, so lane 22's in-venv control arm is needed.
+- **`install.sh` does not install the tag it comes from.** It selects the newest release of a channel ("`--dev` ... the default"; "`--stable`
+  ... latest tagged stable release") and takes the wheel URL from GitHub releases (`install.sh:205-232`, `:304-327`); it has no tag argument.
+  Running the file at `v0.34.0` therefore installs whatever is latest on the dev channel. Lane 22's "install v0.34.0 by the steps of its
+  `install.sh`" has to be done step by step: the vLLM release named in `.github/vllm-release-tag.commit` at that tag, then the `v0.34.0`
+  wheel, by `uv pip install`. Defaults: venv `~/.venv-vllm-metal`, overridden by `VLLM_METAL_VENV` (`:289`); Python 3.12 unless
+  `VLLM_METAL_PYTHON` (`:223`); `ensure_uv` installs `uv` (the function body is in a `lib.sh` fetched or sourced at run time; I did not read
+  it, so where `uv` lands is ⚠️ UNVERIFIED). Run from a source checkout it builds native code (`ensure_metal_toolchain`): do not run it that way.
+  Installation also states "`pip install vllm-metal` is not supported" (`docs/installation.md:50`).
+- **KV pool sizing (`docs/configuration.md:113-159`).** "The paged KV cache budget follows vLLM's standard `--gpu-memory-utilization` flag
+  ... a fraction in `(0, 1]`. The former `VLLM_METAL_MEMORY_FRACTION` override has been removed." Default 0.92: "the pool and the model
+  weights together take about the `--gpu-memory-utilization` fraction (default 0.92) of the memory macOS recommends for GPU use (Metal's
+  recommended working set)." **The cap flag is `--kv-cache-memory-bytes` (`kv_cache_memory_bytes=` for `LLM()`)**, "to override automatic
+  sizing"; it budgets cache storage only, "weights, activations, runtime workspace ... need additional memory"; sizes round down to whole
+  blocks; an explicit budget that would need shrinking is rejected. `--num-gpu-blocks-override` takes precedence. "Plan for the KV pool as RAM
+  the server holds at its full size, even when requests use little of it." A startup probe tests up to 512 MiB of the pool against the
+  machine and can shrink an automatic pool (or stop startup for an explicit one); `VLLM_METAL_KV_COMMIT_PROBE=0` skips it. Both flags apply to Model
+  A and B alike.
+- **What that means on this 16 GB box.** The lab's recommended working set is 11.45 GB (LESSONS, "moe" row). At the 0.92 default,
+  weights + pool plan for 0.92 x 11.45 ≈ **10.5 GB** (arithmetic, not observed). The blog's own recipes use 0.5 (≈ 5.7 GB). For Model A
+  (file bytes 3.55 GB, see below) a pool of 2 GiB by `--kv-cache-memory-bytes` leaves the rest for activations and the sidecar; for Model B
+  (9.18 GB peak in lane 04) nothing like a useful pool fits under 10.5 GB, which is the stub's own guess. **Recommended brief wording:** "set
+  `--kv-cache-memory-bytes` explicitly (start at 2 GiB for Model A) and leave `--gpu-memory-utilization` at a value for which the planned
+  total stays under 11.45 GB; read the startup log line for the pool before the first request."
+- **Gemma 4 and the sidecar (`docs/supported_models.md:64-90`).** "mlx_lm text backbone + mlx-vlm encoder sidecar, paged generation"; the
+  listed checkpoint is `mlx-community/gemma-4-e2b-it-4bit` "(audio, video)". The text says "Gemma 4 keeps its text path exactly as on the
+  text-only table ... only `vision_tower` and `embed_vision` are loaded from the checkpoint through mlx-vlm, plus `audio_tower` and
+  `embed_audio` on checkpoints whose config has an `audio_config`". The sidecar is on when `VLLM_METAL_MULTIMODAL_MODE=auto` **and** the
+  checkpoint is a fully cached local safetensors directory with `vision_tower.*` weights, the HF `Gemma4Processor` builds (the
+  `processor_config.json` needs a `video_processor` block with transformers 5.14+), and no speculative decoding is configured; "otherwise the
+  model stays text-only and the reason is logged". **Does a text-only request need it? The docs do not say that a text-only request skips
+  loading the towers; they say the sidecar loads when its conditions hold.** The docs give no memory figure for it. On disk, in the cached
+  `gemma-4-e2b-it-4bit` (`model.safetensors` header read; nothing loaded): vision tensors **0.335 GB**, audio **0.611 GB**, the rest
+  **2.604 GB**, 3.55 GB in all (summed from tensor data offsets; file bytes, not resident memory). The checkpoint has `vision_config` and
+  `audio_config`, 658 vision and 751 audio tower keys, and a `video_processor` key in `processor_config.json`, so the sidecar's file
+  conditions are met here; whether the transformers version in the venv meets "5.14+" is unknown until it is installed. Consequence for the
+  prediction: Model A's weights bill is up to 3.55 GB, not the lab's 3.71 GB peak for the text path alone, and the sidecar may add up to
+  0.95 GB the lab's rows never carried. Lane 22 should read the log line for the multimodal mode and, if it is on, also set
+  `VLLM_METAL_MULTIMODAL_MODE` to its text-only value (name taken from the doc text above; **the accepted values are not in the files I
+  read**) or record the mode beside the memory figure.
+- **Benchmark guidance the project itself gives (`docs/benchmarking-macos.md`).** Use `vllm bench serve` with
+  `--percentile-metrics ttft,tpot,e2el --metric-percentiles 50,95,99` against a real `vllm serve`; "client concurrency does not establish the
+  number of decode rows in an actual scheduler step"; "Output throughput: completed output tokens divided by the benchmark duration,
+  including the workload's prefill and queueing"; warm up, alternate arm order, record power mode and background GPU load; "Natural
+  generations can diverge even with greedy sampling" and "neither close attention outputs nor matching throughput establishes
+  model-quality equivalence". So **p95 is available in the project's own tool and its throughput definition matches lane 22's**.
 
-### 2.6 FrugalGPT, `2305.05176` (F)
+### Row 6. `mlx-lm` 0.31.3 `server.py` batching, [F] (code read)
 
-- **Setup.** Twelve hosted APIs from five providers at 2023 prices (Table 1); a cascade of length 3 with a DistilBERT scoring function
-  trained on labelled queries, on HEADLINES (10,000), OVERRULING (2,400) and COQA (7,982) (Table 2). Each dataset split into train and test.
-- **Headline (abstract; Table 3, "Cost to reach the same accuracy").** "FrugalGPT can match the performance of the best individual LLM (e.g.
-  GPT-4) with up to 98% cost reduction": HEADLINES 33.1 → 0.6 (98.3%), OVERRULING 9.7 → 2.6 (73.3%), COQA (best individual GPT-3) 72.5 →
-  29.6 (59.2%). Case study (Figure 3): budget one fifth of GPT-4's, cost −80% with accuracy +1.5%.
-- **Limits it states (§5).** "To train the LLM cascade strategy in FrugalGPT, we need some labeled examples", from the test distribution.
-  Every model is hosted; the cheapest is "GPT-J" on a hosting service. No local model, no review cost.
-- **Comparable to lane 19: no.** It reports cost at equal accuracy, hosted only, 2023 prices; it is the baseline for "cheap first, hosted on
-  doubt", which lane 19 does **not** test (a cascade needs a scoring function and calls; lane 19 loads no model).
+- `BatchGenerator` is created per model in `_generate` (`server.py:821-826`) with `completion_batch_size=--decode-concurrency` (default **32**)
+  and `prefill_batch_size=--prompt-concurrency` (default **8**), `prefill_step_size` default 2048 (`:1854-1870`). A request is batched only if
+  `draft_model is None`, **every cache object from `make_prompt_cache(model)` has a `merge` method** (`:370-373`) and `args.seed is None`
+  (`:685-686`). In the lab env, `KVCache`, `RotatingKVCache` and `ArraysCache` have `merge`; `QuantizedKVCache` does not (checked by
+  `hasattr`, this session). Gemma 4 uses `KVCache` plus `RotatingKVCache`, so by source its server batches; **not run**, and it matters that a
+  quantized-KV flag would silently drop a model to the unbatched path. Contiguous batch-padded KV: the blog says "mlx_lm keeps a contiguous
+  `[B, H, T, D]` cache" and pads queries to the longest prompt.
+- **Consequence for lane 22.** "Batching without vLLM" exists inside the pinned stack with no installation: `mlx_lm.server` at the lab's
+  versions. It is the right third arm (L-mlx) for the load table: it separates what vLLM's scheduler and paged kernel buy from what
+  continuous batching alone buys. The lab's lane 02 server probe already ran `mlx_lm.server`; the lane's brief names only a control arm of
+  plain generation, not this.
 
-### 2.7 `mlx-lm` 0.31.3, Gemma 4 e2b (F, code read, nothing run)
+## 3. Comparison with our finished runs
 
-Scope's reading (35 layers, `num_kv_shared_layers` 20, layers 15 to 34 read KV and write none) is **correct, with one off-by-one in the
-safe boundary**:
+Lane 22 has no result yet, so there is no number of ours to set beside these. The lab's committed anchor for Model A is lane 02
+(`results/dense-gemma-4-e2b-it-4bit.json`, 69.2 gen tok/s in process, single stream, peak 3.71 GB; figures as the stub cites them; I did not
+re-open the file for this read). Set beside the M1 Pro blog row (18.9 tok/s at c=1 for E4B with ~1K-token prompts), the two are not the same
+quantity (output tokens over a sweep that includes prefill and queueing, a different model, 100 prompts): **do not compare lane 22's single-stream
+rate with the blog's 18.9.**
 
-- `config.json` of `mlx-community/gemma-4-e2b-it-8bit` (cached): `num_hidden_layers` 35, `num_kv_shared_layers` 20, `sliding_window` 512,
-  `use_double_wide_mlp` true; `layer_types` is five-periodic with `full_attention` at indices 4, 9, 14, 19, 24, 29, 34.
-- `gemma4_text.py:183` `has_kv = layer_idx < num_hidden_layers - num_kv_shared_layers`: **layers 0 to 14 own a KV cache**, 20 layers do not.
-  `make_cache` (`:662-675`) builds exactly 15 caches. `DecoderLayer.__call__` (`:333-389`) returns `(h, shared_kv, offset)`.
-- `Gemma4TextModel.previous_kvs` (`:434-442`): for layers 15 to 34, the KV is that of the **last layer of the same type among layers 0 to 14**:
-  sliding layers read layer **13**, full-attention layers read layer **14**. The loop (`:549-573`) passes `intermediates[prev_idx]` to
-  each shared layer.
-- **Consequence for an exit.** A token that exits at layer **14 or later** has run layers 0 to 14, so it has written every KV entry any later
-  token will read; no entry is missing. A token that exits at layer 13 or earlier leaves a hole (layer 14's full-attention K and V for that
-  position, and for layers below 13 their own). Lane 18's boundary "layer 15 or later" is safe but conservative by one: **layer 14 is the
-  first exit with no hole.** For exits at 14 or later, real skipping would produce the same cache as running every layer; what changes later
-  is only which token id was chosen. (Code read; not run.)
-- `gemma4_text.py:105-106`: with `use_double_wide_mlp`, layers 15 to 34 have a **double-width MLP**. A layer is not an equal share of
-  compute, so "(34 − settle) / 35" is a share of layers, not of FLOPs; the shared block holds 20 of 35 layers and each has more MLP and no
-  K/V projection. The post should say "layers".
-- **Comparable to TIDE: n/a.** This is the reason an exit rule might be cheaper to build here (no KV hole from layer 14), as lane 18's
-  mechanism says; no [F] source reports it.
+## 4. Lane 22 against the bar
 
-### 2.8 `inference-cost-truth` README (F, README and licence file)
+**Does an [F] row already report lane 22's number on a comparable setup?** Partly. Throughput at c=1 and c=8 on M1 Pro, Gemma 4 E4B 4-bit
+(blog, row 4): yes, one run, no spread. c=2 and c=4: no. p95 of any latency: no source. Verdicts under vLLM (equality with a control): no source
+at all; SiliconBench runs a classification fidelity set (GMRID) against an NVIDIA reference, on Qwen3-0.6B and E4B, and reports F1, not
+case-by-case equality. A 16 GB Mac: no source (the two Macs with a memory budget are 32 GB and 64 GB). No [F] source defines p95.
 
-- **What a row is.** A price per million tokens or a GPU rental rate, each with `source_url` and `retrieved_on` ("Prices are read from
-  official vendor pages only"); three mechanical gates before a number is published; dated immutable snapshots in `data/snapshots/`. The
-  GitHub repository description gives "874 verified price rows across 24 providers, 378 GPU rental rates, 395 cited throughput
-  datapoints"; **the README itself does not state 874** (a grep for the number found none). Maintained by a vendor that sells GPU kernel
-  optimisation; the README says so.
-- **Is anything in it a cost-per-correct number? No.** "Not a quality benchmark. Nothing here says which model is better." The grep for
-  "per correct" in the README returns 0. It has a self-hosting break-even model (fixed monthly bill against variable API price) which
-  excludes engineer time.
-- **Dating.** README: verified on 2026-07-31; the default-branch head `a61c501` was committed 2026-07-31, although the README plans a refresh on
-  2026-08-31; the API's `pushed_at` is 18 Sep 2026. At 26 Nov the data is almost four months old.
-- **Licence.** The GitHub API reports NOASSERTION because the licence file is named `LICENSE-DATA`; it holds "Creative Commons Attribution
-  4.0 International (CC BY 4.0)" and the README says "Licensed CC BY 4.0" for the data files. The scripts carry no code licence.
-- **Lane 19 takes the question, not the data** (as briefed). Its price column is the repo-radar ledger and the lab's own metered cost.
+**Memory setting on a 16 GB Mac.** None of the papers or the post uses one. SiliconBench's vllm-metal budget variable is removed; the blog uses
+`--gpu-memory-utilization 0.5` on 32 to 64 GB machines. The project's documented settings for this lane are `--kv-cache-memory-bytes` (explicit
+pool) and `--gpu-memory-utilization` (default 0.92 of the recommended working set, i.e. ≈ 10.5 GB planned at 11.45 GB; arithmetic). Use the
+explicit byte cap and read the pool line from the log; do not rely on the fraction.
 
-## 3. Lane 18 against the bar
+**Changes to the brief that this read supports (the operator amends openly, with a dated note, before the prediction is committed):**
+1. **Re-anchor the load ranges.** The stub's "throughput at c=4 is 1.8 to 3.5 times c=1" and its "c=8 gains under 30% over c=4" sit above or
+   beside the only M1 Pro row (c8/c1 = x1.26; M1 Max x1.63; M2 Max x1.50; M5 Pro x2.58 in the same post). A prediction range that the one comparable
+   [F] row falls below is a prediction written without reading it. Row 4 is E4B at 32 GB, so say what is carried over (the chip's bandwidth) and
+   what is not (model size, memory).
+2. **State definitions before the run.** Throughput = total output tokens over the sweep's wall time (SiliconBench §4; `vllm bench serve`).
+   p95 is the lane's own number: the load driver must compute it itself from per-request latencies, and `vllm bench serve --metric-percentiles
+   50,95,99` gives the same for an independent check. At n = 20 requests per level (the stub's email-triage set, three rounds = 60), a p95 is
+   the 57th of 60 sorted values: state n beside it.
+3. **Closed loop, not Poisson.** The stub's design (concurrency 1, 2, 4, 8 with N in flight) matches SiliconBench and differs from
+   PagedAttention's open-loop request rate. Say which.
+4. **Add the third arm (L-mlx): `mlx_lm.server` at the lab's versions on the same load table**, because "what does a paged, batching server buy"
+   is answered only against a batching baseline; the blog's own mlx_lm row on a long-prompt batch (+143%) is the effect to look for or not.
+   Not queued here; the operator's call.
+5. **Record the multimodal mode** (sidecar on or off, and its memory) for Model A, and add 0.95 GB of possible sidecar weights to the memory plan.
+6. **The installation step in the brief is not what `install.sh` does** (no tag argument): the lane needs an explicit v0.34.0 wheel plus its
+   matching vLLM release, or a written note that the dev channel was installed.
+7. **Variance.** No source reports run-to-run spread for vllm-metal on a laptop (SiliconBench: none designed; blog: one run). Lane 22's "three
+   rounds each" is already above the published bar; keep it.
 
-**Does an [F] row already report the lane's number on a comparable setup? No.** (Section 0.) The lane may run on this evidence. What each
-published row lets it say, and what it may not:
+**What lane 22 may claim after it runs.** Its own numbers on one 16 GB M1 Pro at the pinned v0.34.0 / mlx 0.32.4 / mlx-lm `4cfc647`, Model A:
+throughput and p95 at c = 1, 2, 4, 8 on the email-triage held-out cases, and the count of verdicts that differ from the in-venv control.
+**May set beside:** SiliconBench Table 10 and the blog's M1 Pro row as "published, other chip, model, memory, prompts, release and
+statistic". **May not:** say "vLLM improves local throughput by x" in general, or "the field reports" anything for a 16 GB Mac; call the
+result a test of PagedAttention (the paged pool is not the binding constraint at this model size, §2 row 2); compare the single-stream
+rate with the blog's 18.9 tok/s; claim a p95 gain over mlx-lm without the L-mlx arm; or say vLLM "was used on a client's flows" (the lane
+measures the exams, not a flow). Anything about CUDA is out of scope, as in the stub.
 
-| lane 18 element | closest [F] row | the lane **may** | the lane **may not** |
-|---|---|---|---|
-| "TIDE's cosine rule" `cos(h_l, h_34) > 0.98` at checkpoints 3, 7, ..., 31 | TIDE §3.1, `calibrate.py:89-100` | call it **TIDE's convergence label** (the training target of its routers) | call it "TIDE's exit rule": the exit rule is a router score > 0.85 (`runtime.py:174`); say "an oracle version of TIDE's label". Also note `min_layers = 8` (`config.py:13`): checkpoints 3 and 7 never exit at defaults, so the first live checkpoint is 11. |
-| "cosine" as CALM's state saturation | CALM §3.5 | say its label **differs** from CALM's saturation (`cos(d^i, d^{i−1})`, to the previous layer) | call it CALM's measure or set it beside CALM's saturation results ("often falls bellow the static baseline") |
-| settle layer = smallest l from which lens top-1 = final top-1 at every later layer | tuned lens §5.4 "prediction depth" (tuned lens there, plain lens in the lane) | name it **prediction depth (§5.4), measured with the plain logit lens** | call it CALM's oracle exit layer: CALM's oracle exits at the **first** layer whose top-1 agrees, even if a later layer disagrees (§3.3.1) |
-| oracle saving, (34 − settle) / 35 | CALM §3.3.1 (1.53 of 8 layers, ×5.2), TIDE Table 3/5 | report it as a **share of layers**, an upper bound | set it beside CALM's 1.53 layers or ×5.2 (8-layer T5, trained, TPUv3), or beside TIDE's "98 to 99%" (last-layer exits); call it compute (layers 15 to 34 have a double-width MLP) or speed (no layer is skipped; TIDE's own post-hoc mode is not skipping either) |
-| bias of the plain lens on settle layers | tuned lens Figure 3 (4 to 5 bits KL, GPT-Neo 2.7B) | say the plain lens **understates** early agreement, so settle layers are an upper bound on lateness | attach a size to that bias on Gemma: **no [F] row gives one** |
-| "settled at layer 15 or later: no KV hole" | `gemma4_text.py:183, 434-442, 662-675` | say **layer 14 or later** leaves no hole (code read) | say it of a real exit run: lane 18 reads only the full-depth pass; a skipped layer changes later tokens' context |
-| a mis-exit rate against TIDE's label | TIDE Table 5 (one prompt, "correct") | report it as ours, n = our tokens | say TIDE's quality was measured: the paper has one math prompt, no benchmark number, and its decode "exits" skip no layer |
-
-**Concrete changes tied to rows (for the operator to amend openly, dated, before the prediction is committed):**
-
-1. Rename the cosine arm "TIDE's convergence label", not "TIDE's cosine rule"; the decider's third clause ("TIDE's cosine rule exits")
-   should read "the label fires before layer 31 on at least X% of tokens" or be dropped. (TIDE rows 2.1.)
-2. Post **two settle definitions from the same pass**: first-agree (CALM §3.3.1) and last-disagree-then-stay (prediction depth, §5.4).
-   One extra column; it keeps the lane from being set beside the wrong paper's number. (2.2, 2.4.)
-3. KV boundary: "layer 14 or later" (2.7). Anything stated at 15 stays true; the share past the boundary only grows.
-4. Checkpoints: report 11, 15, ..., 31 as the live ones (`min_layers = 8`) and 3, 7 as extra. At 35 layers the last checkpoint is 31,
-   not 34, so on Gemma the label is not trivially 1 at the last checkpoint, unlike TIDE's three models (2.1).
-5. "Oracle saving" is **layers**; say so in the first paragraph, as the brief already says it measures no speed (2.7).
-
-**What lane 18 may not claim from TIDE:** that TIDE saves layers (it skips none), that "98 to 99% exit early" (a last-layer count), or a
-throughput gain on Apple silicon (+6.6%, +8.1% and −16.3% are one A100 and 16 prompts).
-
-## 4. Lane 19 against the bar
-
-**Does an [F] row already report hosted against local per correct answer with a review cost on short tasks? No** (2.5, 2.6, 2.8). The lane
-runs on this evidence. Definitions that exist, and what the lane may and may not claim:
-
-- **Metric names.** AI Agents That Matter reports accuracy and **total dollars** (Table A1) as a Pareto pair, with token counts advised.
-  FrugalGPT reports **cost to reach the same accuracy** (Table 3). Neither defines cost per correct answer or prices a miss.
-- **The lane's `r*`, by our own algebra (checked numerically here, not a source's definition).** With N cases, P passes and C dollars,
-  and a review cost r per miss, total cost is `C + r (N − P)`. Hosted is cheaper in **total cost** when `r > (C_h − C_l) / (P_h − P_l)`.
-  The lane's `r* = C_h / Δpass` sets `C_l = 0`; since the local cost is unpriced and `≥ 0`, **`r*` is an upper bound on the true
-  crossover**. Per **correct answer** (total cost divided by passes) the crossover with `C_l = 0` is `C_h P_l / (N Δpass) = r* · P_l / N`,
-  lower by the factor `P_l / N`. Both only lower `r*`, so a reading of "r* below €0.50" is unchanged, but **the lane may not call `r*` "cost per
-  correct answer"**: name it "the review cost per miss above which the hosted model costs less in total (local cost left unpriced)".
-- **Concrete changes tied to rows (for the operator):**
-  1. Name the quantity as above and show `P_l / N` beside it if the title keeps "per correct". (2.5, 2.6.)
-  2. Post **input and output token counts with the dollars** (AI Agents That Matter §4), so the table re-prices when prices move. The lab's
-     results files already hold them.
-  3. Show the accuracy-against-dollars pair (the Pareto view) next to `r*`; AI Agents That Matter reports means over five runs with a
-     range. Lane 19's Sonnet and Opus rows are **single sits** (Haiku has three), and the post should say so beside every Δpass. (2.5.)
-  4. The repo-radar ledger is the lane's price source; `inference-cost-truth` is dated 31 Jul and carries no accuracy, so it adds no column.
-  5. A cascade ("cheap first, hosted on doubt") is FrugalGPT's and AI Agents That Matter's baseline; lane 19 does not test one. The post
-     should say it is not tested, not that it was considered and found worse.
-- **May not:** claim a published precedent for pricing a wrong answer (AI Agents That Matter §5.2 leaves it to future work); call the
-  €30 an hour anything but our assumption; set `r*` beside FrugalGPT's 98.3% or 59.2% (hosted only, accuracy held fixed, 2023 prices);
-  quote `inference-cost-truth` for any number about quality.
-
-## 5. Checks run this session
-
-- Fetch and extract: `curl -sL https://arxiv.org/pdf/<id> -o <id>.pdf; pdftotext -layout <id>.pdf <id>.txt` for the six ids: 524, 1332,
-  1794, 1906, 1727 and 842 lines. The tuned lens and LayerSkip were also extracted without `-layout` for quote matching.
-- Quote match: a `python3 -I` script checked 36 quoted source passages against the fetched text (whitespace, apostrophes and dashes normalised): 35 match; the one that does not, the repository description's "874 verified price rows ...", comes from the GitHub API, not from a file.
-- Algebra of section 4: a five-trial numeric check that total-cost and per-correct crossovers are `C_h/Δ` and `C_h·P_l/(N·Δ)`, ratio `P_l/N`.
-- Code: `gh api repos/RightNow-AI/TIDE/contents/python/TIDE/<file>.py` for the files named in 2.1 (head `8bdc187`);
-  `~/.pyenv/versions/lewagon/lib/python3.10/site-packages/mlx_lm/models/gemma4_text.py` (version printed `0.31.3`) and the cached e2b-8bit
-  `config.json` for 2.7.
-
-## 6. What our pages may and may not claim
+## 5. What our pages may and may not claim
 
 **May:**
-- Quote TIDE's tables as its own claims, on its setup (one A100, 8B models, 16 prompts), with "post-hoc: no layer is skipped" beside any
-  speed number, and "prefill latency −5.5% at the default θ, −7.2% at θ = 0.50".
-- Say TIDE's convergence label is cosine to the final layer at 0.98 and its exit rule is a router score above 0.85; that the router checkpoints
-  are every fourth layer from the fourth and exits start at index 8.
-- Say CALM's hidden-state saturation is cosine to the previous layer and that CALM's own results rank it below softmax response.
-- Say the plain logit lens is biased and understates early agreement (tuned lens §2, Figure 3: 4 to 5 bits KL, GPT-Neo 2.7B), as direction only.
-- Say, from code read on the pinned mlx-lm 0.31.3, that on Gemma 4 e2b the 15 caches belong to layers 0 to 14 and a token that leaves at
-  layer 14 or later leaves no missing KV entry.
-- Say AI Agents That Matter asks for dollars with token counts, Pareto curves and repeats, and that FrugalGPT reports cost at equal
-  accuracy for hosted models only.
+- Quote SiliconBench's c=1, 8 and 16 vllm-metal figures for Gemma-4-E4B-it (21.1, 52.3, 63.6 tok/s; Table 10, M5 Pro 64 GB) and its "3.0× its
+  single-stream rate", as their claim on that machine.
+- Quote the vLLM blog's M1 Pro 32 GB row (18.9 → 23.8 tok/s; 2.50 → 12.35 s mean TTFT; one run, v0.29.0, E4B) as the vendor's own
+  chart value, with the date of the post.
+- Quote PagedAttention's "2-4×" with its baselines (re-implemented Orca; FasterTransformer with the authors' scheduler), its metric (mean normalized
+  latency, open loop), its hardware (A100) and its own caveat that gains shrink when the workload is compute-bound.
+- Say that vllm-mlx (2601.19139) reports 3.7x at 16 concurrent requests for Qwen3-0.6B on an M4 Max, with no metric definition and no n.
 
 **May not:**
-- Say "the field reports" a settle layer, an oracle early-exit saving, or an exit rate for Apple silicon, Gemma 4 or a ~2B model: no [F]
-  row does.
-- Present "98 to 99% of tokens exit early" as early exit, or TIDE as saving layers, wall-clock time or energy.
-- Put the lane's oracle layer share beside CALM's 1.53 layers, ×5.2 or ×3, LayerSkip's 2.16×, or TIDE's percentages.
-- Give a size to the plain lens's bias on settle layers.
-- Call lane 19's `r*` "cost per correct answer", or claim a published precedent for pricing a miss.
-- Use `2412.01455` or any paper not ranked in section 1.
+- Present vllm-mlx as vllm-metal or as vLLM; the paper itself says it shares no code with vLLM.
+- Quote the vllm-mlx abstract's "4.3x" (the body says 3.7x).
+- Say that "published results show vLLM scaling on a MacBook" or "on a 16 GB Mac".
+- Use any published p95; none was read.
+- Treat the blog's M1 Pro values as a table the vendor published: they were read from chart labels (`cross-machine.svg`), not from a data table.
 
-## 7. Not read, not ranked
+## 6. Not verified
 
-`2412.01455` (Shan et al.) and TIDE's other citations (EE-LLM, SkipDecode, SpecEE, ADEPT) were seen only as names in TIDE's text.
-`adapters/{llama,mistral,qwen}.py` in TIDE and the data files of `inference-cost-truth` were not read.
-`LITERATURE.md` gets no row: no run of ours is set against any of these papers yet. Lane 18 and lane 19 add theirs when they run.
+- Whether the vision and audio towers are resident in memory on a text-only request under v0.34.0 (docs silent; needs an install this file did not do).
+- `VLLM_METAL_MULTIMODAL_MODE` accepted values; where `ensure_uv` puts `uv`; which transformers version the v0.34.0 install pulls.
+- SiliconBench's 27B and 35B charts and the blog's concurrency-2/4 claims (figures only; values not read).
+- That `mlx_lm.server` batches Gemma 4 e2b at the pinned versions: by source only.
+- The lab's own numbers quoted from the stub (lane 02, 3.71 GB, 69.2 tok/s) and from LESSONS (11.45 GB): not re-opened for this file.
