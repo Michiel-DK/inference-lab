@@ -1,0 +1,75 @@
+{
+ "schema": "inference-lab/results/v1",
+ "run": "macos15-gate-gemma-4-e4b-it-8bit-call",
+ "posted": false,
+ "prediction_commit": "6156de691c3274151161005d3e3ac544fb1b8b6c",
+ "lab_commit": "6156de691c3274151161005d3e3ac544fb1b8b6c",
+ "model": {
+  "ref": "mlx-community/gemma-4-e4b-it-8bit",
+  "snapshot": "4255b21bd9a9d3fc807ef7abd80373f5e3a52a73",
+  "load_s": 5.151833875002922,
+  "mlx": "0.32.2",
+  "mlx_lm": "0.31.3"
+ },
+ "wilco": {
+  "dir": "/Users/michieldekoninck/code/Michiel-DK/inference-lab/.claude/worktrees/wilco-pin-62fcd449",
+  "pin": "62fcd449d5cb3ef7359a0a0262f0f403c929062d",
+  "cases_sha256": "16ea5b0295a4ff2cf4911cbfa55a451014d99f6759875d1eb5098b717d4951af",
+  "grader": "sandbox/runner.py run_exam (per case), adapter_for -> lab.metering.MeteredMLX",
+  "agent": {
+   "temperature": 0.0,
+   "max_tokens": 4096
+  }
+ },
+ "machine": {
+  "model": "MacBookPro18,1",
+  "macos": "27.2.1",
+  "python": "3.10.6"
+ },
+ "exam": "call-fields",
+ "case_ids": [
+  "support-long-train"
+ ],
+ "metric": "pass_rate",
+ "headline": 1.0,
+ "aggregates": {
+  "n_cases": 1,
+  "n_calls": 1,
+  "pass_rate": 1.0,
+  "gen_tokens_total": 789,
+  "gen_tps": 28.644236086177393,
+  "prompt_tps": 288.87516339796076,
+  "peak_memory_gb_max": 8.811451638,
+  "wall_s_total": 42.42870887499885,
+  "wall_s_per_case": 42.42870887499885,
+  "wh_per_case": null
+ },
+ "energy": null,
+ "energy_note": "no powermetrics capture in this run (needs the operator's sudo); Wh not metered",
+ "rows": [
+  {
+   "exam": "call-fields",
+   "case": "support-long-train",
+   "split": "train",
+   "passed": true,
+   "failed_checks": [],
+   "start_utc": "2026-11-27T22:57:20.027911+00:00",
+   "end_utc": "2026-11-27T22:58:02.457591+00:00",
+   "wall_s": 42.42870887499885,
+   "calls": [
+    {
+     "prompt_tokens": 3070,
+     "prompt_tps": 288.87516339796076,
+     "gen_tokens": 789,
+     "gen_tps": 28.644236086177393,
+     "peak_memory_gb": 8.811451638,
+     "finish_reason": "stop",
+     "wall_s": 42.41504833399813,
+     "content_chars": 226,
+     "reasoning_chars": 2578
+    }
+   ]
+  }
+ ],
+ "rows_sha256": "ae9b3e9397443e73e423a1a682c6f16fcb7ea733e38f681b6bee7e61387904f5"
+}
