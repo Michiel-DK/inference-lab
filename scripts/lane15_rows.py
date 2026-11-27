@@ -24,6 +24,21 @@ ROWS = ROOT / "docs" / "probes" / "cold-start-worker" / "rows.jsonl"
 
 # The numbers posted in LESSONS.md / SHOWCASE.md / the article, at the precision posted. Filled after the run.
 POSTED = {
+    'A.saved_by_resume': (3.6, 1),
+    'B.saved_by_resume': (5.4, 1),
+    'A.load_gb_per_s': (2.8, 1),
+    'B.load_gb_per_s': (2.8, 1),
+    'bytes_B_over_A': (1.73, 2),
+    'A.gen_tps1.median': (45.7, 1),
+    'B.gen_tps1.median': (29.7, 1),
+    'A.gaps.max_ms': (1.0, 0),
+    'B.gaps.max_ms': (2.0, 0),
+    'A.swap_growth_mb.max': (-16.0, 0),
+    'B.swap_growth_mb.max': (-1052.0, 0),
+    'gate.A.ftft': (8.1, 2),
+    'gate.A.s3': (2.75, 2),
+    'gate.A.s4': (2.46, 2),
+    'gate.A.prefill_tps1': (95.0, 0),
     'A.s1.median': (1.3, 2),
     'A.s1a.median': (0.06, 2),
     'A.s1b.median': (1.23, 2),
@@ -157,12 +172,29 @@ def derive(rows):
         out[f"{c}.gen_tokens.min"] = min(col("gen_tokens"))
         out[f"{c}.swap_growth_mb.max"] = max(max(r["swap_used_mb_after"], r["swap_used_mb_paused"])
                                              - r["swap_used_mb_block_start"] for r in rs)
+        out[f"{c}.saved_by_resume"] = out[f"{c}.ftft.median"] - out[f"{c}.C.median"]
+        out[f"{c}.gaps.max_ms"] = 1000 * max(max(s["gap_ready_send"], s["gap_tail"]) for s in S)
+        wb = rs[0]["weight_bytes"]
+        out[f"{c}.load_gb_per_s"] = wb / 1e9 / out[f"{c}.s2.median"]
     out["B_over_A.s2"] = out["B.s2.median"] / out["A.s2.median"]
     out["B_minus_A.ftft"] = out["B.ftft.median"] - out["A.ftft.median"]
     out["A_ftft_over_CA"] = out["A.ftft.median"] / out["A.C.median"]
     out["weight_bytes.A"] = rows[0]["weight_bytes"] if rows[0]["condition"] == "A" else rows[1]["weight_bytes"]
     out["weight_bytes.B"] = next(r["weight_bytes"] for r in rows if r["condition"] == "B")
+    out["bytes_B_over_A"] = out["weight_bytes.B"] / out["weight_bytes.A"]
     return out, per
+
+
+def gate_stats(allrows):
+    g = {}
+    for r in allrows:
+        if r["phase"] == "gate":
+            s = stages(r)
+            g[f"gate.{r['condition']}.ftft"] = s["ftft"]
+            g[f"gate.{r['condition']}.prefill_tps1"] = s["prefill_tps1"]
+            g[f"gate.{r['condition']}.s3"] = s["s3"]
+            g[f"gate.{r['condition']}.s4"] = s["s4"]
+    return g
 
 
 def verdict(ok):
@@ -178,6 +210,7 @@ def main():
         print(f"rows not complete: ok counts {counts}, failed {bad}")
         return 1
     o, per = derive(rows)
+    o.update(gate_stats(allrows))
 
     print(f"rows: {ROWS.relative_to(ROOT)}; trial rows {len(rows)} (A {counts['A']}, B {counts['B']}); "
           f"gate rows {sum(1 for r in allrows if r['phase'] == 'gate')} (not counted)")
@@ -209,6 +242,12 @@ def main():
               f"gen tok/s {o[f'{c}.gen_tps1.median']:.1f}; gen tokens min {o[f'{c}.gen_tokens.min']}; "
               f"distinct texts over 30 requests {o[f'{c}.texts_distinct']}")
 
+    for c in ("A", "B"):
+        print(f"{c}: weights read at {o[f'{c}.load_gb_per_s']:.1f} GB/s (bytes / stage 2); resume saves "
+              f"{o[f'{c}.saved_by_resume']:.1f} s per run (fresh start to first token - C); largest measured gap "
+              f"{o[f'{c}.gaps.max_ms']:.1f} ms")
+    print(f"bytes B / A {o['bytes_B_over_A']:.2f}; gate A0: fresh start to first token {o['gate.A.ftft']:.2f} s, server "
+          f"{o['gate.A.s3']:.2f} s, first request {o['gate.A.s4']:.2f} s, prefill {o['gate.A.prefill_tps1']:.0f} tok/s")
     print("\nprediction lines")
     lines = [
         ("A fresh start to first token median in [5, 12] s", o["A.ftft.median"], 5 <= o["A.ftft.median"] <= 12),
