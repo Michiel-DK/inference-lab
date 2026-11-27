@@ -1,0 +1,27 @@
+champion-e4b-8bit load 0 (macOS 14.3.1) vs macos15-resit (macOS 27.2.1)
+snapshot 4255b21bd9a9d3fc807ef7abd80373f5e3a52a73 vs 4255b21bd9a9d3fc807ef7abd80373f5e3a52a73 (same: True)
+mlx 0.32.2 / 0.32.2; mlx-lm 0.31.3 / 0.31.3
+
+cases: 83
+verdicts_identical: 83
+verdicts_moved: 0
+gen_tokens_identical_cases: 83
+outputs_identical_cases: 83
+heldout_pass_base: 41
+heldout_pass_new: 41
+gen_tps_new: 29.2
+gen_tps_base_load0: 29.3
+peak_gb_new: 9.18
+peak_gb_base_load0: 9.18
+macos_base: 14.3.1
+macos_new: 27.2.1
+snapshot_same: True
+
+verdicts moved (exam/case: base -> new):
+  none
+
+failed_checks, wilco error or per-call (gen_tokens, content_chars, reasoning_chars, finish_reason) differ:
+  none
+
+per-call gen_tokens differ (exam/case: base -> new):
+  none

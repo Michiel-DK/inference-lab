@@ -22,6 +22,11 @@ regenerated, and a number is posted only with the command that re-derives it.
   roger3000_automations experiment 15-local-8bit (10 Nov, draft PR #50 there), one pass of Q8_0 e4b at 16k scored
   99/155, against 105 for the stock 4-bit `gemma4:e4b` (three passes). That one pass does not separate precision from
   runtime and task. See SHOWCASE lane 10.
+
+**OS of the committed results (27 Nov 2026, lane 21).** Every committed result up to lane 20 was measured on macOS 14.3.1.
+After the upgrade to macOS 27.2.1 (same pins: mlx 0.32.2, mlx-lm 0.31.3), the e4b-8bit champion re-sat on one load: 83 of
+83 verdicts and 83 of 83 per-call token counts were identical to lane 10's load 0 (`results/macos15-resit.json`,
+`scripts/lane21_compare.py --check`). Results from lane 21 on are measured on macOS 27.2.1.
 - The local champion is `mlx-community/gemma-4-e4b-it-8bit`. The rule is measured on mlx-community affine packs under mlx-lm only, not on Ollama GGUF (SHOWCASE lane 10).
 - Re-derive: `python3 -m lab check results/quant-*.json results/champion-e4b-8bit.json results/dense-*.json` (exits 0); flip ids and
   wall ratios from `scripts/lane04_rows.py` (commands in SHOWCASE lanes 04 and 10).
