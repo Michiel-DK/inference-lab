@@ -1,0 +1,4 @@
+# macos15-resit swap readings (sysctl -n vm.swapusage, 27 Nov 2026). Gate lines: copied by hand from the lane terminal; no file keeps them.
+gate before: total = 9216.00M  used = 7694.69M  free = 1521.31M  (encrypted)
+gate after:  total = 9216.00M  used = 8171.19M  free = 1044.81M  (encrypted)
+full load: see run.log (the watchdog line, verbatim)
