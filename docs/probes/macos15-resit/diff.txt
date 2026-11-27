@@ -16,6 +16,7 @@ peak_gb_base_load0: 9.18
 macos_base: 14.3.1
 macos_new: 27.2.1
 snapshot_same: True
+swap_growth_mb: 933
 
 verdicts moved (exam/case: base -> new):
   none

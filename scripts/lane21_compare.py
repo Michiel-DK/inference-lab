@@ -30,6 +30,7 @@ POSTED = {
     "macos_base": "14.3.1",
     "macos_new": "27.2.1",
     "snapshot_same": True,
+    "swap_growth_mb": 933,
 }
 
 
@@ -42,6 +43,13 @@ def load(run, load_idx=0):
 def tps(rows):
     calls = [c for r in rows.values() for c in r["calls"]]
     return sum(c["gen_tokens"] for c in calls) / sum(c["gen_tokens"] / c["gen_tps"] for c in calls if c["gen_tps"])
+
+
+def swap_growth_mb():
+    """The watchdog's line in docs/probes/macos15-resit/swap.txt: peak minus base over the full load, in sysctl's M units."""
+    import re
+    m = re.search(r"base (\d+) MB, peak (\d+) MB", (OUT.parent / "swap.txt").read_text())
+    return int(m.group(2)) - int(m.group(1))
 
 
 def derive():
@@ -70,6 +78,7 @@ def derive():
         "macos_base": db["machine"]["macos"],
         "macos_new": dn["machine"]["macos"],
         "snapshot_same": db["model"]["snapshot"] == dn["model"]["snapshot"],
+        "swap_growth_mb": swap_growth_mb(),
     }
     lines = [f"{BASE} load 0 (macOS {got['macos_base']}) vs {NEW} (macOS {got['macos_new']})",
              f"snapshot {db['model']['snapshot']} vs {dn['model']['snapshot']} (same: {got['snapshot_same']})",
@@ -118,6 +127,7 @@ POSTED_TEXT = {
     "tps": "gen {gen_tps_new} tok/s (lane 10 load 0: {gen_tps_base_load0})",
     "peak": "peak {peak_gb_new} GB ({peak_gb_base_load0})",
     "os": "macOS {macos_base} to {macos_new}",
+    "swap": "Swap +{swap_growth_mb} MB over the run",
 }
 
 if __name__ == "__main__":
