@@ -197,6 +197,33 @@ def gate_stats(allrows):
     return g
 
 
+# The headline values as the posts print them: each must appear, at this precision, in the lane's LESSONS row AND its
+# SHOWCASE section, so an edit to the text that leaves the rows behind fails this check (refuter of 27 Nov).
+TEXT_KEYS = [("A.ftft.median", 2), ("B.ftft.median", 2), ("A.cold.median", 2), ("B.cold.median", 2), ("A.C.median", 2),
+             ("B.C.median", 2), ("A_ftft_over_CA", 1), ("B.ftft_over_C", 1), ("B_over_A.s2", 2), ("bytes_B_over_A", 2),
+             ("A.peak_gb.max", 2), ("B.peak_gb.max", 2), ("A.ttft1_over_ttft2", 2), ("B.ttft1_over_ttft2", 2),
+             ("B_minus_A.ftft", 2), ("A.s2.median", 2), ("B.s2.median", 2), ("A.s4.median", 2), ("B.s4.median", 2),
+             ("A.ttft3_minus_ttft2", 2), ("B.ttft3_minus_ttft2", 2), ("A.ftft.spread", 2), ("gate.A.ftft", 2)]
+
+
+def post_texts():
+    les = next(line for line in (ROOT / "LESSONS.md").read_text().splitlines() if line.startswith("| cold-start-worker"))
+    show = (ROOT / "SHOWCASE.md").read_text()
+    i = show.index("## Lane 15 cold-start-worker")
+    j = show.find("\n## ", i + 1)
+    return {"LESSONS.md row": les, "SHOWCASE.md lane 15": show[i:j if j > 0 else None]}
+
+
+def text_drift(o):
+    drift = []
+    for where, text in post_texts().items():
+        for key, nd in TEXT_KEYS:
+            want = f"{o[key]:.{nd}f}"
+            if want not in text:
+                drift.append(f"{where}: {key} = {want} (from the rows) is not in the text")
+    return drift
+
+
 def verdict(ok):
     return "held" if ok else "REFUTED"
 
@@ -281,12 +308,13 @@ def main():
     print(f"  B ftft median {o['B.ftft.median']:.2f} s; B ftft / C-B {o['B.ftft_over_C']:.2f} -> "
           f"{'FLIPS' if flip else 'does not flip'}")
 
-    drift = []
+    drift = text_drift(o)
     for key, (val, nd) in POSTED.items():
         got = round(o[key], nd)
         if got != val:
             drift.append(f"{key}: posted {val}, rows give {got}")
-    print(f"\nPOSTED check: {len(POSTED)} numbers; " + ("all match" if not drift else "DRIFT:\n  " + "\n  ".join(drift)))
+    print(f"\nPOSTED check: {len(POSTED)} numbers against the rows, {len(TEXT_KEYS)} of them also found in the LESSONS row and "
+          f"the SHOWCASE section; " + ("all match" if not drift else "DRIFT:\n  " + "\n  ".join(drift)))
     return 1 if drift else 0
 
 
