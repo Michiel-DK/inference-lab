@@ -3,6 +3,94 @@
 The post: one headline number with its spread, what was refused, the reopen threshold, and how to re-derive it
 (`python3 -m lab check <results file>`).
 
+## Lane 15 cold-start-worker: where a cold start goes on a laptop, behind Runpod's worker interface (26–27 Nov 2026)
+
+**Question.** Runpod took a vLLM worker's `delayTime` from a median of 324 s to ~91 s (3 against 2 trials, Qwen3-32B-FP8 on
+2× H200, "Treat the 3.5× ratio as directional"). Here, the same question at laptop size: a real Runpod serverless handler
+(`runpod` 2.4.0, local mode `--rp_serve_api`, no key, no account, no network) around an MLX model loaded at module level,
+started fresh 10 times per pack. Where does the time go, and what does pausing a ready worker save? This is **not** a
+reproduction: GPU allocation, image pull and vLLM compilation, which their post says make up most of the 324 s, do not
+exist here, and `delayTime` has no laptop equivalent. Prediction committed first: `predictions/cold-start-worker.md`
+(`22e969c`), with lane 14's corrections in its pre-run notes. Fixed prompt: email-triage TRAIN case `overdue-invoice`,
+211 prompt tokens, 64 new tokens at temperature 0, nothing graded. 16 GB M1 Pro, mlx 0.32.2, mlx-lm 0.31.3, warm file cache
+(the weight files read with `cat` before every worker).
+
+**Headline.** Fresh start to first token: **4.34 s** on the 4-bit e4b and **6.18 s** on the 8-bit champion (median of 10,
+slowest/fastest 1.04 on both). Of that, the cold start in Runpod's sense (process start to accepting a job) is 3.53 / 4.80 s.
+The weights are the largest stage (43 % / 51 %). A worker stopped with `SIGSTOP` for 60 s and continued gives its first token
+**0.72 / 0.79 s** after `SIGCONT`: **6.1× / 7.9×** faster than a fresh start. No kill fired.
+
+| stage, s (median [min, max], n = 10 fresh workers each) | A: gemma-4-e4b-it-4bit (5.15 GB) | B: gemma-4-e4b-it-8bit (8.88 GB) |
+|---|---|---|
+| 1 imports (spawn → `runpod` and `mlx_lm` imported) | 1.30 (runpod 0.06, mlx_lm 1.23) | 1.29 (0.06, 1.23) |
+| 2 weights (`mlx_lm.load`, eager evaluation) | 1.87 | 3.15 |
+| 3 server accepting (load returned → first `GET /` answers, 20 ms poll) | 0.37 | 0.36 |
+| **cold start, Runpod's definition (1–3)** | **3.53** [3.50, 3.70] | **4.80** [4.73, 4.92] |
+| 4 first request → first token | 0.81 | 1.38 |
+| **fresh start to first token (1–4)** | **4.34** [4.31, 4.49] | **6.18** [6.07, 6.31] |
+| 5 first → 64th token | 1.42 | 2.18 |
+| driver: spawn → first response received | 5.76 | 8.36 |
+| request 2, same worker: sent → first token | 0.64 | 0.66 |
+| **C: `SIGCONT` after 60 s stopped → request 3's first token** | **0.72** | **0.79** |
+| peak memory (mlx, process) | 4.59 GB | 8.29 GB |
+
+Re-derive (every number in this section, the LESSONS row and the lane's article):
+```sh
+~/.pyenv/versions/lewagon/bin/python3 scripts/lane15_rows.py    # reads docs/probes/cold-start-worker/rows.jsonl; exit 1 on drift
+```
+Rows were written by `scripts/lane15_drive.py --phase trial` (worker: `scripts/lane15_worker.py`, venv in
+`docs/probes/cold-start-worker/env.txt`). They are committed and are never regenerated: the driver refuses to run when trial rows exist.
+
+**What the numbers say.**
+- **The weights stage scales with bytes.** B/A = 1.68 against a byte ratio of 1.73: about 2.8 GB/s from a warm page cache on both
+  packs. The imports (1.3 s, almost all `mlx_lm` and what it pulls in) and the server start (0.36 s) are the same for both packs.
+- **The first request is the warmup.** Prefill ran at 378 / 187 tok/s on request 1 against 464 / 451 on request 2. So request 1
+  waits 1.25× (A) and 2.10× (B) as long for its first token. `load()` already evaluates the weights (`lazy=False`), so this is not
+  weight loading. Why the 8-bit pays twice the 4-bit's warmup is ⚠️ not established here.
+- **Pause and resume is not free, but close.** Request 3, after a 60 s stop, waits 0.07 / 0.13 s longer than request 2. Most of C
+  is the request itself (211-token prefill + first token), not the resume.
+- **Deterministic.** 1 distinct output text in 30 requests per pack.
+- **The very first start in a new venv was slower** (gate row, n = 1, not counted): A0 8.10 s to first token, with the server stage
+  at 2.75 s and the first request at 2.46 s (prefill 95 tok/s). This matches a first-run compile and cache fill; that cause is
+  ⚠️ not shown here.
+
+**Prediction vs result** (scope job's bands, written before the SDK was installed).
+
+| claim | predicted | result | |
+|---|---|---|---|
+| A fresh start to first token | 5–12 s | 4.34 | refuted (faster) |
+| A imports · weights · first request | 1.5–5 · 2.5–4 · 0.5–3 s | 1.30 · 1.87 · 0.81 | refuted · refuted · held |
+| B weights / A weights | 1.3–1.6× | 1.68× | refuted (scales with bytes, as the mechanism said) |
+| B weights | 4–5.5 s | 3.15 | refuted (faster) |
+| B − A fresh start to first token | +1 to +4 s | +1.84 | held |
+| C-A first token | ≤ 1.0 s | 0.72 | held |
+| A fresh start / C-A | ≥ 5× | 6.1× | held |
+| first / second request time to first token (unsure) | ≥ 1.5× | A 1.25×, B 2.10× | refuted on A, held on B |
+| spread, slowest / fastest of 10 | ≤ 1.5 | 1.04 · 1.04 | held |
+| kill 1: stages 1–5 vs driver end-to-end, median trial | within 10 % | 0.01 % · 0.02 % | not fired |
+| kill 2: spread > 2× in both | — | 1.04 · 1.04 | not fired |
+
+Kill 1 checks that the two processes' clocks join up. It is not an independent measure of hidden work: the stages tile the
+interval by design, and the two gaps (ready → sent, last token → response) were measured separately at ≤ 2 ms.
+
+**Decider (operator).** It flips if the 8-bit's fresh start to first token is above 15 s at the median, or if resume is less than
+5× faster than a fresh start. Result: 6.18 s and 7.9×, so **it does not flip**. A scheduled flow that loads the 8-bit per run pays
+about 6.2 s before its first token; a worker kept loaded pays ~0.66 s and holds 8.29 GB. Which one the cards recommend is the
+operator's call; this lane changes no card.
+
+**What this does not show.** Nothing about GPU allocation, image pull, vLLM compilation and CUDA graph capture, or a network
+volume, which Runpod says make up most of their 324 s. Nothing about `delayTime`. The arm C stand-in is the Flash post's
+"container pausing" only, not FlashBoot in general; their "about 200ms" has no n or method, and our 0.72 s includes a full
+request. One laptop, one runtime version, one model family, a warm file cache only. 2511.05502's "MLX in ∼31s" (M2 Ultra, Qwen-2.5,
+no stages, no n) is a different setup and quantity, and is not contradicted or confirmed by this.
+
+**Not run.** D, a cold file cache: `sudo -n purge` needs a password here, and the lane did not ask for one. By hand:
+`sudo purge`, then one worker started as in `scripts/lane15_drive.py` without its `cat` step. There was no Ollama arm and no
+Docker arm (lab rule: mlx-lm only). Those are the follow-ups: the same worker behind a GGUF runtime, and inside a container on
+this machine.
+
+**Reopen** if a cold-cache run (D) puts B's fresh start to first token above 15 s, or on a runtime upgrade (mlx, mlx-lm, runpod).
+
 ## Lane calibrated-4bit: does a properly made (QAT) 4-bit pack close the e4b's 4 → 8-bit gap? (16–17 Nov 2026)
 
 origin: {"kind": "lane", "url": null, "label": "inference literature: calibration-free 4-bit vs calibrated INT4"}
