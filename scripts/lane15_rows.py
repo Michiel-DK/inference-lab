@@ -15,6 +15,7 @@ Stages (predictions/cold-start-worker.md, pre-run notes), in seconds:
   C = SIGCONT (driver) -> request 3's first token, after a 60 s SIGSTOP of the whole process group
 """
 import json
+import re
 import statistics as st
 import sys
 from pathlib import Path
@@ -214,12 +215,32 @@ def post_texts():
     return {"LESSONS.md row": les, "SHOWCASE.md lane 15": show[i:j if j > 0 else None]}
 
 
+NUM = re.compile(r"(?<![\w.])\d+(?:\.\d+)?")
+# Numbers allowed in the LESSONS row's result and verdict cells that are not row-derived, each with its reason.
+CONSTANTS = {
+    "0": "exit code of this script", "3": "stage label (1-3)", "64": "max new tokens (design)",
+    "1.0": "prediction threshold (C <= 1.0 s)", "5": "prediction / decider threshold (>= 5x)", "15": "decider threshold (15 s)",
+    "324": "Runpod's quoted median", "91": "Runpod's quoted median", "2511.05502": "cited paper id", "31": "cited paper's MLX total",
+}
+
+
 def text_drift(o):
+    """Two checks on the posted text. (1) Every number in the LESSONS row's result and verdict cells is, as a whole token, a
+    POSTED value at its posted precision, the POSTED count, or a named CONSTANT. (2) Each TEXT_KEYS value appears as a whole
+    token in the LESSONS row and in the SHOWCASE lane-15 section."""
     drift = []
-    for where, text in post_texts().items():
+    allowed = {f"{o[k]:.{nd}f}" for k, (_, nd) in POSTED.items()} | {str(len(POSTED))} | set(CONSTANTS)
+    texts = post_texts()
+    cells = [c.strip() for c in texts["LESSONS.md row"].split(" | ")]
+    for name, cell in (("result", cells[2]), ("verdict", cells[3])):
+        for tok in NUM.findall(cell):
+            if tok not in allowed:
+                drift.append(f"LESSONS.md row, {name} cell: {tok} is not a row-derived posted value or a named constant")
+    for where, text in texts.items():
+        toks = set(NUM.findall(text))
         for key, nd in TEXT_KEYS:
             want = f"{o[key]:.{nd}f}"
-            if want not in text:
+            if want not in toks:
                 drift.append(f"{where}: {key} = {want} (from the rows) is not in the text")
     return drift
 
@@ -313,8 +334,8 @@ def main():
         got = round(o[key], nd)
         if got != val:
             drift.append(f"{key}: posted {val}, rows give {got}")
-    print(f"\nPOSTED check: {len(POSTED)} numbers against the rows, {len(TEXT_KEYS)} of them also found in the LESSONS row and "
-          f"the SHOWCASE section; " + ("all match" if not drift else "DRIFT:\n  " + "\n  ".join(drift)))
+    print(f"\nPOSTED check: {len(POSTED)} numbers against the rows, every number in the LESSONS row's result and verdict "
+          f"cells traced to one of them or a named constant, {len(TEXT_KEYS)} also found in the SHOWCASE section; " + ("all match" if not drift else "DRIFT:\n  " + "\n  ".join(drift)))
     return 1 if drift else 0
 
 
